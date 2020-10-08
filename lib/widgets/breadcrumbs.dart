@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_navigator2_test/classes/custom_page.dart';
 import 'package:flutter_app_navigator2_test/classes/page_stack.dart';
 import 'package:provider/provider.dart';
 
 class BreadCrumbs extends StatelessWidget {
   const BreadCrumbs({Key key, this.page}) : super(key: key);
-  final CustomPage page;
+  final Page page;
 
   @override
   Widget build(BuildContext context) {
