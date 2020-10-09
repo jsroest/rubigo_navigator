@@ -2,8 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_rubigo_navigator/classes/page_stack.dart';
-import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
 
 enum StackChange {
   pushed_on_top,
@@ -11,26 +9,25 @@ enum StackChange {
 }
 
 class RubigoNavigator extends ChangeNotifier {
-  RubigoNavigator() {
-    _pageStack = PageStack([S010LoginPage.page]);
+  RubigoNavigator(List<Page> initialPages) {
+    _pages = initialPages;
   }
 
-  PageStack _pageStack;
-
-  UnmodifiableListView<Page> get pages => _pageStack.pages;
+  List<Page> _pages;
+  UnmodifiableListView<Page> get pages => UnmodifiableListView(_pages);
 
   void push(Page value) {
-    _pageStack.push(value);
+    _pages.add(value);
     notifyListeners();
   }
 
   void remove(Page value) {
-    _pageStack.remove(value);
+    _pages.remove(value);
     notifyListeners();
   }
 
   bool onPopPage(Route<dynamic> route, dynamic result) {
-    _pageStack.remove(route.settings as Page);
+    _pages.remove(route.settings as Page);
     return route.didPop(result);
   }
 }
