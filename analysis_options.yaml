@@ -1,0 +1,11 @@
+analyzer:
+  exclude:
+    # ignore warnings in files from json_serializable, built_value and most generators
+    - "**/*.g.dart"
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+include: package:pedantic/analysis_options.yaml
+linter:
+  rules:
+    - avoid_void_async

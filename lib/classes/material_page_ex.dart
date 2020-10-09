@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class MaterialPageEx<T> extends MaterialPage<T> {
   MaterialPageEx({
-    @required child,
-    maintainState = true,
-    fullscreenDialog = false,
+    @required Widget child,
+    bool maintainState = true,
+    bool fullscreenDialog = false,
     LocalKey key,
     String name,
     Object arguments,
