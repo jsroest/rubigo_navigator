@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rubigo_navigator/app_providers.dart';
-import 'package:flutter_rubigo_navigator/classes/page_stack.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
@@ -18,7 +18,7 @@ class _AppState extends State<App> {
     return MultiProvider(
       providers: providers,
       builder: (BuildContext context, _) {
-        var pageStack = context.watch<PageStack>();
+        var rubigoNavigator = context.watch<RubigoNavigator>();
         return MaterialApp(
           navigatorKey: _navigatorKey,
           onGenerateRoute: (_) => null,
@@ -30,11 +30,8 @@ class _AppState extends State<App> {
           builder: (context, _) {
             return Navigator(
               key: _navigatorKey,
-              pages: pageStack.pages,
-              onPopPage: (Route<dynamic> route, dynamic result) {
-                pageStack.remove(route.settings as Page);
-                return route.didPop(result);
-              },
+              pages: rubigoNavigator.pages,
+              onPopPage: rubigoNavigator.onPopPage,
             );
           },
         );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rubigo_navigator/classes/page_stack.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
 import 'package:provider/provider.dart';
 
 class BreadCrumbs extends StatelessWidget {
@@ -8,7 +8,7 @@ class BreadCrumbs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pages = List<Page>.from(Provider.of<PageStack>(context).pages);
+    var pages = List<Page>.from(Provider.of<RubigoNavigator>(context).pages);
     if (page != null) {
       var indexOfThisPage = pages.lastIndexWhere((element) => element == page);
       if (pages.length - 1 > indexOfThisPage) {
