@@ -1,5 +1,5 @@
-name: flutter_app_navigator2_test
-description: Doing some tests with navigator 2.0
+name: flutter_rubigo_navigator
+description: A navigator based on navigator 2.0
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
