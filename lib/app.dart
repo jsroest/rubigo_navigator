@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_navigator2_test/classes/page_stack.dart';
-import 'package:flutter_app_navigator2_test/pages/s010_login/s010_login.page.dart';
+import 'package:flutter_rubigo_navigator/classes/page_stack.dart';
+import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_navigator2_test/classes/material_page_ex.dart';
-import 'package:flutter_app_navigator2_test/pages/s030_sub_page/services/s030_providers.dart';
-import 'package:flutter_app_navigator2_test/pages/s030_sub_page/services/s030_state.dart';
-import 'package:flutter_app_navigator2_test/widgets/breadcrumbs.dart';
+import 'package:flutter_rubigo_navigator/classes/material_page_ex.dart';
+import 'package:flutter_rubigo_navigator/pages/s030_sub_page/services/s030_providers.dart';
+import 'package:flutter_rubigo_navigator/pages/s030_sub_page/services/s030_state.dart';
+import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 import 'package:provider/provider.dart';
 
 class S030SubPage extends StatelessWidget {
   static MaterialPageEx get page {
     return MaterialPageEx<S030SubPage>(
-      builder: (_) => S030SubPage(),
+      child: S030SubPage(),
       name: 'S030SubPage',
     );
   }

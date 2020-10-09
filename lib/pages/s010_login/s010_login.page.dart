@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_navigator2_test/classes/material_page_ex.dart';
-import 'package:flutter_app_navigator2_test/pages/s010_login/services/s010_providers.dart';
-import 'package:flutter_app_navigator2_test/pages/s010_login/services/s010_state.dart';
-import 'package:flutter_app_navigator2_test/widgets/breadcrumbs.dart';
+import 'package:flutter_rubigo_navigator/classes/material_page_ex.dart';
+import 'package:flutter_rubigo_navigator/pages/s010_login/services/s010_providers.dart';
+import 'package:flutter_rubigo_navigator/pages/s010_login/services/s010_state.dart';
+import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 import 'package:provider/provider.dart';
 
 class S010LoginPage extends StatelessWidget {
   static MaterialPageEx get page {
     return MaterialPageEx<S010LoginPage>(
-      builder: (_) => S010LoginPage(),
+      child: S010LoginPage(),
       name: 'S010LoginPage',
     );
   }

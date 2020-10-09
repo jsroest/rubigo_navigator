@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class MaterialPageEx<T> extends MaterialPage<T> {
   MaterialPageEx({
-    @required builder,
+    @required child,
     maintainState = true,
     fullscreenDialog = false,
     LocalKey key,
     String name,
     Object arguments,
   }) : super(
-          builder: builder,
+          child: child,
           maintainState: maintainState,
           fullscreenDialog: fullscreenDialog,
           key: key ?? ValueKey(name),
