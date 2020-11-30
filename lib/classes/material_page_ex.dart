@@ -6,14 +6,13 @@ class MaterialPageEx<T> extends MaterialPage<T> {
     bool maintainState = true,
     bool fullscreenDialog = false,
     LocalKey key,
-    String name,
     Object arguments,
   }) : super(
           child: child,
           maintainState: maintainState,
           fullscreenDialog: fullscreenDialog,
-          key: key ?? ValueKey(name),
-          name: name,
+          key: key ?? ValueKey(child.toString()),
+          name: child.toString(),
           arguments: arguments,
         );
 

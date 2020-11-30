@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rubigo_navigator/app_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
+import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
+
+final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
+  (ref) {
+    return RubigoNavigator(
+      controllers: [
+        ref.watch(s010ControllerProvider),
+      ],
+      initialScreenController: S010LoginPage,
+    );
+  },
+);
 
 class App extends StatefulWidget {
   @override
@@ -15,23 +27,21 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: providers,
-      builder: (BuildContext context, _) {
-        var rubigoNavigator = context.watch<RubigoNavigator>();
-        return MaterialApp(
-          navigatorKey: _navigatorKey,
-          onGenerateRoute: (_) => null,
-          title: 'Flutter Navigator Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          builder: (context, _) {
+    return MaterialApp(
+      navigatorKey: _navigatorKey,
+      onGenerateRoute: (_) => null,
+      title: 'Flutter Navigator Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      builder: (context, _) {
+        return Consumer(
+          builder: (context, watch, child) {
             return Navigator(
               key: _navigatorKey,
-              pages: rubigoNavigator.pages,
-              onPopPage: rubigoNavigator.onPopPage,
+              pages: watch(rubigoNavigatorProvider).pages,
+              onPopPage: context.read(rubigoNavigatorProvider).onPopPage,
             );
           },
         );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_rubigo_navigator/app.dart';
 
 class BreadCrumbs extends StatelessWidget {
   const BreadCrumbs({Key key, this.page}) : super(key: key);
@@ -8,18 +8,23 @@ class BreadCrumbs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pages = List<Page>.from(Provider.of<RubigoNavigator>(context).pages);
-    if (page != null) {
-      var indexOfThisPage = pages.lastIndexWhere((element) => element == page);
-      if (pages.length - 1 > indexOfThisPage) {
-        //There are page above this page
-        //remove them from this list, because this shows during the transition between pages
-        pages.removeRange(indexOfThisPage + 1, pages.length);
-      }
-    }
-    var pageNames = pages.map((e) => e.name).toList();
+    return Consumer(
+      builder: (context, watch, _) {
+        var pages = List<Page>.from(watch(rubigoNavigatorProvider).pages);
+        if (page != null) {
+          var indexOfThisPage =
+              pages.lastIndexWhere((element) => element == page);
+          if (pages.length - 1 > indexOfThisPage) {
+            //There are page above this page
+            //remove them from this list, because this shows during the transition between pages
+            pages.removeRange(indexOfThisPage + 1, pages.length);
+          }
+        }
+        var pageNames = pages.map((e) => e.name).toList();
 
-    var breadCrumbs = pageNames.join('=>');
-    return Text(breadCrumbs);
+        var breadCrumbs = pageNames.join('=>');
+        return Text(breadCrumbs);
+      },
+    );
   }
 }
