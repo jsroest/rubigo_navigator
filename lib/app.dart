@@ -1,19 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_controllers.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
-import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
-import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
-
-final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
-  (ref) {
-    return RubigoNavigator(
-      controllers: [
-        ref.watch(s010ControllerProvider),
-      ],
-      initialScreenController: S010LoginPage,
-    );
-  },
-);
 
 class App extends StatefulWidget {
   @override
@@ -24,6 +12,14 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    var navigator = context.read(rubigoNavigatorProvider);
+    var controllers = context.read(rubigoControllerProvider);
+    navigator.init(controllers);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

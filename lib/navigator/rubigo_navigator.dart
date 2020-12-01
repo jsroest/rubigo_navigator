@@ -2,43 +2,51 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_rubigo_navigator/navigator/controller.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_controllers.dart';
 
 enum StackChange {
   pushed_on_top,
   returned_from_screen,
 }
 
+final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
+  (ref) {
+    return RubigoNavigator();
+  },
+);
+
 class RubigoNavigator extends ChangeNotifier {
-  RubigoNavigator({
-    this.controllers,
-    Type initialScreenController,
-  }) {
-    var screenController = controllers.firstWhere(
-        (element) => element.runtimeType == initialScreenController);
-    push(screenController);
+  RubigoController _rubigoController;
+
+  void init(RubigoController rubigoController) {
+    _rubigoController = rubigoController;
   }
 
-  T get<T extends Controller>() {
-    var screenController =
-        controllers.firstWhere((element) => element.runtimeType == T);
-    return screenController as T;
-  }
-
-  final List<Controller> controllers;
   final _stack = <Controller>[];
 
-  UnmodifiableListView<Page> get pages => UnmodifiableListView(
-        _stack.map((e) => e.page),
-      );
+  Controller _getController(Type type) {
+    return _rubigoController.controllers
+        .firstWhere((element) => element.runtimeType == type);
+  }
 
-  void push(Controller value) {
-    _stack.add(value);
+  UnmodifiableListView<Page> get pages {
+    if (_stack.isEmpty) {
+      push(_rubigoController.initialScreenController);
+    }
+    return UnmodifiableListView(
+      _stack.map((e) => e.page),
+    );
+  }
+
+  void push(Type type) {
+    _stack.add(_getController(type));
     notifyListeners();
   }
 
-  void remove(Controller value) {
-    _stack.remove(value);
+  void remove(Type type) {
+    _stack.remove(_getController(type));
     notifyListeners();
   }
 

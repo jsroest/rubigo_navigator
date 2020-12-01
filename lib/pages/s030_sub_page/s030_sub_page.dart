@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/classes/material_page_ex.dart';
-import 'package:flutter_rubigo_navigator/pages/s020_main_menu/s020_controller.dart';
+import 'package:flutter_rubigo_navigator/pages/s030_sub_page/s030_state.dart';
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
 class S030SubPage extends StatelessWidget {
@@ -29,7 +29,7 @@ class S030SubPage extends StatelessWidget {
           BreadCrumbs(page: S030SubPage.page),
           FlatButton(
             child: Text('Remove page 2'),
-            onPressed: context.read(s020ControllerProvider).doContinue,
+            onPressed: context.read(s030ControllerProvider).doContinue,
           )
         ],
       ),
