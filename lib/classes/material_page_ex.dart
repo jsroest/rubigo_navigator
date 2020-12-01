@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+MaterialPageEx<T> createPage<T>(Widget widget) => MaterialPageEx<T>(
+      child: widget,
+    );
+
 class MaterialPageEx<T> extends MaterialPage<T> {
   MaterialPageEx({
     @required Widget child,

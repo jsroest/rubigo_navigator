@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_rubigo_navigator/navigator/controller.dart';
 import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
 import 'package:flutter_rubigo_navigator/pages/s020_main_menu/s020_controller.dart';
-import 'package:flutter_rubigo_navigator/pages/s030_sub_page/s030_state.dart';
+import 'package:flutter_rubigo_navigator/pages/s030_sub_page/s030_controller.dart';
 
 final rubigoControllerProvider = Provider<RubigoController>(
   (ref) {

@@ -5,11 +5,7 @@ import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
 class S010LoginPage extends StatelessWidget {
-  static MaterialPageEx get page {
-    return MaterialPageEx<S010LoginPage>(
-      child: S010LoginPage(),
-    );
-  }
+  static MaterialPageEx<S010LoginPage> get page => createPage(S010LoginPage());
 
   @override
   Widget build(BuildContext context) {

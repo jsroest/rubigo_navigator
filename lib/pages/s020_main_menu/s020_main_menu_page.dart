@@ -5,11 +5,8 @@ import 'package:flutter_rubigo_navigator/pages/s020_main_menu/s020_controller.da
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
 class S020MainMenuPage extends StatelessWidget {
-  static MaterialPageEx get page {
-    return MaterialPageEx<S020MainMenuPage>(
-      child: S020MainMenuPage(),
-    );
-  }
+  static MaterialPageEx<S020MainMenuPage> get page =>
+      createPage(S020MainMenuPage());
 
   @override
   Widget build(BuildContext context) {
