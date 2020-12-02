@@ -19,14 +19,11 @@ final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
 class RubigoNavigator extends ChangeNotifier {
   void init({
     @required List<Controller> controllers,
-    @required Type initialController,
   }) {
     _controllers = controllers;
-    _initialController = initialController;
   }
 
   List<Controller> _controllers;
-  Type _initialController;
 
   final _stack = <Controller>[];
 
@@ -36,7 +33,7 @@ class RubigoNavigator extends ChangeNotifier {
 
   UnmodifiableListView<Page> get pages {
     if (_stack.isEmpty) {
-      _stack.add(_getController(_initialController));
+      _stack.add(_controllers.first);
     }
     return UnmodifiableListView(
       _stack.map((e) => e.page),

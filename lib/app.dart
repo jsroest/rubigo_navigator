@@ -22,7 +22,6 @@ class _AppState extends State<App> {
         context.read(s020ControllerProvider),
         context.read(s030ControllerProvider),
       ],
-      initialController: S010Controller,
     );
     super.initState();
   }
