@@ -33,7 +33,7 @@ class RubigoNavigator extends ChangeNotifier {
 
   UnmodifiableListView<Page> get pages {
     if (_stack.isEmpty) {
-      push(_rubigoController.initialScreenController);
+      _stack.add(_getController(_rubigoController.initialScreenController));
     }
     return UnmodifiableListView(
       _stack.map((e) => e.page),
