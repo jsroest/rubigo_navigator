@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rubigo_navigator/classes/material_page_ex.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_stack_manager.dart';
 
 class Controller extends ChangeNotifier {
   Controller(
