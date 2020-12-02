@@ -7,8 +7,10 @@ import 'package:flutter_rubigo_navigator/navigator/controller.dart';
 
 enum StackChange {
   pushed_on_top,
-  returned_from_screen,
+  returned_from_controller,
 }
+
+enum PushOrPop { Push, Pop, PopTo }
 
 final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
   (ref) {
@@ -40,10 +42,17 @@ class RubigoNavigator extends ChangeNotifier {
     );
   }
 
-  void push(Type type) {
-    _stack.add(_getController(type));
-    notifyListeners();
-  }
+  Future<void> pop() => _pushOrPopController(PushOrPop.Pop, null);
+
+  Future<void> push(Type controller) => _pushOrPopController(
+        PushOrPop.Push,
+        controller,
+      );
+
+  Future<void> popTo(Type controller) => _pushOrPopController(
+        PushOrPop.PopTo,
+        controller,
+      );
 
   void remove(Type type) {
     _stack.remove(_getController(type));
@@ -51,10 +60,75 @@ class RubigoNavigator extends ChangeNotifier {
   }
 
   bool onPopPage(Route<dynamic> route, dynamic result) {
-    var controller = _stack.lastWhere(
-      (controller) => controller.page == (route.settings as Page),
-    );
-    _stack.remove(controller);
-    return route.didPop(result);
+    pop();
+    return false;
+  }
+
+  bool _inIsShown = false;
+  bool _inIsPopping = false;
+  int _pushPopCounter = 0;
+
+  Future<void> _pushOrPopController(
+    PushOrPop pushOrPop,
+    Type toController,
+  ) async {
+    if (_inIsShown) {
+      throw 'Developer: you may not Push or Pop in the isShown method';
+    }
+    if (_inIsPopping) {
+      throw 'Developer: you may not Push or Pop in the isPopping method';
+    }
+    switch (pushOrPop) {
+      case PushOrPop.Push:
+        final previousController = _stack.last;
+        _stack.add(_getController(toController));
+        final currentController = _stack.last;
+        _pushPopCounter++;
+        await currentController.onTop(
+            StackChange.pushed_on_top, previousController);
+        _pushPopCounter--;
+        break;
+
+      case PushOrPop.Pop:
+        if (_stack.isNotEmpty) {
+          var currentController = _stack.last;
+          _inIsPopping = true;
+          var okWithPop = await currentController.isPopping();
+          _inIsPopping = false;
+          if (!okWithPop) {
+            return;
+          }
+          final previousController = currentController;
+          _stack.removeLast();
+          currentController = _stack.last;
+          _pushPopCounter++;
+          await currentController.onTop(
+              StackChange.returned_from_controller, previousController);
+          _pushPopCounter--;
+        }
+        break;
+
+      case PushOrPop.PopTo:
+        final previousController = _stack.last;
+        while (_stack.length > 1) {
+          _stack.removeLast();
+          if (_stack.last == _getController(toController)) {
+            _pushPopCounter++;
+            final currentController = _stack.last;
+            await currentController.onTop(
+                StackChange.returned_from_controller, previousController);
+            _pushPopCounter--;
+            break;
+          }
+        }
+        break;
+    }
+    if (_pushPopCounter == 0) {
+      _inIsShown = true;
+      final currentController = _stack.last;
+      await currentController.isShown();
+      _inIsShown = false;
+      notifyListeners();
+    }
   }
 }

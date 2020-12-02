@@ -18,14 +18,22 @@ class Controller extends ChangeNotifier {
 
   RubigoNavigator get rubigoNavigator => _rubigoNavigator;
 
-  FutureOr<void> screenOnTop(
+  @mustCallSuper
+  FutureOr<void> onTop(
     StackChange stackChange,
-    Controller previousScreen,
-  ) {}
+    Controller previousController,
+  ) {
+    debugPrint('$runtimeType: onTop');
+  }
 
-  FutureOr<void> screenIsShown() {}
+  @mustCallSuper
+  FutureOr<void> isShown() {
+    debugPrint('$runtimeType: isShown');
+  }
 
-  FutureOr<bool> screenIsPopping() {
+  @mustCallSuper
+  FutureOr<bool> isPopping() {
+    debugPrint('$runtimeType: isPopping');
     return true;
   }
 }

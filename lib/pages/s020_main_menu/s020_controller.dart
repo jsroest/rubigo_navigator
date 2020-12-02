@@ -18,6 +18,17 @@ class S020Controller extends Controller {
   S020Controller(MaterialPageEx page, RubigoNavigator rubigoNavigator)
       : super(page, rubigoNavigator);
 
+  @override
+  void onTop(
+    StackChange stackChange,
+    Controller previousController,
+  ) {
+    super.onTop(stackChange, previousController);
+    if (stackChange == StackChange.pushed_on_top) {
+      rubigoNavigator.push(S030Controller);
+    }
+  }
+
   void doContinue() {
     rubigoNavigator.push(S030Controller);
   }
