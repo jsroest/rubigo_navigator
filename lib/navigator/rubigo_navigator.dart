@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_rubigo_navigator/navigator/controller.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_controllers.dart';
 
 enum StackChange {
   pushed_on_top,
@@ -18,22 +17,26 @@ final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
 );
 
 class RubigoNavigator extends ChangeNotifier {
-  RubigoController _rubigoController;
-
-  void init(RubigoController rubigoController) {
-    _rubigoController = rubigoController;
+  void init({
+    @required List<Controller> controllers,
+    @required Type initialController,
+  }) {
+    _controllers = controllers;
+    _initialController = initialController;
   }
+
+  List<Controller> _controllers;
+  Type _initialController;
 
   final _stack = <Controller>[];
 
   Controller _getController(Type type) {
-    return _rubigoController.controllers
-        .firstWhere((element) => element.runtimeType == type);
+    return _controllers.firstWhere((element) => element.runtimeType == type);
   }
 
   UnmodifiableListView<Page> get pages {
     if (_stack.isEmpty) {
-      _stack.add(_getController(_rubigoController.initialScreenController));
+      _stack.add(_getController(_initialController));
     }
     return UnmodifiableListView(
       _stack.map((e) => e.page),
