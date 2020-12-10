@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_page_controller.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_stack_manager.dart';
 
 final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
@@ -14,7 +14,7 @@ final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
 
 class RubigoNavigator extends ChangeNotifier {
   void init({
-    @required List<RubigoPageController> controllers,
+    @required List<RubigoController> controllers,
   }) {
     _manager = RubigoStackManager(controllers, notifyListeners);
   }

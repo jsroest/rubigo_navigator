@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_page_controller.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
 
 enum PushOrPop { Push, Pop, PopTo }
 
@@ -16,11 +16,11 @@ class RubigoStackManager {
     stack.add(controllers.first);
   }
 
-  final stack = <RubigoPageController>[];
-  final List<RubigoPageController> controllers;
+  final stack = <RubigoController>[];
+  final List<RubigoController> controllers;
   final void Function() _notifyListeners;
 
-  RubigoPageController _getController(Type type) {
+  RubigoController _getController(Type type) {
     return controllers.firstWhere((element) => element.runtimeType == type);
   }
 
