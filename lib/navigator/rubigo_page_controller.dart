@@ -5,8 +5,8 @@ import 'package:flutter_rubigo_navigator/classes/material_page_ex.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_stack_manager.dart';
 
-class Controller extends ChangeNotifier {
-  Controller(
+abstract class RubigoPageController extends ChangeNotifier {
+  RubigoPageController(
     this._page,
     this._rubigoNavigator,
   );
@@ -19,22 +19,12 @@ class Controller extends ChangeNotifier {
 
   RubigoNavigator get rubigoNavigator => _rubigoNavigator;
 
-  @mustCallSuper
   FutureOr<void> onTop(
     StackChange stackChange,
-    Controller previousController,
-  ) {
-    debugPrint('$runtimeType: onTop');
-  }
+    RubigoPageController previousController,
+  ) {}
 
-  @mustCallSuper
-  FutureOr<void> isShown() {
-    debugPrint('$runtimeType: isShown');
-  }
+  FutureOr<void> isShown() {}
 
-  @mustCallSuper
-  FutureOr<bool> isPopping() {
-    debugPrint('$runtimeType: isPopping');
-    return true;
-  }
+  FutureOr<bool> isPopping() => true;
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-
-import 'controller.dart';
+import 'package:flutter_rubigo_navigator/navigator/rubigo_page_controller.dart';
 
 enum PushOrPop { Push, Pop, PopTo }
 
@@ -17,11 +16,11 @@ class RubigoStackManager {
     stack.add(controllers.first);
   }
 
-  final stack = <Controller>[];
-  final List<Controller> controllers;
+  final stack = <RubigoPageController>[];
+  final List<RubigoPageController> controllers;
   final void Function() _notifyListeners;
 
-  Controller _getController(Type type) {
+  RubigoPageController _getController(Type type) {
     return controllers.firstWhere((element) => element.runtimeType == type);
   }
 
@@ -50,6 +49,7 @@ class RubigoStackManager {
         stack.add(_getController(toController));
         final currentController = stack.last;
         _pushPopCounter++;
+        debugPrint('{$currentController.runtimeType}: onTop');
         await currentController.onTop(
             StackChange.pushed_on_top, previousController);
         _pushPopCounter--;
@@ -59,6 +59,7 @@ class RubigoStackManager {
         if (stack.isNotEmpty) {
           var currentController = stack.last;
           _inIsPopping = true;
+          debugPrint('{$currentController.runtimeType}: isPopping');
           var okWithPop = await currentController.isPopping();
           _inIsPopping = false;
           if (!okWithPop) {
@@ -68,6 +69,7 @@ class RubigoStackManager {
           stack.removeLast();
           currentController = stack.last;
           _pushPopCounter++;
+          debugPrint('{$currentController.runtimeType}: onTop');
           await currentController.onTop(
               StackChange.returned_from_controller, previousController);
           _pushPopCounter--;
@@ -81,6 +83,7 @@ class RubigoStackManager {
           if (stack.last == _getController(toController)) {
             _pushPopCounter++;
             final currentController = stack.last;
+            debugPrint('{$currentController.runtimeType}: onTop');
             await currentController.onTop(
                 StackChange.returned_from_controller, previousController);
             _pushPopCounter--;
@@ -92,6 +95,7 @@ class RubigoStackManager {
     if (_pushPopCounter == 0) {
       _inIsShown = true;
       final currentController = stack.last;
+      debugPrint('{$currentController.runtimeType}: isShown');
       await currentController.isShown();
       _inIsShown = false;
       _notifyListeners();
