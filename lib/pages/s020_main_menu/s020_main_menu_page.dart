@@ -6,7 +6,8 @@ import 'package:flutter_rubigo_navigator/pages/s020_main_menu/s020_controller.da
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
 class S020MainMenuPage extends RubigoPage<S020Controller> {
-  S020MainMenuPage(ChangeNotifierProvider<S020Controller> state) : super(state);
+  S020MainMenuPage(ChangeNotifierProvider<S020Controller> controllerProvider)
+      : super(controllerProvider);
 
   static RubigoMaterialPage<S020MainMenuPage, S020Controller> get page =>
       createPage(S020MainMenuPage(s020ControllerProvider));
@@ -23,7 +24,7 @@ class S020MainMenuPage extends RubigoPage<S020Controller> {
           BreadCrumbs(page: S020MainMenuPage.page),
           FlatButton(
             child: Text('To sub page'),
-            onPressed: context.read(state).doContinue,
+            onPressed: context.read(controllerProvider).doContinue,
           )
         ],
       ),

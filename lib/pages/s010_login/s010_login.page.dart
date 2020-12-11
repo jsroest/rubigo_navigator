@@ -6,7 +6,8 @@ import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
 class S010LoginPage extends RubigoPage<S010Controller> {
-  S010LoginPage(ChangeNotifierProvider<S010Controller> state) : super(state);
+  S010LoginPage(ChangeNotifierProvider<S010Controller> controllerProvider)
+      : super(controllerProvider);
 
   static RubigoMaterialPage<S010LoginPage, S010Controller> get page =>
       createPage(S010LoginPage(s010ControllerProvider));
@@ -23,7 +24,7 @@ class S010LoginPage extends RubigoPage<S010Controller> {
           BreadCrumbs(page: S010LoginPage.page),
           FlatButton(
             child: Text('Login'),
-            onPressed: context.read(state).doContinue,
+            onPressed: context.read(controllerProvider).doContinue,
           )
         ],
       ),

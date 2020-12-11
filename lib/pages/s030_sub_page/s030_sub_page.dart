@@ -6,7 +6,8 @@ import 'package:flutter_rubigo_navigator/pages/s030_sub_page/s030_controller.dar
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
 class S030SubPage extends RubigoPage<S030Controller> {
-  S030SubPage(ChangeNotifierProvider<S030Controller> state) : super(state);
+  S030SubPage(ChangeNotifierProvider<S030Controller> controllerProvider)
+      : super(controllerProvider);
 
   static RubigoMaterialPage<S030SubPage, S030Controller> get page =>
       createPage(S030SubPage(s030ControllerProvider));
@@ -23,7 +24,7 @@ class S030SubPage extends RubigoPage<S030Controller> {
           BreadCrumbs(page: S030SubPage.page),
           FlatButton(
             child: Text('Remove page 2'),
-            onPressed: context.read(state).doContinue,
+            onPressed: context.read(controllerProvider).doContinue,
           )
         ],
       ),
