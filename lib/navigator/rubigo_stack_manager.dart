@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
 
@@ -13,19 +15,15 @@ class RubigoStackManager {
     this.controllers,
     this._notifyListeners,
   ) {
-    stack.add(controllers.first);
+    stack.addEntries([controllers.entries.first]);
   }
 
-  final stack = <RubigoController>[];
-  final List<RubigoController> controllers;
+  final stack = <String, RubigoController>{};
+  final LinkedHashMap<String, RubigoController> controllers;
   final void Function() _notifyListeners;
 
-  RubigoController _getController(Type type) {
-    return controllers.firstWhere((element) => element.runtimeType == type);
-  }
-
-  void remove(Type type) {
-    stack.remove(_getController(type));
+  void remove(String key) {
+    stack.remove(key);
     _notifyListeners();
   }
 
@@ -35,7 +33,7 @@ class RubigoStackManager {
 
   Future<void> navigate({
     @required PushOrPop pushOrPop,
-    Type toController,
+    String toController,
   }) async {
     if (_inIsShown) {
       throw 'Developer: you may not Push or Pop in the isShown method';
@@ -45,47 +43,47 @@ class RubigoStackManager {
     }
     switch (pushOrPop) {
       case PushOrPop.Push:
-        final previousController = stack.last;
-        stack.add(_getController(toController));
-        final currentController = stack.last;
+        final previousController = stack.entries.last;
+        final currentController = controllers[toController];
+        stack[toController] = currentController;
         _pushPopCounter++;
         debugPrint('{$currentController.runtimeType}: onTop');
         await currentController.onTop(
-            StackChange.pushed_on_top, previousController);
+            StackChange.pushed_on_top, previousController.value);
         _pushPopCounter--;
         break;
 
       case PushOrPop.Pop:
         if (stack.isNotEmpty) {
-          var currentController = stack.last;
+          var currentController = stack.entries.last;
           _inIsPopping = true;
           debugPrint('{$currentController.runtimeType}: isPopping');
-          var okWithPop = await currentController.isPopping();
+          var okWithPop = await currentController.value.isPopping();
           _inIsPopping = false;
           if (!okWithPop) {
             return;
           }
           final previousController = currentController;
-          stack.removeLast();
-          currentController = stack.last;
+          stack.remove(currentController.key);
+          currentController = stack.entries.last;
           _pushPopCounter++;
           debugPrint('{$currentController.runtimeType}: onTop');
-          await currentController.onTop(
-              StackChange.returned_from_controller, previousController);
+          await currentController.value.onTop(
+              StackChange.returned_from_controller, previousController.value);
           _pushPopCounter--;
         }
         break;
 
       case PushOrPop.PopTo:
-        final previousController = stack.last;
+        final previousController = stack.entries.last;
         while (stack.length > 1) {
-          stack.removeLast();
-          if (stack.last == _getController(toController)) {
+          stack.remove(previousController.key);
+          if (stack.entries.last.key == toController) {
             _pushPopCounter++;
-            final currentController = stack.last;
+            final currentController = stack.entries.last;
             debugPrint('{$currentController.runtimeType}: onTop');
-            await currentController.onTop(
-                StackChange.returned_from_controller, previousController);
+            await currentController.value.onTop(
+                StackChange.returned_from_controller, previousController.value);
             _pushPopCounter--;
             break;
           }
@@ -94,9 +92,9 @@ class RubigoStackManager {
     }
     if (_pushPopCounter == 0) {
       _inIsShown = true;
-      final currentController = stack.last;
-      debugPrint('{$currentController.runtimeType}: isShown');
-      await currentController.isShown();
+      final currentController = stack.entries.last;
+      debugPrint('${currentController.value.runtimeType}: isShown');
+      await currentController.value.isShown();
       _inIsShown = false;
       _notifyListeners();
     }

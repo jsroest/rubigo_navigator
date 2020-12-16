@@ -14,7 +14,7 @@ final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
 
 class RubigoNavigator extends ChangeNotifier {
   void init({
-    @required List<RubigoController> controllers,
+    @required LinkedHashMap<String, RubigoController> controllers,
   }) {
     _manager = RubigoStackManager(controllers, notifyListeners);
   }

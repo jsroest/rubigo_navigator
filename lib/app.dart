@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
@@ -17,15 +19,20 @@ class _AppState extends State<App> {
   void initState() {
     var navigator = context.read(rubigoNavigatorProvider);
     navigator.init(
-      controllers: [
-        context.read(s010ControllerProvider),
-        context.read(s020ControllerProvider),
-        context.read(s030ControllerProvider),
-      ],
+      controllers: LinkedHashMap.of({
+        'a': context.read(s010ControllerProvider),
+        'b': context.read(s020ControllerProvider),
+        'c': context.read(s030ControllerProvider),
+      }),
     );
     super.initState();
   }
 
+  // LinkedHashMap.fromEntries([
+  // MapEntry('a', context.read(s010ControllerProvider)),
+  // context.read(s020ControllerProvider),
+  // context.read(s030ControllerProvider),
+  // ]
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
