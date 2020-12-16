@@ -13,13 +13,15 @@ final s020ControllerProvider = ChangeNotifierProvider<S020Controller>(
     return S020Controller(
       S020MainMenuPage.page,
       ref.read(rubigoNavigatorProvider),
+      's020',
     );
   },
 );
 
 class S020Controller extends Controller {
-  S020Controller(MaterialPageEx page, RubigoNavigator rubigoNavigator)
-      : super(page, rubigoNavigator);
+  S020Controller(
+      MaterialPageEx page, RubigoNavigator rubigoNavigator, String id)
+      : super(page, rubigoNavigator, id);
 
   @override
   FutureOr<void> onTop(

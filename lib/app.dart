@@ -20,7 +20,16 @@ class _AppState extends State<App> {
       controllers: [
         context.read(s010ControllerProvider),
         context.read(s020ControllerProvider),
-        context.read(s030ControllerProvider),
+        context.read(s030ControllerProvider(S030.V01)),
+        context.read(s030ControllerProvider(S030.V02)),
+        context.read(s030ControllerProvider(S030.V03)),
+        context.read(s030ControllerProvider(S030.V04)),
+        context.read(s030ControllerProvider(S030.V05)),
+        context.read(s030ControllerProvider(S030.V06)),
+        context.read(s030ControllerProvider(S030.V07)),
+        context.read(s030ControllerProvider(S030.V08)),
+        context.read(s030ControllerProvider(S030.V09)),
+        context.read(s030ControllerProvider(S030.V10)),
       ],
     );
     super.initState();

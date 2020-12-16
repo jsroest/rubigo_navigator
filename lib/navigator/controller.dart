@@ -9,6 +9,7 @@ class Controller extends ChangeNotifier {
   Controller(
     this._page,
     this._rubigoNavigator,
+    this.id,
   );
 
   final MaterialPageEx _page;
@@ -18,6 +19,8 @@ class Controller extends ChangeNotifier {
   final RubigoNavigator _rubigoNavigator;
 
   RubigoNavigator get rubigoNavigator => _rubigoNavigator;
+
+  final String id;
 
   @mustCallSuper
   FutureOr<void> onTop(

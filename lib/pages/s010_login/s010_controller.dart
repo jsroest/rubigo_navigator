@@ -10,13 +10,15 @@ final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
     return S010Controller(
       S010LoginPage.page,
       ref.read(rubigoNavigatorProvider),
+      's010',
     );
   },
 );
 
 class S010Controller extends Controller {
-  S010Controller(MaterialPageEx page, RubigoNavigator rubigoNavigator)
-      : super(page, rubigoNavigator);
+  S010Controller(
+      MaterialPageEx page, RubigoNavigator rubigoNavigator, String id)
+      : super(page, rubigoNavigator, id);
 
   void doContinue() {
     rubigoNavigator.push(S020Controller);
