@@ -21,22 +21,28 @@ class RubigoNavigator extends ChangeNotifier {
 
   RubigoStackManager _manager;
 
-  UnmodifiableListView<Page> get pages =>
-      UnmodifiableListView(_manager.stack.map((e) => e.page));
+  UnmodifiableListView<Page> get pages {
+    return UnmodifiableListView(
+      _manager.stack
+          .map<String, Page<dynamic>>((k, v) => MapEntry(k, v.page))
+          .values
+          .toList(),
+    );
+  }
 
   Future<void> pop() => _manager.navigate(pushOrPop: PushOrPop.Pop);
 
-  Future<void> push(Type controller) => _manager.navigate(
+  Future<void> push(String id) => _manager.navigate(
         pushOrPop: PushOrPop.Push,
-        toController: controller,
+        toController: id,
       );
 
-  Future<void> popTo(Type controller) => _manager.navigate(
+  Future<void> popTo(String id) => _manager.navigate(
         pushOrPop: PushOrPop.PopTo,
-        toController: controller,
+        toController: id,
       );
 
-  void remove(Type type) => _manager.remove(type);
+  void remove(String id) => _manager.remove(id);
 
   bool onPopPage(Route<dynamic> route, dynamic result) {
     pop();
