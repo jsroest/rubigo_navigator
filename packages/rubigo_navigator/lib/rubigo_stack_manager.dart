@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo.dart';
 
 enum PushOrPop { Push, Pop, PopTo }
@@ -15,7 +15,12 @@ class RubigoStackManager<PAGE_ENUM> {
     this.controllers,
     this._notifyListeners,
   ) {
-    stack.addEntries([controllers.entries.first]);
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        await navigate(
+            pushOrPop: PushOrPop.Push, toController: controllers.keys.first);
+      },
+    );
   }
 
   final stack = <PAGE_ENUM, RubigoController<PAGE_ENUM>>{};
@@ -43,13 +48,14 @@ class RubigoStackManager<PAGE_ENUM> {
     }
     switch (pushOrPop) {
       case PushOrPop.Push:
-        final previousController = stack.entries.last;
+        final previousController =
+            stack.entries.isNotEmpty ? stack.entries.last : null;
         final currentController = controllers[toController];
         stack[toController] = currentController;
         _pushPopCounter++;
         debugPrint('{$currentController.runtimeType}: onTop');
         await currentController.onTop(
-            StackChange.pushed_on_top, previousController.value);
+            StackChange.pushed_on_top, previousController?.value);
         _pushPopCounter--;
         break;
 

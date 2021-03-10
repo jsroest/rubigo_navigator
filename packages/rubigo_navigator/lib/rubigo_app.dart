@@ -10,6 +10,7 @@ class RubigoApp<PAGE_ENUM> extends StatefulWidget {
     @required this.pages,
     @required this.navigatorProvider,
     this.materialApp,
+    this.initialBackground,
   }) : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class RubigoApp<PAGE_ENUM> extends StatefulWidget {
       BuildContext context) pages;
   final ChangeNotifierProvider<RubigoNavigator<PAGE_ENUM>> navigatorProvider;
   final MaterialApp materialApp;
+  final Widget initialBackground;
 }
 
 class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
@@ -31,6 +33,7 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
     pages.forEach((key, value) => value.init(navigator));
     navigator.init(
       controllers: LinkedHashMap.of(pages),
+      initialBackground: widget.initialBackground,
     );
     super.initState();
   }
