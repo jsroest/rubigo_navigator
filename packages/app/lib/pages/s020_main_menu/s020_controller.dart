@@ -15,7 +15,8 @@ final s020ControllerProvider = ChangeNotifierProvider<S020Controller>(
 );
 
 class S020Controller extends RubigoController<Pages> {
-  S020Controller(RubigoPage<Pages, RubigoController<Pages>> page) : super(page);
+  S020Controller(RubigoPage<Pages, RubigoController<Pages>> rubigoPage)
+      : super(rubigoPage);
 
   @override
   FutureOr<void> onTop(

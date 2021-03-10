@@ -6,8 +6,8 @@ import 'package:rubigo_navigator/rubigo_stack_manager.dart';
 
 abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
   RubigoController(
-    RubigoPage<PAGE_ENUM, RubigoController<PAGE_ENUM>> page,
-  ) : _rubigoPage = createPage(page);
+    RubigoPage<PAGE_ENUM, RubigoController<PAGE_ENUM>> rubigoPage,
+  ) : _rubigoPage = createPage(rubigoPage);
 
   final RubigoMaterialPage _rubigoPage;
 

@@ -12,7 +12,8 @@ final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
 );
 
 class S010Controller extends RubigoController<Pages> {
-  S010Controller(RubigoPage<Pages, RubigoController<Pages>> page) : super(page);
+  S010Controller(RubigoPage<Pages, RubigoController<Pages>> rubigoPage)
+      : super(rubigoPage);
 
   void doContinue() {
     rubigoNavigator.push(Pages.S020);
