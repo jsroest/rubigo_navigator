@@ -18,7 +18,7 @@ class BreadCrumbs extends StatelessWidget {
           var indexOfThisPage = controllers.keys.toList().lastIndexOf(page);
           if (indexOfThisPage != -1 &&
               controllers.length - 1 > indexOfThisPage) {
-            //There are page above this page
+            //There are pages above this page
             //remove them from this list, because this shows during the transition between pages
             pages.removeRange(indexOfThisPage + 1, pages.length);
           }
