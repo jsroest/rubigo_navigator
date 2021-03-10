@@ -9,9 +9,6 @@ class S020MainMenuPage extends RubigoPage<Pages, S020Controller> {
   S020MainMenuPage(ChangeNotifierProvider<S020Controller> controllerProvider)
       : super(controllerProvider);
 
-  static RubigoMaterialPage<Pages, S020MainMenuPage> get page =>
-      createPage(S020MainMenuPage(s020ControllerProvider));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

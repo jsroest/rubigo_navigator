@@ -7,15 +7,13 @@ import 'package:rubigo_navigator/rubigo_controller.dart';
 final s030ControllerProvider = ChangeNotifierProvider<S030Controller>(
   (ref) {
     return S030Controller(
-      S030SubPage.page,
+      S030SubPage(s030ControllerProvider),
     );
   },
 );
 
 class S030Controller extends RubigoController<Pages> {
-  S030Controller(
-    RubigoMaterialPage page,
-  ) : super(page);
+  S030Controller(RubigoPage<Pages, RubigoController<Pages>> page) : super(page);
 
   void doContinue() {
     rubigoNavigator.remove(Pages.S020);

@@ -6,15 +6,13 @@ import 'package:rubigo_navigator/rubigo.dart';
 final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
   (ref) {
     return S010Controller(
-      S010LoginPage.page,
+      S010LoginPage(s010ControllerProvider),
     );
   },
 );
 
 class S010Controller extends RubigoController<Pages> {
-  S010Controller(
-    RubigoMaterialPage page,
-  ) : super(page);
+  S010Controller(RubigoPage<Pages, RubigoController<Pages>> page) : super(page);
 
   void doContinue() {
     rubigoNavigator.push(Pages.S020);

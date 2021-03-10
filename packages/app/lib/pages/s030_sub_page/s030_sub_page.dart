@@ -9,9 +9,6 @@ class S030SubPage extends RubigoPage<Pages, S030Controller> {
   S030SubPage(ChangeNotifierProvider<S030Controller> controllerProvider)
       : super(controllerProvider);
 
-  static RubigoMaterialPage<Pages, S030SubPage> get page =>
-      createPage(S030SubPage(s030ControllerProvider));
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
