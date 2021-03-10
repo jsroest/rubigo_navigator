@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_rubigo_navigator/app.dart';
+import 'package:flutter_rubigo_navigator/main.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
@@ -8,7 +8,7 @@ final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
   (ref) {
     return S010Controller(
       S010LoginPage.page,
-      ref.read(rubigoNavigatorProvider),
+      ref.read(appNavigatorProvider),
     );
   },
 );

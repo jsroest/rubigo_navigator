@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:flutter_rubigo_navigator/app.dart';
+import 'package:flutter_rubigo_navigator/main.dart';
 
 class BreadCrumbs extends StatelessWidget {
   const BreadCrumbs({Key key, this.page}) : super(key: key);
@@ -10,7 +10,7 @@ class BreadCrumbs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, watch, _) {
-        var pages = List<Page>.from(watch(rubigoNavigatorProvider).pages);
+        var pages = List<Page>.from(watch(appNavigatorProvider).pages);
         if (page != null) {
           var indexOfThisPage =
               pages.lastIndexWhere((element) => element == page);
