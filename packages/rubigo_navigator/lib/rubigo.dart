@@ -1,3 +1,5 @@
+library rubigo_navigator;
+
 export 'rubigo_controller.dart';
 export 'rubigo_material_page.dart';
 export 'rubigo_navigator.dart';

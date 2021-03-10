@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
+import 'package:rubigo_navigator/rubigo.dart';
 
 enum PushOrPop { Push, Pop, PopTo }
 

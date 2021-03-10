@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_page.dart';
+import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_page.dart';
 
 RubigoMaterialPage<PAGES_ENUM, RUBIGO_PAGE> createPage<
         PAGES_ENUM,

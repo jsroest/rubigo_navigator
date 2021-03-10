@@ -1,6 +1,6 @@
-import 'package:flutter/widgets.dart';
-import 'package:flutter_riverpod/all.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rubigo_navigator/rubigo.dart';
 
 abstract class RubigoPage<PAGE_ENUM,
         RUBIGO_CONTROLLER extends RubigoController<PAGE_ENUM>>

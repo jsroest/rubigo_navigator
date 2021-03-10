@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo.dart';
 
 class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   const RubigoApp({

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_material_page.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_page.dart';
+import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s020_main_menu/s020_controller.dart';
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
+import 'package:rubigo_navigator/rubigo.dart';
 
 class S020MainMenuPage extends RubigoPage<Pages, S020Controller> {
   S020MainMenuPage(ChangeNotifierProvider<S020Controller> controllerProvider)
