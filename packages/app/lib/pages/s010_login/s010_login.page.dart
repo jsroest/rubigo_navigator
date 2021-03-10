@@ -19,7 +19,7 @@ class S010LoginPage extends RubigoPage<Pages, S010Controller> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BreadCrumbs(page: Pages.S010),
-          FlatButton(
+          TextButton(
             child: Text('Login'),
             onPressed: context.read(controllerProvider).doContinue,
           )

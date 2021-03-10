@@ -19,11 +19,11 @@ class S030SubPage extends RubigoPage<Pages, S030Controller> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BreadCrumbs(page: Pages.S030),
-          FlatButton(
+          TextButton(
             child: Text('Remove page 2'),
             onPressed: context.read(controllerProvider).doContinue,
           ),
-          FlatButton(
+          TextButton(
             child: Text('Pop to page 1'),
             onPressed: context.read(controllerProvider).popTo,
           ),
