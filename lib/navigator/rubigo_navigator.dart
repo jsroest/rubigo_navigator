@@ -5,20 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_stack_manager.dart';
 
-// final rubigoNavigatorProvider = ChangeNotifierProvider<RubigoNavigator>(
-//   (ref) {
-//     return RubigoNavigator();
-//   },
-// );
-
-class RubigoNavigator<T> extends ChangeNotifier {
+class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   void init({
-    @required LinkedHashMap<T, RubigoController> controllers,
+    @required LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers,
   }) {
-    _manager = RubigoStackManager<T>(controllers, notifyListeners);
+    _manager = RubigoStackManager<PAGE_ENUM>(controllers, notifyListeners);
   }
 
-  RubigoStackManager _manager;
+  RubigoStackManager<PAGE_ENUM> _manager;
 
   UnmodifiableListView<Page> get pages {
     return UnmodifiableListView(
@@ -28,17 +22,17 @@ class RubigoNavigator<T> extends ChangeNotifier {
 
   Future<void> pop() => _manager.navigate(pushOrPop: PushOrPop.Pop);
 
-  Future<void> push(T id) => _manager.navigate(
+  Future<void> push(PAGE_ENUM id) => _manager.navigate(
         pushOrPop: PushOrPop.Push,
         toController: id,
       );
 
-  Future<void> popTo(T id) => _manager.navigate(
+  Future<void> popTo(PAGE_ENUM id) => _manager.navigate(
         pushOrPop: PushOrPop.PopTo,
         toController: id,
       );
 
-  void remove(T id) => _manager.remove(id);
+  void remove(PAGE_ENUM id) => _manager.remove(id);
 
   bool onPopPage(Route<dynamic> route, dynamic result) {
     pop();

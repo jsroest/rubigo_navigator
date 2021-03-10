@@ -10,7 +10,7 @@ enum StackChange {
   returned_from_controller,
 }
 
-class RubigoStackManager<T> {
+class RubigoStackManager<PAGE_ENUM> {
   RubigoStackManager(
     this.controllers,
     this._notifyListeners,
@@ -18,11 +18,11 @@ class RubigoStackManager<T> {
     stack.addEntries([controllers.entries.first]);
   }
 
-  final stack = <T, RubigoController>{};
-  final LinkedHashMap<T, RubigoController> controllers;
+  final stack = <PAGE_ENUM, RubigoController<PAGE_ENUM>>{};
+  final LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers;
   final void Function() _notifyListeners;
 
-  void remove(T key) {
+  void remove(PAGE_ENUM key) {
     stack.remove(key);
     _notifyListeners();
   }
@@ -33,7 +33,7 @@ class RubigoStackManager<T> {
 
   Future<void> navigate({
     @required PushOrPop pushOrPop,
-    T toController,
+    PAGE_ENUM toController,
   }) async {
     if (_inIsShown) {
       throw 'Developer: you may not Push or Pop in the isShown method';

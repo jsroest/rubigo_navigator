@@ -5,7 +5,7 @@ import 'package:flutter_rubigo_navigator/navigator/rubigo_material_page.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_stack_manager.dart';
 
-abstract class RubigoController<T> extends ChangeNotifier {
+abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
   RubigoController(
     this._page,
     this._rubigoNavigator,
@@ -15,9 +15,9 @@ abstract class RubigoController<T> extends ChangeNotifier {
 
   RubigoMaterialPage get page => _page;
 
-  final RubigoNavigator<T> _rubigoNavigator;
+  final RubigoNavigator<PAGE_ENUM> _rubigoNavigator;
 
-  RubigoNavigator<T> get rubigoNavigator => _rubigoNavigator;
+  RubigoNavigator<PAGE_ENUM> get rubigoNavigator => _rubigoNavigator;
 
   FutureOr<void> onTop(
     StackChange stackChange,

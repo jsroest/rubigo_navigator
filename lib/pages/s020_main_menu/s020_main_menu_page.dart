@@ -10,7 +10,7 @@ class S020MainMenuPage extends RubigoPage<Pages, S020Controller> {
   S020MainMenuPage(ChangeNotifierProvider<S020Controller> controllerProvider)
       : super(controllerProvider);
 
-  static RubigoMaterialPage<Pages, S020MainMenuPage, S020Controller> get page =>
+  static RubigoMaterialPage<Pages, S020MainMenuPage> get page =>
       createPage(S020MainMenuPage(s020ControllerProvider));
 
   @override

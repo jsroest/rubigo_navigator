@@ -10,7 +10,7 @@ class S030SubPage extends RubigoPage<Pages, S030Controller> {
   S030SubPage(ChangeNotifierProvider<S030Controller> controllerProvider)
       : super(controllerProvider);
 
-  static RubigoMaterialPage<Pages, S030SubPage, S030Controller> get page =>
+  static RubigoMaterialPage<Pages, S030SubPage> get page =>
       createPage(S030SubPage(s030ControllerProvider));
 
   @override
