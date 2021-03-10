@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
-import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
+import 'package:flutter_rubigo_navigator/app.dart';
 
 class BreadCrumbs extends StatelessWidget {
   const BreadCrumbs({Key key, this.page}) : super(key: key);

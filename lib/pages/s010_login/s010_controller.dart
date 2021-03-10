@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_rubigo_navigator/app.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo.dart';
 import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
 

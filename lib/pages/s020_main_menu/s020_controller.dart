@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_rubigo_navigator/app.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_material_page.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_navigator.dart';
