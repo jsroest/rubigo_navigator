@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_material_page.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_page.dart';
+import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
 import 'package:flutter_rubigo_navigator/widgets/breadcrumbs.dart';
 
-class S010LoginPage extends RubigoPage<S010Controller> {
+class S010LoginPage extends RubigoPage<Pages, S010Controller> {
   S010LoginPage(ChangeNotifierProvider<S010Controller> controllerProvider)
       : super(controllerProvider);
 
-  static RubigoMaterialPage<S010LoginPage, S010Controller> get page =>
+  static RubigoMaterialPage<Pages, S010LoginPage, S010Controller> get page =>
       createPage(S010LoginPage(s010ControllerProvider));
 
   @override

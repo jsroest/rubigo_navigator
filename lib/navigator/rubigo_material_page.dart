@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_controller.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo_page.dart';
 
-RubigoMaterialPage<T, U>
-    createPage<T extends RubigoPage, U extends RubigoController>(
-            RubigoPage widget) =>
-        RubigoMaterialPage<T, U>(
-          child: widget,
-        );
+RubigoMaterialPage<P, T, U> createPage<
+        P,
+        T extends RubigoPage<P, RubigoController<P>>,
+        U extends RubigoController<P>>(RubigoPage widget) =>
+    RubigoMaterialPage<P, T, U>(
+      child: widget,
+    );
 
-class RubigoMaterialPage<T extends RubigoPage, U> extends MaterialPage<T> {
+class RubigoMaterialPage<P, T extends RubigoPage<P, RubigoController<P>>, U>
+    extends MaterialPage<T> {
   RubigoMaterialPage({
     @required Widget child,
     bool maintainState = true,

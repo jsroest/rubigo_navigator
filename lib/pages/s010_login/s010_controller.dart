@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/app.dart';
 import 'package:flutter_rubigo_navigator/navigator/rubigo.dart';
+import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s010_login/s010_login.page.dart';
 
 final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
@@ -12,13 +13,13 @@ final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
   },
 );
 
-class S010Controller extends RubigoController {
+class S010Controller extends RubigoController<Pages> {
   S010Controller(
     RubigoMaterialPage page,
-    RubigoNavigator rubigoNavigator,
+    RubigoNavigator<Pages> rubigoNavigator,
   ) : super(page, rubigoNavigator);
 
   void doContinue() {
-    rubigoNavigator.push('b');
+    rubigoNavigator.push(Pages.S020);
   }
 }
