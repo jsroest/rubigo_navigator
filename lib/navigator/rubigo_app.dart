@@ -25,8 +25,10 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
   @override
   void initState() {
     var navigator = context.read(widget.navigatorProvider);
+    var pages = widget.pages(context);
+    pages.forEach((key, value) => value.init(navigator));
     navigator.init(
-      controllers: LinkedHashMap.of(widget.pages(context)),
+      controllers: LinkedHashMap.of(pages),
     );
     super.initState();
   }
