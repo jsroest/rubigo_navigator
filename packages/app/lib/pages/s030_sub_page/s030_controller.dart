@@ -19,4 +19,8 @@ class S030Controller extends RubigoController<Pages> {
   void doContinue() {
     rubigoNavigator.remove(Pages.S020);
   }
+
+  void popTo() {
+    rubigoNavigator.popTo(Pages.S010);
+  }
 }

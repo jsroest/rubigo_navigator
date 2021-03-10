@@ -19,10 +19,7 @@ class S020Controller extends RubigoController<Pages> {
       : super(rubigoPage);
 
   @override
-  FutureOr<void> onTop(
-    StackChange stackChange,
-    RubigoController previousController,
-  ) {
+  FutureOr<void> onTop(StackChange stackChange, Pages previousPage) {
     if (stackChange == StackChange.pushed_on_top) {
       rubigoNavigator.push(Pages.S030);
     }

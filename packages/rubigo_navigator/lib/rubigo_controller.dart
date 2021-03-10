@@ -23,7 +23,7 @@ abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
 
   FutureOr<void> onTop(
     StackChange stackChange,
-    RubigoController previousController,
+    PAGE_ENUM previousPage,
   ) {}
 
   FutureOr<void> isShown() {}

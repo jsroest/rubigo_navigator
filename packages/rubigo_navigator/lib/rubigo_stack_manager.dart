@@ -28,6 +28,7 @@ class RubigoStackManager<PAGE_ENUM> {
   final void Function() _notifyListeners;
 
   void remove(PAGE_ENUM key) {
+    debugPrint('$key: remove');
     stack.remove(key);
     _notifyListeners();
   }
@@ -53,9 +54,9 @@ class RubigoStackManager<PAGE_ENUM> {
         final currentController = controllers[toController];
         stack[toController] = currentController;
         _pushPopCounter++;
-        debugPrint('{$currentController.runtimeType}: onTop');
+        debugPrint('$toController: onTop');
         await currentController.onTop(
-            StackChange.pushed_on_top, previousController?.value);
+            StackChange.pushed_on_top, previousController?.key);
         _pushPopCounter--;
         break;
 
@@ -63,7 +64,7 @@ class RubigoStackManager<PAGE_ENUM> {
         if (stack.isNotEmpty) {
           var currentController = stack.entries.last;
           _inIsPopping = true;
-          debugPrint('{$currentController.runtimeType}: isPopping');
+          debugPrint('${currentController.key}: isPopping');
           var okWithPop = await currentController.value.isPopping();
           _inIsPopping = false;
           if (!okWithPop) {
@@ -73,23 +74,23 @@ class RubigoStackManager<PAGE_ENUM> {
           stack.remove(currentController.key);
           currentController = stack.entries.last;
           _pushPopCounter++;
-          debugPrint('{$currentController.runtimeType}: onTop');
+          debugPrint('${currentController.key}: onTop');
           await currentController.value.onTop(
-              StackChange.returned_from_controller, previousController.value);
+              StackChange.returned_from_controller, previousController.key);
           _pushPopCounter--;
         }
         break;
 
       case PushOrPop.PopTo:
-        final previousController = stack.entries.last;
         while (stack.length > 1) {
+          final previousController = stack.entries.last;
           stack.remove(previousController.key);
           if (stack.entries.last.key == toController) {
             _pushPopCounter++;
             final currentController = stack.entries.last;
-            debugPrint('{$currentController.runtimeType}: onTop');
+            debugPrint('${currentController.key}: onTop');
             await currentController.value.onTop(
-                StackChange.returned_from_controller, previousController.value);
+                StackChange.returned_from_controller, previousController.key);
             _pushPopCounter--;
             break;
           }
@@ -99,7 +100,7 @@ class RubigoStackManager<PAGE_ENUM> {
     if (_pushPopCounter == 0) {
       _inIsShown = true;
       final currentController = stack.entries.last;
-      debugPrint('${currentController.value.runtimeType}: isShown');
+      debugPrint('${currentController.key}: isShown');
       await currentController.value.isShown();
       _inIsShown = false;
       _notifyListeners();

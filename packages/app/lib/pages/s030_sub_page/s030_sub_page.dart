@@ -22,7 +22,11 @@ class S030SubPage extends RubigoPage<Pages, S030Controller> {
           FlatButton(
             child: Text('Remove page 2'),
             onPressed: context.read(controllerProvider).doContinue,
-          )
+          ),
+          FlatButton(
+            child: Text('Pop to page 1'),
+            onPressed: context.read(controllerProvider).popTo,
+          ),
         ],
       ),
     );
