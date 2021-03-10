@@ -20,6 +20,10 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
     );
   }
 
+  LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> get stack {
+    return _manager.stack;
+  }
+
   Future<void> pop() => _manager.navigate(pushOrPop: PushOrPop.Pop);
 
   Future<void> push(PAGE_ENUM id) => _manager.navigate(

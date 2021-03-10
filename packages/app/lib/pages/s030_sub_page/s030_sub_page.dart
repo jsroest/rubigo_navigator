@@ -21,7 +21,7 @@ class S030SubPage extends RubigoPage<Pages, S030Controller> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BreadCrumbs(page: S030SubPage.page),
+          BreadCrumbs(page: Pages.S030),
           FlatButton(
             child: Text('Remove page 2'),
             onPressed: context.read(controllerProvider).doContinue,
