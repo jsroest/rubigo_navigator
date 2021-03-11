@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo.dart';
-import 'package:rubigo_navigator/rubigo_stack_manager.dart';
 
 class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   void init({
