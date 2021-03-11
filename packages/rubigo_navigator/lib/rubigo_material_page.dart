@@ -2,14 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo.dart';
 import 'package:rubigo_navigator/rubigo_page.dart';
 
-RubigoMaterialPage<PAGES_ENUM, RUBIGO_PAGE> createPage<
-        PAGES_ENUM,
-        RUBIGO_PAGE extends RubigoPage<PAGES_ENUM,
-            RubigoController<PAGES_ENUM>>>(RubigoPage widget) =>
-    RubigoMaterialPage<PAGES_ENUM, RUBIGO_PAGE>(
-      child: widget,
-    );
-
 class RubigoMaterialPage<
     PAGES_ENUM,
     RUBIGO_PAGE extends RubigoPage<PAGES_ENUM,

@@ -9,14 +9,14 @@ import 'package:rubigo_navigator/rubigo_stack_manager.dart';
 final s010ControllerProvider = ChangeNotifierProvider<S010Controller>(
   (ref) {
     return S010Controller(
-      S010LoginPage(s010ControllerProvider),
+      () => S010LoginPage(s010ControllerProvider),
     );
   },
 );
 
 class S010Controller extends RubigoController<Pages> {
-  S010Controller(RubigoPage<Pages, RubigoController<Pages>> rubigoPage)
-      : super(rubigoPage);
+  S010Controller(RubigoPage<Pages, RubigoController> Function() getRubigoPage)
+      : super(getRubigoPage);
 
   @override
   FutureOr<void> onTop(StackChange stackChange, Pages previousPage) {

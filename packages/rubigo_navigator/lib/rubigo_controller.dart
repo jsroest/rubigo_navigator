@@ -1,17 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo.dart';
 import 'package:rubigo_navigator/rubigo_stack_manager.dart';
 
 abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
   RubigoController(
-    RubigoPage<PAGE_ENUM, RubigoController<PAGE_ENUM>> rubigoPage,
-  ) : _rubigoPage = createPage(rubigoPage);
+    this.getRubigoPage,
+  );
 
-  final RubigoMaterialPage _rubigoPage;
+  final RubigoPage<PAGE_ENUM, RubigoController> Function() getRubigoPage;
 
-  RubigoMaterialPage get page => _rubigoPage;
+  RubigoMaterialPage get page => RubigoMaterialPage(child: getRubigoPage());
 
   RubigoNavigator<PAGE_ENUM> _rubigoNavigator;
 
