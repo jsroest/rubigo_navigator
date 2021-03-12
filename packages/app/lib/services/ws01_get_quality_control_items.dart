@@ -1,15 +1,25 @@
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rubigo_navigator/services/rubigo_busy_service.dart';
 
 final ws01GetQualityControlItemsProvider = Provider<Ws01GetQualityControlItems>(
   (ref) {
-    return Ws01GetQualityControlItems();
+    return Ws01GetQualityControlItems(
+      ref.read(busyServiceProvider),
+    );
   },
 );
 
 class Ws01GetQualityControlItems {
+  Ws01GetQualityControlItems(this.busyService);
+
+  final BusyService busyService;
+
   Future<List<QualityControlItem>> get() async {
-    await Future<void>.delayed(Duration(seconds: 1));
-    //return <QualityControlItem>[];
+    await busyService.protect(
+      () async {
+        await Future<void>.delayed(Duration(seconds: 1));
+      },
+    );
     return <QualityControlItem>[
       QualityControlItem(1, 'Assembly'),
       QualityControlItem(2, 'Steel case'),
