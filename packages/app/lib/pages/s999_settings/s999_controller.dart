@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s999_settings/s999_settings_page.dart';
 import 'package:rubigo_navigator/rubigo.dart';

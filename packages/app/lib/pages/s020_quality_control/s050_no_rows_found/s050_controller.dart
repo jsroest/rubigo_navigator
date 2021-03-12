@@ -1,4 +1,4 @@
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s020_quality_control/s050_no_rows_found/s050_no_rows_found_page.dart';
 import 'package:rubigo_navigator/rubigo.dart';

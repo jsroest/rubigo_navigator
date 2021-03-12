@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/services/ws01_get_quality_control_items.dart';
 
 final qualityControlProvider = ChangeNotifierProvider<QualityControl>(

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_riverpod/all.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s020_quality_control/quality_control.dart';
 import 'package:flutter_rubigo_navigator/pages/s020_quality_control/s020_select_item/s020_select_item_page.dart';
