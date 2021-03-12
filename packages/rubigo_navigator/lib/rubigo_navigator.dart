@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo.dart';
@@ -19,6 +20,7 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   UnmodifiableListView<Page> get pages {
     var stack = _manager.stack;
     if (stack.isEmpty) {
+      print('Navigator 2.0: empty');
       return UnmodifiableListView(
         [
           MaterialPage(
@@ -30,6 +32,10 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
         ],
       );
     }
+    var pageNames =
+        stack.keys.map((e) => EnumToString.convertToString(e)).toList();
+    var breadCrumbs = pageNames.join(' => ');
+    print('Navigator 2.0: $breadCrumbs');
     return UnmodifiableListView(
       stack.values.map((e) => e.page).toList(),
     );

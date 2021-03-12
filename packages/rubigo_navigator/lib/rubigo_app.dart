@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/services/rubigo_busy.dart';
 
 class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   const RubigoApp({
@@ -52,10 +53,12 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
         builder: (context, _) {
           return Consumer(
             builder: (context, watch, child) {
-              return Navigator(
-                key: _navigatorKey,
-                pages: watch(widget.navigatorProvider).pages,
-                onPopPage: context.read(widget.navigatorProvider).onPopPage,
+              return Busy(
+                child: Navigator(
+                  key: _navigatorKey,
+                  pages: watch(widget.navigatorProvider).pages,
+                  onPopPage: context.read(widget.navigatorProvider).onPopPage,
+                ),
               );
             },
           );
