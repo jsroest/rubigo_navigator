@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
-import 'package:flutter_rubigo_navigator/pages/s010_login/s010_controller.dart';
+import 'package:flutter_rubigo_navigator/pages/s010_main_menu/s010_controller.dart';
 import 'package:flutter_rubigo_navigator/pages/s020_main_menu/s020_controller.dart';
 import 'package:flutter_rubigo_navigator/pages/s030_sub_page/s030_controller.dart';
 import 'package:rubigo_navigator/rubigo.dart';
@@ -19,7 +19,7 @@ void main() {
       child: RubigoApp<Pages>(
         navigatorProvider: appNavigatorProvider,
         pages: (context) => {
-          Pages.s010Login: context.read(s010ControllerProvider),
+          Pages.s010MainMenu: context.read(s010ControllerProvider),
           Pages.s020MainMenu: context.read(s020ControllerProvider),
           Pages.s030SubPage: context.read(s030ControllerProvider),
         },
