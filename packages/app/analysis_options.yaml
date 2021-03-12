@@ -2,7 +2,7 @@ analyzer:
   exclude:
     # ignore warnings in files from json_serializable, built_value and most generators
     - "**/*.g.dart"
-    - "/bricks"
+    - "bricks/**"
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
