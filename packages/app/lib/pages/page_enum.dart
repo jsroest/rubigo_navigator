@@ -1,6 +1,8 @@
 enum Pages {
   s010MainMenu,
-  s010Login,
-  s020MainMenu,
-  s030SubPage,
+  s020SelectItem,
+  s030PerformCheck,
+  s040AllRowsDone,
+  s050NoRowsFound,
+  s999Settings,
 }

@@ -15,7 +15,11 @@ class S010Controller extends RubigoController<Pages> {
   S010Controller(RubigoPage<Pages, RubigoController> Function() getRubigoPage)
       : super(getRubigoPage);
 
-  void onQualityControlTap() {}
+  void onQualityControlTap() {
+    rubigoNavigator.push(Pages.s020SelectItem);
+  }
 
-  void onSettingsTap() {}
+  void onSettingsTap() {
+    rubigoNavigator.push(Pages.s999Settings);
+  }
 }

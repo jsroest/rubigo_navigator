@@ -12,14 +12,14 @@ class S010MainMenuPage extends RubigoPage<Pages, S010Controller> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main Menu'),
+        title: Text('Main menu'),
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
           ListTile(
-            leading: Icon(Icons.check),
-            title: Text('Quality Control'),
+            leading: Icon(Icons.check_circle),
+            title: Text('Quality control'),
             onTap: context.read(controllerProvider).onQualityControlTap,
           ),
           ListTile(
