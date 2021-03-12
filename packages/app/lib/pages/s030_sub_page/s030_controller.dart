@@ -16,11 +16,11 @@ class S030Controller extends RubigoController<Pages> {
   S030Controller(RubigoPage<Pages, RubigoController> Function() getRubigoPage)
       : super(getRubigoPage);
 
-  void doContinue() {
-    rubigoNavigator.remove(Pages.S020);
+  void action() {
+    rubigoNavigator.remove(Pages.s020MainMenu);
   }
 
   void popTo() {
-    rubigoNavigator.popTo(Pages.S010);
+    rubigoNavigator.popTo(Pages.s010Login);
   }
 }

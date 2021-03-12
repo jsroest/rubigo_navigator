@@ -18,7 +18,7 @@ class S020MainMenuPage extends RubigoPage<Pages, S020Controller> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BreadCrumbs(page: Pages.S020),
+          BreadCrumbs(page: Pages.s020MainMenu),
           TextButton(
             child: Text('To sub page'),
             onPressed: context.read(controllerProvider).doContinue,

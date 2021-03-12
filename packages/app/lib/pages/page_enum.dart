@@ -1,5 +1,5 @@
 enum Pages {
-  S010,
-  S020,
-  S030,
+  s010Login,
+  s020MainMenu,
+  s030SubPage,
 }

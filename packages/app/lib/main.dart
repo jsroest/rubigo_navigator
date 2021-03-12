@@ -19,9 +19,9 @@ void main() {
       child: RubigoApp<Pages>(
         navigatorProvider: appNavigatorProvider,
         pages: (context) => {
-          Pages.S010: context.read(s010ControllerProvider),
-          Pages.S020: context.read(s020ControllerProvider),
-          Pages.S030: context.read(s030ControllerProvider),
+          Pages.s010Login: context.read(s010ControllerProvider),
+          Pages.s020MainMenu: context.read(s020ControllerProvider),
+          Pages.s030SubPage: context.read(s030ControllerProvider),
         },
       ),
     ),
