@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s230_all_rows_done/s230_all_rows_done_page.dart';
@@ -17,7 +19,14 @@ class S230AllRowsDoneController extends RubigoController<Pages> {
       RubigoPage<Pages, RubigoController> Function() getRubigoPage)
       : super(getRubigoPage);
 
-  void onOkPressed() {
-    rubigoNavigator.popTo(Pages.s100MainMenu);
+  @override
+  FutureOr<void> isShown() {
+    Future<void>.delayed(
+      Duration(seconds: 2),
+      () => rubigoNavigator.popTo(Pages.s100MainMenu),
+    );
   }
+
+  @override
+  FutureOr<bool> isPopping() => false;
 }

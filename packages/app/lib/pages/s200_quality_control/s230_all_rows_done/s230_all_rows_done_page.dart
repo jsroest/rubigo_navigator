@@ -13,18 +13,24 @@ class S230AllRowsDonePage extends RubigoPage<Pages, S230AllRowsDoneController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quality control -Ready'),
+        title: Text('Ready'),
+        automaticallyImplyLeading: false,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text('All checks are done'),
-          ),
-          TextButton(
-              onPressed: context.read(controllerProvider).onOkPressed,
-              child: Text('OK'))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.thumb_up,
+              size: 64.0,
+              color: Colors.green,
+            ),
+            Text(
+              'All checks are done.',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+            ),
+          ],
+        ),
       ),
     );
   }
