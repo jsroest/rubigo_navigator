@@ -26,33 +26,45 @@ class S220PerformCheckPage
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      'Item: ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 24.0,
+                ListTile(
+                  leading: Icon(
+                    Icons.fact_check,
+                    color: Colors.green,
+                    size: 48.0,
+                  ),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Item: ',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 24.0,
+                            ),
+                          ),
+                          Text(
+                            qualityControl.selectedItem.itemId.toString(),
+                            style: TextStyle(
+                              fontSize: 24.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      qualityControl.selectedItem.itemId.toString(),
-                      style: TextStyle(
-                        fontSize: 24.0,
+                      Row(
+                        children: [
+                          Text(
+                            qualityControl.selectedItem.description,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      qualityControl.selectedItem.description,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24.0,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 32.0,
@@ -66,7 +78,10 @@ class S220PerformCheckPage
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(64),
                             primary: Colors.green),
-                        child: Icon(Icons.check_circle),
+                        child: Icon(
+                          Icons.check_circle,
+                          size: 48.0,
+                        ),
                         onPressed: controller.onQualityOkPressed,
                       ),
                     ),
@@ -80,7 +95,10 @@ class S220PerformCheckPage
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(64),
                             primary: Colors.red),
-                        child: Icon(Icons.cancel),
+                        child: Icon(
+                          Icons.cancel,
+                          size: 48.0,
+                        ),
                         onPressed: controller.onQualityNotOkPressed,
                       ),
                     ),

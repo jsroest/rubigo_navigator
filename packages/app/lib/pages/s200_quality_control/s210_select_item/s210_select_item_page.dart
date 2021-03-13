@@ -28,6 +28,11 @@ class S210SelectItemPage extends RubigoPage<Pages, S210SelectItemController> {
             itemBuilder: (context, index) {
               return ListTile(
                 onTap: () => controller.onItemTap(index),
+                leading: Icon(
+                  Icons.fact_check,
+                  color: Colors.green,
+                  size: 48.0,
+                ),
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
