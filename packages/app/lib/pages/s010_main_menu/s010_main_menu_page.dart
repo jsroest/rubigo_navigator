@@ -18,13 +18,26 @@ class S010MainMenuPage extends RubigoPage<Pages, S010Controller> {
         padding: EdgeInsets.all(16.0),
         children: [
           ListTile(
-            leading: Icon(Icons.check_circle),
-            title: Text('Quality control'),
+            leading: Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
+            title: Text(
+              'Quality control',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap: context.read(controllerProvider).onQualityControlTap,
           ),
+          Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: Icon(
+              Icons.settings,
+              color: Colors.blue,
+            ),
+            title: Text(
+              'Settings',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             onTap: context.read(controllerProvider).onSettingsTap,
           )
         ],

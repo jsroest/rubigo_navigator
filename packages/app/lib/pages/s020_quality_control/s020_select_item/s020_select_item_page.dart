@@ -30,8 +30,30 @@ class S020SelectItemPage extends RubigoPage<Pages, S020Controller> {
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Item: ${items[index].itemId.toString()}'),
-                    Text('Description: ${items[index].description}'),
+                    Row(
+                      children: [
+                        Text(
+                          'Item: ',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        Text(
+                          items[index].itemId.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          items[index].description,
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               );
