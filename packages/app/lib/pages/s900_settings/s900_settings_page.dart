@@ -16,7 +16,20 @@ class S900SettingsPage extends RubigoPage<Pages, S900SettingsController> {
         title: Text('Settings'),
       ),
       body: Center(
-        child: Text('Not implemented'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.report_problem,
+              size: 64.0,
+              color: Colors.red,
+            ),
+            Text(
+              'Not implemented',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+            ),
+          ],
+        ),
       ),
     );
   }
