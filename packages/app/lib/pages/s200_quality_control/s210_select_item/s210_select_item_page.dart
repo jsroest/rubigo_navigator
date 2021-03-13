@@ -14,8 +14,8 @@ class S210SelectItemPage extends RubigoPage<Pages, S210SelectItemController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quality control -select item'),
-        leading: Container(),
+        title: Text('Select item'),
+        automaticallyImplyLeading: false,
       ),
       body: Consumer(
         builder: (context, watch, _) {
@@ -37,12 +37,13 @@ class S210SelectItemPage extends RubigoPage<Pages, S210SelectItemController> {
                           'Item: ',
                           style: TextStyle(
                             color: Colors.grey,
+                            fontSize: 24.0,
                           ),
                         ),
                         Text(
                           items[index].itemId.toString(),
                           style: TextStyle(
-                            fontWeight: FontWeight.normal,
+                            fontSize: 24.0,
                           ),
                         ),
                       ],
@@ -51,7 +52,10 @@ class S210SelectItemPage extends RubigoPage<Pages, S210SelectItemController> {
                       children: [
                         Text(
                           items[index].description,
-                          style: TextStyle(fontSize: 20.0),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                          ),
                         ),
                       ],
                     ),

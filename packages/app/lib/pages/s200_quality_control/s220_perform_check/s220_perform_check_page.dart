@@ -15,7 +15,7 @@ class S220PerformCheckPage
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quality control -Check item'),
+        title: Text('Check item'),
       ),
       body: Consumer(
         builder: (context, watch, _) {
@@ -26,16 +26,36 @@ class S220PerformCheckPage
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Item: ${qualityControl.selectedItem.itemId.toString()}',
-                  style: TextStyle(fontSize: 16.0),
+                Row(
+                  children: [
+                    Text(
+                      'Item: ',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 24.0,
+                      ),
+                    ),
+                    Text(
+                      qualityControl.selectedItem.itemId.toString(),
+                      style: TextStyle(
+                        fontSize: 24.0,
+                      ),
+                    )
+                  ],
                 ),
-                Text(
-                  'Description: ${qualityControl.selectedItem.description}',
-                  style: TextStyle(fontSize: 16.0),
+                Row(
+                  children: [
+                    Text(
+                      qualityControl.selectedItem.description,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: 8.0,
+                  height: 32.0,
                 ),
                 Row(
                   children: [
