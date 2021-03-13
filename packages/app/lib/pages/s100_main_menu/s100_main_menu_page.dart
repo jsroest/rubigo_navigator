@@ -21,11 +21,12 @@ class S100MainMenuPage extends RubigoPage<Pages, S100MainMenuController> {
           ListTile(
             leading: Icon(
               Icons.check_circle,
+              size: 48.0,
               color: Colors.green,
             ),
             title: Text(
               'Quality control',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
             ),
             onTap: context.read(controllerProvider).onQualityControlTap,
           ),
@@ -33,11 +34,12 @@ class S100MainMenuPage extends RubigoPage<Pages, S100MainMenuController> {
           ListTile(
             leading: Icon(
               Icons.settings,
+              size: 48.0,
               color: Colors.blue,
             ),
             title: Text(
               'Settings',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
             ),
             onTap: context.read(controllerProvider).onSettingsTap,
           )
