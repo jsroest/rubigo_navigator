@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
-import 'package:flutter_rubigo_navigator/pages/s020_quality_control/s040_all_rows_done/s040_controller.dart';
+import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s230_all_rows_done/s230_all_rows_done_controller.dart';
 import 'package:rubigo_navigator/rubigo.dart';
 
-class S040AllRowsDonePage extends RubigoPage<Pages, S040Controller> {
-  S040AllRowsDonePage(ChangeNotifierProvider<S040Controller> controllerProvider)
+class S230AllRowsDonePage extends RubigoPage<Pages, S230AllRowsDoneController> {
+  S230AllRowsDonePage(
+      ChangeNotifierProvider<S230AllRowsDoneController> controllerProvider)
       : super(controllerProvider);
 
   @override

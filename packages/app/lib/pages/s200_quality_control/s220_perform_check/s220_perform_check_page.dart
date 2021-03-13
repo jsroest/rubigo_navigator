@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
-import 'package:flutter_rubigo_navigator/pages/s020_quality_control/quality_control.dart';
-import 'package:flutter_rubigo_navigator/pages/s020_quality_control/s030_perform_check/s030_controller.dart';
+import 'package:flutter_rubigo_navigator/pages/s200_quality_control/quality_control.dart';
+import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s220_perform_check/s220_perform_check_controller.dart';
 import 'package:rubigo_navigator/rubigo.dart';
 
-class S030PerformCheckPage extends RubigoPage<Pages, S030Controller> {
-  S030PerformCheckPage(
-      ChangeNotifierProvider<S030Controller> controllerProvider)
+class S220PerformCheckPage
+    extends RubigoPage<Pages, S220PerformCheckController> {
+  S220PerformCheckPage(
+      ChangeNotifierProvider<S220PerformCheckController> controllerProvider)
       : super(controllerProvider);
 
   @override
