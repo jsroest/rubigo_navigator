@@ -34,7 +34,7 @@ class S100MainMenuController extends RubigoController<Pages> {
                   ws01.debugAmount = DebugAmount.empty;
                   Navigator.of(context).pop();
                 },
-                child: Text('Nothing'),
+                child: Text('No items'),
               ),
               ElevatedButton(
                 onPressed: () {
