@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s240_no_rows_found/s240_no_rows_found_page.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 final s240NoRowsFoundControllerProvider =
     ChangeNotifierProvider<S240NoRowsFoundController>(

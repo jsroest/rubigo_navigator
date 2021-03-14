@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s230_all_rows_done/s230_all_rows_done_controller.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S230AllRowsDonePage extends RubigoPage<Pages, S230AllRowsDoneController> {
   S230AllRowsDonePage(

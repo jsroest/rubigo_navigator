@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
   RubigoController(

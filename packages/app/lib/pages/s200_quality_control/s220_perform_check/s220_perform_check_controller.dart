@@ -3,7 +3,7 @@ import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/quality_control.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s220_perform_check/s220_perform_check_page.dart';
 import 'package:flutter_rubigo_navigator/services/ws02_set_quality_control_item.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 final s220PerformCheckControllerProvider =
     ChangeNotifierProvider<S220PerformCheckController>(

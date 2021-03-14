@@ -5,7 +5,7 @@ import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/quality_control.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s210_select_item/s210_select_item_page.dart';
 import 'package:flutter_rubigo_navigator/services/ws01_get_quality_control_items.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 final s210SelectItemControllerProvider =
     ChangeNotifierProvider<S210SelectItemController>(

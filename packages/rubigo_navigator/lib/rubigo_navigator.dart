@@ -1,9 +1,18 @@
+library rubigo_navigator;
+
 import 'dart:collection';
 
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
+
+export 'rubigo_app.dart';
+export 'rubigo_controller.dart';
+export 'rubigo_material_page.dart';
+export 'rubigo_navigator.dart';
+export 'rubigo_page.dart';
+export 'rubigo_stack_manager.dart';
 
 class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   void init({

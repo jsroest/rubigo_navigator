@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/rubigo_page.dart';
 
 class RubigoMaterialPage<
