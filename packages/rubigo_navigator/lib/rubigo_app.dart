@@ -35,6 +35,7 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
     navigator.init(
       controllers: LinkedHashMap.of(pages),
       initialBackground: widget.initialBackground,
+      navigatorState: _navigatorKey,
     );
     super.initState();
   }

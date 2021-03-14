@@ -9,13 +9,16 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   void init({
     @required LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers,
     @required Widget initialBackground,
+    @required GlobalKey<NavigatorState> navigatorState,
   }) {
     _manager = RubigoStackManager<PAGE_ENUM>(controllers, notifyListeners);
     _initialBackground = initialBackground;
+    this.navigatorState = navigatorState;
   }
 
   RubigoStackManager<PAGE_ENUM> _manager;
   Widget _initialBackground;
+  GlobalKey<NavigatorState> navigatorState;
 
   UnmodifiableListView<Page> get pages {
     var stack = _manager.stack;
