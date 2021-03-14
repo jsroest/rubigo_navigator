@@ -6,13 +6,14 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/services/rubigo_busy.dart';
 
 class RubigoApp<PAGE_ENUM> extends StatefulWidget {
-  const RubigoApp({
-    Key key,
-    @required this.pages,
-    @required this.navigatorProvider,
-    this.materialApp,
-    this.initialBackground,
-  }) : super(key: key);
+  const RubigoApp(
+      {Key key,
+      @required this.pages,
+      @required this.navigatorProvider,
+      this.materialApp,
+      this.initialBackground,
+      this.log})
+      : super(key: key);
 
   @override
   _RubigoAppState createState() => _RubigoAppState<PAGE_ENUM>();
@@ -22,6 +23,7 @@ class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   final ChangeNotifierProvider<RubigoNavigator<PAGE_ENUM>> navigatorProvider;
   final MaterialApp materialApp;
   final Widget initialBackground;
+  final void Function(String value) log;
 }
 
 class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
@@ -36,6 +38,7 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
       controllers: LinkedHashMap.of(pages),
       initialBackground: widget.initialBackground,
       navigatorState: _navigatorKey,
+      log: widget.log ?? (String value) => debugPrint('$value'),
     );
     super.initState();
   }

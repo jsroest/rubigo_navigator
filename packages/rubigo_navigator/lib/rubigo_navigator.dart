@@ -1,5 +1,6 @@
 library rubigo_navigator;
 
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:enum_to_string/enum_to_string.dart';
@@ -19,8 +20,10 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
     @required LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers,
     @required Widget initialBackground,
     @required GlobalKey<NavigatorState> navigatorState,
+    @required void Function(String value) log,
   }) {
-    _manager = RubigoStackManager<PAGE_ENUM>(controllers, notifyListeners);
+    this.log = log;
+    _manager = RubigoStackManager<PAGE_ENUM>(controllers, notifyListeners, log);
     _initialBackground = initialBackground;
     this.navigatorState = navigatorState;
   }
@@ -28,11 +31,12 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   RubigoStackManager<PAGE_ENUM> _manager;
   Widget _initialBackground;
   GlobalKey<NavigatorState> navigatorState;
+  void Function(String value) log;
 
   UnmodifiableListView<Page> get pages {
     var stack = _manager.stack;
     if (stack.isEmpty) {
-      print('Navigator 2.0: Empty pages list');
+      log('Navigator 2.0: Empty pages list');
       return UnmodifiableListView(
         [
           MaterialPage(
@@ -47,7 +51,7 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
     var pageNames =
         stack.keys.map((e) => EnumToString.convertToString(e)).toList();
     var breadCrumbs = pageNames.join(' => ');
-    print('Navigator 2.0: $breadCrumbs');
+    log('Navigator 2.0: $breadCrumbs');
     return UnmodifiableListView(
       stack.values.map((e) => e.page).toList(),
     );
