@@ -13,18 +13,24 @@ class S240NoRowsFoundPage extends RubigoPage<Pages, S240NoRowsFoundController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Quality control -Warning'),
+        title: Text('Info'),
+        automaticallyImplyLeading: false,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text('No quality check rows found'),
-          ),
-          TextButton(
-              onPressed: context.read(controllerProvider).onOkPressed,
-              child: Text('OK'))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.report_problem,
+              size: 64.0,
+              color: Colors.red,
+            ),
+            Text(
+              'No items to check',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+            ),
+          ],
+        ),
       ),
     );
   }
