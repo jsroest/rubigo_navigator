@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
-import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s230_all_rows_done/s230_all_rows_done_page.dart';
+import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s220_all_rows_done/s220_all_rows_done_page.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-final s230AllRowsDoneControllerProvider =
-    ChangeNotifierProvider<S230AllRowsDoneController>(
+final s220AllRowsDoneControllerProvider =
+    ChangeNotifierProvider<S220AllRowsDoneController>(
   (ref) {
-    return S230AllRowsDoneController(
-      () => S230AllRowsDonePage(s230AllRowsDoneControllerProvider),
+    return S220AllRowsDoneController(
+      () => S220AllRowsDonePage(s220AllRowsDoneControllerProvider),
     );
   },
 );
 
-class S230AllRowsDoneController extends RubigoController<Pages> {
-  S230AllRowsDoneController(
+class S220AllRowsDoneController extends RubigoController<Pages> {
+  S220AllRowsDoneController(
       RubigoPage<Pages, RubigoController> Function() createRubigoPage)
       : super(createRubigoPage);
 

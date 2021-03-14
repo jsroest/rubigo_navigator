@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/quality_control.dart';
-import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s210_select_item/s210_select_item_controller.dart';
+import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s200_select_item/s200_select_item_controller.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class S210SelectItemPage extends RubigoPage<Pages, S210SelectItemController> {
-  S210SelectItemPage(
-      ChangeNotifierProvider<S210SelectItemController> controllerProvider)
+class S200SelectItemPage extends RubigoPage<Pages, S200SelectItemController> {
+  S200SelectItemPage(
+      ChangeNotifierProvider<S200SelectItemController> controllerProvider)
       : super(controllerProvider);
 
   @override

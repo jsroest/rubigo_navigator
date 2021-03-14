@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
-import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s240_no_rows_found/s240_no_rows_found_page.dart';
+import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s230_no_rows_found/s230_no_rows_found_page.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-final s240NoRowsFoundControllerProvider =
-    ChangeNotifierProvider<S240NoRowsFoundController>(
+final s230NoRowsFoundControllerProvider =
+    ChangeNotifierProvider<S230NoRowsFoundController>(
   (ref) {
-    return S240NoRowsFoundController(
-      () => S240NoRowsFoundPage(s240NoRowsFoundControllerProvider),
+    return S230NoRowsFoundController(
+      () => S230NoRowsFoundPage(s230NoRowsFoundControllerProvider),
     );
   },
 );
 
-class S240NoRowsFoundController extends RubigoController<Pages> {
-  S240NoRowsFoundController(
+class S230NoRowsFoundController extends RubigoController<Pages> {
+  S230NoRowsFoundController(
       RubigoPage<Pages, RubigoController> Function() createRubigoPage)
       : super(createRubigoPage);
 

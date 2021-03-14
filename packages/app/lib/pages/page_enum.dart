@@ -1,8 +1,8 @@
 enum Pages {
   s100MainMenu,
-  s210SelectItem,
-  s220PerformCheck,
-  s230AllRowsDone,
-  s240NoRowsFound,
+  s200SelectItem,
+  s210PerformCheck,
+  s220AllRowsDone,
+  s230NoRowsFound,
   s900Settings,
 }

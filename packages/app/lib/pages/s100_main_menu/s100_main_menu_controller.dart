@@ -55,7 +55,7 @@ class S100MainMenuController extends RubigoController<Pages> {
         );
       },
     );
-    await rubigoNavigator.push(Pages.s210SelectItem);
+    await rubigoNavigator.push(Pages.s200SelectItem);
   }
 
   void onSettingsTap() {
