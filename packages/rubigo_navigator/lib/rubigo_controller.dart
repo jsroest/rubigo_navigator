@@ -6,12 +6,12 @@ import 'package:rubigo_navigator/rubigo.dart';
 
 abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
   RubigoController(
-    this.getRubigoPage,
+    this._createRubigoPage,
   );
 
-  final RubigoPage<PAGE_ENUM, RubigoController> Function() getRubigoPage;
+  final RubigoPage<PAGE_ENUM, RubigoController> Function() _createRubigoPage;
 
-  RubigoMaterialPage get page => RubigoMaterialPage(child: getRubigoPage());
+  RubigoMaterialPage get page => RubigoMaterialPage(child: _createRubigoPage());
 
   RubigoNavigator<PAGE_ENUM> _rubigoNavigator;
 

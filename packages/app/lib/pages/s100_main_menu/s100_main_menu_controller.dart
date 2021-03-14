@@ -16,8 +16,8 @@ final s100MainMenuControllerProvider =
 
 class S100MainMenuController extends RubigoController<Pages> {
   S100MainMenuController(
-      RubigoPage<Pages, RubigoController> Function() getRubigoPage)
-      : super(getRubigoPage);
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+      : super(createRubigoPage);
 
   Future<void> onQualityControlTap() async {
     await showDialog<void>(

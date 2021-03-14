@@ -16,8 +16,8 @@ final s240NoRowsFoundControllerProvider =
 
 class S240NoRowsFoundController extends RubigoController<Pages> {
   S240NoRowsFoundController(
-      RubigoPage<Pages, RubigoController> Function() getRubigoPage)
-      : super(getRubigoPage);
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+      : super(createRubigoPage);
 
   @override
   FutureOr<void> isShown() {

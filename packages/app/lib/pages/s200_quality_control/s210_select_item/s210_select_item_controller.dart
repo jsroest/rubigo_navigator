@@ -20,10 +20,10 @@ final s210SelectItemControllerProvider =
 
 class S210SelectItemController extends RubigoController<Pages> {
   S210SelectItemController(
-    RubigoPage<Pages, RubigoController> Function() getRubigoPage,
+    RubigoPage<Pages, RubigoController> Function() createRubigoPage,
     this.qualityControl,
     this.ws01getQualityControlItems,
-  ) : super(getRubigoPage);
+  ) : super(createRubigoPage);
 
   final QualityControl qualityControl;
   final Ws01GetQualityControlItems ws01getQualityControlItems;

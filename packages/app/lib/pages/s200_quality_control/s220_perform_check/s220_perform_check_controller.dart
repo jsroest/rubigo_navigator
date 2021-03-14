@@ -18,10 +18,10 @@ final s220PerformCheckControllerProvider =
 
 class S220PerformCheckController extends RubigoController<Pages> {
   S220PerformCheckController(
-      RubigoPage<Pages, RubigoController> Function() getRubigoPage,
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage,
       this.qualityControl,
       this.ws02setQualityControlItem)
-      : super(getRubigoPage);
+      : super(createRubigoPage);
 
   final QualityControl qualityControl;
   final Ws02SetQualityControlItem ws02setQualityControlItem;

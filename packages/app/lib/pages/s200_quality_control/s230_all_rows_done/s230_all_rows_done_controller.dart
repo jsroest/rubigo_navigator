@@ -16,8 +16,8 @@ final s230AllRowsDoneControllerProvider =
 
 class S230AllRowsDoneController extends RubigoController<Pages> {
   S230AllRowsDoneController(
-      RubigoPage<Pages, RubigoController> Function() getRubigoPage)
-      : super(getRubigoPage);
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+      : super(createRubigoPage);
 
   @override
   FutureOr<void> isShown() {

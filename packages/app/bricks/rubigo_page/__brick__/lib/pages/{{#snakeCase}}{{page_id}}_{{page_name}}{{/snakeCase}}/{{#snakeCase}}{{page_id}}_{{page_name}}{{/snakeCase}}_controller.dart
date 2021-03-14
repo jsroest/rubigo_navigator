@@ -14,7 +14,7 @@ final {{#camelCase}}{{page_id}}{{/camelCase}}{{#pascalCase}}{{page_name}}{{/pasc
 );
 
 class {{#pascalCase}}{{page_id}}{{/pascalCase}}{{#pascalCase}}{{page_name}}{{/pascalCase}}Controller extends RubigoController<Pages> {
-  {{#pascalCase}}{{page_id}}{{/pascalCase}}{{#pascalCase}}{{page_name}}{{/pascalCase}}Controller(RubigoPage<Pages, RubigoController> Function() getRubigoPage)
-      : super(getRubigoPage);
+  {{#pascalCase}}{{page_id}}{{/pascalCase}}{{#pascalCase}}{{page_name}}{{/pascalCase}}Controller(RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+      : super(createRubigoPage);
 }
 

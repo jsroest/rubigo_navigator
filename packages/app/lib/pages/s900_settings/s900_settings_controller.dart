@@ -14,6 +14,6 @@ final s900SettingsControllerProvider =
 
 class S900SettingsController extends RubigoController<Pages> {
   S900SettingsController(
-      RubigoPage<Pages, RubigoController> Function() getRubigoPage)
-      : super(getRubigoPage);
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+      : super(createRubigoPage);
 }
