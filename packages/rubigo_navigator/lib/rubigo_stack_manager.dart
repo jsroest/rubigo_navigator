@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -28,24 +29,24 @@ class RubigoStackManager<PAGE_ENUM> {
   final void Function() _notifyListeners;
 
   void remove(PAGE_ENUM key) {
-    debugPrint('$key: remove');
+    debugPrint('${EnumToString.convertToString(key)}: remove');
     stack.remove(key);
     _notifyListeners();
   }
 
-  bool _inIsShown = false;
-  bool _inIsPopping = false;
+  bool _inWillShow = false;
+  bool _inMayPop = false;
   int _pushPopCounter = 0;
 
   Future<void> navigate({
     @required PushOrPop pushOrPop,
     PAGE_ENUM toController,
   }) async {
-    if (_inIsShown) {
-      throw 'Developer: you may not Push or Pop in the isShown method';
+    if (_inWillShow) {
+      throw 'Developer: you may not Push or Pop in the willShow method';
     }
-    if (_inIsPopping) {
-      throw 'Developer: you may not Push or Pop in the isPopping method';
+    if (_inMayPop) {
+      throw 'Developer: you may not Push or Pop in the mayShow method';
     }
     switch (pushOrPop) {
       case PushOrPop.Push:
@@ -54,7 +55,7 @@ class RubigoStackManager<PAGE_ENUM> {
         final currentController = controllers[toController];
         stack[toController] = currentController;
         _pushPopCounter++;
-        debugPrint('$toController: onTop');
+        debugPrint('${EnumToString.convertToString(toController)}: onTop');
         await currentController.onTop(
             StackChange.pushed_on_top, previousController?.key);
         _pushPopCounter--;
@@ -63,10 +64,11 @@ class RubigoStackManager<PAGE_ENUM> {
       case PushOrPop.Pop:
         if (stack.isNotEmpty) {
           var currentController = stack.entries.last;
-          _inIsPopping = true;
-          debugPrint('${currentController.key}: isPopping');
-          var okWithPop = await currentController.value.isPopping();
-          _inIsPopping = false;
+          _inMayPop = true;
+          debugPrint(
+              '${EnumToString.convertToString(currentController.key)}: mayPop');
+          var okWithPop = await currentController.value.mayPop();
+          _inMayPop = false;
           if (!okWithPop) {
             return;
           }
@@ -74,7 +76,8 @@ class RubigoStackManager<PAGE_ENUM> {
           stack.remove(currentController.key);
           currentController = stack.entries.last;
           _pushPopCounter++;
-          debugPrint('${currentController.key}: onTop');
+          debugPrint(
+              '${EnumToString.convertToString(currentController.key)}: onTop');
           await currentController.value.onTop(
               StackChange.returned_from_controller, previousController.key);
           _pushPopCounter--;
@@ -88,7 +91,8 @@ class RubigoStackManager<PAGE_ENUM> {
           if (stack.entries.last.key == toController) {
             _pushPopCounter++;
             final currentController = stack.entries.last;
-            debugPrint('${currentController.key}: onTop');
+            debugPrint(
+                '${EnumToString.convertToString(currentController.key)}: onTop');
             await currentController.value.onTop(
                 StackChange.returned_from_controller, previousController.key);
             _pushPopCounter--;
@@ -98,11 +102,12 @@ class RubigoStackManager<PAGE_ENUM> {
         break;
     }
     if (_pushPopCounter == 0) {
-      _inIsShown = true;
+      _inWillShow = true;
       final currentController = stack.entries.last;
-      debugPrint('${currentController.key}: isShown');
-      await currentController.value.isShown();
-      _inIsShown = false;
+      debugPrint(
+          '${EnumToString.convertToString(currentController.key)}: willShow');
+      await currentController.value.willShow();
+      _inWillShow = false;
       _notifyListeners();
     }
   }
