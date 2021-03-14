@@ -9,10 +9,18 @@ final ws01GetQualityControlItemsProvider = Provider<Ws01GetQualityControlItems>(
   },
 );
 
+enum DebugAmount {
+  empty,
+  one,
+  all,
+}
+
 class Ws01GetQualityControlItems {
   Ws01GetQualityControlItems(this.busyService);
 
   final BusyService busyService;
+
+  var debugAmount = DebugAmount.all;
 
   Future<List<QualityControlItem>> get() async {
     await busyService.protect(
@@ -20,11 +28,21 @@ class Ws01GetQualityControlItems {
         await Future<void>.delayed(Duration(seconds: 1));
       },
     );
-    return <QualityControlItem>[
-      QualityControlItem(1, 'Assembly'),
-      QualityControlItem(2, 'Steel case'),
-      QualityControlItem(3, 'Power cord'),
-    ];
+    switch (debugAmount) {
+      case DebugAmount.empty:
+        return <QualityControlItem>[];
+      case DebugAmount.one:
+        return <QualityControlItem>[
+          QualityControlItem(1, 'Assembly'),
+        ];
+      case DebugAmount.all:
+      default:
+        return <QualityControlItem>[
+          QualityControlItem(1, 'Assembly'),
+          QualityControlItem(2, 'Steel case'),
+          QualityControlItem(3, 'Power cord'),
+        ];
+    }
   }
 }
 
