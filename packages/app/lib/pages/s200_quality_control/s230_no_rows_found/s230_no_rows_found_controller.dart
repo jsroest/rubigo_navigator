@@ -20,7 +20,7 @@ class S230NoRowsFoundController extends RubigoController<Pages> {
       : super(createRubigoPage);
 
   @override
-  FutureOr<void> isShown() {
+  FutureOr<void> willShow() {
     Future<void>.delayed(
       Duration(seconds: 2),
       () => rubigoNavigator.popTo(Pages.s100MainMenu),
@@ -28,5 +28,5 @@ class S230NoRowsFoundController extends RubigoController<Pages> {
   }
 
   @override
-  FutureOr<bool> isPopping() => false;
+  FutureOr<bool> mayPop() => false;
 }

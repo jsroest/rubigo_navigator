@@ -26,7 +26,7 @@ abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
     PAGE_ENUM previousPage,
   ) {}
 
-  FutureOr<void> isShown() {}
+  FutureOr<void> willShow() {}
 
-  FutureOr<bool> isPopping() => true;
+  FutureOr<bool> mayPop() => true;
 }

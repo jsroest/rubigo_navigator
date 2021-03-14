@@ -53,7 +53,7 @@ class S200SelectItemController extends RubigoController<Pages> {
   }
 
   @override
-  FutureOr<bool> isPopping() => false;
+  FutureOr<bool> mayPop() => false;
 
   Future<void> onItemTap(int index) async {
     qualityControl.selectedItem = qualityControl.items[index];

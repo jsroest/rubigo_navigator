@@ -32,7 +32,7 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   UnmodifiableListView<Page> get pages {
     var stack = _manager.stack;
     if (stack.isEmpty) {
-      print('Navigator 2.0: empty');
+      print('Navigator 2.0: Empty pages list');
       return UnmodifiableListView(
         [
           MaterialPage(
