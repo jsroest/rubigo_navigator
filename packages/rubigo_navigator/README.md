@@ -49,5 +49,5 @@ This contains the view.
 
 Properties:
 - **controllerProvider**  
-     Allows easy access the corresponding Controller  
+  Allows easy access the corresponding RubigoController
   
