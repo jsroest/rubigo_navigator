@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
@@ -23,7 +21,7 @@ class S100MainMenuController extends RubigoController<Pages> {
 
   Future<void> onQualityControlTap() async {
     await showDialog<void>(
-      context: rubigoNavigator.navigatorState.currentContext,
+      context: rubigoNavigator.navigatorState.currentContext!,
       builder: (context) {
         var ws01 = context.read(ws01GetQualityControlItemsProvider);
         return AlertDialog(
