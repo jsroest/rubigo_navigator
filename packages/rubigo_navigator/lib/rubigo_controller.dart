@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -15,7 +13,7 @@ abstract class RubigoController<PAGE_ENUM> extends ChangeNotifier {
 
   RubigoMaterialPage get page => RubigoMaterialPage(child: _createRubigoPage());
 
-  RubigoNavigator<PAGE_ENUM> _rubigoNavigator;
+  late RubigoNavigator<PAGE_ENUM> _rubigoNavigator;
 
   RubigoNavigator<PAGE_ENUM> get rubigoNavigator => _rubigoNavigator;
 
