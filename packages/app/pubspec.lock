@@ -49,14 +49,14 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   enum_to_string:
     dependency: "direct main"
     description:
       name: enum_to_string
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.14"
+    version: "2.0.0-nullsafety.1"
   fake_async:
     dependency: transitive
     description:
@@ -87,7 +87,7 @@ packages:
       name: freezed_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0"
+    version: "0.14.1"
   json_annotation:
     dependency: transitive
     description:
@@ -122,7 +122,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.0"
+    version: "1.11.0"
   riverpod:
     dependency: transitive
     description:
@@ -206,5 +206,5 @@ packages:
     source: hosted
     version: "2.1.0"
 sdks:
-  dart: ">=2.12.0-29.10.beta <3.0.0"
+  dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
