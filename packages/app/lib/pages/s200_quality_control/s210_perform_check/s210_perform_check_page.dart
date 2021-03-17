@@ -80,11 +80,11 @@ class S210PerformCheckPage
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(64),
                             primary: Colors.green),
+                        onPressed: controller.onQualityOkPressed,
                         child: Icon(
                           Icons.check_circle,
                           size: 48.0,
                         ),
-                        onPressed: controller.onQualityOkPressed,
                       ),
                     ),
                     SizedBox(
@@ -97,11 +97,11 @@ class S210PerformCheckPage
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size.fromHeight(64),
                             primary: Colors.red),
+                        onPressed: controller.onQualityNotOkPressed,
                         child: Icon(
                           Icons.cancel,
                           size: 48.0,
                         ),
-                        onPressed: controller.onQualityNotOkPressed,
                       ),
                     ),
                   ],
