@@ -16,6 +16,7 @@ final appNavigatorProvider = ChangeNotifierProvider<RubigoNavigator<Pages>>(
 );
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     ProviderScope(
       child: RubigoApp<Pages>(
