@@ -1,5 +1,3 @@
-// @dart=2.9
-
 enum Pages {
   s100MainMenu,
   s200SelectItem,

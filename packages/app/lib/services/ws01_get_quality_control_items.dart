@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rubigo_navigator/services/rubigo_busy_service.dart';
 
