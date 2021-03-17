@@ -26,7 +26,7 @@ class BreadCrumbs extends StatelessWidget {
           }
         }
         var pageNames =
-        pages.map((e) => EnumToString.convertToString(e.key)).toList();
+            pages.map((e) => EnumToString.convertToString(e.key)).toList();
 
         var breadCrumbs = pageNames.join(' => ');
         return Text(breadCrumbs);

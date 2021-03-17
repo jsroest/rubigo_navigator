@@ -9,7 +9,8 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S210PerformCheckPage
     extends RubigoPage<Pages, S210PerformCheckController> {
-  S210PerformCheckPage(ChangeNotifierProvider<S210PerformCheckController> controllerProvider)
+  S210PerformCheckPage(
+      ChangeNotifierProvider<S210PerformCheckController> controllerProvider)
       : super(controllerProvider);
 
   @override

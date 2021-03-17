@@ -11,13 +11,14 @@ final s100MainMenuControllerProvider =
     ChangeNotifierProvider<S100MainMenuController>(
   (ref) {
     return S100MainMenuController(
-          () => S100MainMenuPage(s100MainMenuControllerProvider),
+      () => S100MainMenuPage(s100MainMenuControllerProvider),
     );
   },
 );
 
 class S100MainMenuController extends RubigoController<Pages> {
-  S100MainMenuController(RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+  S100MainMenuController(
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
       : super(createRubigoPage);
 
   Future<void> onQualityControlTap() async {

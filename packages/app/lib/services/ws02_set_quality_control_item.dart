@@ -19,7 +19,7 @@ class Ws02SetQualityControlItem {
 
   Future<void> set(QualityControlItem item) async {
     await busyService.protect(
-          () async {
+      () async {
         await Future<void>.delayed(Duration(seconds: 1));
       },
     );

@@ -10,10 +10,10 @@ import 'package:flutter_rubigo_navigator/services/ws01_get_quality_control_items
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 final s200SelectItemControllerProvider =
-ChangeNotifierProvider<S200SelectItemController>(
-      (ref) {
+    ChangeNotifierProvider<S200SelectItemController>(
+  (ref) {
     return S200SelectItemController(
-          () => S200SelectItemPage(s200SelectItemControllerProvider),
+      () => S200SelectItemPage(s200SelectItemControllerProvider),
       ref.read(qualityControlProvider),
       ref.read(ws01GetQualityControlItemsProvider),
     );
@@ -21,9 +21,11 @@ ChangeNotifierProvider<S200SelectItemController>(
 );
 
 class S200SelectItemController extends RubigoController<Pages> {
-  S200SelectItemController(RubigoPage<Pages, RubigoController> Function() createRubigoPage,
-      this.qualityControl,
-      this.ws01getQualityControlItems,) : super(createRubigoPage);
+  S200SelectItemController(
+    RubigoPage<Pages, RubigoController> Function() createRubigoPage,
+    this.qualityControl,
+    this.ws01getQualityControlItems,
+  ) : super(createRubigoPage);
 
   final QualityControl qualityControl;
   final Ws01GetQualityControlItems ws01getQualityControlItems;

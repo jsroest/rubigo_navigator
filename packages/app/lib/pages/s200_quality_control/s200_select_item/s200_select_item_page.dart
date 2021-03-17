@@ -8,7 +8,8 @@ import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s200_select_
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S200SelectItemPage extends RubigoPage<Pages, S200SelectItemController> {
-  S200SelectItemPage(ChangeNotifierProvider<S200SelectItemController> controllerProvider)
+  S200SelectItemPage(
+      ChangeNotifierProvider<S200SelectItemController> controllerProvider)
       : super(controllerProvider);
 
   @override

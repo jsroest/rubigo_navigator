@@ -26,7 +26,7 @@ class Ws01GetQualityControlItems {
 
   Future<List<QualityControlItem>> get() async {
     await busyService.protect(
-          () async {
+      () async {
         await Future<void>.delayed(Duration(seconds: 1));
       },
     );

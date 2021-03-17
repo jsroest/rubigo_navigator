@@ -11,7 +11,7 @@ final s210PerformCheckControllerProvider =
     ChangeNotifierProvider<S210PerformCheckController>(
   (ref) {
     return S210PerformCheckController(
-          () => S210PerformCheckPage(s210PerformCheckControllerProvider),
+      () => S210PerformCheckPage(s210PerformCheckControllerProvider),
       ref.read(qualityControlProvider),
       ref.read(ws02SetQualityControlItemProvider),
     );
@@ -19,7 +19,8 @@ final s210PerformCheckControllerProvider =
 );
 
 class S210PerformCheckController extends RubigoController<Pages> {
-  S210PerformCheckController(RubigoPage<Pages, RubigoController> Function() createRubigoPage,
+  S210PerformCheckController(
+      RubigoPage<Pages, RubigoController> Function() createRubigoPage,
       this.qualityControl,
       this.ws02setQualityControlItem)
       : super(createRubigoPage);
