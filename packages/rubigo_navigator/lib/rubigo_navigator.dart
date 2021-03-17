@@ -1,5 +1,3 @@
-// @dart=2.9
-
 library rubigo_navigator;
 
 import 'dart:async';
@@ -19,10 +17,10 @@ export 'rubigo_stack_manager.dart';
 
 class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
   void init({
-    @required LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers,
-    @required Widget initialBackground,
-    @required GlobalKey<NavigatorState> navigatorState,
-    @required void Function(String value) log,
+    required LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers,
+    required Widget? initialBackground,
+    required GlobalKey<NavigatorState> navigatorState,
+    required void Function(String value) log,
   }) {
     this.log = log;
     _manager = RubigoStackManager<PAGE_ENUM>(controllers, notifyListeners, log);
@@ -30,10 +28,10 @@ class RubigoNavigator<PAGE_ENUM> extends ChangeNotifier {
     this.navigatorState = navigatorState;
   }
 
-  RubigoStackManager<PAGE_ENUM> _manager;
-  Widget _initialBackground;
-  GlobalKey<NavigatorState> navigatorState;
-  void Function(String value) log;
+  late RubigoStackManager<PAGE_ENUM> _manager;
+  late Widget? _initialBackground;
+  late GlobalKey<NavigatorState> navigatorState;
+  late void Function(String value) log;
 
   UnmodifiableListView<Page> get pages {
     var stack = _manager.stack;

@@ -26,7 +26,7 @@ class RubigoStackManager<PAGE_ENUM> {
     );
   }
 
-  final stack = <PAGE_ENUM, RubigoController<PAGE_ENUM>>{};
+  final stack = LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>>();
   final LinkedHashMap<PAGE_ENUM, RubigoController<PAGE_ENUM>> controllers;
   final void Function() _notifyListeners;
   void Function(String value) log;
