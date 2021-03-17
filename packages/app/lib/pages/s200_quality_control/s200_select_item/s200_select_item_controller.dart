@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,7 +29,7 @@ class S200SelectItemController extends RubigoController<Pages> {
   final Ws01GetQualityControlItems ws01getQualityControlItems;
 
   @override
-  FutureOr<void> onTop(StackChange stackChange, Pages previousPage) async {
+  FutureOr<void> onTop(StackChange stackChange, Pages? previousPage) async {
     switch (stackChange) {
       case StackChange.pushed_on_top:
         var tmpItems = await ws01getQualityControlItems.get();
