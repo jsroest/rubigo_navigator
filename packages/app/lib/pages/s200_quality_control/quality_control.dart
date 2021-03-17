@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/services/ws01_get_quality_control_items.dart';
@@ -27,7 +25,7 @@ class QualityControl extends ChangeNotifier {
     notifyListeners();
   }
 
-  QualityControlItem _selectedItem;
+  late QualityControlItem _selectedItem;
 
   QualityControlItem get selectedItem => _selectedItem;
 
