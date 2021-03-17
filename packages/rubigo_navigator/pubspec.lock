@@ -49,7 +49,7 @@ packages:
       name: enum_to_string
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.14"
+    version: "2.0.0-nullsafety.1"
   fake_async:
     dependency: transitive
     description:

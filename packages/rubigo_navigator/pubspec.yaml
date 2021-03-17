@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^0.13.1
-  enum_to_string: ^1.0.14
+  enum_to_string: 2.0.0-nullsafety.1
 
 dev_dependencies:
   flutter_test:
