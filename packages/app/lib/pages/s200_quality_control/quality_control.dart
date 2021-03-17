@@ -25,9 +25,9 @@ class QualityControl extends ChangeNotifier {
     notifyListeners();
   }
 
-  late QualityControlItem _selectedItem;
+  QualityControlItem? _selectedItem;
 
-  QualityControlItem get selectedItem => _selectedItem;
+  QualityControlItem get selectedItem => _selectedItem!;
 
   set selectedItem(QualityControlItem value) {
     if (_selectedItem != value) {
