@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/rubigo_page.dart';
@@ -9,11 +7,11 @@ class RubigoMaterialPage<
     RUBIGO_PAGE extends RubigoPage<PAGES_ENUM,
         RubigoController<PAGES_ENUM>>> extends MaterialPage<RUBIGO_PAGE> {
   RubigoMaterialPage({
-    @required Widget child,
+    required Widget child,
     bool maintainState = true,
     bool fullscreenDialog = false,
-    LocalKey key,
-    Object arguments,
+    LocalKey? key,
+    Object? arguments,
   }) : super(
           child: child,
           maintainState: maintainState,
