@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rubigo_navigator/services/rubigo_busy_service.dart';
 
@@ -24,7 +26,7 @@ class Ws01GetQualityControlItems {
 
   Future<List<QualityControlItem>> get() async {
     await busyService.protect(
-      () async {
+          () async {
         await Future<void>.delayed(Duration(seconds: 1));
       },
     );

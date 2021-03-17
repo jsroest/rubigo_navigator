@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
@@ -7,8 +9,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S210PerformCheckPage
     extends RubigoPage<Pages, S210PerformCheckController> {
-  S210PerformCheckPage(
-      ChangeNotifierProvider<S210PerformCheckController> controllerProvider)
+  S210PerformCheckPage(ChangeNotifierProvider<S210PerformCheckController> controllerProvider)
       : super(controllerProvider);
 
   @override

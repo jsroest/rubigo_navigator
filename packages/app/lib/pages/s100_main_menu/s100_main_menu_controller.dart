@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
@@ -9,14 +11,13 @@ final s100MainMenuControllerProvider =
     ChangeNotifierProvider<S100MainMenuController>(
   (ref) {
     return S100MainMenuController(
-      () => S100MainMenuPage(s100MainMenuControllerProvider),
+          () => S100MainMenuPage(s100MainMenuControllerProvider),
     );
   },
 );
 
 class S100MainMenuController extends RubigoController<Pages> {
-  S100MainMenuController(
-      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+  S100MainMenuController(RubigoPage<Pages, RubigoController> Function() createRubigoPage)
       : super(createRubigoPage);
 
   Future<void> onQualityControlTap() async {

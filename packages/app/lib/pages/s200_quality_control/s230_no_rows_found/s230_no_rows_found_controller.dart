@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,21 +11,20 @@ final s230NoRowsFoundControllerProvider =
     ChangeNotifierProvider<S230NoRowsFoundController>(
   (ref) {
     return S230NoRowsFoundController(
-      () => S230NoRowsFoundPage(s230NoRowsFoundControllerProvider),
+          () => S230NoRowsFoundPage(s230NoRowsFoundControllerProvider),
     );
   },
 );
 
 class S230NoRowsFoundController extends RubigoController<Pages> {
-  S230NoRowsFoundController(
-      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+  S230NoRowsFoundController(RubigoPage<Pages, RubigoController> Function() createRubigoPage)
       : super(createRubigoPage);
 
   @override
   FutureOr<void> willShow() {
     Future<void>.delayed(
       Duration(seconds: 2),
-      () => rubigoNavigator.popTo(Pages.s100MainMenu),
+          () => rubigoNavigator.popTo(Pages.s100MainMenu),
     );
   }
 

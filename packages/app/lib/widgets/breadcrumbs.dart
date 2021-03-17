@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,7 +26,7 @@ class BreadCrumbs extends StatelessWidget {
           }
         }
         var pageNames =
-            pages.map((e) => EnumToString.convertToString(e.key)).toList();
+        pages.map((e) => EnumToString.convertToString(e.key)).toList();
 
         var breadCrumbs = pageNames.join(' => ');
         return Text(breadCrumbs);

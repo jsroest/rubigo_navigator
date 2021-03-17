@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
@@ -10,7 +12,7 @@ import 'package:flutter_rubigo_navigator/pages/s900_settings/s900_settings_contr
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 final appNavigatorProvider = ChangeNotifierProvider<RubigoNavigator<Pages>>(
-  (ref) {
+      (ref) {
     return RubigoNavigator();
   },
 );

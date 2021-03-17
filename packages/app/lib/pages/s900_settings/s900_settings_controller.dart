@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s900_settings/s900_settings_page.dart';
@@ -13,7 +15,6 @@ final s900SettingsControllerProvider =
 );
 
 class S900SettingsController extends RubigoController<Pages> {
-  S900SettingsController(
-      RubigoPage<Pages, RubigoController> Function() createRubigoPage)
+  S900SettingsController(RubigoPage<Pages, RubigoController> Function() createRubigoPage)
       : super(createRubigoPage);
 }

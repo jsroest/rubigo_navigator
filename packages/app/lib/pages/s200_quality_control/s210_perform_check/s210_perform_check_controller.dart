@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/quality_control.dart';
@@ -9,7 +11,7 @@ final s210PerformCheckControllerProvider =
     ChangeNotifierProvider<S210PerformCheckController>(
   (ref) {
     return S210PerformCheckController(
-      () => S210PerformCheckPage(s210PerformCheckControllerProvider),
+          () => S210PerformCheckPage(s210PerformCheckControllerProvider),
       ref.read(qualityControlProvider),
       ref.read(ws02SetQualityControlItemProvider),
     );
@@ -17,8 +19,7 @@ final s210PerformCheckControllerProvider =
 );
 
 class S210PerformCheckController extends RubigoController<Pages> {
-  S210PerformCheckController(
-      RubigoPage<Pages, RubigoController> Function() createRubigoPage,
+  S210PerformCheckController(RubigoPage<Pages, RubigoController> Function() createRubigoPage,
       this.qualityControl,
       this.ws02setQualityControlItem)
       : super(createRubigoPage);
