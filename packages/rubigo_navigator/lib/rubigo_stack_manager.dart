@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 import 'dart:collection';
 
@@ -20,7 +18,7 @@ class RubigoStackManager<PAGE_ENUM> {
     this._notifyListeners,
     this.log,
   ) {
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance!.addPostFrameCallback(
       (timeStamp) async {
         await navigate(
             pushOrPop: PushOrPop.Push, toController: controllers.keys.first);
@@ -44,8 +42,8 @@ class RubigoStackManager<PAGE_ENUM> {
   int _pushPopCounter = 0;
 
   Future<void> navigate({
-    @required PushOrPop pushOrPop,
-    PAGE_ENUM toController,
+    required PushOrPop pushOrPop,
+    PAGE_ENUM? toController,
   }) async {
     if (_inWillShow) {
       throw 'Developer: you may not Push or Pop in the willShow method';
@@ -55,9 +53,12 @@ class RubigoStackManager<PAGE_ENUM> {
     }
     switch (pushOrPop) {
       case PushOrPop.Push:
+        if (toController == null) {
+          throw FormatException('Push: toController may not be null');
+        }
         final previousController =
             stack.entries.isNotEmpty ? stack.entries.last : null;
-        final currentController = controllers[toController];
+        final currentController = controllers[toController]!;
         stack[toController] = currentController;
         _pushPopCounter++;
         log('${EnumToString.convertToString(toController)}.onTop');
@@ -67,6 +68,9 @@ class RubigoStackManager<PAGE_ENUM> {
         break;
 
       case PushOrPop.Pop:
+        if (toController != null) {
+          throw FormatException('Pop: toController must be null');
+        }
         if (stack.isNotEmpty) {
           var currentController = stack.entries.last;
           _inMayPop = true;
@@ -88,6 +92,9 @@ class RubigoStackManager<PAGE_ENUM> {
         break;
 
       case PushOrPop.PopTo:
+        if (toController == null) {
+          throw FormatException('PopTo: toController may not be null');
+        }
         while (stack.length > 1) {
           final previousController = stack.entries.last;
           stack.remove(previousController.key);
