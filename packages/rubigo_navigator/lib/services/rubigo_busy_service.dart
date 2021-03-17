@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -21,7 +19,7 @@ class BusyService extends ChangeNotifier {
   }
 
   int _busyCounter = 0;
-  DeBouncer _progressIndicatorDeBouncer;
+  late DeBouncer _progressIndicatorDeBouncer;
 
   void _addBusy() {
     _busyCounter++;
@@ -87,13 +85,13 @@ class DeBouncer {
   });
 
   final int milliseconds;
-  final VoidCallback action;
-  Timer _timer;
+  final VoidCallback? action;
+  Timer? _timer;
 
   void run() {
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
     }
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
+    _timer = Timer(Duration(milliseconds: milliseconds), action!);
   }
 }
