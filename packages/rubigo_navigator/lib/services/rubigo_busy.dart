@@ -1,13 +1,11 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rubigo_navigator/services/rubigo_busy_service.dart';
 
 class Busy extends StatelessWidget {
   Busy({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.progressIndicator,
     this.opacityWithoutProgressIndicator = 0.0,
     this.opacityWithProgressIndicator = 0.3,
@@ -15,7 +13,7 @@ class Busy extends StatelessWidget {
   }) : super(key: key);
 
   final Widget child;
-  final Widget progressIndicator;
+  final Widget? progressIndicator;
   final double opacityWithoutProgressIndicator;
   final double opacityWithProgressIndicator;
   final Color barrierColor;
@@ -42,7 +40,7 @@ class Busy extends StatelessWidget {
                 busyService.isBusy &&
                 busyService.showProgressIndicator &&
                 (progressIndicator != null))
-              progressIndicator,
+              progressIndicator!,
           ],
         );
       },
