@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
@@ -9,9 +7,9 @@ import 'package:rubigo_navigator/services/rubigo_busy.dart';
 
 class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   const RubigoApp(
-      {Key key,
-      @required this.pages,
-      @required this.navigatorProvider,
+      {Key? key,
+      required this.pages,
+      required this.navigatorProvider,
       this.materialApp,
       this.initialBackground,
       this.log})
@@ -23,9 +21,9 @@ class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   final Map<PAGE_ENUM, RubigoController<PAGE_ENUM>> Function(
       BuildContext context) pages;
   final ChangeNotifierProvider<RubigoNavigator<PAGE_ENUM>> navigatorProvider;
-  final MaterialApp materialApp;
-  final Widget initialBackground;
-  final void Function(String value) log;
+  final MaterialApp? materialApp;
+  final Widget? initialBackground;
+  final void Function(String value)? log;
 }
 
 class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
@@ -40,7 +38,7 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
       controllers: LinkedHashMap.of(pages),
       initialBackground: widget.initialBackground,
       navigatorState: _navigatorKey,
-      log: widget.log ?? (String value) => debugPrint('$value'),
+      log: widget.log ?? ((String value) => debugPrint('$value')),
     );
     super.initState();
   }
