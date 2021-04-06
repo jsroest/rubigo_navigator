@@ -42,7 +42,7 @@ class S100MainMenuPage extends RubigoPage<Pages, S100MainMenuController> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
             ),
             onTap: context.read(controllerProvider).onSettingsTap,
-          )
+          ),
         ],
       ),
     );
