@@ -5,7 +5,7 @@ import 'package:rubigo_navigator/rubigo_page.dart';
 class RubigoMaterialPage<
     PAGES_ENUM,
     RUBIGO_PAGE extends RubigoPage<PAGES_ENUM,
-        RubigoController<PAGES_ENUM>>> extends MaterialPage<RUBIGO_PAGE> {
+        RubigoController<PAGES_ENUM>>> extends MaterialPage<void> {
   RubigoMaterialPage({
     required Widget child,
     bool maintainState = true,
