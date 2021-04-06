@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
+import 'package:flutter_rubigo_navigator/pages/pages.dart';
 import 'package:flutter_rubigo_navigator/pages/{{#snakeCase}}{{page_id}}_{{page_name}}{{/snakeCase}}/{{#snakeCase}}{{page_id}}_{{page_name}}{{/snakeCase}}_controller.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 

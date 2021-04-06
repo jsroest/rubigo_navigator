@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
+import 'package:flutter_rubigo_navigator/pages/pages.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/quality_control.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s210_perform_check/s210_perform_check_page.dart';
 import 'package:flutter_rubigo_navigator/services/ws02_set_quality_control_item.dart';

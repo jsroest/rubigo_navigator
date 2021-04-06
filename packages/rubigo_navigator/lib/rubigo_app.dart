@@ -8,7 +8,7 @@ import 'package:rubigo_navigator/services/rubigo_busy.dart';
 class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   const RubigoApp(
       {Key? key,
-      required this.pages,
+      required this.controllers,
       required this.navigatorProvider,
       this.materialApp,
       this.initialBackground,
@@ -19,7 +19,7 @@ class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   _RubigoAppState createState() => _RubigoAppState<PAGE_ENUM>();
 
   final Map<PAGE_ENUM, RubigoController<PAGE_ENUM>> Function(
-      BuildContext context) pages;
+      BuildContext context) controllers;
   final ChangeNotifierProvider<RubigoNavigator<PAGE_ENUM>> navigatorProvider;
   final MaterialApp? materialApp;
   final Widget? initialBackground;
@@ -32,7 +32,7 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
   @override
   void initState() {
     var navigator = context.read(widget.navigatorProvider);
-    var pages = widget.pages(context);
+    var pages = widget.controllers(context);
     pages.forEach((key, value) => value.init(navigator));
     navigator.init(
       controllers: LinkedHashMap.of(pages),

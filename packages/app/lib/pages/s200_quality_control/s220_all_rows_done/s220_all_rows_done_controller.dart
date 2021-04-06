@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_rubigo_navigator/pages/page_enum.dart';
+import 'package:flutter_rubigo_navigator/pages/pages.dart';
 import 'package:flutter_rubigo_navigator/pages/s200_quality_control/s220_all_rows_done/s220_all_rows_done_page.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
