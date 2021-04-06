@@ -18,8 +18,8 @@ class RubigoApp<PAGE_ENUM> extends StatefulWidget {
   @override
   _RubigoAppState createState() => _RubigoAppState<PAGE_ENUM>();
 
-  final Map<PAGE_ENUM, RubigoController<PAGE_ENUM>> Function(
-      BuildContext context) controllers;
+  final Map<PAGE_ENUM, ChangeNotifierProvider<RubigoController<PAGE_ENUM>>>
+      controllers;
   final ChangeNotifierProvider<RubigoNavigator<PAGE_ENUM>> navigatorProvider;
   final MaterialApp? materialApp;
   final Widget? initialBackground;
@@ -32,10 +32,11 @@ class _RubigoAppState<PAGE_ENUM> extends State<RubigoApp<PAGE_ENUM>> {
   @override
   void initState() {
     var navigator = context.read(widget.navigatorProvider);
-    var pages = widget.controllers(context);
-    pages.forEach((key, value) => value.init(navigator));
+    var _controllers = widget.controllers
+        .map((key, value) => MapEntry(key, context.read(value)));
+    _controllers.forEach((key, value) => value.init(navigator));
     navigator.init(
-      controllers: LinkedHashMap.of(pages),
+      controllers: LinkedHashMap.of(_controllers),
       initialBackground: widget.initialBackground,
       navigatorState: _navigatorKey,
       log: widget.log ?? ((String value) => debugPrint('$value')),
