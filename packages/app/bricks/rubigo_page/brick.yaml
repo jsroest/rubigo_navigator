@@ -1,5 +1,0 @@
-name: rubigo_page
-description: Creates a page and a controller
-vars:
-  - page_id
-  - page_name
