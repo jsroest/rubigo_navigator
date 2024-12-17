@@ -142,7 +142,7 @@ packages:
   rubigo_navigator:
     dependency: "direct main"
     description:
-      path: "../package"
+      path: ".."
       relative: true
     source: path
     version: "0.0.1"
