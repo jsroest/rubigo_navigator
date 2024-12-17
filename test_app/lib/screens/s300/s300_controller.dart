@@ -10,8 +10,11 @@ class S300Controller extends RubigoController<Screens> {
     await navigator.popTo(Screens.s100);
   }
 
-  Future<void> onRemoveBelowButtonPressed() async {
-    final pageBelow = navigator.screenStack[navigator.screenStack.length - 2];
-    navigator.remove(pageBelow);
+  Future<void> onRemoveS200ButtonPressed() async {
+    navigator.remove(Screens.s200);
+  }
+
+  Future<void> onRemoveS100ButtonPressed() async {
+    navigator.remove(Screens.s100);
   }
 }

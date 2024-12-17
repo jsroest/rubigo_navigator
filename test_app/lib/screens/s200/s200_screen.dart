@@ -27,12 +27,12 @@ class S200Screen extends StatelessWidget
               ),
               ElevatedButton(
                 onPressed: controller.onS300ButtonPressed,
-                child: const Text('S300'),
+                child: const Text('Push S300'),
               ),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: controller.onBackButtonPressed,
-                child: const Text('Back'),
+                child: const Text('Pop'),
               ),
             ],
           ),
