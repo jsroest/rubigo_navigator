@@ -91,4 +91,9 @@ class RubigoNavigator<SCREEN_ID extends Enum>
 
   @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
+
+  @override
+  bool onPopPage(Route<dynamic> route, dynamic result) {
+    return _rubigoStackManager.onPopPage(route, result);
+  }
 }

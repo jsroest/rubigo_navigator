@@ -22,6 +22,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
     return Navigator(
       pages: _navigator.pages,
       onDidRemovePage: _navigator.onDidRemovePage,
+      //onPopPage: _navigator.onPopPage,
     );
   }
 }

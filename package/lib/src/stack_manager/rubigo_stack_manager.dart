@@ -91,6 +91,15 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
+  bool onPopPage(Route<dynamic> route, dynamic result) {
+    unawaited(
+      _logNavigation('onPopPage() called by Flutter framework'),
+    );
+    unawaited(pop());
+    return false;
+  }
+
+  @override
   void remove(SCREEN_ID screenId) {
     unawaited(
       _logNavigation('remove(${screenId.name}) called'),
