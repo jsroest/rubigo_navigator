@@ -30,6 +30,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> pop() async {
+    unawaited(_logNavigation('pop() called'));
     await _navigate(
       pushOrPop: PushOrPop.pop,
     );
@@ -37,6 +38,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> popTo(SCREEN_ID screenId) async {
+    unawaited(_logNavigation('popTo(${screenId.name}) called'));
     await _navigate(
       pushOrPop: PushOrPop.popTo,
       toScreenId: screenId,
@@ -45,6 +47,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> push(SCREEN_ID screenId) async {
+    unawaited(_logNavigation('push(${screenId.name}) called'));
     await _navigate(
       pushOrPop: PushOrPop.push,
       toScreenId: screenId,
@@ -65,20 +68,33 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     }
     final removedScreenId =
         availableScreens.findScreenIdByScreen(removedScreen);
+    unawaited(
+      _logNavigation(
+        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework',
+      ),
+    );
     final lastScreenId = screenStack.last;
     if (removedScreenId != lastScreenId) {
+      unawaited(
+        _logNavigation('but ignored by us.'),
+      );
       //onDidRemovePage was initiated by the business logic.
       //In this case the screenStack is already valid
     } else {
       //onDidRemovePage was initiated by the backButton/predictiveBackGesture (Android) or swipeBack (iOS).
       //In this case we still need to adjust the screenStack accordingly
+      unawaited(
+        _logNavigation('and redirected to pop().'),
+      );
       await pop();
     }
   }
 
   @override
   void remove(SCREEN_ID screenId) {
-    unawaited(_logNavigation('${screenId.name}.remove'));
+    unawaited(
+      _logNavigation('remove(${screenId.name}) called'),
+    );
     screenStack.remove(screenId);
     notifyListeners();
   }
@@ -118,7 +134,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         final currentController = availableScreens.findController(toScreenId);
         screenStack.add(toScreenId);
         _pushPopCounter++;
-        unawaited(_logNavigation('${toScreenId.name}.onTop'));
         await currentController.onTop(changeInfo);
         _pushPopCounter--;
 
@@ -134,7 +149,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         var currentScreen = screenStack.last;
         var currentController = availableScreens.findController(currentScreen);
         _inMayPop = true;
-        unawaited(_logNavigation('${currentScreen.name}.mayPop'));
         final mayPop = await currentController.mayPop();
         _inMayPop = false;
         if (!mayPop) {
@@ -149,7 +163,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         currentScreen = screenStack.last;
         currentController = availableScreens.findController(currentScreen);
         _pushPopCounter++;
-        unawaited(_logNavigation('${currentScreen.name}.onTop'));
         await currentController.onTop(changeInfo);
         _pushPopCounter--;
 
@@ -170,7 +183,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
             final currentScreen = screenStack.last;
             final currentController =
                 availableScreens.findController(currentScreen);
-            unawaited(_logNavigation('${currentScreen.name}.onTop'));
             await currentController.onTop(changeInfo);
             _pushPopCounter--;
             break;
@@ -181,7 +193,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       _inWillShow = true;
       final currentScreen = screenStack.last;
       final currentController = availableScreens.findController(currentScreen);
-      unawaited(_logNavigation('${currentScreen.name}.willShow'));
       await currentController.willShow(changeInfo);
       _inWillShow = false;
       notifyListeners();
