@@ -61,19 +61,45 @@ void main() {
       availableScreens: availableScreens,
     );
     final pages = navigator.pages;
+    final screens = initialScreenStack.toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages,
+      screens: screens,
+    );
+    await navigator.popTo(Screens.s100);
+    final pages2 = navigator.pages;
+    final screens2 = [Screens.s100].toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages2,
+      screens: screens2,
+    );
+  });
+
+  test('Test push', () async {
+    final availableScreens = createAvailableScreens();
+    final initialScreenStack = [
+      Screens.s100,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    final pages = navigator.pages;
     final initialScreens =
         initialScreenStack.map(availableScreens.findScreen).toList();
     checkPages(
       pages: pages,
       screens: initialScreens,
     );
-    await navigator.popTo(Screens.s100);
+    await navigator.push(Screens.s200);
     final pages2 = navigator.pages;
+    final screens2 = [
+      Screens.s100,
+      Screens.s200,
+    ].toListOfWidget(availableScreens);
     checkPages(
       pages: pages2,
-      screens: [
-        availableScreens.findScreen(Screens.s100),
-      ],
+      screens: screens2,
     );
   });
 }
