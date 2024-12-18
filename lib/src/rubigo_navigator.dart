@@ -31,10 +31,11 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     final navigator =
         RubigoNavigator._(rubigoStackManager, logNavigation, screenToPage);
     for (final screenSet in availableScreens) {
-      //Wire up the controller in each screen that has the RubigoControllerMixin
-      final screen = screenSet.screen;
-      if (screen is RubigoControllerMixin) {
-        (screen as RubigoControllerMixin).controller = screenSet.controller;
+      //Wire up the controller in each screenWidget that has the RubigoControllerMixin
+      final screenWidget = screenSet.screenWidget;
+      if (screenWidget is RubigoControllerMixin) {
+        (screenWidget as RubigoControllerMixin).controller =
+            screenSet.controller;
       }
       //Wire up the navigator in each controller
       screenSet.controller.navigator = navigator;

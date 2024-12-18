@@ -12,10 +12,10 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
       firstWhere((e) => e.screenId == screenId).controller as CONTROLLER;
 
   Widget findScreen(SCREEN_ID screenId) =>
-      firstWhere((e) => e.screenId == screenId).screen;
+      firstWhere((e) => e.screenId == screenId).screenWidget;
 
   SCREEN_ID findScreenIdByScreen(Widget screen) =>
-      firstWhere((e) => e.screen == screen).screenId as SCREEN_ID;
+      firstWhere((e) => e.screenWidget == screen).screenId as SCREEN_ID;
 }
 
 extension ExtensionOnListOfScreenId on List<Enum> {

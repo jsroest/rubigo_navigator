@@ -5,11 +5,11 @@ class RubigoScreen<SCREEN_ID extends Enum,
     RUBIGO_CONTROLLER extends RubigoController<SCREEN_ID>> {
   RubigoScreen(
     this.screenId,
-    this.screen,
+    this.screenWidget,
     this.controller,
   );
 
   final SCREEN_ID screenId;
-  final Widget screen;
+  final Widget screenWidget;
   final RUBIGO_CONTROLLER controller;
 }
