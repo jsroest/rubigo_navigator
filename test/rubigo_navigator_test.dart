@@ -91,22 +91,31 @@ void main() {
     );
   });
 
-  test('controller events on first page loaded', () {
+  test('Test popTo', () async {
     final availableScreens = createAvailableScreens();
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
     final navigator = RubigoNavigator<Screens>(
-      initialScreenStack: [Screens.s100],
+      initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
     final pages = navigator.pages;
-    // We expect one page on the stack
-    expect(pages.length, 1);
-    // We expect it of being of the type MaterialPage
-    final page = pages[0];
-    expect(page is MaterialPage<void>, true);
-    // We expect the child of the MaterialPage to be our instance of
-    // S100Screen()
-    final screen = (page as MaterialPage<void>).child;
-    final expectedScreen = availableScreens.findScreen(Screens.s100);
-    expect(screen, expectedScreen);
+    final initialScreens =
+        initialScreenStack.map(availableScreens.findScreen).toList();
+    checkPages(
+      pages: pages,
+      screens: initialScreens,
+    );
+    await navigator.popTo(Screens.s100);
+    final pages2 = navigator.pages;
+    checkPages(
+      pages: pages2,
+      screens: [
+        availableScreens.findScreen(Screens.s100),
+      ],
+    );
   });
 }
