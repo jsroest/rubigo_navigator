@@ -17,6 +17,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
     RubigoStackManagerInterface<SCREEN_ID>? rubigoStackManager,
     LogNavigation? logNavigation,
+    ScreenToPage? screenToPage,
   }) {
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
@@ -25,7 +26,10 @@ class RubigoNavigator<SCREEN_ID extends Enum>
       logNavigation,
     );
 
-    final navigator = RubigoNavigator._(rubigoStackManager, logNavigation);
+    screenToPage ??= (Widget screen) => MaterialPage<void>(child: screen);
+
+    final navigator =
+        RubigoNavigator._(rubigoStackManager, logNavigation, screenToPage);
     for (final screenSet in availableScreens) {
       //Wire up the controller in each screen that has the RubigoControllerMixin
       final screen = screenSet.screen;
@@ -39,16 +43,17 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   }
 
   //Private constructor
-  RubigoNavigator._(this._rubigoStackManager, this._logNavigation) {
+  RubigoNavigator._(
+    this._rubigoStackManager,
+    this._logNavigation,
+    this._screenToPage,
+  ) {
     _rubigoStackManager.addListener(notifyListeners);
   }
 
   final RubigoStackManagerInterface<SCREEN_ID> _rubigoStackManager;
   final LogNavigation _logNavigation;
-
-  //This function wraps a widget in a MaterialPage.
-  //Override this functions if you want to use CupertinoPage's
-  Page<void> screenToPage(Widget screen) => MaterialPage<void>(child: screen);
+  final ScreenToPage _screenToPage;
 
   //The list of pages to feed to the Flutter Navigator
   List<Page<void>> get pages {
@@ -60,7 +65,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     );
     final pages = screenStack
         .map(_rubigoStackManager.availableScreens.findScreen)
-        .map(screenToPage)
+        .map(_screenToPage)
         .toList();
     return pages;
   }
