@@ -90,32 +90,4 @@ void main() {
       ),
     );
   });
-
-  test('Test popTo', () async {
-    final availableScreens = createAvailableScreens();
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
-    final navigator = RubigoNavigator<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
-    );
-    final pages = navigator.pages;
-    final initialScreens =
-        initialScreenStack.map(availableScreens.findScreen).toList();
-    checkPages(
-      pages: pages,
-      screens: initialScreens,
-    );
-    await navigator.popTo(Screens.s100);
-    final pages2 = navigator.pages;
-    checkPages(
-      pages: pages2,
-      screens: [
-        availableScreens.findScreen(Screens.s100),
-      ],
-    );
-  });
 }

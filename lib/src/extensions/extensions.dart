@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
@@ -16,4 +16,9 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
 
   SCREEN_ID findScreenIdByScreen(Widget screen) =>
       firstWhere((e) => e.screen == screen).screenId as SCREEN_ID;
+}
+
+extension ExtensionOnListOfScreenId on List<Enum> {
+  List<Widget> toListOfWidget(ListOfRubigoScreens availableScreens) =>
+      map((screenId) => availableScreens.findScreen(screenId)).toList();
 }
