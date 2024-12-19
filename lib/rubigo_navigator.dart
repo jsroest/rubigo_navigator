@@ -4,3 +4,4 @@ export 'src/rubigo_controller.dart';
 export 'src/rubigo_navigator.dart';
 export 'src/rubigo_screen.dart';
 export 'src/types/rubigo_type_definitions.dart';
+export 'src/extensions/extensions.dart';
