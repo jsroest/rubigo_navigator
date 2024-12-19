@@ -2,7 +2,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 import '../screens.dart';
 
-class S200ControllerOnTopPushAndPop extends RubigoController<Screens> {
+class S200ControllerOnTopPushAndPop with RubigoController<Screens> {
   @override
   Future<void> onTop(RubigoChangeInfo<Screens?> changeInfo) async {
     //Here you can set conditions to push the next screen on the stack in one go.

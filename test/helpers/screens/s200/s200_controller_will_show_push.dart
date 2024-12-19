@@ -2,7 +2,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 import '../screens.dart';
 
-class S200ControllerWillShowPush extends RubigoController<Screens> {
+class S200ControllerWillShowPush with RubigoController<Screens> {
   @override
   Future<void> willShow(RubigoChangeInfo<Screens?> changeInfo) async {
     await navigator.push(Screens.s300);

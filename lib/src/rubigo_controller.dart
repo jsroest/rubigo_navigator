@@ -1,6 +1,6 @@
 import 'package:rubigo_navigator/src/rubigo_navigator.dart';
 
-abstract class RubigoController<SCREEN_ID extends Enum> {
+mixin RubigoController<SCREEN_ID extends Enum> {
   Future<void> onTop(RubigoChangeInfo<SCREEN_ID?> changeInfo) async {}
 
   Future<void> willShow(RubigoChangeInfo<SCREEN_ID?> changeInfo) async {}

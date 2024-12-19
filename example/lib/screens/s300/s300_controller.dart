@@ -1,7 +1,7 @@
 import 'package:example/screens/screens.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class S300Controller extends RubigoController<Screens> {
+class S300Controller with RubigoController<Screens> {
   bool get canPop => true;
 
   Future<void> onPopButtonPressed() async {
