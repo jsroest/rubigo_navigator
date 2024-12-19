@@ -30,7 +30,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> pop() async {
-    unawaited(_logNavigation('pop() called'));
+    unawaited(_logNavigation('pop() called.'));
     await _navigate(
       pushOrPop: PushOrPop.pop,
     );
@@ -38,7 +38,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> popTo(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('popTo(${screenId.name}) called'));
+    unawaited(_logNavigation('popTo(${screenId.name}) called.'));
     await _navigate(
       pushOrPop: PushOrPop.popTo,
       toScreenId: screenId,
@@ -47,7 +47,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> push(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('push(${screenId.name}) called'));
+    unawaited(_logNavigation('push(${screenId.name}) called.'));
     await _navigate(
       pushOrPop: PushOrPop.push,
       toScreenId: screenId,
@@ -63,14 +63,14 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       removedScreen = page.child;
     } else {
       throw UnsupportedError(
-        'PANIC: Page must be of type MaterialPage or CupertinoPage',
+        'PANIC: Page must be of type MaterialPage or CupertinoPage.',
       );
     }
     final removedScreenId =
         availableScreens.findScreenIdByScreen(removedScreen);
     unawaited(
       _logNavigation(
-        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework',
+        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
       ),
     );
     final lastScreenId = screenStack.last;
@@ -93,7 +93,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   @override
   Future<bool> onPopPage(Route<dynamic> route, dynamic result) async {
     unawaited(
-      _logNavigation('onPopPage() called by Flutter framework'),
+      _logNavigation('onPopPage() called by Flutter framework.'),
     );
     await pop();
     return false;
@@ -102,7 +102,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   @override
   void remove(SCREEN_ID screenId) {
     unawaited(
-      _logNavigation('remove(${screenId.name}) called'),
+      _logNavigation('remove(${screenId.name}) called.'),
     );
     if (!screenStack.contains(screenId)) {
       throw UnsupportedError(
@@ -123,12 +123,12 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }) async {
     if (_inWillShow) {
       throw UnsupportedError(
-        'Developer: you may not Push or Pop in the willShow method',
+        'Developer: you may not Push or Pop in the willShow method.',
       );
     }
     if (_inMayPop) {
       throw UnsupportedError(
-        'Developer: you may not Push or Pop in the mayPop method',
+        'Developer: you may not Push or Pop in the mayPop method.',
       );
     }
     late RubigoChangeInfo<SCREEN_ID> changeInfo;
@@ -136,7 +136,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       case PushOrPop.push:
         if (toScreenId == null) {
           throw UnsupportedError(
-            'Developer: When calling push, parameter toController may not be null',
+            'Developer: When calling push, parameter toController may not be null.',
           );
         }
         final previousScreen = screenStack.lastOrNull;
@@ -154,7 +154,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       case PushOrPop.pop:
         if (toScreenId != null) {
           throw UnsupportedError(
-            'Developer: When PushOrPop.pop, toController must be null',
+            'Developer: When PushOrPop.pop, toController must be null.',
           );
         }
         if (screenStack.isEmpty) {
@@ -176,7 +176,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         screenStack.removeLast();
         if (screenStack.isEmpty) {
           throw UnsupportedError(
-            'Developer: Pop was called on the last page. The screen stack may not be empty',
+            'Developer: Pop was called on the last page. The screen stack may not be empty.',
           );
         }
         currentScreen = screenStack.last;
@@ -188,7 +188,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       case PushOrPop.popTo:
         if (toScreenId == null) {
           throw ArgumentError(
-            'Developer: With popTo, the toController parameter may not be null',
+            'Developer: With popTo, the toController parameter may not be null.',
           );
         }
         changeInfo = RubigoChangeInfo(

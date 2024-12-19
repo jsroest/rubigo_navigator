@@ -60,7 +60,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     final screenStack = _rubigoStackManager.screenStack;
     unawaited(
       _logNavigation(
-        'Screen stack: ${screenStack.map((e) => e.name).toList().join(' => ')}',
+        'Screen stack: ${screenStack.map((e) => e.name).toList().join(' => ')}.',
       ),
     );
     final pages = screenStack

@@ -76,7 +76,7 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: Pop was called on the last page. The screen stack may not be empty',
+                    'Developer: Pop was called on the last page. The screen stack may not be empty.',
           ),
         ),
       );

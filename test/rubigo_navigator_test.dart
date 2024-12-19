@@ -84,7 +84,7 @@ void main() {
           (e) =>
               e is UnsupportedError &&
               e.message ==
-                  'PANIC: Page must be of type MaterialPage or CupertinoPage',
+                  'PANIC: Page must be of type MaterialPage or CupertinoPage.',
         ),
       ),
     );
