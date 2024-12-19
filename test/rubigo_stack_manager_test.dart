@@ -5,9 +5,11 @@ import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
 import 'helpers/screens/s200/s200_controller.dart';
+import 'helpers/screens/s200/s200_controller_may_pop_pop.dart';
+import 'helpers/screens/s200/s200_controller_may_pop_push.dart';
+import 'helpers/screens/s200/s200_controller_on_top_push_and_pop.dart';
 import 'helpers/screens/s200/s200_controller_will_show_pop.dart';
 import 'helpers/screens/s200/s200_controller_will_show_push.dart';
-import 'helpers/screens/s200/s200_controller_on_top_push_and_pop.dart';
 import 'helpers/screens/s200/s200_screen.dart';
 import 'helpers/screens/s300/s200_controller.dart';
 import 'helpers/screens/s300/s200_screen.dart';
@@ -340,6 +342,66 @@ void main() {
               e is UnsupportedError &&
               e.message ==
                   'Developer: you may not Push or Pop in the willShow method.',
+        ),
+      ),
+    );
+  });
+
+  test('Pop in mayPop', () async {
+    final availableScreens = [
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        S200ControllerMayPopPop(),
+      ),
+    ];
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    expect(
+      () async => await navigator.pop(),
+      throwsA(
+        predicate(
+          (e) =>
+              e is UnsupportedError &&
+              e.message ==
+                  'Developer: you may not Push or Pop in the mayPop method.',
+        ),
+      ),
+    );
+  });
+
+  test('Push in mayPop', () async {
+    final availableScreens = [
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        S200ControllerMayPopPush(),
+      ),
+    ];
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    expect(
+      () async => await navigator.pop(),
+      throwsA(
+        predicate(
+          (e) =>
+              e is UnsupportedError &&
+              e.message ==
+                  'Developer: you may not Push or Pop in the mayPop method.',
         ),
       ),
     );
