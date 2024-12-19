@@ -1,13 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum>
     with ChangeNotifier {
-  //This is the actual screen stack
-  List<SCREEN_ID> get screenStack;
-
-  //This is a list of all available screens
-  ListOfRubigoScreens<SCREEN_ID> get availableScreens;
+  List<Page<void>> get pages;
 
   Future<void> pop();
 

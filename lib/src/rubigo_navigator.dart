@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
@@ -18,14 +17,14 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     LogNavigation? logNavigation,
     ScreenToPage? screenToPage,
   }) {
+    screenToPage ??= (Widget screen) => MaterialPage<void>(child: screen);
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
       initialScreenStack,
       availableScreens,
+      screenToPage,
       logNavigation,
     );
-
-    screenToPage ??= (Widget screen) => MaterialPage<void>(child: screen);
 
     final navigator =
         RubigoNavigator._(rubigoStackManager, logNavigation, screenToPage);
@@ -55,19 +54,8 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   final ScreenToPage _screenToPage;
 
   //The list of pages to feed to the Flutter Navigator
-  List<Page<void>> get pages {
-    final screenStack = _rubigoStackManager.screenStack;
-    unawaited(
-      _logNavigation(
-        'Screen stack: ${screenStack.map((e) => e.name).toList().join(' => ')}.',
-      ),
-    );
-    final pages = screenStack
-        .map(_rubigoStackManager.availableScreens.findScreen)
-        .map(_screenToPage)
-        .toList();
-    return pages;
-  }
+  @override
+  List<Page<void>> get pages => _rubigoStackManager.pages;
 
   @override
   Future<void> pop() => _rubigoStackManager.pop();
@@ -77,16 +65,6 @@ class RubigoNavigator<SCREEN_ID extends Enum>
 
   @override
   Future<void> push(SCREEN_ID screenId) => _rubigoStackManager.push(screenId);
-
-  @override
-  ListOfRubigoScreens<SCREEN_ID> get availableScreens =>
-      ListOfRubigoScreens<SCREEN_ID>.unmodifiable(
-        _rubigoStackManager.availableScreens,
-      );
-
-  @override
-  List<SCREEN_ID> get screenStack =>
-      List<SCREEN_ID>.unmodifiable(_rubigoStackManager.screenStack);
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) =>

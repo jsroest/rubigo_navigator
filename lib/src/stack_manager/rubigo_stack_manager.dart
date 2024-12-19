@@ -14,18 +14,19 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   RubigoStackManager(
     this.screenStack,
     this.availableScreens,
+    this._screenToPage,
     this._logNavigation,
   );
 
   //This is the actual screen stack
-  @override
   final List<SCREEN_ID> screenStack;
 
   //This is a list of all available screens
-  @override
   final ListOfRubigoScreens<SCREEN_ID> availableScreens;
 
   final LogNavigation _logNavigation;
+
+  final ScreenToPage _screenToPage;
 
   @override
   Future<void> pop() async {
@@ -196,5 +197,20 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       await Future<void>.delayed(const Duration(milliseconds: 100));
       await currentController.isShown(changeInfo);
     }
+  }
+
+  @override
+  // TODO: implement pages
+  List<Page<void>> get pages {
+    unawaited(
+      _logNavigation(
+        'Screen stack: ${screenStack.map((e) => e.name).toList().join(' => ')}.',
+      ),
+    );
+    final pages = screenStack
+        .map(availableScreens.findScreen)
+        .map(_screenToPage)
+        .toList();
+    return pages;
   }
 }
