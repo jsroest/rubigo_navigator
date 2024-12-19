@@ -169,6 +169,11 @@ class RubigoStackManager<SCREEN_ID extends Enum>
           previousScreen,
         );
         screenStack.removeLast();
+        if (screenStack.isEmpty) {
+          throw UnsupportedError(
+            'Developer: Pop was called on the last page. The screen stack may not be empty',
+          );
+        }
         currentScreen = screenStack.last;
         currentController = availableScreens.findController(currentScreen);
         _pushPopCounter++;
@@ -177,16 +182,21 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
       case PushOrPop.popTo:
         if (toScreenId == null) {
-          throw UnsupportedError(
-            'Developer: When PushOrPop.popTo, toController may not be null',
+          throw ArgumentError(
+            'Developer: With popTo, the toController parameter may not be null',
           );
         }
         changeInfo = RubigoChangeInfo(
           StackChange.isRevealed,
           screenStack.last,
         );
-        while (screenStack.length > 1) {
+        while (screenStack.isNotEmpty) {
           screenStack.removeLast();
+          if (screenStack.isEmpty) {
+            throw UnsupportedError(
+              'Developer: With popTo, you tried to navigate to ${toScreenId.name}, which was not on the stack.',
+            );
+          }
           if (screenStack.last == toScreenId) {
             _pushPopCounter++;
             final currentScreen = screenStack.last;

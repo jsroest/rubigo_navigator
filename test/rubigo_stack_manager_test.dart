@@ -18,7 +18,7 @@ ListOfRubigoScreens<Screens> createAvailableScreens() => [
     ];
 
 void main() {
-  test('Test pop', () async {
+  test('Test s100-s200-s300 pop', () async {
     final availableScreens = createAvailableScreens();
     final initialScreenStack = [
       Screens.s100,
@@ -49,7 +49,41 @@ void main() {
     );
   });
 
-  test('Test popTo', () async {
+  test(
+    'Test s100 pop',
+    () async {
+      final availableScreens = createAvailableScreens();
+      final initialScreenStack = [
+        Screens.s100,
+      ];
+      final navigator = RubigoNavigator<Screens>(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      );
+      final pages = navigator.pages;
+      final initialScreens =
+          initialScreenStack.toListOfWidget(availableScreens);
+
+      checkPages(
+        pages: pages,
+        screens: initialScreens,
+      );
+
+      expect(
+        () async => await navigator.pop(),
+        throwsA(
+          predicate(
+            (e) =>
+                e is UnsupportedError &&
+                e.message ==
+                    'Developer: Pop was called on the last page. The screen stack may not be empty',
+          ),
+        ),
+      );
+    },
+  );
+
+  test('Test s100-s200-s300 popTo s100', () async {
     final availableScreens = createAvailableScreens();
     final initialScreenStack = [
       Screens.s100,
@@ -75,7 +109,42 @@ void main() {
     );
   });
 
-  test('Test push', () async {
+  test(
+    'Test s100-s200 popTo s300',
+    () async {
+      final availableScreens = createAvailableScreens();
+      final initialScreenStack = [
+        Screens.s100,
+        Screens.s200,
+      ];
+      final navigator = RubigoNavigator<Screens>(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      );
+      final pages = navigator.pages;
+      final initialScreens =
+          initialScreenStack.toListOfWidget(availableScreens);
+
+      checkPages(
+        pages: pages,
+        screens: initialScreens,
+      );
+
+      expect(
+        () async => await navigator.popTo(Screens.s300),
+        throwsA(
+          predicate(
+            (e) =>
+                e is UnsupportedError &&
+                e.message ==
+                    'Developer: With popTo, you tried to navigate to s300, which was not on the stack.',
+          ),
+        ),
+      );
+    },
+  );
+
+  test('Test s100 push s200', () async {
     final availableScreens = createAvailableScreens();
     final initialScreenStack = [
       Screens.s100,
