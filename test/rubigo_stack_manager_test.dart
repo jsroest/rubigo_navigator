@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
 import 'helpers/screens/s200/s200_controller.dart';
+import 'helpers/screens/s200/s200_controller_with_on_top_event.dart';
 import 'helpers/screens/s200/s200_screen.dart';
 import 'helpers/screens/s300/s200_controller.dart';
 import 'helpers/screens/s300/s200_screen.dart';
@@ -226,6 +226,58 @@ void main() {
                   'Developer: You can only remove pages that exist on the stack (s300 not found).',
         ),
       ),
+    );
+  });
+
+  test('Test s100 push s100-s200-s300', () async {
+    final availableScreens = [
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(Screens.s200, S200Screen(), S200ControllerWithOnTopEvents()),
+      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+    ];
+    final initialScreenStack = [
+      Screens.s100,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    await navigator.push(Screens.s200);
+    final pages = navigator.pages;
+    final screens = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ].toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages,
+      screens: screens,
+    );
+  });
+
+  test('Test s100-s200-s300 pop s100 ', () async {
+    final availableScreens = [
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(Screens.s200, S200Screen(), S200ControllerWithOnTopEvents()),
+      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+    ];
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    await navigator.pop();
+    final pages = navigator.pages;
+    final screens = [
+      Screens.s100,
+    ].toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages,
+      screens: screens,
     );
   });
 }

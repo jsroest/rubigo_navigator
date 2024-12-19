@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
@@ -90,4 +89,151 @@ void main() {
       ),
     );
   });
+
+  test('onDidRemovePage last MaterialPage', () async {
+    final initialStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final availableScreens = createAvailableScreens();
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialStack,
+      availableScreens: availableScreens,
+    );
+    await navigator.onDidRemovePage(
+      MaterialPage<void>(
+        child: availableScreens[2].screenWidget,
+      ),
+    );
+    checkPages(pages: navigator.pages, screens: [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+    ]);
+  });
+
+  test('onDidRemovePage last CupertinoPage', () async {
+    final initialStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final availableScreens = createAvailableScreens();
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialStack,
+      availableScreens: availableScreens,
+      screenToPage: (screen) => CupertinoPage<void>(child: screen),
+    );
+    await navigator.onDidRemovePage(
+      CupertinoPage<void>(
+        child: availableScreens[2].screenWidget,
+      ),
+    );
+    checkPages(pages: navigator.pages, screens: [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+    ]);
+  });
+
+  test('onDidRemovePage middle MaterialPage', () async {
+    final initialStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final availableScreens = createAvailableScreens();
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialStack,
+      availableScreens: availableScreens,
+    );
+    await navigator.onDidRemovePage(
+      MaterialPage<void>(
+        child: availableScreens[1].screenWidget,
+      ),
+    );
+    checkPages(pages: navigator.pages, screens: [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+      availableScreens[2].screenWidget,
+    ]);
+  });
+
+  test('onPopPage last page', () async {
+    final initialStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final availableScreens = createAvailableScreens();
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialStack,
+      availableScreens: availableScreens,
+    );
+    await navigator.onPopPage(
+      MaterialPageRoute<void>(builder: (_) => Placeholder()),
+      null,
+    );
+    checkPages(pages: navigator.pages, screens: [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+    ]);
+  });
+
+  test(
+    'Navigator screenStack is equal and unmodifiable',
+    () {
+      final initialStack = [
+        Screens.s100,
+        Screens.s200,
+        Screens.s300,
+      ];
+      final availableScreens = createAvailableScreens();
+      final navigator = RubigoNavigator<Screens>(
+        initialScreenStack: initialStack,
+        availableScreens: availableScreens,
+      );
+      final navScreenStack = navigator.screenStack;
+      //Check if the contents are the same
+      expect(navScreenStack, initialStack);
+      expect(
+        () => navScreenStack.removeLast(),
+        throwsA(
+          predicate(
+            (e) =>
+                e is UnsupportedError &&
+                e.message == 'Cannot remove from an unmodifiable list',
+          ),
+        ),
+      );
+    },
+  );
+
+  test(
+    'Navigator availableScreens is equal and unmodifiable',
+    () {
+      final initialStack = [
+        Screens.s100,
+        Screens.s200,
+        Screens.s300,
+      ];
+      final availableScreens = createAvailableScreens();
+      final navigator = RubigoNavigator<Screens>(
+        initialScreenStack: initialStack,
+        availableScreens: availableScreens,
+      );
+      final navAvailableScreens = navigator.availableScreens;
+      //Check if the contents are the same
+      expect(navAvailableScreens, availableScreens);
+      expect(
+        () => navAvailableScreens.removeLast(),
+        throwsA(
+          predicate(
+            (e) =>
+                e is UnsupportedError &&
+                e.message == 'Cannot remove from an unmodifiable list',
+          ),
+        ),
+      );
+    },
+  );
 }
