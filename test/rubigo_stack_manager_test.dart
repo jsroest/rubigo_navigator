@@ -5,6 +5,8 @@ import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
 import 'helpers/screens/s200/s200_controller.dart';
+import 'helpers/screens/s200/s200_controller_pop_in_will_show.dart';
+import 'helpers/screens/s200/s200_controller_push_in_will_show.dart';
 import 'helpers/screens/s200/s200_controller_with_on_top_event.dart';
 import 'helpers/screens/s200/s200_screen.dart';
 import 'helpers/screens/s300/s200_controller.dart';
@@ -255,7 +257,7 @@ void main() {
     );
   });
 
-  test('Test s100-s200-s300 pop s100 ', () async {
+  test('Test s100-s200-s300 pop s100', () async {
     final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerWithOnTopEvents()),
@@ -278,6 +280,68 @@ void main() {
     checkPages(
       pages: pages,
       screens: screens,
+    );
+  });
+
+  test('Push in willShow', () async {
+    final availableScreens = [
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        S200ControllerPushInWillShow(),
+      ),
+      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+    ];
+    final initialScreenStack = [
+      Screens.s100,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    expect(
+      () async => await navigator.push(Screens.s200),
+      throwsA(
+        predicate(
+          (e) =>
+              e is UnsupportedError &&
+              e.message ==
+                  'Developer: you may not Push or Pop in the willShow method.',
+        ),
+      ),
+    );
+  });
+
+  test('Pop in willShow', () async {
+    final availableScreens = [
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        S200ControllerPopInWillShow(),
+      ),
+      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+    ];
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    expect(
+      () async => await navigator.pop(),
+      throwsA(
+        predicate(
+          (e) =>
+              e is UnsupportedError &&
+              e.message ==
+                  'Developer: you may not Push or Pop in the willShow method.',
+        ),
+      ),
     );
   });
 }
