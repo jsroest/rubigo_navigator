@@ -71,10 +71,6 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     return pages;
   }
 
-  //Use this function if you want access to a specific controller
-  T getController<T extends RubigoController<SCREEN_ID>>(SCREEN_ID screenId) =>
-      _rubigoStackManager.availableScreens.findSpecificController<T>(screenId);
-
   @override
   Future<void> pop() => _rubigoStackManager.pop();
 
