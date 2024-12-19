@@ -4,10 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
+import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
-
-enum PushOrPop { push, pop, popTo }
 
 class RubigoStackManager<SCREEN_ID extends Enum>
     with ChangeNotifier
@@ -31,27 +30,19 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   @override
   Future<void> pop() async {
     unawaited(_logNavigation('pop() called.'));
-    await _navigate(
-      pushOrPop: PushOrPop.pop,
-    );
+    await _navigate(Pop<SCREEN_ID>());
   }
 
   @override
   Future<void> popTo(SCREEN_ID screenId) async {
     unawaited(_logNavigation('popTo(${screenId.name}) called.'));
-    await _navigate(
-      pushOrPop: PushOrPop.popTo,
-      toScreenId: screenId,
-    );
+    await _navigate(PopTo(screenId));
   }
 
   @override
   Future<void> push(SCREEN_ID screenId) async {
     unawaited(_logNavigation('push(${screenId.name}) called.'));
-    await _navigate(
-      pushOrPop: PushOrPop.push,
-      toScreenId: screenId,
-    );
+    await _navigate(Push(screenId));
   }
 
   @override
@@ -117,10 +108,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   bool _inMayPop = false;
   int _pushPopCounter = 0;
 
-  Future<void> _navigate({
-    required PushOrPop pushOrPop,
-    SCREEN_ID? toScreenId,
-  }) async {
+  Future<void> _navigate(NavigationType<SCREEN_ID> navigationType) async {
     if (_inWillShow) {
       throw UnsupportedError(
         'Developer: you may not Push or Pop in the willShow method.',
@@ -132,31 +120,21 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       );
     }
     late RubigoChangeInfo<SCREEN_ID> changeInfo;
-    switch (pushOrPop) {
-      case PushOrPop.push:
-        if (toScreenId == null) {
-          throw UnsupportedError(
-            'Developer: When calling push, parameter toController may not be null.',
-          );
-        }
+    switch (navigationType) {
+      case Push<SCREEN_ID>():
         final previousScreen = screenStack.lastOrNull;
-
         changeInfo = RubigoChangeInfo(
           StackChange.isPushed,
           previousScreen,
         );
-        final currentController = availableScreens.findController(toScreenId);
-        screenStack.add(toScreenId);
+        final currentController =
+            availableScreens.findController(navigationType.screenId);
+        screenStack.add(navigationType.screenId);
         _pushPopCounter++;
         await currentController.onTop(changeInfo);
         _pushPopCounter--;
 
-      case PushOrPop.pop:
-        if (toScreenId != null) {
-          throw UnsupportedError(
-            'Developer: When PushOrPop.pop, toController must be null.',
-          );
-        }
+      case Pop():
         if (screenStack.isEmpty) {
           return;
         }
@@ -185,12 +163,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         await currentController.onTop(changeInfo);
         _pushPopCounter--;
 
-      case PushOrPop.popTo:
-        if (toScreenId == null) {
-          throw ArgumentError(
-            'Developer: With popTo, the toController parameter may not be null.',
-          );
-        }
+      case PopTo<SCREEN_ID>():
         changeInfo = RubigoChangeInfo(
           StackChange.isRevealed,
           screenStack.last,
@@ -199,10 +172,10 @@ class RubigoStackManager<SCREEN_ID extends Enum>
           screenStack.removeLast();
           if (screenStack.isEmpty) {
             throw UnsupportedError(
-              'Developer: With popTo, you tried to navigate to ${toScreenId.name}, which was not on the stack.',
+              'Developer: With popTo, you tried to navigate to ${navigationType.screenId.name}, which was not on the stack.',
             );
           }
-          if (screenStack.last == toScreenId) {
+          if (screenStack.last == navigationType.screenId) {
             _pushPopCounter++;
             final currentScreen = screenStack.last;
             final currentController =
