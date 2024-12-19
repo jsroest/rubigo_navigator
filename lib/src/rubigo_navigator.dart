@@ -26,8 +26,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
       logNavigation,
     );
 
-    final navigator =
-        RubigoNavigator._(rubigoStackManager, logNavigation, screenToPage);
+    final navigator = RubigoNavigator._(rubigoStackManager);
     for (final screenSet in availableScreens) {
       //Wire up the controller in each screenWidget that has the RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
@@ -43,15 +42,11 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   //Private constructor
   RubigoNavigator._(
     this._rubigoStackManager,
-    this._logNavigation,
-    this._screenToPage,
   ) {
     _rubigoStackManager.addListener(notifyListeners);
   }
 
   final RubigoStackManagerInterface<SCREEN_ID> _rubigoStackManager;
-  final LogNavigation _logNavigation;
-  final ScreenToPage _screenToPage;
 
   //The list of pages to feed to the Flutter Navigator
   @override
@@ -74,7 +69,6 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
 
   @override
-  Future<bool> onPopPage(Route<dynamic> route, dynamic result) {
-    return _rubigoStackManager.onPopPage(route, result);
-  }
+  bool onPopPage(Route<dynamic> route, dynamic result) =>
+      _rubigoStackManager.onPopPage(route, result);
 }

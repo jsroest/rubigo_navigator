@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 
 abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum>
@@ -12,7 +14,7 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum>
 
   Future<void> onDidRemovePage(Page<Object?> page);
 
-  Future<bool> onPopPage(Route<dynamic> route, dynamic result);
+  bool onPopPage(Route<dynamic> route, dynamic result);
 
   void remove(SCREEN_ID screenId);
 }
