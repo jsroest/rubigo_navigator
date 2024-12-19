@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
-import 'package:rubigo_navigator/src/mixins/rubigo_controller_mixin.dart';
+import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
@@ -32,9 +32,8 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     for (final screenSet in availableScreens) {
       //Wire up the controller in each screenWidget that has the RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
-      if (screenWidget is RubigoControllerMixin) {
-        (screenWidget as RubigoControllerMixin).controller =
-            screenSet.controller;
+      if (screenWidget is RubigoScreenMixin) {
+        (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
       }
       //Wire up the navigator in each controller
       screenSet.controller.navigator = navigator;

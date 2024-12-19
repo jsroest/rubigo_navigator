@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class S300Screen extends StatelessWidget with RubigoControllerMixin {
+class S300Screen extends StatelessWidget with RubigoScreenMixin {
   S300Screen({super.key});
 
   @override

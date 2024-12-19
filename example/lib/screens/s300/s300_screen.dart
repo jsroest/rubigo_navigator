@@ -7,7 +7,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 /// Shows the details of a post
 
 class S300Screen extends StatelessWidget
-    with RubigoControllerMixin<S300Controller> {
+    with RubigoScreenMixin<S300Controller> {
   /// The post to display in this screen
 
   S300Screen({
