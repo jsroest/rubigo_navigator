@@ -5,9 +5,9 @@ import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
 import 'helpers/screens/s200/s200_controller.dart';
-import 'helpers/screens/s200/s200_controller_pop_in_will_show.dart';
-import 'helpers/screens/s200/s200_controller_push_in_will_show.dart';
-import 'helpers/screens/s200/s200_controller_with_on_top_event.dart';
+import 'helpers/screens/s200/s200_controller_will_show_pop.dart';
+import 'helpers/screens/s200/s200_controller_will_show_push.dart';
+import 'helpers/screens/s200/s200_controller_on_top_push_and_pop.dart';
 import 'helpers/screens/s200/s200_screen.dart';
 import 'helpers/screens/s300/s200_controller.dart';
 import 'helpers/screens/s300/s200_screen.dart';
@@ -234,7 +234,7 @@ void main() {
   test('Test s100 push s100-s200-s300', () async {
     final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200ControllerWithOnTopEvents()),
+      RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
     final initialScreenStack = [
@@ -260,7 +260,7 @@ void main() {
   test('Test s100-s200-s300 pop s100', () async {
     final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200ControllerWithOnTopEvents()),
+      RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
     final initialScreenStack = [
@@ -289,7 +289,7 @@ void main() {
       RubigoScreen(
         Screens.s200,
         S200Screen(),
-        S200ControllerPushInWillShow(),
+        S200ControllerWillShowPush(),
       ),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
@@ -319,7 +319,7 @@ void main() {
       RubigoScreen(
         Screens.s200,
         S200Screen(),
-        S200ControllerPopInWillShow(),
+        S200ControllerWillShowPop(),
       ),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
