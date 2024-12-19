@@ -32,8 +32,7 @@ void main() {
       availableScreens: availableScreens,
     );
     final pages = navigator.pages;
-    final screens =
-        initialStack.map((e) => availableScreens.findScreen(e)).toList();
+    final screens = initialStack.map(availableScreens.findScreen).toList();
     checkPages<MaterialPage<void>>(
       pages: pages,
       screens: screens,
@@ -53,8 +52,7 @@ void main() {
       screenToPage: (screen) => CupertinoPage<void>(child: screen),
     );
     final pages = navigator.pages;
-    final screens =
-        initialStack.map((e) => availableScreens.findScreen(e)).toList();
+    final screens = initialStack.map(availableScreens.findScreen).toList();
     checkPages<CupertinoPage<void>>(
       pages: pages,
       screens: screens,
@@ -106,10 +104,13 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
-    checkPages(pages: navigator.pages, screens: [
-      availableScreens[0].screenWidget,
-      availableScreens[1].screenWidget,
-    ]);
+    checkPages(
+      pages: navigator.pages,
+      screens: [
+        availableScreens[0].screenWidget,
+        availableScreens[1].screenWidget,
+      ],
+    );
   });
 
   test('onDidRemovePage last CupertinoPage', () async {
@@ -129,10 +130,13 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
-    checkPages(pages: navigator.pages, screens: [
-      availableScreens[0].screenWidget,
-      availableScreens[1].screenWidget,
-    ]);
+    checkPages(
+      pages: navigator.pages,
+      screens: [
+        availableScreens[0].screenWidget,
+        availableScreens[1].screenWidget,
+      ],
+    );
   });
 
   test('onDidRemovePage middle MaterialPage', () async {
@@ -151,11 +155,14 @@ void main() {
         child: availableScreens[1].screenWidget,
       ),
     );
-    checkPages(pages: navigator.pages, screens: [
-      availableScreens[0].screenWidget,
-      availableScreens[1].screenWidget,
-      availableScreens[2].screenWidget,
-    ]);
+    checkPages(
+      pages: navigator.pages,
+      screens: [
+        availableScreens[0].screenWidget,
+        availableScreens[1].screenWidget,
+        availableScreens[2].screenWidget,
+      ],
+    );
   });
 
   test('onPopPage last page', () async {
@@ -170,13 +177,16 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.onPopPage(
-      MaterialPageRoute<void>(builder: (_) => Placeholder()),
+      MaterialPageRoute<void>(builder: (_) => const Placeholder()),
       null,
     );
-    checkPages(pages: navigator.pages, screens: [
-      availableScreens[0].screenWidget,
-      availableScreens[1].screenWidget,
-    ]);
+    checkPages(
+      pages: navigator.pages,
+      screens: [
+        availableScreens[0].screenWidget,
+        availableScreens[1].screenWidget,
+      ],
+    );
   });
 
   test(
@@ -196,7 +206,7 @@ void main() {
       //Check if the contents are the same
       expect(navScreenStack, initialStack);
       expect(
-        () => navScreenStack.removeLast(),
+        navScreenStack.removeLast,
         throwsA(
           predicate(
             (e) =>
@@ -225,7 +235,7 @@ void main() {
       //Check if the contents are the same
       expect(navAvailableScreens, availableScreens);
       expect(
-        () => navAvailableScreens.removeLast(),
+        navAvailableScreens.removeLast,
         throwsA(
           predicate(
             (e) =>

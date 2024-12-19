@@ -74,7 +74,7 @@ void main() {
       );
 
       expect(
-        () async => await navigator.pop(),
+        () async => navigator.pop(),
         throwsA(
           predicate(
             (e) =>
@@ -135,7 +135,7 @@ void main() {
       );
 
       expect(
-        () async => await navigator.popTo(Screens.s300),
+        () async => navigator.popTo(Screens.s300),
         throwsA(
           predicate(
             (e) =>
@@ -303,7 +303,7 @@ void main() {
       availableScreens: availableScreens,
     );
     expect(
-      () async => await navigator.push(Screens.s200),
+      () async => navigator.push(Screens.s200),
       throwsA(
         predicate(
           (e) =>
@@ -335,7 +335,7 @@ void main() {
       availableScreens: availableScreens,
     );
     expect(
-      () async => await navigator.pop(),
+      () async => navigator.pop(),
       throwsA(
         predicate(
           (e) =>
@@ -365,7 +365,7 @@ void main() {
       availableScreens: availableScreens,
     );
     expect(
-      () async => await navigator.pop(),
+      () async => navigator.pop(),
       throwsA(
         predicate(
           (e) =>
@@ -395,7 +395,7 @@ void main() {
       availableScreens: availableScreens,
     );
     expect(
-      () async => await navigator.pop(),
+      () async => navigator.pop(),
       throwsA(
         predicate(
           (e) =>

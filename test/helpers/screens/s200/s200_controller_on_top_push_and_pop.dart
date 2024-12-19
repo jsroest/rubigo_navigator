@@ -8,13 +8,13 @@ class S200ControllerOnTopPushAndPop extends RubigoController<Screens> {
     //Here you can set conditions to push the next screen on the stack in one go.
     if (changeInfo.stackChange == StackChange.isPushed &&
         changeInfo.previousScreen == Screens.s100) {
-      navigator.push(Screens.s300);
+      await navigator.push(Screens.s300);
       return;
     }
     //Here you can set conditions to also pop this screen from the stack in one go.
     if (changeInfo.stackChange == StackChange.isRevealed &&
         changeInfo.previousScreen == Screens.s300) {
-      navigator.pop();
+      await navigator.pop();
     }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-checkPages<PAGE_TYPE extends Page>({
-  required List<Page> pages,
+void checkPages<PAGE_TYPE extends Page<dynamic>>({
+  required List<Page<dynamic>> pages,
   required List<Widget> screens,
 }) {
   //We expect the number of items in the list to be equal
@@ -17,12 +17,12 @@ checkPages<PAGE_TYPE extends Page>({
     for (final page in pages) {
       if (page is! PAGE_TYPE) {
         throw ArgumentError(
-          'Some or all pages are not of type ${PAGE_TYPE.toString()}.',
+          'Some or all pages are not of type $PAGE_TYPE.',
         );
       }
     }
   }
-  for (int index = 0; index < pages.length; index++) {
+  for (var index = 0; index < pages.length; index++) {
     final page = pages[index];
     final screen = screens[index];
     final Widget screenWidget;
