@@ -82,10 +82,12 @@ class RubigoNavigator<SCREEN_ID extends Enum>
 
   @override
   ListOfRubigoScreens<SCREEN_ID> get availableScreens =>
-      _rubigoStackManager.availableScreens;
+      ListOfRubigoScreens<SCREEN_ID>.unmodifiable(
+          _rubigoStackManager.availableScreens);
 
   @override
-  List<SCREEN_ID> get screenStack => _rubigoStackManager.screenStack;
+  List<SCREEN_ID> get screenStack =>
+      List<SCREEN_ID>.unmodifiable(_rubigoStackManager.screenStack);
 
   @override
   void onDidRemovePage(Page<Object?> page) =>
