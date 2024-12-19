@@ -1,4 +1,3 @@
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/rubigo_navigator.dart';
 
 abstract class RubigoController<SCREEN_ID extends Enum> {
@@ -9,15 +8,6 @@ abstract class RubigoController<SCREEN_ID extends Enum> {
   Future<void> isShown(RubigoChangeInfo<SCREEN_ID?> changeInfo) async {}
 
   Future<bool> mayPop() => Future.value(true);
-
-  bool get canPop {
-    final firstController =
-        navigator.availableScreens.findController(navigator.screenStack.first);
-    if (this == firstController) {
-      return false;
-    }
-    return true;
-  }
 
   late final RubigoNavigator<SCREEN_ID> navigator;
 }
