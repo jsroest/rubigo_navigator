@@ -104,6 +104,11 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     unawaited(
       _logNavigation('remove(${screenId.name}) called'),
     );
+    if (!screenStack.contains(screenId)) {
+      throw UnsupportedError(
+        'Developer: You can only remove pages that exist on the stack (${screenId.name} not found).',
+      );
+    }
     screenStack.remove(screenId);
     notifyListeners();
   }
@@ -131,7 +136,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       case PushOrPop.push:
         if (toScreenId == null) {
           throw UnsupportedError(
-            'Developer: When PushOrPop.push, toController may not be null',
+            'Developer: When calling push, parameter toController may not be null',
           );
         }
         final previousScreen = screenStack.lastOrNull;

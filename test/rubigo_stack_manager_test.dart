@@ -171,4 +171,61 @@ void main() {
       screens: screens2,
     );
   });
+
+  test('Test s100-s200-s300 remove s200', () {
+    final availableScreens = createAvailableScreens();
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    final pages = navigator.pages;
+    final screens = initialScreenStack.toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages,
+      screens: screens,
+    );
+    navigator.remove(Screens.s200);
+    final pages2 = navigator.pages;
+    final screens2 =
+        [Screens.s100, Screens.s300].toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages2,
+      screens: screens2,
+    );
+  });
+
+  test('Test s100-s200 remove s300', () {
+    final availableScreens = createAvailableScreens();
+    final initialScreenStack = [
+      Screens.s100,
+      Screens.s200,
+    ];
+    final navigator = RubigoNavigator<Screens>(
+      initialScreenStack: initialScreenStack,
+      availableScreens: availableScreens,
+    );
+    final pages = navigator.pages;
+    final screens = initialScreenStack.toListOfWidget(availableScreens);
+    checkPages(
+      pages: pages,
+      screens: screens,
+    );
+
+    expect(
+      () => navigator.remove(Screens.s300),
+      throwsA(
+        predicate(
+          (e) =>
+              e is UnsupportedError &&
+              e.message ==
+                  'Developer: You can only remove pages that exist on the stack (s300 not found).',
+        ),
+      ),
+    );
+  });
 }
