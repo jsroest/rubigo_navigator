@@ -128,7 +128,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     }
     if (_inMayPop) {
       throw UnsupportedError(
-        'Developer: you may not Push or Pop in the mayShow method',
+        'Developer: you may not Push or Pop in the mayPop method',
       );
     }
     late RubigoChangeInfo<SCREEN_ID> changeInfo;
