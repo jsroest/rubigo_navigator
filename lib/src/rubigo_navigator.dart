@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_controller_mixin.dart';
-import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
@@ -90,14 +89,14 @@ class RubigoNavigator<SCREEN_ID extends Enum>
       List<SCREEN_ID>.unmodifiable(_rubigoStackManager.screenStack);
 
   @override
-  void onDidRemovePage(Page<Object?> page) =>
+  Future<void> onDidRemovePage(Page<Object?> page) =>
       _rubigoStackManager.onDidRemovePage(page);
 
   @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
 
   @override
-  bool onPopPage(Route<dynamic> route, dynamic result) {
+  Future<bool> onPopPage(Route<dynamic> route, dynamic result) {
     return _rubigoStackManager.onPopPage(route, result);
   }
 }

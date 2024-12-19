@@ -91,11 +91,11 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
-  bool onPopPage(Route<dynamic> route, dynamic result) {
+  Future<bool> onPopPage(Route<dynamic> route, dynamic result) async {
     unawaited(
       _logNavigation('onPopPage() called by Flutter framework'),
     );
-    unawaited(pop());
+    await pop();
     return false;
   }
 
