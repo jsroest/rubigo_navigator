@@ -20,7 +20,12 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     screenToPage ??= (Widget screen) => MaterialPage<void>(child: screen);
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
-      initialScreenStack,
+      initialScreenStack
+          .map(
+            (screenId) =>
+                availableScreens.firstWhere((e) => e.screenId == screenId),
+          )
+          .toList(),
       availableScreens,
       screenToPage,
       logNavigation,
