@@ -14,7 +14,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   RubigoStackManager(
     this.screenStack,
     this.availableScreens,
-    this._screenToPage,
+    this._screenListToPageList,
     this._logNavigation,
   );
 
@@ -26,7 +26,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   final LogNavigation _logNavigation;
 
-  final ScreenToPage _screenToPage;
+  final ScreenListToPageList _screenListToPageList;
 
   @override
   Future<void> pop() async {
@@ -83,9 +83,9 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
-  bool onPopPage(Route<dynamic> route, dynamic result) {
-    _logNavigation('onPopPage() called by Flutter framework.');
-    pop();
+  Future<bool> onPopPage(Route<dynamic> route, dynamic result) async {
+    unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
+    await pop();
     return false;
   }
 
@@ -200,8 +200,9 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         'Screen stack: ${screenStack.map((e) => e.screenId.name).toList().join(' => ')}.',
       ),
     );
-    final pages =
-        screenStack.map((e) => _screenToPage(e.screenWidget)).toList();
+    final pages = _screenListToPageList(
+      screenStack.map((e) => e.screenWidget).toList(),
+    );
     return pages;
   }
 }

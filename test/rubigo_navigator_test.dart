@@ -49,7 +49,8 @@ void main() {
     final navigator = RubigoNavigator<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
-      screenToPage: (screen) => CupertinoPage<void>(child: screen),
+      screenListToPageList: (screenList) =>
+          screenList.map((e) => CupertinoPage<void>(child: e)).toList(),
     );
     final pages = navigator.pages;
     final screens = initialStack.map(availableScreens.findScreen).toList();
@@ -69,7 +70,8 @@ void main() {
     final navigator = RubigoNavigator<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
-      screenToPage: (screen) => UnsupportedPage<void>(child: screen),
+      screenListToPageList: (screenList) =>
+          screenList.map((e) => UnsupportedPage<void>(child: e)).toList(),
     );
     expect(
       () => navigator.onDidRemovePage(
@@ -123,7 +125,8 @@ void main() {
     final navigator = RubigoNavigator<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
-      screenToPage: (screen) => CupertinoPage<void>(child: screen),
+      screenListToPageList: (screenList) =>
+          screenList.map((e) => CupertinoPage<void>(child: e)).toList(),
     );
     await navigator.onDidRemovePage(
       CupertinoPage<void>(

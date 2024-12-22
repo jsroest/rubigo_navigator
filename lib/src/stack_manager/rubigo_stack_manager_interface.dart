@@ -14,7 +14,7 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum>
 
   Future<void> onDidRemovePage(Page<Object?> page);
 
-  bool onPopPage(Route<dynamic> route, dynamic result);
+  Future<bool> onPopPage(Route<dynamic> route, dynamic result);
 
   void remove(SCREEN_ID screenId);
 }

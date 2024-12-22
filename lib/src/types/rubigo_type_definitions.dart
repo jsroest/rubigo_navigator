@@ -10,4 +10,4 @@ typedef ListOfRubigoScreens<SCREEN_ID extends Enum>
 
 typedef LogNavigation = Future<void> Function(String message);
 
-typedef ScreenToPage = Page<void> Function(Widget screen);
+typedef ScreenListToPageList = List<Page<void>> Function(List<Widget> screen);

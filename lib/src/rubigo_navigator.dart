@@ -15,9 +15,9 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
     RubigoStackManagerInterface<SCREEN_ID>? rubigoStackManager,
     LogNavigation? logNavigation,
-    ScreenToPage? screenToPage,
+    ScreenListToPageList? screenListToPageList,
   }) {
-    screenToPage ??= (Widget screen) => MaterialPage<void>(child: screen);
+    screenListToPageList ??= _listOfWidgetToListOfPage;
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
       initialScreenStack
@@ -27,7 +27,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
           )
           .toList(),
       availableScreens,
-      screenToPage,
+      screenListToPageList,
       logNavigation,
     );
 
@@ -74,6 +74,14 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
 
   @override
-  bool onPopPage(Route<dynamic> route, dynamic result) =>
+  Future<bool> onPopPage(Route<dynamic> route, dynamic result) =>
       _rubigoStackManager.onPopPage(route, result);
+
+  static List<Page<void>> _listOfWidgetToListOfPage(List<Widget> listOfWidget) {
+    return listOfWidget
+        .map(
+          (e) => MaterialPage<void>(child: e),
+        )
+        .toList();
+  }
 }
