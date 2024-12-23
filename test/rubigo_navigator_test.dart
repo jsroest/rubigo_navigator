@@ -34,7 +34,7 @@ void main() {
     final pages = navigator.pages;
     final screens = initialStack.map(availableScreens.findScreen).toList();
     checkPages<MaterialPage<void>>(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: screens,
     );
   });
@@ -49,18 +49,16 @@ void main() {
     final navigator = RubigoNavigator<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
-      screenListToPageList: (screenList) =>
-          screenList.map((e) => CupertinoPage<void>(child: e)).toList(),
     );
     final pages = navigator.pages;
     final screens = initialStack.map(availableScreens.findScreen).toList();
     checkPages<CupertinoPage<void>>(
-      pages: pages,
+      pages: RubigoRouterDelegate.cupertinoPages(pages),
       screens: screens,
     );
   });
 
-  test('Navigator with list of UnsupportedPages', () {
+  test('Navigator with list of UnsupportedPages', () async {
     final initialStack = [
       Screens.s100,
       Screens.s200,
@@ -70,10 +68,8 @@ void main() {
     final navigator = RubigoNavigator<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
-      screenListToPageList: (screenList) =>
-          screenList.map((e) => UnsupportedPage<void>(child: e)).toList(),
     );
-    expect(
+    await expectLater(
       () => navigator.onDidRemovePage(
         UnsupportedPage<void>(
           child: S300Screen(),
@@ -107,7 +103,7 @@ void main() {
       ),
     );
     checkPages(
-      pages: navigator.pages,
+      pages: RubigoRouterDelegate.materialPages(navigator.pages),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
@@ -125,8 +121,6 @@ void main() {
     final navigator = RubigoNavigator<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
-      screenListToPageList: (screenList) =>
-          screenList.map((e) => CupertinoPage<void>(child: e)).toList(),
     );
     await navigator.onDidRemovePage(
       CupertinoPage<void>(
@@ -134,7 +128,7 @@ void main() {
       ),
     );
     checkPages(
-      pages: navigator.pages,
+      pages: RubigoRouterDelegate.cupertinoPages(navigator.pages),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
@@ -159,7 +153,7 @@ void main() {
       ),
     );
     checkPages(
-      pages: navigator.pages,
+      pages: RubigoRouterDelegate.materialPages(navigator.pages),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
@@ -179,12 +173,14 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    await navigator.onPopPage(
+    navigator.onPopPage(
       MaterialPageRoute<void>(builder: (_) => const Placeholder()),
       null,
     );
+    //Allow time for the pop to finish.
+    await Future<void>.delayed(const Duration(milliseconds: 10));
     checkPages(
-      pages: navigator.pages,
+      pages: RubigoRouterDelegate.materialPages(navigator.pages),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,

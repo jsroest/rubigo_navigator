@@ -37,7 +37,7 @@ void main() {
     final initialScreens = initialScreenStack.toListOfWidget(availableScreens);
 
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: initialScreens,
     );
     await navigator.pop();
@@ -48,7 +48,7 @@ void main() {
     ].toListOfWidget(availableScreens);
 
     checkPages(
-      pages: pages2,
+      pages: RubigoRouterDelegate.materialPages(pages2),
       screens: screens2,
     );
   });
@@ -69,7 +69,7 @@ void main() {
           initialScreenStack.toListOfWidget(availableScreens);
 
       checkPages(
-        pages: pages,
+        pages: RubigoRouterDelegate.materialPages(pages),
         screens: initialScreens,
       );
 
@@ -101,14 +101,14 @@ void main() {
     final pages = navigator.pages;
     final screens = initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: screens,
     );
     await navigator.popTo(Screens.s100);
     final pages2 = navigator.pages;
     final screens2 = [Screens.s100].toListOfWidget(availableScreens);
     checkPages(
-      pages: pages2,
+      pages: RubigoRouterDelegate.materialPages(pages2),
       screens: screens2,
     );
   });
@@ -130,7 +130,7 @@ void main() {
           initialScreenStack.toListOfWidget(availableScreens);
 
       checkPages(
-        pages: pages,
+        pages: RubigoRouterDelegate.materialPages(pages),
         screens: initialScreens,
       );
 
@@ -161,7 +161,7 @@ void main() {
     final initialScreens =
         initialScreenStack.map(availableScreens.findScreen).toList();
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: initialScreens,
     );
     await navigator.push(Screens.s200);
@@ -171,7 +171,7 @@ void main() {
       Screens.s200,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: pages2,
+      pages: RubigoRouterDelegate.materialPages(pages2),
       screens: screens2,
     );
   });
@@ -190,7 +190,7 @@ void main() {
     final pages = navigator.pages;
     final screens = initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: screens,
     );
     navigator.remove(Screens.s200);
@@ -198,7 +198,7 @@ void main() {
     final screens2 =
         [Screens.s100, Screens.s300].toListOfWidget(availableScreens);
     checkPages(
-      pages: pages2,
+      pages: RubigoRouterDelegate.materialPages(pages2),
       screens: screens2,
     );
   });
@@ -216,7 +216,7 @@ void main() {
     final pages = navigator.pages;
     final screens = initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: screens,
     );
 
@@ -254,7 +254,7 @@ void main() {
       Screens.s300,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: screens,
     );
   });
@@ -280,7 +280,7 @@ void main() {
       Screens.s100,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: pages,
+      pages: RubigoRouterDelegate.materialPages(pages),
       screens: screens,
     );
   });

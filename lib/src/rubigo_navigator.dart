@@ -2,22 +2,24 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
+import 'package:rubigo_navigator/src/rubigo_controller.dart';
+import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 class RubigoNavigator<SCREEN_ID extends Enum>
     with ChangeNotifier
-    implements RubigoStackManagerInterface<SCREEN_ID> {
+    implements
+        RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   //This constructor creates a new RubigoNavigator and wires up the components
   factory RubigoNavigator({
     required List<SCREEN_ID> initialScreenStack,
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
-    RubigoStackManagerInterface<SCREEN_ID>? rubigoStackManager,
+    RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
+        rubigoStackManager,
     LogNavigation? logNavigation,
-    ScreenListToPageList? screenListToPageList,
   }) {
-    screenListToPageList ??= _listOfWidgetToListOfPage;
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
       initialScreenStack
@@ -27,7 +29,6 @@ class RubigoNavigator<SCREEN_ID extends Enum>
           )
           .toList(),
       availableScreens,
-      screenListToPageList,
       logNavigation,
     );
 
@@ -51,11 +52,11 @@ class RubigoNavigator<SCREEN_ID extends Enum>
     _rubigoStackManager.addListener(notifyListeners);
   }
 
-  final RubigoStackManagerInterface<SCREEN_ID> _rubigoStackManager;
+  final RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
+      _rubigoStackManager;
 
-  //The list of pages to feed to the Flutter Navigator
   @override
-  List<Page<void>> get pages => _rubigoStackManager.pages;
+  List<RubigoScreen<SCREEN_ID>> get pages => _rubigoStackManager.pages;
 
   @override
   Future<void> pop() => _rubigoStackManager.pop();
@@ -74,14 +75,6 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
 
   @override
-  Future<bool> onPopPage(Route<dynamic> route, dynamic result) =>
+  bool onPopPage(Route<dynamic> route, dynamic result) =>
       _rubigoStackManager.onPopPage(route, result);
-
-  static List<Page<void>> _listOfWidgetToListOfPage(List<Widget> listOfWidget) {
-    return listOfWidget
-        .map(
-          (e) => MaterialPage<void>(child: e),
-        )
-        .toList();
-  }
 }

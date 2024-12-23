@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -27,8 +26,7 @@ void main() {
       availableScreens: availableScreens,
     );
     final pages = navigator.pages;
-    final materialPage = pages[0] as MaterialPage<void>;
-    final s100Screen = materialPage.child;
+    final s100Screen = pages[0].screenWidget;
     final screenId = availableScreens.findScreenIdByScreen(s100Screen);
     final s100Controller =
         availableScreens.findSpecificController<S100Controller>(screenId);

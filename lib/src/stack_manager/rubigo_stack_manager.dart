@@ -4,17 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
+import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 class RubigoStackManager<SCREEN_ID extends Enum>
     with ChangeNotifier
-    implements RubigoStackManagerInterface<SCREEN_ID> {
+    implements
+        RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   RubigoStackManager(
     this.screenStack,
     this.availableScreens,
-    this._screenListToPageList,
     this._logNavigation,
   );
 
@@ -25,8 +26,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   final ListOfRubigoScreens<SCREEN_ID> availableScreens;
 
   final LogNavigation _logNavigation;
-
-  final ScreenListToPageList _screenListToPageList;
 
   @override
   Future<void> pop() async {
@@ -83,9 +82,9 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
-  Future<bool> onPopPage(Route<dynamic> route, dynamic result) async {
+  bool onPopPage(Route<dynamic> route, dynamic result) {
     unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
-    await pop();
+    unawaited(pop());
     return false;
   }
 
@@ -123,7 +122,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     switch (navigationType) {
       case Push<SCREEN_ID>():
         final previousScreen = screenStack.lastOrNull;
-        changeInfo = RubigoChangeInfo(
+        changeInfo = RubigoChangeInfo<SCREEN_ID>(
           StackChange.isPushed,
           previousScreen?.screenId,
         );
@@ -194,15 +193,12 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
-  List<Page<void>> get pages {
+  List<RubigoScreen<SCREEN_ID>> get pages {
     unawaited(
       _logNavigation(
         'Screen stack: ${screenStack.map((e) => e.screenId.name).toList().join(' => ')}.',
       ),
     );
-    final pages = _screenListToPageList(
-      screenStack.map((e) => e.screenWidget).toList(),
-    );
-    return pages;
+    return screenStack;
   }
 }
