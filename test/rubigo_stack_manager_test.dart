@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
@@ -33,22 +34,22 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final initialScreens = initialScreenStack.toListOfWidget(availableScreens);
 
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: initialScreens,
     );
     await navigator.pop();
-    final pages2 = navigator.pages;
+    final pages2 = navigator.screens;
     final screens2 = [
       Screens.s100,
       Screens.s200,
     ].toListOfWidget(availableScreens);
 
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages2),
+      pages: screensToMaterialPages(pages2),
       screens: screens2,
     );
   });
@@ -64,12 +65,12 @@ void main() {
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final pages = navigator.pages;
+      final pages = navigator.screens;
       final initialScreens =
           initialScreenStack.toListOfWidget(availableScreens);
 
       checkPages(
-        pages: RubigoRouterDelegate.materialPages(pages),
+        pages: screensToMaterialPages(pages),
         screens: initialScreens,
       );
 
@@ -80,7 +81,7 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: Pop was called on the last page. The screen stack may not be empty.',
+                    'Developer: Pop was called on the last screen. The screen stack may not be empty.',
           ),
         ),
       );
@@ -98,17 +99,17 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: screens,
     );
     await navigator.popTo(Screens.s100);
-    final pages2 = navigator.pages;
+    final pages2 = navigator.screens;
     final screens2 = [Screens.s100].toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages2),
+      pages: screensToMaterialPages(pages2),
       screens: screens2,
     );
   });
@@ -125,12 +126,12 @@ void main() {
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final pages = navigator.pages;
+      final pages = navigator.screens;
       final initialScreens =
           initialScreenStack.toListOfWidget(availableScreens);
 
       checkPages(
-        pages: RubigoRouterDelegate.materialPages(pages),
+        pages: screensToMaterialPages(pages),
         screens: initialScreens,
       );
 
@@ -157,21 +158,21 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final initialScreens =
         initialScreenStack.map(availableScreens.findScreen).toList();
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: initialScreens,
     );
     await navigator.push(Screens.s200);
-    final pages2 = navigator.pages;
+    final pages2 = navigator.screens;
     final screens2 = [
       Screens.s100,
       Screens.s200,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages2),
+      pages: screensToMaterialPages(pages2),
       screens: screens2,
     );
   });
@@ -187,18 +188,18 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: screens,
     );
     navigator.remove(Screens.s200);
-    final pages2 = navigator.pages;
+    final pages2 = navigator.screens;
     final screens2 =
         [Screens.s100, Screens.s300].toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages2),
+      pages: screensToMaterialPages(pages2),
       screens: screens2,
     );
   });
@@ -213,10 +214,10 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: screens,
     );
 
@@ -227,7 +228,7 @@ void main() {
           (e) =>
               e is UnsupportedError &&
               e.message ==
-                  'Developer: You can only remove pages that exist on the stack (s300 not found).',
+                  'Developer: You can only remove screens that exist on the stack (s300 not found).',
         ),
       ),
     );
@@ -247,14 +248,14 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.push(Screens.s200);
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = [
       Screens.s100,
       Screens.s200,
       Screens.s300,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: screens,
     );
   });
@@ -275,12 +276,12 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.pop();
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = [
       Screens.s100,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: screens,
     );
   });

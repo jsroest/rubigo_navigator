@@ -96,7 +96,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     final index = screenStack.indexWhere((e) => e.screenId == screenId);
     if (index == -1) {
       throw UnsupportedError(
-        'Developer: You can only remove pages that exist on the stack (${screenId.name} not found).',
+        'Developer: You can only remove screens that exist on the stack (${screenId.name} not found).',
       );
     }
     screenStack.removeAt(index);
@@ -154,7 +154,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         screenStack.removeLast();
         if (screenStack.isEmpty) {
           throw UnsupportedError(
-            'Developer: Pop was called on the last page. The screen stack may not be empty.',
+            'Developer: Pop was called on the last screen. The screen stack may not be empty.',
           );
         }
         _pushPopCounter++;
@@ -193,7 +193,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
-  List<RubigoScreen<SCREEN_ID>> get pages {
+  List<RubigoScreen<SCREEN_ID>> get screens {
     unawaited(
       _logNavigation(
         'Screen stack: ${screenStack.map((e) => e.screenId.name).toList().join(' => ')}.',

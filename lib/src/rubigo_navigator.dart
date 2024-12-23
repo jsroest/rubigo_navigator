@@ -56,7 +56,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
       _rubigoStackManager;
 
   @override
-  List<RubigoScreen<SCREEN_ID>> get pages => _rubigoStackManager.pages;
+  List<RubigoScreen<SCREEN_ID>> get screens => _rubigoStackManager.screens;
 
   @override
   Future<void> pop() => _rubigoStackManager.pop();

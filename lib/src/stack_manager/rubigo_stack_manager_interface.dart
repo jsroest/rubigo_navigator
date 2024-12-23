@@ -5,7 +5,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
     RUBIGO_CONTROLLER extends RubigoController<SCREEN_ID>> with ChangeNotifier {
-  List<RubigoScreen<SCREEN_ID>> get pages;
+  List<RubigoScreen<SCREEN_ID>> get screens;
 
   Future<void> pop();
 

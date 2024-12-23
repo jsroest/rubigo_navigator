@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
@@ -31,10 +32,10 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = initialStack.map(availableScreens.findScreen).toList();
     checkPages<MaterialPage<void>>(
-      pages: RubigoRouterDelegate.materialPages(pages),
+      pages: screensToMaterialPages(pages),
       screens: screens,
     );
   });
@@ -50,10 +51,10 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.pages;
+    final pages = navigator.screens;
     final screens = initialStack.map(availableScreens.findScreen).toList();
     checkPages<CupertinoPage<void>>(
-      pages: RubigoRouterDelegate.cupertinoPages(pages),
+      pages: screensToCupertinoPages(pages),
       screens: screens,
     );
   });
@@ -103,7 +104,7 @@ void main() {
       ),
     );
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(navigator.pages),
+      pages: screensToMaterialPages(navigator.screens),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
@@ -128,7 +129,7 @@ void main() {
       ),
     );
     checkPages(
-      pages: RubigoRouterDelegate.cupertinoPages(navigator.pages),
+      pages: screensToCupertinoPages(navigator.screens),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
@@ -153,7 +154,7 @@ void main() {
       ),
     );
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(navigator.pages),
+      pages: screensToMaterialPages(navigator.screens),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
@@ -180,7 +181,7 @@ void main() {
     //Allow time for the pop to finish.
     await Future<void>.delayed(const Duration(milliseconds: 10));
     checkPages(
-      pages: RubigoRouterDelegate.materialPages(navigator.pages),
+      pages: screensToMaterialPages(navigator.screens),
       screens: [
         availableScreens[0].screenWidget,
         availableScreens[1].screenWidget,
