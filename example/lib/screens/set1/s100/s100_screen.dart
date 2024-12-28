@@ -4,9 +4,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S100Screen extends StatelessWidget
     with RubigoScreenMixin<S100Controller> {
-  S100Screen({
-    super.key,
-  });
+  S100Screen({super.key});
 
   @override
   Widget build(BuildContext context) {

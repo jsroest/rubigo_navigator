@@ -4,8 +4,6 @@ import 'package:example/screens/set2_state.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S700Controller with RubigoController<Screens> {
-  bool get canPop => true;
-
   Future<void> onPopButtonPressed() async {
     await rubigoRouter.pop();
   }

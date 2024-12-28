@@ -9,6 +9,8 @@ mixin RubigoController<SCREEN_ID extends Enum> {
 
   Future<bool> mayPop() => Future.value(true);
 
+  bool get canPop => true;
+
   late final RubigoRouter<SCREEN_ID> rubigoRouter;
 }
 
