@@ -1,15 +1,15 @@
-import 'package:example/screens/s100/s100_controller.dart';
-import 'package:example/screens/s100/s100_screen.dart';
-import 'package:example/screens/s200/s200_controller.dart';
-import 'package:example/screens/s200/s200_screen.dart';
-import 'package:example/screens/s300/s300_controller.dart';
-import 'package:example/screens/s300/s300_screen.dart';
-import 'package:example/screens/s500/s500_controller.dart';
-import 'package:example/screens/s500/s500_screen.dart';
-import 'package:example/screens/s600/s600_controller.dart';
-import 'package:example/screens/s600/s600_screen.dart';
-import 'package:example/screens/s700/s700_controller.dart';
-import 'package:example/screens/s700/s700_screen.dart';
+import 'package:example/screens/set1/s100/s100_controller.dart';
+import 'package:example/screens/set1/s100/s100_screen.dart';
+import 'package:example/screens/set1/s200/s200_controller.dart';
+import 'package:example/screens/set1/s200/s200_screen.dart';
+import 'package:example/screens/set1/s300/s300_controller.dart';
+import 'package:example/screens/set1/s300/s300_screen.dart';
+import 'package:example/screens/set2/s500/s500_controller.dart';
+import 'package:example/screens/set2/s500/s500_screen.dart';
+import 'package:example/screens/set2/s600/s600_controller.dart';
+import 'package:example/screens/set2/s600/s600_screen.dart';
+import 'package:example/screens/set2/s700/s700_controller.dart';
+import 'package:example/screens/set2/s700/s700_screen.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 enum Screens {

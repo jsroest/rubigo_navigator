@@ -1,4 +1,4 @@
-import 'package:example/screens/s100/s100_controller.dart';
+import 'package:example/screens/set1/s100/s100_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 

@@ -1,4 +1,4 @@
-import 'package:example/screens/s700/s700_controller.dart';
+import 'package:example/screens/set1/s300/s300_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -6,11 +6,11 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 /// Shows the details of a post
 
-class S700Screen extends StatelessWidget
-    with RubigoScreenMixin<S700Controller> {
+class S300Screen extends StatelessWidget
+    with RubigoScreenMixin<S300Controller> {
   /// The post to display in this screen
 
-  S700Screen({
+  S300Screen({
     super.key,
   });
 
@@ -20,7 +20,7 @@ class S700Screen extends StatelessWidget
       canPop: controller.canPop,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('S700'),
+          title: const Text('S300'),
           automaticallyImplyLeading: false,
           leading: controller.canPop ? const BackButton() : null,
         ),
@@ -39,22 +39,22 @@ class S700Screen extends StatelessWidget
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: controller.onPopToS500ButtonPressed,
-                child: const Text('PopTo S500'),
+                onPressed: controller.onPopToS100ButtonPressed,
+                child: const Text('PopTo S100'),
               ),
               const SizedBox(
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: controller.onRemoveS600ButtonPressed,
-                child: const Text('Remove S600'),
+                onPressed: controller.onRemoveS200ButtonPressed,
+                child: const Text('Remove S200'),
               ),
               const SizedBox(
                 height: 16,
               ),
               ElevatedButton(
-                onPressed: controller.onRemoveS500ButtonPressed,
-                child: const Text('Remove S500'),
+                onPressed: controller.onRemoveS100ButtonPressed,
+                child: const Text('Remove S100'),
               ),
             ],
           ),
