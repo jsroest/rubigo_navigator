@@ -1,10 +1,10 @@
-import 'package:example/screens/s100/s100_controller.dart';
+import 'package:example/screens/s500/s500_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class S100Screen extends StatelessWidget
-    with RubigoScreenMixin<S100Controller> {
-  S100Screen({
+class S500Screen extends StatelessWidget
+    with RubigoScreenMixin<S500Controller> {
+  S500Screen({
     super.key,
   });
 
@@ -14,15 +14,15 @@ class S100Screen extends StatelessWidget
       canPop: controller.canPop,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('S100'),
+          title: const Text('S500'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(width: double.infinity, height: 16),
             ElevatedButton(
-              onPressed: controller.onS200ButtonPressed,
-              child: const Text('Push S200'),
+              onPressed: controller.onS600ButtonPressed,
+              child: const Text('Push S600'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(

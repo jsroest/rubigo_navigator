@@ -68,6 +68,10 @@ class RubigoNavigator<SCREEN_ID extends Enum>
       _rubigoStackManager.onDidRemovePage(page);
 
   @override
+  Future<void> replaceStack(List<SCREEN_ID> screens) =>
+      _rubigoStackManager.replaceStack(screens);
+
+  @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
 
   @override

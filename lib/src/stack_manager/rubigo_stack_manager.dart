@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
@@ -52,6 +53,15 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   Future<void> push(SCREEN_ID screenId) async {
     unawaited(_logNavigation('push(${screenId.name}) called.'));
     await _navigate(Push(screenId));
+  }
+
+  @override
+  Future<void> replaceStack(List<SCREEN_ID> screens) async {
+    final localScreens = screens.toListOfRubigoScreen(availableScreens);
+    final topScreen = localScreens.removeLast();
+    screenStack.clear();
+    screenStack.addAll(localScreens);
+    await _navigate(Push(topScreen.screenId));
   }
 
   @override
