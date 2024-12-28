@@ -2,28 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-List<Page<dynamic>> screensToMaterialPages<SCREEN_ID extends Enum>(
-  List<RubigoScreen<SCREEN_ID>> screens,
-) {
-  return screens
-      .map(
+extension FlutterExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
+    on ListOfRubigoScreens<SCREEN_ID> {
+  List<MaterialPage<void>> toMaterialPages() => map(
         (e) => MaterialPage<void>(
           key: e.pageKey,
           child: e.screenWidget,
         ),
-      )
-      .toList();
-}
+      ).toList();
 
-List<Page<dynamic>> screensToCupertinoPages<SCREEN_ID extends Enum>(
-  List<RubigoScreen<SCREEN_ID>> screens,
-) {
-  return screens
-      .map(
+  List<CupertinoPage<void>> toCupertinoPages() => map(
         (e) => CupertinoPage<void>(
           key: e.pageKey,
           child: e.screenWidget,
         ),
-      )
-      .toList();
+      ).toList();
 }

@@ -32,7 +32,7 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets = initialStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
@@ -51,7 +51,7 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final actualPages = screensToCupertinoPages(navigator.screens);
+    final actualPages = navigator.screens.toCupertinoPages();
     final expectedScreenWidgets = initialStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
@@ -103,7 +103,7 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,
@@ -131,7 +131,7 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
-    final actualPages = screensToCupertinoPages(navigator.screens);
+    final actualPages = navigator.screens.toCupertinoPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,
@@ -159,7 +159,7 @@ void main() {
         child: availableScreens[1].screenWidget,
       ),
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,
@@ -188,7 +188,7 @@ void main() {
     );
     //Allow time for the pop to finish.
     await Future<void>.delayed(const Duration(milliseconds: 10));
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,

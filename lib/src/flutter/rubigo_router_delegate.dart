@@ -21,7 +21,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      pages: screensToMaterialPages(_navigator.screens),
+      pages: _navigator.screens.toMaterialPages(),
       onDidRemovePage: _navigator.onDidRemovePage,
       //onPopPage: _navigator.onPopPage,
     );

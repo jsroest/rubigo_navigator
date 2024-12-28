@@ -35,7 +35,7 @@ void main() {
       availableScreens: availableScreens,
     );
 
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
@@ -43,7 +43,7 @@ void main() {
       expectedScreenWidgets: expectedScreenWidgets,
     );
     await navigator.pop();
-    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final actualPages2 = navigator.screens.toMaterialPages();
     final expectedScreenWidgets2 = [
       Screens.s100,
       Screens.s200,
@@ -65,7 +65,7 @@ void main() {
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final actualPages = screensToMaterialPages(navigator.screens);
+      final actualPages = navigator.screens.toMaterialPages();
       final expectedScreenWidgets =
           initialScreenStack.toListOfWidget(availableScreens);
       checkPages(
@@ -97,7 +97,7 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
@@ -105,7 +105,7 @@ void main() {
       expectedScreenWidgets: expectedScreenWidgets,
     );
     await navigator.popTo(Screens.s100);
-    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final actualPages2 = navigator.screens.toMaterialPages();
     final expectedScreenWidgets2 =
         [Screens.s100].toListOfWidget(availableScreens);
     checkPages(
@@ -126,7 +126,7 @@ void main() {
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final actualPages = screensToMaterialPages(navigator.screens);
+      final actualPages = navigator.screens.toMaterialPages();
       final expectedScreenWidgets =
           initialScreenStack.toListOfWidget(availableScreens);
       checkPages(
@@ -156,7 +156,7 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
@@ -164,7 +164,7 @@ void main() {
       expectedScreenWidgets: expectedScreenWidgets,
     );
     await navigator.push(Screens.s200);
-    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final actualPages2 = navigator.screens.toMaterialPages();
     final expectedScreenWidgets2 = [
       Screens.s100,
       Screens.s200,
@@ -186,7 +186,7 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
@@ -194,7 +194,7 @@ void main() {
       expectedScreenWidgets: expectedScreenWidgets,
     );
     navigator.remove(Screens.s200);
-    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final actualPages2 = navigator.screens.toMaterialPages();
     final expectedScreenWidgets2 =
         [Screens.s100, Screens.s300].toListOfWidget(availableScreens);
     checkPages(
@@ -213,7 +213,7 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
@@ -248,7 +248,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.push(Screens.s200);
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets = [
       Screens.s100,
       Screens.s200,
@@ -276,7 +276,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.pop();
-    final actualPages = screensToMaterialPages(navigator.screens);
+    final actualPages = navigator.screens.toMaterialPages();
     final expectedScreenWidgets = [
       Screens.s100,
     ].toListOfWidget(availableScreens);
