@@ -8,7 +8,7 @@ List<Page<dynamic>> screensToMaterialPages<SCREEN_ID extends Enum>(
   return screens
       .map(
         (e) => MaterialPage<void>(
-          key: e.key,
+          key: e.pageKey,
           child: e.screenWidget,
         ),
       )
@@ -21,7 +21,7 @@ List<Page<dynamic>> screensToCupertinoPages<SCREEN_ID extends Enum>(
   return screens
       .map(
         (e) => CupertinoPage<void>(
-          key: e.key,
+          key: e.pageKey,
           child: e.screenWidget,
         ),
       )

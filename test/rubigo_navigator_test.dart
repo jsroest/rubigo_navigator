@@ -80,8 +80,7 @@ void main() {
         predicate(
           (e) =>
               e is UnsupportedError &&
-              e.message ==
-                  'PANIC: Page must be of type MaterialPage or CupertinoPage.',
+              e.message == 'PANIC: page.key must be of type ValueKey<Screens>.',
         ),
       ),
     );
@@ -100,6 +99,7 @@ void main() {
     );
     await navigator.onDidRemovePage(
       MaterialPage<void>(
+        key: availableScreens[2].pageKey,
         child: availableScreens[2].screenWidget,
       ),
     );
@@ -125,6 +125,7 @@ void main() {
     );
     await navigator.onDidRemovePage(
       CupertinoPage<void>(
+        key: availableScreens[2].pageKey,
         child: availableScreens[2].screenWidget,
       ),
     );
@@ -150,6 +151,7 @@ void main() {
     );
     await navigator.onDidRemovePage(
       MaterialPage<void>(
+        key: availableScreens[1].pageKey,
         child: availableScreens[1].screenWidget,
       ),
     );

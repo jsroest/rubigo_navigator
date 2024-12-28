@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
@@ -47,18 +46,14 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    late final Widget removedScreen;
-    if (page is MaterialPage) {
-      removedScreen = page.child;
-    } else if (page is CupertinoPage) {
-      removedScreen = page.child;
-    } else {
+    final pageKey = page.key;
+    if (pageKey is! ValueKey<SCREEN_ID>) {
       throw UnsupportedError(
-        'PANIC: Page must be of type MaterialPage or CupertinoPage.',
+        'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
       );
     }
-    final removedScreenId =
-        availableScreens.findScreenIdByScreen(removedScreen);
+
+    final removedScreenId = pageKey.value;
     unawaited(
       _logNavigation(
         'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
