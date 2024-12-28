@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
@@ -22,12 +23,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
   }) {
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
-      initialScreenStack
-          .map(
-            (screenId) =>
-                availableScreens.firstWhere((e) => e.screenId == screenId),
-          )
-          .toList(),
+      initialScreenStack.toListOfRubigoScreen(availableScreens),
       availableScreens,
       logNavigation,
     );
