@@ -31,7 +31,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   List<RubigoScreen<SCREEN_ID>> get screens {
     unawaited(
       _logNavigation(
-        'Screen stack: ${screenStack.map((e) => e.screenId.name).toList().join(' => ')}.',
+        'Screen stack: ${screenStack.printStack()}.',
       ),
     );
     return screenStack;
