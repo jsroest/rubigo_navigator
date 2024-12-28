@@ -27,6 +27,16 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   final LogNavigation _logNavigation;
 
   @override
+  List<RubigoScreen<SCREEN_ID>> get screens {
+    unawaited(
+      _logNavigation(
+        'Screen stack: ${screenStack.map((e) => e.screenId.name).toList().join(' => ')}.',
+      ),
+    );
+    return screenStack;
+  }
+
+  @override
   Future<void> pop() async {
     unawaited(_logNavigation('pop() called.'));
     await _navigate(Pop<SCREEN_ID>());
@@ -45,6 +55,21 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
+  void remove(SCREEN_ID screenId) {
+    unawaited(
+      _logNavigation('remove(${screenId.name}) called.'),
+    );
+    final index = screenStack.indexWhere((e) => e.screenId == screenId);
+    if (index == -1) {
+      throw UnsupportedError(
+        'Developer: You can only remove screens that exist on the stack (${screenId.name} not found).',
+      );
+    }
+    screenStack.removeAt(index);
+    notifyListeners();
+  }
+
+  @override
   Future<void> onDidRemovePage(Page<Object?> page) async {
     final pageKey = page.key;
     if (pageKey is! ValueKey<SCREEN_ID>) {
@@ -52,7 +77,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
       );
     }
-
     final removedScreenId = pageKey.value;
     unawaited(
       _logNavigation(
@@ -76,26 +100,15 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     }
   }
 
+  @Deprecated(
+    'Use onDidRemovePage instead. '
+    'This feature was deprecated after v3.16.0-17.0.pre.',
+  )
   @override
   bool onPopPage(Route<dynamic> route, dynamic result) {
     unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
     unawaited(pop());
     return false;
-  }
-
-  @override
-  void remove(SCREEN_ID screenId) {
-    unawaited(
-      _logNavigation('remove(${screenId.name}) called.'),
-    );
-    final index = screenStack.indexWhere((e) => e.screenId == screenId);
-    if (index == -1) {
-      throw UnsupportedError(
-        'Developer: You can only remove screens that exist on the stack (${screenId.name} not found).',
-      );
-    }
-    screenStack.removeAt(index);
-    notifyListeners();
   }
 
   bool _inWillShow = false;
@@ -185,15 +198,5 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       await Future<void>.delayed(const Duration(milliseconds: 100));
       await screenStack.last.controller.isShown(changeInfo);
     }
-  }
-
-  @override
-  List<RubigoScreen<SCREEN_ID>> get screens {
-    unawaited(
-      _logNavigation(
-        'Screen stack: ${screenStack.map((e) => e.screenId.name).toList().join(' => ')}.',
-      ),
-    );
-    return screenStack;
   }
 }
