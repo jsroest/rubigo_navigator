@@ -9,12 +9,12 @@ import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
-class RubigoNavigator<SCREEN_ID extends Enum>
+class RubigoRouter<SCREEN_ID extends Enum>
     with ChangeNotifier
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   //This constructor creates a new RubigoNavigator and wires up the components
-  factory RubigoNavigator({
+  factory RubigoRouter({
     required List<SCREEN_ID> initialScreenStack,
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
     RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
@@ -28,7 +28,7 @@ class RubigoNavigator<SCREEN_ID extends Enum>
       logNavigation,
     );
 
-    final navigator = RubigoNavigator._(rubigoStackManager);
+    final rubigoRouter = RubigoRouter._(rubigoStackManager);
     for (final screenSet in availableScreens) {
       //Wire up the controller in each screenWidget that has the RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
@@ -36,13 +36,13 @@ class RubigoNavigator<SCREEN_ID extends Enum>
         (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
       }
       //Wire up the navigator in each controller
-      screenSet.controller.navigator = navigator;
+      screenSet.controller.rubigoRouter = rubigoRouter;
     }
-    return navigator;
+    return rubigoRouter;
   }
 
   //Private constructor
-  RubigoNavigator._(
+  RubigoRouter._(
     this._rubigoStackManager,
   ) {
     _rubigoStackManager.addListener(notifyListeners);

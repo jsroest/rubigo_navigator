@@ -28,11 +28,11 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets = initialStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
@@ -47,11 +47,11 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final actualPages = navigator.screens.toCupertinoPages();
+    final actualPages = rubigoRouter.screens.toCupertinoPages();
     final expectedScreenWidgets = initialStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
@@ -66,12 +66,12 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
     await expectLater(
-      () => navigator.onDidRemovePage(
+      () => rubigoRouter.onDidRemovePage(
         UnsupportedPage<void>(
           child: S300Screen(),
         ),
@@ -93,17 +93,17 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    await navigator.onDidRemovePage(
+    await rubigoRouter.onDidRemovePage(
       MaterialPage<void>(
         key: availableScreens[2].pageKey,
         child: availableScreens[2].screenWidget,
       ),
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,
@@ -121,17 +121,17 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    await navigator.onDidRemovePage(
+    await rubigoRouter.onDidRemovePage(
       CupertinoPage<void>(
         key: availableScreens[2].pageKey,
         child: availableScreens[2].screenWidget,
       ),
     );
-    final actualPages = navigator.screens.toCupertinoPages();
+    final actualPages = rubigoRouter.screens.toCupertinoPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,
@@ -149,17 +149,17 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    await navigator.onDidRemovePage(
+    await rubigoRouter.onDidRemovePage(
       MaterialPage<void>(
         key: availableScreens[1].pageKey,
         child: availableScreens[1].screenWidget,
       ),
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,
@@ -178,17 +178,17 @@ void main() {
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    navigator.onPopPage(
+    rubigoRouter.onPopPage(
       MaterialPageRoute<void>(builder: (_) => const Placeholder()),
       null,
     );
     //Allow time for the pop to finish.
     await Future<void>.delayed(const Duration(milliseconds: 10));
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets = [
       availableScreens[0].screenWidget,
       availableScreens[1].screenWidget,

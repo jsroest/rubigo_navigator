@@ -16,11 +16,11 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    final navigator = RubigoNavigator(
+    final rubigoRouter = RubigoRouter(
       initialScreenStack: screenStackSet1,
       availableScreens: availableScreens,
     );
-    _routerDelegate = RubigoRouterDelegate(navigator);
+    _routerDelegate = RubigoRouterDelegate(rubigoRouter);
   }
 
   @override

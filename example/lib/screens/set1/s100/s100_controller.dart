@@ -5,6 +5,6 @@ class S100Controller with RubigoController<Screens> {
   bool get canPop => true;
 
   Future<void> onS200ButtonPressed() async {
-    await navigator.push(Screens.s200);
+    await rubigoRouter.push(Screens.s200);
   }
 }

@@ -7,23 +7,23 @@ class S700Controller with RubigoController<Screens> {
   bool get canPop => true;
 
   Future<void> onPopButtonPressed() async {
-    await navigator.pop();
+    await rubigoRouter.pop();
   }
 
   Future<void> onPopToS500ButtonPressed() async {
-    await navigator.popTo(Screens.s500);
+    await rubigoRouter.popTo(Screens.s500);
   }
 
   Future<void> onRemoveS600ButtonPressed() async {
-    navigator.remove(Screens.s600);
+    rubigoRouter.remove(Screens.s600);
   }
 
   Future<void> onRemoveS500ButtonPressed() async {
-    navigator.remove(Screens.s500);
+    rubigoRouter.remove(Screens.s500);
   }
 
   Future<void> toSet1() async {
-    screenStackSet2 = navigator.screens.toListOfScreenId();
-    await navigator.replaceStack(screenStackSet1);
+    screenStackSet2 = rubigoRouter.screens.toListOfScreenId();
+    await rubigoRouter.replaceStack(screenStackSet1);
   }
 }

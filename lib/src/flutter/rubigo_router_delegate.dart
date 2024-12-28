@@ -6,8 +6,8 @@ import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 class RubigoRouterDelegate<SCREEN_ID extends Enum>
     extends RouterDelegate<SCREEN_ID>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
-  RubigoRouterDelegate(this._navigator) {
-    _navigator.addListener(notifyListeners);
+  RubigoRouterDelegate(this._rubigoRouter) {
+    _rubigoRouter.addListener(notifyListeners);
   }
 
   @override
@@ -16,13 +16,13 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   @override
   Future<void> setNewRoutePath(SCREEN_ID configuration) async {}
 
-  final RubigoNavigator<SCREEN_ID> _navigator;
+  final RubigoRouter<SCREEN_ID> _rubigoRouter;
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      pages: _navigator.screens.toMaterialPages(),
-      onDidRemovePage: _navigator.onDidRemovePage,
+      pages: _rubigoRouter.screens.toMaterialPages(),
+      onDidRemovePage: _rubigoRouter.onDidRemovePage,
       //onPopPage: _navigator.onPopPage,
     );
   }

@@ -5,10 +5,10 @@ class S200Controller with RubigoController<Screens> {
   bool get canPop => true;
 
   Future<void> onS300ButtonPressed() async {
-    await navigator.push(Screens.s300);
+    await rubigoRouter.push(Screens.s300);
   }
 
   Future<void> onBackButtonPressed() async {
-    await navigator.pop();
+    await rubigoRouter.pop();
   }
 }

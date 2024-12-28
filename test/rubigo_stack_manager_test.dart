@@ -30,20 +30,20 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
 
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
-    await navigator.pop();
-    final actualPages2 = navigator.screens.toMaterialPages();
+    await rubigoRouter.pop();
+    final actualPages2 = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets2 = [
       Screens.s100,
       Screens.s200,
@@ -61,11 +61,11 @@ void main() {
       final initialScreenStack = [
         Screens.s100,
       ];
-      final navigator = RubigoNavigator<Screens>(
+      final rubigoRouter = RubigoRouter<Screens>(
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final actualPages = navigator.screens.toMaterialPages();
+      final actualPages = rubigoRouter.screens.toMaterialPages();
       final expectedScreenWidgets =
           initialScreenStack.toListOfWidget(availableScreens);
       checkPages(
@@ -73,7 +73,7 @@ void main() {
         expectedScreenWidgets: expectedScreenWidgets,
       );
       expect(
-        () async => navigator.pop(),
+        () async => rubigoRouter.pop(),
         throwsA(
           predicate(
             (e) =>
@@ -93,19 +93,19 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
-    await navigator.popTo(Screens.s100);
-    final actualPages2 = navigator.screens.toMaterialPages();
+    await rubigoRouter.popTo(Screens.s100);
+    final actualPages2 = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets2 =
         [Screens.s100].toListOfWidget(availableScreens);
     checkPages(
@@ -122,11 +122,11 @@ void main() {
         Screens.s100,
         Screens.s200,
       ];
-      final navigator = RubigoNavigator<Screens>(
+      final rubigoRouter = RubigoRouter<Screens>(
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final actualPages = navigator.screens.toMaterialPages();
+      final actualPages = rubigoRouter.screens.toMaterialPages();
       final expectedScreenWidgets =
           initialScreenStack.toListOfWidget(availableScreens);
       checkPages(
@@ -134,7 +134,7 @@ void main() {
         expectedScreenWidgets: expectedScreenWidgets,
       );
       expect(
-        () async => navigator.popTo(Screens.s300),
+        () async => rubigoRouter.popTo(Screens.s300),
         throwsA(
           predicate(
             (e) =>
@@ -152,19 +152,19 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
-    await navigator.push(Screens.s200);
-    final actualPages2 = navigator.screens.toMaterialPages();
+    await rubigoRouter.push(Screens.s200);
+    final actualPages2 = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets2 = [
       Screens.s100,
       Screens.s200,
@@ -182,19 +182,19 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
-    navigator.remove(Screens.s200);
-    final actualPages2 = navigator.screens.toMaterialPages();
+    rubigoRouter.remove(Screens.s200);
+    final actualPages2 = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets2 =
         [Screens.s100, Screens.s300].toListOfWidget(availableScreens);
     checkPages(
@@ -209,11 +209,11 @@ void main() {
       Screens.s100,
       Screens.s200,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final actualPages = navigator.screens.toMaterialPages();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
@@ -222,7 +222,7 @@ void main() {
     );
 
     expect(
-      () => navigator.remove(Screens.s300),
+      () => rubigoRouter.remove(Screens.s300),
       throwsA(
         predicate(
           (e) =>
@@ -243,12 +243,12 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    await navigator.push(Screens.s200);
-    final actualPages = navigator.screens.toMaterialPages();
+    await rubigoRouter.push(Screens.s200);
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets = [
       Screens.s100,
       Screens.s200,
@@ -271,12 +271,12 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    await navigator.pop();
-    final actualPages = navigator.screens.toMaterialPages();
+    await rubigoRouter.pop();
+    final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets = [
       Screens.s100,
     ].toListOfWidget(availableScreens);
@@ -295,12 +295,12 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
     expect(
-      () async => navigator.push(Screens.s200),
+      () async => rubigoRouter.push(Screens.s200),
       throwsA(
         predicate(
           (e) =>
@@ -327,12 +327,12 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
     expect(
-      () async => navigator.pop(),
+      () async => rubigoRouter.pop(),
       throwsA(
         predicate(
           (e) =>
@@ -357,12 +357,12 @@ void main() {
       Screens.s100,
       Screens.s200,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
     expect(
-      () async => navigator.pop(),
+      () async => rubigoRouter.pop(),
       throwsA(
         predicate(
           (e) =>
@@ -387,12 +387,12 @@ void main() {
       Screens.s100,
       Screens.s200,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
     expect(
-      () async => navigator.pop(),
+      () async => rubigoRouter.pop(),
       throwsA(
         predicate(
           (e) =>

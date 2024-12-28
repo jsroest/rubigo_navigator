@@ -5,7 +5,7 @@ import '../screens.dart';
 class S200ControllerMayPopPop with RubigoController<Screens> {
   @override
   Future<bool> mayPop() async {
-    await navigator.push(Screens.s300);
+    await rubigoRouter.push(Screens.s300);
     return false;
   }
 }

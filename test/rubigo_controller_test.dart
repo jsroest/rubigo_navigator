@@ -21,15 +21,15 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final navigator = RubigoNavigator<Screens>(
+    final rubigoRouter = RubigoRouter<Screens>(
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final screens = navigator.screens;
+    final screens = rubigoRouter.screens;
     final s100Screen = screens[0].screenWidget;
     final screenId = availableScreens.findScreenIdByScreen(s100Screen);
     final s100Controller =
         availableScreens.findSpecificController<S100Controller>(screenId);
-    expect(s100Controller.navigator, navigator);
+    expect(s100Controller.rubigoRouter, rubigoRouter);
   });
 }
