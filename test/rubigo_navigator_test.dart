@@ -32,11 +32,11 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final screens = initialStack.map(availableScreens.findScreen).toList();
-    checkPages<MaterialPage<void>>(
-      pages: screensToMaterialPages(pages),
-      screens: screens,
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets = initialStack.toListOfWidget(availableScreens);
+    checkPages(
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
@@ -51,11 +51,11 @@ void main() {
       initialScreenStack: initialStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final screens = initialStack.map(availableScreens.findScreen).toList();
-    checkPages<CupertinoPage<void>>(
-      pages: screensToCupertinoPages(pages),
-      screens: screens,
+    final actualPages = screensToCupertinoPages(navigator.screens);
+    final expectedScreenWidgets = initialStack.toListOfWidget(availableScreens);
+    checkPages(
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
@@ -103,12 +103,14 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets = [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+    ];
     checkPages(
-      pages: screensToMaterialPages(navigator.screens),
-      screens: [
-        availableScreens[0].screenWidget,
-        availableScreens[1].screenWidget,
-      ],
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
@@ -129,12 +131,14 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
+    final actualPages = screensToCupertinoPages(navigator.screens);
+    final expectedScreenWidgets = [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+    ];
     checkPages(
-      pages: screensToCupertinoPages(navigator.screens),
-      screens: [
-        availableScreens[0].screenWidget,
-        availableScreens[1].screenWidget,
-      ],
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
@@ -155,13 +159,15 @@ void main() {
         child: availableScreens[1].screenWidget,
       ),
     );
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets = [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+      availableScreens[2].screenWidget,
+    ];
     checkPages(
-      pages: screensToMaterialPages(navigator.screens),
-      screens: [
-        availableScreens[0].screenWidget,
-        availableScreens[1].screenWidget,
-        availableScreens[2].screenWidget,
-      ],
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
@@ -182,12 +188,14 @@ void main() {
     );
     //Allow time for the pop to finish.
     await Future<void>.delayed(const Duration(milliseconds: 10));
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets = [
+      availableScreens[0].screenWidget,
+      availableScreens[1].screenWidget,
+    ];
     checkPages(
-      pages: screensToMaterialPages(navigator.screens),
-      screens: [
-        availableScreens[0].screenWidget,
-        availableScreens[1].screenWidget,
-      ],
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 }

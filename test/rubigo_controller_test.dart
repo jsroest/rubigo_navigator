@@ -25,8 +25,8 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final s100Screen = pages[0].screenWidget;
+    final screens = navigator.screens;
+    final s100Screen = screens[0].screenWidget;
     final screenId = availableScreens.findScreenIdByScreen(s100Screen);
     final s100Controller =
         availableScreens.findSpecificController<S100Controller>(screenId);

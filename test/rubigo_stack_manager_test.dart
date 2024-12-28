@@ -34,23 +34,23 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final initialScreens = initialScreenStack.toListOfWidget(availableScreens);
 
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets =
+        initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: initialScreens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
     await navigator.pop();
-    final pages2 = navigator.screens;
-    final screens2 = [
+    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets2 = [
       Screens.s100,
       Screens.s200,
     ].toListOfWidget(availableScreens);
-
     checkPages(
-      pages: screensToMaterialPages(pages2),
-      screens: screens2,
+      actualPages: actualPages2,
+      expectedScreenWidgets: expectedScreenWidgets2,
     );
   });
 
@@ -65,15 +65,13 @@ void main() {
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final pages = navigator.screens;
-      final initialScreens =
+      final actualPages = screensToMaterialPages(navigator.screens);
+      final expectedScreenWidgets =
           initialScreenStack.toListOfWidget(availableScreens);
-
       checkPages(
-        pages: screensToMaterialPages(pages),
-        screens: initialScreens,
+        actualPages: actualPages,
+        expectedScreenWidgets: expectedScreenWidgets,
       );
-
       expect(
         () async => navigator.pop(),
         throwsA(
@@ -99,18 +97,20 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final screens = initialScreenStack.toListOfWidget(availableScreens);
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets =
+        initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: screens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
     await navigator.popTo(Screens.s100);
-    final pages2 = navigator.screens;
-    final screens2 = [Screens.s100].toListOfWidget(availableScreens);
+    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets2 =
+        [Screens.s100].toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages2),
-      screens: screens2,
+      actualPages: actualPages2,
+      expectedScreenWidgets: expectedScreenWidgets2,
     );
   });
 
@@ -126,15 +126,13 @@ void main() {
         initialScreenStack: initialScreenStack,
         availableScreens: availableScreens,
       );
-      final pages = navigator.screens;
-      final initialScreens =
+      final actualPages = screensToMaterialPages(navigator.screens);
+      final expectedScreenWidgets =
           initialScreenStack.toListOfWidget(availableScreens);
-
       checkPages(
-        pages: screensToMaterialPages(pages),
-        screens: initialScreens,
+        actualPages: actualPages,
+        expectedScreenWidgets: expectedScreenWidgets,
       );
-
       expect(
         () async => navigator.popTo(Screens.s300),
         throwsA(
@@ -158,22 +156,22 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final initialScreens =
-        initialScreenStack.map(availableScreens.findScreen).toList();
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets =
+        initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: initialScreens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
     await navigator.push(Screens.s200);
-    final pages2 = navigator.screens;
-    final screens2 = [
+    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets2 = [
       Screens.s100,
       Screens.s200,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages2),
-      screens: screens2,
+      actualPages: actualPages2,
+      expectedScreenWidgets: expectedScreenWidgets2,
     );
   });
 
@@ -188,19 +186,20 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final screens = initialScreenStack.toListOfWidget(availableScreens);
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets =
+        initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: screens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
     navigator.remove(Screens.s200);
-    final pages2 = navigator.screens;
-    final screens2 =
+    final actualPages2 = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets2 =
         [Screens.s100, Screens.s300].toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages2),
-      screens: screens2,
+      actualPages: actualPages2,
+      expectedScreenWidgets: expectedScreenWidgets2,
     );
   });
 
@@ -214,11 +213,12 @@ void main() {
       initialScreenStack: initialScreenStack,
       availableScreens: availableScreens,
     );
-    final pages = navigator.screens;
-    final screens = initialScreenStack.toListOfWidget(availableScreens);
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets =
+        initialScreenStack.toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: screens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
 
     expect(
@@ -248,15 +248,15 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.push(Screens.s200);
-    final pages = navigator.screens;
-    final screens = [
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets = [
       Screens.s100,
       Screens.s200,
       Screens.s300,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: screens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
@@ -276,24 +276,20 @@ void main() {
       availableScreens: availableScreens,
     );
     await navigator.pop();
-    final pages = navigator.screens;
-    final screens = [
+    final actualPages = screensToMaterialPages(navigator.screens);
+    final expectedScreenWidgets = [
       Screens.s100,
     ].toListOfWidget(availableScreens);
     checkPages(
-      pages: screensToMaterialPages(pages),
-      screens: screens,
+      actualPages: actualPages,
+      expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
   test('Push in willShow', () async {
     final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(
-        Screens.s200,
-        S200Screen(),
-        S200ControllerWillShowPush(),
-      ),
+      RubigoScreen(Screens.s200, S200Screen(), S200ControllerWillShowPush()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
     final initialScreenStack = [

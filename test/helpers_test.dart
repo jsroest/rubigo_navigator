@@ -12,15 +12,18 @@ void main() {
     () {
       final s100Screen = S100Screen();
       final s200Screen = S200Screen();
-      final pages = <MaterialPage<void>>[
+      final actualPages = <MaterialPage<void>>[
         MaterialPage(child: s100Screen),
         MaterialPage(child: s200Screen),
       ];
-      final screens = <Widget>[
+      final expectedScreenWidgets = <Widget>[
         s100Screen,
         s200Screen,
       ];
-      checkPages(pages: pages, screens: screens);
+      checkPages(
+        actualPages: actualPages,
+        expectedScreenWidgets: expectedScreenWidgets,
+      );
     },
   );
 
@@ -29,15 +32,18 @@ void main() {
     () {
       final s100Screen = S100Screen();
       final s200Screen = S200Screen();
-      final pages = <CupertinoPage<void>>[
+      final actualPages = <CupertinoPage<void>>[
         CupertinoPage(child: s100Screen),
         CupertinoPage(child: s200Screen),
       ];
-      final screens = <Widget>[
+      final expectedScreenWidgets = <Widget>[
         s100Screen,
         s200Screen,
       ];
-      checkPages(pages: pages, screens: screens);
+      checkPages(
+        actualPages: actualPages,
+        expectedScreenWidgets: expectedScreenWidgets,
+      );
     },
   );
 
@@ -46,17 +52,17 @@ void main() {
     () {
       final s100Screen = S100Screen();
       final s200Screen = S200Screen();
-      final pages = <MaterialPage<void>>[
+      final actualPages = <MaterialPage<void>>[
         MaterialPage(child: s100Screen),
       ];
-      final screens = <Widget>[
+      final expectedScreenWidgets = <Widget>[
         s100Screen,
         s200Screen,
       ];
       expect(
-        () => checkPages<MaterialPage<void>>(
-          pages: pages,
-          screens: screens,
+        () => checkPages(
+          actualPages: actualPages,
+          expectedScreenWidgets: expectedScreenWidgets,
         ),
         throwsA(
           predicate(
@@ -75,18 +81,18 @@ void main() {
     () {
       final s100Screen = S100Screen();
       final s200Screen = S200Screen();
-      final pages = <Page<void>>[
+      final actualPages = <Page<void>>[
         MaterialPage(child: s100Screen),
         CupertinoPage(child: s200Screen),
       ];
-      final screens = <Widget>[
+      final expectedScreenWidgets = <Widget>[
         s100Screen,
         s200Screen,
       ];
       expect(
-        () => checkPages<MaterialPage<void>>(
-          pages: pages,
-          screens: screens,
+        () => checkPages(
+          actualPages: actualPages,
+          expectedScreenWidgets: expectedScreenWidgets,
         ),
         throwsA(
           predicate(
@@ -105,18 +111,18 @@ void main() {
     () {
       final s100Screen = S100Screen();
       final s200Screen = S200Screen();
-      final pages = <Page<void>>[
+      final actualPages = <Page<void>>[
         MaterialPage(child: s100Screen),
         MaterialPage(child: s200Screen),
       ];
-      final screens = <Widget>[
+      final expectedScreenWidgets = <Widget>[
         s200Screen,
         s100Screen,
       ];
       expect(
-        () => checkPages<MaterialPage<void>>(
-          pages: pages,
-          screens: screens,
+        () => checkPages(
+          actualPages: actualPages,
+          expectedScreenWidgets: expectedScreenWidgets,
         ),
         throwsA(
           predicate(
