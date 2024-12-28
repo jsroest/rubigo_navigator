@@ -24,11 +24,6 @@ class S100Screen extends StatelessWidget
               onPressed: controller.onS200ButtonPressed,
               child: const Text('Push S200'),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: controller.replaceStack,
-              child: const Text('Replace stack'),
-            ),
           ],
         ),
       ),

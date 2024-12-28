@@ -7,14 +7,4 @@ class S500Controller with RubigoController<Screens> {
   Future<void> onS600ButtonPressed() async {
     await navigator.push(Screens.s600);
   }
-
-  Future<void> replaceStack() async {
-    await navigator.replaceStack(
-      [
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
-      ],
-    );
-  }
 }

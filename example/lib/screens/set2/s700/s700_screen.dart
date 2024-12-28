@@ -56,6 +56,11 @@ class S700Screen extends StatelessWidget
                 onPressed: controller.onRemoveS500ButtonPressed,
                 child: const Text('Remove S500'),
               ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: controller.toSet1,
+                child: const Text('Replace stack with set 1'),
+              ),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:example/screens/screens.dart';
+import 'package:example/screens/set1/set1_state.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -16,7 +17,7 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     final navigator = RubigoNavigator(
-      initialScreenStack: [Screens.s100],
+      initialScreenStack: screenStackSet1,
       availableScreens: availableScreens,
     );
     _routerDelegate = RubigoRouterDelegate(navigator);
