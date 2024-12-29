@@ -80,6 +80,9 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   }
 
   @override
+  bool hasScreenBelow() => screenStack.length > 1;
+
+  @override
   Future<void> onDidRemovePage(Page<Object?> page) async {
     final pageKey = page.key;
     if (pageKey is! ValueKey<SCREEN_ID>) {

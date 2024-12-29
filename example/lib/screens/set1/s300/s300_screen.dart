@@ -1,4 +1,5 @@
 import 'package:example/dependency_injection.dart';
+import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/s300/s300_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
 import 'package:flutter/material.dart';
@@ -18,58 +19,79 @@ class S300Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: controller.canPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: AppBarTitle(
-            title: 'S300',
-            breadCrumbs: breadCrumbsNotifier,
+    return ListenableBuilder(
+      listenable: rubigoRouter,
+      builder: (context, child) {
+        return PopScope(
+          canPop: controller.canPop,
+          child: Scaffold(
+            appBar: AppBar(
+              title: AppBarTitle(
+                title: 'S300',
+                breadCrumbs: breadCrumbsNotifier,
+              ),
+              automaticallyImplyLeading: false,
+              leading: controller.canPop ? const BackButton() : null,
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed: rubigoRouter.hasScreenBelow()
+                        ? controller.onPopButtonPressed
+                        : null,
+                    child: const Text('Pop'),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed:
+                        rubigoRouter.screens.containsScreenId(Screens.s100)
+                            ? controller.onPopToS100ButtonPressed
+                            : null,
+                    child: const Text('PopTo S100'),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed:
+                        rubigoRouter.screens.containsScreenId(Screens.s200)
+                            ? controller.onRemoveS200ButtonPressed
+                            : null,
+                    child: const Text('Remove S200'),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ElevatedButton(
+                    onPressed:
+                        rubigoRouter.screens.containsScreenId(Screens.s100)
+                            ? controller.onRemoveS100ButtonPressed
+                            : null,
+                    child: const Text('Remove S100'),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: controller.resetStack,
+                    child: const Text('Reset stack'),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: controller.toSet2,
+                    child: const Text('Replace stack with set 2'),
+                  ),
+                ],
+              ),
+            ),
           ),
-          automaticallyImplyLeading: false,
-          leading: controller.canPop ? const BackButton() : null,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: controller.onPopButtonPressed,
-                child: const Text('Pop'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: controller.onPopToS100ButtonPressed,
-                child: const Text('PopTo S100'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: controller.onRemoveS200ButtonPressed,
-                child: const Text('Remove S200'),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: controller.onRemoveS100ButtonPressed,
-                child: const Text('Remove S100'),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: controller.toSet2,
-                child: const Text('Replace stack with set 2'),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

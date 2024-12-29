@@ -66,6 +66,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
 
   @override
+  bool hasScreenBelow() => _rubigoStackManager.hasScreenBelow();
+
+  @override
   bool onPopPage(Route<dynamic> route, dynamic result) =>
       _rubigoStackManager.onPopPage(route, result);
 }

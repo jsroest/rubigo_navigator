@@ -17,6 +17,8 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
 
   void remove(SCREEN_ID screenId);
 
+  bool hasScreenBelow();
+
   //region Events required by the Flutter navigator
   Future<void> onDidRemovePage(Page<Object?> page);
 
