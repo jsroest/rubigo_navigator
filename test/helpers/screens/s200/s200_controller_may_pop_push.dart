@@ -1,6 +1,6 @@
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-import '../../dependency_injection.dart';
+import '../../rubigo_router.dart';
 import '../screens.dart';
 
 class S200ControllerMayPopPush with RubigoController<Screens> {

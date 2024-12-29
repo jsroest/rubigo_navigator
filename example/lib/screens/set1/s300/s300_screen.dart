@@ -1,4 +1,6 @@
+import 'package:example/dependency_injection.dart';
 import 'package:example/screens/set1/s300/s300_controller.dart';
+import 'package:example/widgets/app_bar_title.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -20,7 +22,10 @@ class S300Screen extends StatelessWidget
       canPop: controller.canPop,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('S300'),
+          title: AppBarTitle(
+            title: 'S300',
+            breadCrumbs: breadCrumbsNotifier,
+          ),
           automaticallyImplyLeading: false,
           leading: controller.canPop ? const BackButton() : null,
         ),

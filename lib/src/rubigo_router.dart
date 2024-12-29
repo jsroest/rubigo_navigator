@@ -13,8 +13,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
     with ChangeNotifier
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
-  //This constructor creates a new RubigoNavigator and wires up the components
-  factory RubigoRouter({
+  void init({
     required List<SCREEN_ID> initialScreenStack,
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
     RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
@@ -28,7 +27,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
       logNavigation,
     );
 
-    final rubigoRouter = RubigoRouter._(rubigoStackManager);
+    rubigoStackManager.addListener(notifyListeners);
+    _rubigoStackManager = rubigoStackManager;
+
     for (final screenSet in availableScreens) {
       //Wire up the controller in each screenWidget that has the RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
@@ -36,17 +37,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
         (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
       }
     }
-    return rubigoRouter;
   }
 
-  //Private constructor
-  RubigoRouter._(
-    this._rubigoStackManager,
-  ) {
-    _rubigoStackManager.addListener(notifyListeners);
-  }
-
-  final RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
+  late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;
 
   @override

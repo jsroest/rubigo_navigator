@@ -1,4 +1,6 @@
+import 'package:example/dependency_injection.dart';
 import 'package:example/screens/set2/s500/s500_controller.dart';
+import 'package:example/widgets/app_bar_title.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -14,7 +16,10 @@ class S500Screen extends StatelessWidget
       canPop: controller.canPop,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('S500'),
+          title: AppBarTitle(
+            title: 'S500',
+            breadCrumbs: breadCrumbsNotifier,
+          ),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,3 +1,5 @@
+import 'package:example/classes/bread_crumbs_notifier.dart';
+import 'package:example/extensions/rubigo_screen_extensions.dart';
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/set1_state.dart';
 import 'package:get_it/get_it.dart';
@@ -7,11 +9,18 @@ final getIt = GetIt.instance;
 
 RubigoRouter<Screens> get rubigoRouter => getIt.get<RubigoRouter<Screens>>();
 
-void dependencyInjection() {
-  getIt.registerSingleton(
-    RubigoRouter(
-      initialScreenStack: screenStackSet1,
-      availableScreens: availableScreens,
-    ),
+BreadCrumbsNotifier get breadCrumbsNotifier => getIt.get<BreadCrumbsNotifier>();
+
+String get _breadCrumbsString => 'Stack: ${rubigoRouter.screens.breadCrumbs()}';
+
+void setup() {
+  getIt.registerSingleton(RubigoRouter<Screens>());
+  rubigoRouter.init(
+    initialScreenStack: screenStackSet1,
+    availableScreens: availableScreens,
+  );
+  getIt.registerSingleton(BreadCrumbsNotifier(_breadCrumbsString));
+  rubigoRouter.addListener(
+    () => breadCrumbsNotifier.value = _breadCrumbsString,
   );
 }
