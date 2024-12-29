@@ -35,8 +35,6 @@ class RubigoRouter<SCREEN_ID extends Enum>
       if (screenWidget is RubigoScreenMixin) {
         (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
       }
-      //Wire up the navigator in each controller
-      screenSet.controller.rubigoRouter = rubigoRouter;
     }
     return rubigoRouter;
   }

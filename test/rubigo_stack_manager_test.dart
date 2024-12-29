@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
+import 'helpers/dependency_injection.dart';
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
@@ -12,8 +13,8 @@ import 'helpers/screens/s200/s200_controller_on_top_push_and_pop.dart';
 import 'helpers/screens/s200/s200_controller_will_show_pop.dart';
 import 'helpers/screens/s200/s200_controller_will_show_push.dart';
 import 'helpers/screens/s200/s200_screen.dart';
-import 'helpers/screens/s300/s200_controller.dart';
-import 'helpers/screens/s300/s200_screen.dart';
+import 'helpers/screens/s300/s300_controller.dart';
+import 'helpers/screens/s300/s300_screen.dart';
 import 'helpers/screens/screens.dart';
 
 ListOfRubigoScreens<Screens> createAvailableScreens() => [
@@ -30,9 +31,11 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
 
     final actualPages = rubigoRouter.screens.toMaterialPages();
@@ -61,9 +64,11 @@ void main() {
       final initialScreenStack = [
         Screens.s100,
       ];
-      final rubigoRouter = RubigoRouter<Screens>(
-        initialScreenStack: initialScreenStack,
-        availableScreens: availableScreens,
+      getIt.registerSingleton(
+        RubigoRouter(
+          initialScreenStack: initialScreenStack,
+          availableScreens: availableScreens,
+        ),
       );
       final actualPages = rubigoRouter.screens.toMaterialPages();
       final expectedScreenWidgets =
@@ -93,9 +98,11 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
@@ -122,9 +129,11 @@ void main() {
         Screens.s100,
         Screens.s200,
       ];
-      final rubigoRouter = RubigoRouter<Screens>(
-        initialScreenStack: initialScreenStack,
-        availableScreens: availableScreens,
+      getIt.registerSingleton(
+        RubigoRouter(
+          initialScreenStack: initialScreenStack,
+          availableScreens: availableScreens,
+        ),
       );
       final actualPages = rubigoRouter.screens.toMaterialPages();
       final expectedScreenWidgets =
@@ -152,9 +161,11 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
@@ -182,9 +193,11 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
@@ -209,9 +222,11 @@ void main() {
       Screens.s100,
       Screens.s200,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
@@ -243,9 +258,11 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     await rubigoRouter.push(Screens.s200);
     final actualPages = rubigoRouter.screens.toMaterialPages();
@@ -271,9 +288,11 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     await rubigoRouter.pop();
     final actualPages = rubigoRouter.screens.toMaterialPages();
@@ -295,9 +314,11 @@ void main() {
     final initialScreenStack = [
       Screens.s100,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     expect(
       () async => rubigoRouter.push(Screens.s200),
@@ -327,9 +348,11 @@ void main() {
       Screens.s200,
       Screens.s300,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     expect(
       () async => rubigoRouter.pop(),
@@ -357,9 +380,11 @@ void main() {
       Screens.s100,
       Screens.s200,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     expect(
       () async => rubigoRouter.pop(),
@@ -387,9 +412,11 @@ void main() {
       Screens.s100,
       Screens.s200,
     ];
-    final rubigoRouter = RubigoRouter<Screens>(
-      initialScreenStack: initialScreenStack,
-      availableScreens: availableScreens,
+    getIt.registerSingleton(
+      RubigoRouter(
+        initialScreenStack: initialScreenStack,
+        availableScreens: availableScreens,
+      ),
     );
     expect(
       () async => rubigoRouter.pop(),

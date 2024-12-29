@@ -1,3 +1,4 @@
+import 'package:example/dependency_injection.dart';
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/set1_state.dart';
 import 'package:example/screens/set2/set2_state.dart';

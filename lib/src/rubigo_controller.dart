@@ -1,5 +1,3 @@
-import 'package:rubigo_navigator/src/rubigo_router.dart';
-
 mixin RubigoController<SCREEN_ID extends Enum> {
   Future<void> onTop(RubigoChangeInfo<SCREEN_ID?> changeInfo) async {}
 
@@ -10,8 +8,6 @@ mixin RubigoController<SCREEN_ID extends Enum> {
   Future<bool> mayPop() => Future.value(true);
 
   bool get canPop => true;
-
-  late final RubigoRouter<SCREEN_ID> rubigoRouter;
 }
 
 class RubigoChangeInfo<SCREEN_ID> {
