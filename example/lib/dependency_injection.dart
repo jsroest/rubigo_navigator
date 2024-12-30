@@ -1,4 +1,5 @@
 import 'package:example/classes/bread_crumbs_notifier.dart';
+import 'package:example/classes/screen_stack_notifier.dart';
 import 'package:example/extensions/rubigo_screen_extensions.dart';
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/set1_state.dart';
@@ -11,16 +12,30 @@ RubigoRouter<Screens> get rubigoRouter => getIt.get<RubigoRouter<Screens>>();
 
 BreadCrumbsNotifier get breadCrumbsNotifier => getIt.get<BreadCrumbsNotifier>();
 
-String get _breadCrumbsString => 'Stack: ${rubigoRouter.screens.breadCrumbs()}';
+ScreenStackNotifier get screenStackNotifier => getIt.get<ScreenStackNotifier>();
 
 void setup() {
-  getIt.registerSingleton(RubigoRouter<Screens>());
+  //region RubigoRouter
+  final rubigoRouter = RubigoRouter<Screens>();
+  getIt.registerSingleton(rubigoRouter);
   rubigoRouter.init(
     initialScreenStack: screenStackSet1,
     availableScreens: availableScreens,
   );
-  getIt.registerSingleton(BreadCrumbsNotifier(_breadCrumbsString));
-  rubigoRouter.addListener(
-    () => breadCrumbsNotifier.value = _breadCrumbsString,
-  );
+  //endregion
+
+  //region BreadCrumbsNotifier
+  String breadCrumbsString() => 'Stack: ${rubigoRouter.screens.breadCrumbs()}';
+  final breadCrumbsNotifier = BreadCrumbsNotifier(breadCrumbsString());
+  getIt.registerSingleton(breadCrumbsNotifier);
+  rubigoRouter
+      .addListener(() => breadCrumbsNotifier.value = breadCrumbsString());
+  //endregion
+
+  //region ScreenStackNotifier
+  List<Screens> listOfScreenId() => rubigoRouter.screens.toListOfScreenId();
+  final screenStackNotifier = ScreenStackNotifier(listOfScreenId());
+  getIt.registerSingleton(screenStackNotifier);
+  rubigoRouter.addListener(() => screenStackNotifier.value = listOfScreenId());
+  //endregion
 }

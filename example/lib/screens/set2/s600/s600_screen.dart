@@ -1,6 +1,7 @@
 import 'package:example/dependency_injection.dart';
 import 'package:example/screens/set2/s600/s600_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
+import 'package:example/widgets/navigate_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -20,8 +21,6 @@ class S600Screen extends StatelessWidget
             title: 'S600',
             breadCrumbsNotifier: breadCrumbsNotifier,
           ),
-          automaticallyImplyLeading: false,
-          leading: controller.canPop ? const BackButton() : null,
         ),
         body: Center(
           child: Column(
@@ -35,8 +34,10 @@ class S600Screen extends StatelessWidget
                 child: const Text('Push S700'),
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: controller.onBackButtonPressed,
+              NavigateButton(
+                screenStackNotifier: screenStackNotifier,
+                isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+                onPressed: controller.onPopButtonPressed,
                 child: const Text('Pop'),
               ),
             ],

@@ -7,7 +7,7 @@ class S600Controller with RubigoController<Screens> {
     await rubigoRouter.push(Screens.s700);
   }
 
-  Future<void> onBackButtonPressed() async {
+  Future<void> onPopButtonPressed() async {
     await rubigoRouter.pop();
   }
 }

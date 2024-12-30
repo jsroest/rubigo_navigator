@@ -21,6 +21,14 @@ class S700Controller with RubigoController<Screens> {
     rubigoRouter.remove(Screens.s500);
   }
 
+  Future<void> resetStack() async {
+    await rubigoRouter.replaceStack([
+      Screens.s500,
+      Screens.s600,
+      Screens.s700,
+    ]);
+  }
+
   Future<void> toSet1() async {
     screenStackSet2 = rubigoRouter.screens.toListOfScreenId();
     await rubigoRouter.replaceStack(screenStackSet1);

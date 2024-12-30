@@ -24,6 +24,11 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
 }
 
 extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
+  bool hasScreenBelow() => length > 1;
+
+  bool containsScreenBelow(SCREEN_ID screenId) =>
+      lastIndexWhere((e) => e == screenId, length - 1) != -1;
+
   List<Widget> toListOfWidget(ListOfRubigoScreens availableScreens) =>
       map((screenId) => availableScreens.findScreen(screenId)).toList();
 
