@@ -21,8 +21,6 @@ void setup() {
   rubigoRouter.init(
     initialScreenStack: screenStackSet1,
     availableScreens: availableScreens,
-    splashScreen: Screens.splashScreen,
-    initializeServices: () => Future<void>.delayed(const Duration(seconds: 2)),
   );
   //endregion
 
