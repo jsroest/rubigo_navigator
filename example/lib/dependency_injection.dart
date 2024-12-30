@@ -2,7 +2,6 @@ import 'package:example/classes/bread_crumbs_notifier.dart';
 import 'package:example/classes/screen_stack_notifier.dart';
 import 'package:example/extensions/rubigo_screen_extensions.dart';
 import 'package:example/screens/screens.dart';
-import 'package:example/screens/set1/set1_state.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
@@ -14,12 +13,13 @@ BreadCrumbsNotifier get breadCrumbsNotifier => getIt.get<BreadCrumbsNotifier>();
 
 ScreenStackNotifier get screenStackNotifier => getIt.get<ScreenStackNotifier>();
 
-void setup() {
+Future<void> setup() async {
   //region RubigoRouter
-  final rubigoRouter = RubigoRouter<Screens>();
-  getIt.registerSingleton(rubigoRouter);
-  rubigoRouter.init(
-    initialScreenStack: screenStackSet1,
+  await rubigoRouter.init(
+    getFirstScreenAsync: () async {
+      await Future<void>.delayed(const Duration(seconds: 4));
+      return Screens.s100;
+    },
     availableScreens: availableScreens,
   );
   //endregion

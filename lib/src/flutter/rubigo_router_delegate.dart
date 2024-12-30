@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
@@ -21,7 +20,9 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      pages: _rubigoRouter.screens.toMaterialPages(),
+      pages: _rubigoRouter.isInitialized
+          ? _rubigoRouter.screens.toMaterialPages()
+          : _rubigoRouter.splashWidget.toMaterialPages(),
       onDidRemovePage: _rubigoRouter.onDidRemovePage,
       //onPopPage: _rubigoRouter.onPopPage,
     );

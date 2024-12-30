@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart' as widgets;
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 extension FlutterExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
@@ -17,4 +18,8 @@ extension FlutterExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
           child: e.screenWidget,
         ),
       ).toList();
+}
+
+extension ExtensionOnWidget on widgets.Widget {
+  List<MaterialPage<void>> toMaterialPages() => [MaterialPage(child: this)];
 }

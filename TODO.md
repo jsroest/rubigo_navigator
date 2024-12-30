@@ -6,3 +6,11 @@ Done: Although it we could not get rid of the extensions.
 Now, e.g. when a screen in between is deleted, the same page would animate again on top.
 
 Done.
+
+1. Add a way to notify listeners that the navigator is busy. We need this for our busy_service which prevents user input while navigating.
+
+
+
+1. 2.Add a splash screen while the app is loading (during app startup).
+
+Done.

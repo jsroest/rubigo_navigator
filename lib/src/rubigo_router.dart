@@ -13,16 +13,19 @@ class RubigoRouter<SCREEN_ID extends Enum>
     with ChangeNotifier
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
-  void init({
-    required List<SCREEN_ID> initialScreenStack,
+  RubigoRouter({required this.splashWidget});
+
+  Future<void> init({
+    required Future<SCREEN_ID> Function() getFirstScreenAsync,
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
     RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
         rubigoStackManager,
     LogNavigation? logNavigation,
-  }) {
+  }) async {
+    final firstScreen = await getFirstScreenAsync();
     logNavigation ??= (message) async => debugPrint(message);
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
-      initialScreenStack.toListOfRubigoScreen(availableScreens),
+      [firstScreen].toListOfRubigoScreen(availableScreens),
       availableScreens,
       logNavigation,
     );
@@ -37,7 +40,16 @@ class RubigoRouter<SCREEN_ID extends Enum>
         (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
       }
     }
+
+    _isInitialized = true;
+    notifyListeners();
   }
+
+  bool _isInitialized = false;
+
+  bool get isInitialized => _isInitialized;
+
+  final Widget splashWidget;
 
   late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;

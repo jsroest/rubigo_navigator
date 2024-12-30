@@ -25,22 +25,27 @@ ListOfRubigoScreens<Screens> createAvailableScreens() => [
 void main() {
   setUpAll(
     () {
-      GetIt.instance.registerSingleton(RubigoRouter<Screens>());
+      GetIt.instance.registerSingleton(
+        RubigoRouter<Screens>(
+          splashWidget: Container(),
+        ),
+      );
     },
   );
 
-  test('Navigator with list of MaterialPages', () {
+  test('Navigator with list of MaterialPages', () async {
     final initialScreenStack = [
       Screens.s100,
       Screens.s200,
       Screens.s300,
     ];
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
-
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     final actualPages = rubigoRouter.screens.toMaterialPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);
@@ -50,17 +55,14 @@ void main() {
     );
   });
 
-  test('Navigator with list of CupertinoPages', () {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
+  test('Navigator with list of CupertinoPages', () async {
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     final actualPages = rubigoRouter.screens.toCupertinoPages();
     final expectedScreenWidgets =
         initialScreenStack.toListOfWidget(availableScreens);

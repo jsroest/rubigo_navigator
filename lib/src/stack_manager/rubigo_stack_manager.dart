@@ -82,6 +82,9 @@ class RubigoStackManager<SCREEN_ID extends Enum>
   @override
   Future<void> onDidRemovePage(Page<Object?> page) async {
     final pageKey = page.key;
+    if (pageKey == null) {
+      return;
+    }
     if (pageKey is! ValueKey<SCREEN_ID>) {
       throw UnsupportedError(
         'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
