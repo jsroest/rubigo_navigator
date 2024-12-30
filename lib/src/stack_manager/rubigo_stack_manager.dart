@@ -165,6 +165,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         final mayPop = await screenStack.last.controller.mayPop();
         _inMayPop = false;
         if (!mayPop) {
+          notifyListeners();
           return;
         }
 
