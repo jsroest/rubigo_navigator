@@ -19,7 +19,10 @@ Future<void> setup() async {
   //region RubigoRouter
   await rubigoRouter.init(
     getFirstScreenAsync: () async {
-      await Future<void>.delayed(const Duration(seconds: 4));
+      // This can be used to wire up the application. During this time a
+      // Splash widget is show. When the wiring up completes, this function
+      // can return the first page to navigate to.
+      await Future<void>.delayed(const Duration(seconds: 2));
       return Screens.s100;
     },
     availableScreens: availableScreens,
