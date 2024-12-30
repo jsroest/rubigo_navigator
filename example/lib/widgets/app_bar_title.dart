@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class AppBarTitle extends StatelessWidget {
   const AppBarTitle({
     required this.title,
-    required this.breadCrumbs,
+    required this.breadCrumbsNotifier,
     super.key,
   });
 
   final String title;
-  final ValueListenable<String> breadCrumbs;
+  final ValueListenable<String> breadCrumbsNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,8 @@ class AppBarTitle extends StatelessWidget {
       children: [
         Text('Screen: $title'),
         ValueListenableBuilder(
-          valueListenable: breadCrumbs,
-          builder: (context, value, child) => Text(breadCrumbs.value),
+          valueListenable: breadCrumbsNotifier,
+          builder: (context, value, child) => Text(breadCrumbsNotifier.value),
         ),
       ],
     );

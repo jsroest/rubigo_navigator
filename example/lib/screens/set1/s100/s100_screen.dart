@@ -16,7 +16,7 @@ class S100Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S100',
-            breadCrumbs: breadCrumbsNotifier,
+            breadCrumbsNotifier: breadCrumbsNotifier,
           ),
         ),
         body: Column(

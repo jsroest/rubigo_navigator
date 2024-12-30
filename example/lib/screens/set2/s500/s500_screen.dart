@@ -18,7 +18,7 @@ class S500Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S500',
-            breadCrumbs: breadCrumbsNotifier,
+            breadCrumbsNotifier: breadCrumbsNotifier,
           ),
         ),
         body: Column(

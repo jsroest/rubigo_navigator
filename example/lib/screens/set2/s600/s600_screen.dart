@@ -18,7 +18,7 @@ class S600Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S600',
-            breadCrumbs: breadCrumbsNotifier,
+            breadCrumbsNotifier: breadCrumbsNotifier,
           ),
           automaticallyImplyLeading: false,
           leading: controller.canPop ? const BackButton() : null,

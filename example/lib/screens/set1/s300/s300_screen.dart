@@ -28,7 +28,7 @@ class S300Screen extends StatelessWidget
             appBar: AppBar(
               title: AppBarTitle(
                 title: 'S300',
-                breadCrumbs: breadCrumbsNotifier,
+                breadCrumbsNotifier: breadCrumbsNotifier,
               ),
               automaticallyImplyLeading: false,
               leading: controller.canPop ? const BackButton() : null,
