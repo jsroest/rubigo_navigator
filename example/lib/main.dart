@@ -8,11 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 void main() {
-  getIt.registerSingleton(
-    RubigoRouter<Screens>(
-      splashWidget: const SplashWidget(),
-    ),
+  final rubigoBusyService = RubigoBusyService();
+  getIt.registerSingleton(rubigoBusyService);
+  final rubigoRouter = RubigoRouter<Screens>(
+    splashWidget: const SplashWidget(),
+    protect: rubigoBusyService.protect,
   );
+  getIt.registerSingleton(rubigoRouter);
+
   unawaited(setup());
   runApp(const App());
 }

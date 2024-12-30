@@ -13,7 +13,10 @@ class RubigoRouter<SCREEN_ID extends Enum>
     with ChangeNotifier
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
-  RubigoRouter({required this.splashWidget});
+  RubigoRouter({
+    required this.splashWidget,
+    required this.protect,
+  });
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
@@ -54,25 +57,29 @@ class RubigoRouter<SCREEN_ID extends Enum>
   late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;
 
+  final Future<T> Function<T>(Future<T> Function() function) protect;
+
   @override
   List<RubigoScreen<SCREEN_ID>> get screens => _rubigoStackManager.screens;
 
   @override
-  Future<void> pop() => _rubigoStackManager.pop();
+  Future<void> pop() => protect(() => _rubigoStackManager.pop());
 
   @override
-  Future<void> popTo(SCREEN_ID screenId) => _rubigoStackManager.popTo(screenId);
+  Future<void> popTo(SCREEN_ID screenId) =>
+      protect(() => _rubigoStackManager.popTo(screenId));
 
   @override
-  Future<void> push(SCREEN_ID screenId) => _rubigoStackManager.push(screenId);
+  Future<void> push(SCREEN_ID screenId) =>
+      protect(() => _rubigoStackManager.push(screenId));
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) =>
-      _rubigoStackManager.onDidRemovePage(page);
+      protect(() => _rubigoStackManager.onDidRemovePage(page));
 
   @override
   Future<void> replaceStack(List<SCREEN_ID> screens) =>
-      _rubigoStackManager.replaceStack(screens);
+      protect(() => _rubigoStackManager.replaceStack(screens));
 
   @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);

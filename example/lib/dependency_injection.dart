@@ -13,6 +13,8 @@ BreadCrumbsNotifier get breadCrumbsNotifier => getIt.get<BreadCrumbsNotifier>();
 
 ScreenStackNotifier get screenStackNotifier => getIt.get<ScreenStackNotifier>();
 
+RubigoBusyService get rubigoBusyService => getIt.get<RubigoBusyService>();
+
 Future<void> setup() async {
   //region RubigoRouter
   await rubigoRouter.init(

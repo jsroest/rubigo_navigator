@@ -24,6 +24,17 @@ class _AppState extends State<App> {
     return MaterialApp.router(
       backButtonDispatcher: RootBackButtonDispatcher(),
       routerDelegate: _routerDelegate,
+      builder: (context, child) => ListenableBuilder(
+        listenable: rubigoBusyService,
+        builder: (BuildContext context, Widget? _) {
+          return RubigoBusy(
+            enabled: rubigoBusyService.enabled,
+            isBusy: rubigoBusyService.isBusy,
+            showProgressIndicator: rubigoBusyService.showProgressIndicator,
+            child: child!,
+          );
+        },
+      ),
     );
   }
 }
