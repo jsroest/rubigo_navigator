@@ -14,27 +14,45 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   RubigoStackManager(
-    this.screenStack,
-    this.availableScreens,
+    this._screenStack,
+    this._availableScreens,
     this._logNavigation,
-  );
+    this._splashScreen,
+    this._initializeServices,
+  ) {
+    unawaited(_initialize());
+  }
+
+  Future<void> _initialize() async {
+    await _initializeServices();
+    _isInitialized = true;
+    notifyListeners();
+  }
+
+  var _isInitialized = false;
 
   //This is the actual screen stack
-  final ListOfRubigoScreens<SCREEN_ID> screenStack;
+  final ListOfRubigoScreens<SCREEN_ID> _screenStack;
 
   //This is a list of all available screens
-  final ListOfRubigoScreens<SCREEN_ID> availableScreens;
+  final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
 
   final LogNavigation _logNavigation;
+
+  final SCREEN_ID _splashScreen;
+
+  final Future<void> Function() _initializeServices;
 
   @override
   List<RubigoScreen<SCREEN_ID>> get screens {
     unawaited(
       _logNavigation(
-        'Screen stack: ${screenStack.printStack()}.',
+        'Screen stack: ${_screenStack.printStack()}.',
       ),
     );
-    return screenStack;
+    return _isInitialized
+        ? _screenStack
+        : [_availableScreens.findByScreenId(_splashScreen)];
   }
 
   @override
@@ -57,10 +75,10 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   Future<void> replaceStack(List<SCREEN_ID> screens) async {
-    final localScreens = screens.toListOfRubigoScreen(availableScreens);
+    final localScreens = screens.toListOfRubigoScreen(_availableScreens);
     final topScreen = localScreens.removeLast();
-    screenStack.clear();
-    screenStack.addAll(localScreens);
+    _screenStack.clear();
+    _screenStack.addAll(localScreens);
     await _navigate(Push(topScreen.screenId));
   }
 
@@ -69,13 +87,13 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     unawaited(
       _logNavigation('remove(${screenId.name}) called.'),
     );
-    final index = screenStack.indexWhere((e) => e.screenId == screenId);
+    final index = _screenStack.indexWhere((e) => e.screenId == screenId);
     if (index == -1) {
       throw UnsupportedError(
         'Developer: You can only remove screens that exist on the stack (${screenId.name} not found).',
       );
     }
-    screenStack.removeAt(index);
+    _screenStack.removeAt(index);
     notifyListeners();
   }
 
@@ -93,7 +111,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
       ),
     );
-    final lastScreenId = screenStack.last.screenId;
+    final lastScreenId = _screenStack.last.screenId;
     if (removedScreenId != lastScreenId) {
       unawaited(
         _logNavigation('but ignored by us.'),
@@ -139,27 +157,27 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     late RubigoChangeInfo<SCREEN_ID> changeInfo;
     switch (navigationType) {
       case Push<SCREEN_ID>():
-        final previousScreen = screenStack.lastOrNull;
+        final previousScreen = _screenStack.lastOrNull;
         changeInfo = RubigoChangeInfo<SCREEN_ID>(
           StackChange.isPushed,
           previousScreen?.screenId,
         );
 
-        screenStack.add(
-          availableScreens.firstWhere(
+        _screenStack.add(
+          _availableScreens.firstWhere(
             (e) => e.screenId == navigationType.screenId,
           ),
         );
         _pushPopCounter++;
-        await screenStack.last.controller.onTop(changeInfo);
+        await _screenStack.last.controller.onTop(changeInfo);
         _pushPopCounter--;
 
       case Pop():
-        if (screenStack.isEmpty) {
+        if (_screenStack.isEmpty) {
           return;
         }
         _inMayPop = true;
-        final mayPop = await screenStack.last.controller.mayPop();
+        final mayPop = await _screenStack.last.controller.mayPop();
         _inMayPop = false;
         if (!mayPop) {
           return;
@@ -167,33 +185,33 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
         changeInfo = RubigoChangeInfo(
           StackChange.isRevealed,
-          screenStack.last.screenId,
+          _screenStack.last.screenId,
         );
-        screenStack.removeLast();
-        if (screenStack.isEmpty) {
+        _screenStack.removeLast();
+        if (_screenStack.isEmpty) {
           throw UnsupportedError(
             'Developer: Pop was called on the last screen. The screen stack may not be empty.',
           );
         }
         _pushPopCounter++;
-        await screenStack.last.controller.onTop(changeInfo);
+        await _screenStack.last.controller.onTop(changeInfo);
         _pushPopCounter--;
 
       case PopTo<SCREEN_ID>():
         changeInfo = RubigoChangeInfo(
           StackChange.isRevealed,
-          screenStack.last.screenId,
+          _screenStack.last.screenId,
         );
-        while (screenStack.isNotEmpty) {
-          screenStack.removeLast();
-          if (screenStack.isEmpty) {
+        while (_screenStack.isNotEmpty) {
+          _screenStack.removeLast();
+          if (_screenStack.isEmpty) {
             throw UnsupportedError(
               'Developer: With popTo, you tried to navigate to ${navigationType.screenId.name}, which was not on the stack.',
             );
           }
-          if (screenStack.last.screenId == navigationType.screenId) {
+          if (_screenStack.last.screenId == navigationType.screenId) {
             _pushPopCounter++;
-            final currentRubigoScreen = screenStack.last;
+            final currentRubigoScreen = _screenStack.last;
             await currentRubigoScreen.controller.onTop(changeInfo);
             _pushPopCounter--;
             break;
@@ -202,11 +220,11 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     }
     if (_pushPopCounter == 0) {
       _inWillShow = true;
-      await screenStack.last.controller.willShow(changeInfo);
+      await _screenStack.last.controller.willShow(changeInfo);
       _inWillShow = false;
       notifyListeners();
       await Future<void>.delayed(const Duration(milliseconds: 100));
-      await screenStack.last.controller.isShown(changeInfo);
+      await _screenStack.last.controller.isShown(changeInfo);
     }
   }
 }

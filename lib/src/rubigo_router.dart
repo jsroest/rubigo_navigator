@@ -16,6 +16,8 @@ class RubigoRouter<SCREEN_ID extends Enum>
   void init({
     required List<SCREEN_ID> initialScreenStack,
     required ListOfRubigoScreens<SCREEN_ID> availableScreens,
+    required SCREEN_ID splashScreen,
+    required Future<void> Function() initializeServices,
     RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
         rubigoStackManager,
     LogNavigation? logNavigation,
@@ -25,6 +27,8 @@ class RubigoRouter<SCREEN_ID extends Enum>
       initialScreenStack.toListOfRubigoScreen(availableScreens),
       availableScreens,
       logNavigation,
+      splashScreen,
+      initializeServices,
     );
 
     rubigoStackManager.addListener(notifyListeners);
