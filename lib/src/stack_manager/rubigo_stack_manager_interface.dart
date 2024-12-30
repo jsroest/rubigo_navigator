@@ -17,9 +17,7 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
 
   void remove(SCREEN_ID screenId);
 
-  bool hasScreenBelow();
-
-  //region Events required by the Flutter navigator
+//region Events required by the Flutter navigator
   Future<void> onDidRemovePage(Page<Object?> page);
 
   @Deprecated(
@@ -27,5 +25,5 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
     'This feature was deprecated after v3.16.0-17.0.pre.',
   )
   bool onPopPage(Route<dynamic> route, dynamic result);
-  //endregion
+//endregion
 }

@@ -3,22 +3,13 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
     on ListOfRubigoScreens<SCREEN_ID> {
-  CONTROLLER findSpecificController<CONTROLLER>(SCREEN_ID screenId) =>
-      firstWhere((e) => e.screenId == screenId).controller as CONTROLLER;
-
   Widget findScreen(SCREEN_ID screenId) =>
       firstWhere((e) => e.screenId == screenId).screenWidget;
-
-  SCREEN_ID findScreenIdByScreen(Widget screen) =>
-      firstWhere((e) => e.screenWidget == screen).screenId;
 
   List<SCREEN_ID> toListOfScreenId() => map((e) => e.screenId).toList();
 
   RubigoScreen<SCREEN_ID> findByScreenId(SCREEN_ID screenId) =>
       firstWhere((e) => e.screenId == screenId);
-
-  bool containsScreenId(SCREEN_ID screenId) =>
-      toListOfScreenId().contains(screenId);
 
   String printStack() => map((e) => e.screenId.name).toList().join(' => ');
 }
