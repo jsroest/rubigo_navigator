@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 class UnsupportedPage<T> extends Page<T> {
-  const UnsupportedPage({required this.child});
+  const UnsupportedPage({
+    required this.child,
+  });
 
   final Widget child;
 

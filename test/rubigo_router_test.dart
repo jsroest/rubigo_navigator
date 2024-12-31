@@ -34,11 +34,6 @@ void main() {
   );
 
   test('Navigator with list of MaterialPages', () async {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
     final availableScreens = createAvailableScreens();
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
@@ -47,8 +42,11 @@ void main() {
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
     final actualPages = rubigoRouter.screens.toMaterialPages();
-    final expectedScreenWidgets =
-        initialScreenStack.toListOfWidget(availableScreens);
+    final expectedScreenWidgets = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ].toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
@@ -64,8 +62,11 @@ void main() {
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
     final actualPages = rubigoRouter.screens.toCupertinoPages();
-    final expectedScreenWidgets =
-        initialScreenStack.toListOfWidget(availableScreens);
+    final expectedScreenWidgets = [
+      Screens.s100,
+      Screens.s200,
+      Screens.s300,
+    ].toListOfWidget(availableScreens);
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
@@ -73,16 +74,13 @@ void main() {
   });
 
   test('Navigator with list of UnsupportedPages', () async {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     await expectLater(
       () => rubigoRouter.onDidRemovePage(
         UnsupportedPage<void>(
@@ -100,16 +98,13 @@ void main() {
   });
 
   test('onDidRemovePage last MaterialPage', () async {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     await rubigoRouter.onDidRemovePage(
       MaterialPage<void>(
         key: availableScreens[2].pageKey,
@@ -128,16 +123,13 @@ void main() {
   });
 
   test('onDidRemovePage last CupertinoPage', () async {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     await rubigoRouter.onDidRemovePage(
       CupertinoPage<void>(
         key: availableScreens[2].pageKey,
@@ -156,16 +148,13 @@ void main() {
   });
 
   test('onDidRemovePage middle MaterialPage', () async {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     await rubigoRouter.onDidRemovePage(
       MaterialPage<void>(
         key: availableScreens[1].pageKey,
@@ -185,16 +174,13 @@ void main() {
   });
 
   test('onPopPage last page', () async {
-    final initialScreenStack = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ];
     final availableScreens = createAvailableScreens();
-    rubigoRouter.init(
-      initialScreenStack: initialScreenStack,
+    await rubigoRouter.init(
+      getFirstScreenAsync: () async => Screens.s100,
       availableScreens: availableScreens,
     );
+    await rubigoRouter.push(Screens.s200);
+    await rubigoRouter.push(Screens.s300);
     rubigoRouter.onPopPage(
       MaterialPageRoute<void>(builder: (_) => const Placeholder()),
       null,
