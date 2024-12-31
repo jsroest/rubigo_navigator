@@ -1,7 +1,7 @@
 import 'package:example/dependency_injection.dart';
 import 'package:example/screens/screens.dart';
-import 'package:example/screens/set1/set1_state.dart';
-import 'package:example/screens/set2/set2_state.dart';
+import 'package:example/screens/set1/screen_stack_backup_set1.dart';
+import 'package:example/screens/set2/screen_stack_backup_set2.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S700Controller with RubigoController<Screens> {
@@ -30,7 +30,7 @@ class S700Controller with RubigoController<Screens> {
   }
 
   Future<void> toSet1() async {
-    screenStackSet2 = rubigoRouter.screens.toListOfScreenId();
-    await rubigoRouter.replaceStack(screenStackSet1);
+    screenStackBackupSet2 = rubigoRouter.screenStackNotifier.value;
+    await rubigoRouter.replaceStack(screenStackBackupSet1);
   }
 }
