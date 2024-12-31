@@ -1,25 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart' as widgets;
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
-extension FlutterExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
-    on ListOfRubigoScreens<SCREEN_ID> {
-  List<MaterialPage<void>> toMaterialPages() => map(
-        (e) => MaterialPage<void>(
-          key: e.pageKey,
-          child: e.screenWidget,
-        ),
-      ).toList();
+extension ExtensionOnListOfRubigoScreenBase on List<RubigoScreen> {
+  List<MaterialPage<void>> toListOfMaterialPage() =>
+      map((e) => e.toMaterialPage()).toList();
 
-  List<CupertinoPage<void>> toCupertinoPages() => map(
-        (e) => CupertinoPage<void>(
-          key: e.pageKey,
-          child: e.screenWidget,
-        ),
-      ).toList();
+  List<CupertinoPage<void>> toListOfCupertinoPage() =>
+      map((e) => e.toCupertinoPage()).toList();
 }
 
-extension ExtensionOnWidget on widgets.Widget {
-  List<MaterialPage<void>> toMaterialPages() => [MaterialPage(child: this)];
+extension ExtensionOnRubigoScreenBase on RubigoScreen {
+  MaterialPage<void> toMaterialPage() => MaterialPage(
+        key: pageKey,
+        child: screenWidget,
+      );
+
+  CupertinoPage<void> toCupertinoPage() => CupertinoPage(
+        key: pageKey,
+        child: screenWidget,
+      );
 }

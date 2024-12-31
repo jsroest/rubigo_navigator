@@ -7,13 +7,16 @@ enum BackCallback {
   onPopPage,
 }
 
+typedef RubigoScreenToPage = Page<void> Function(RubigoScreen screen);
+
 class RubigoRouterDelegate<SCREEN_ID extends Enum>
     extends RouterDelegate<SCREEN_ID>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   RubigoRouterDelegate({
     required this.rubigoRouter,
-    required this.backCallback,
-  }) {
+    this.backCallback = BackCallback.onPopPage,
+    RubigoScreenToPage? widgetToPage,
+  }) : widgetToPage = widgetToPage ??= ((e) => e.toMaterialPage()) {
     rubigoRouter.addListener(notifyListeners);
   }
 
@@ -25,13 +28,12 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
 
   final RubigoRouter<SCREEN_ID> rubigoRouter;
   final BackCallback backCallback;
+  final RubigoScreenToPage widgetToPage;
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      pages: rubigoRouter.isInitialized
-          ? rubigoRouter.screens.toMaterialPages()
-          : rubigoRouter.splashWidget.toMaterialPages(),
+      pages: rubigoRouter.screens.map(widgetToPage).toList(),
       onDidRemovePage: backCallback == BackCallback.onDidRemovePage
           ? rubigoRouter.onDidRemovePage
           : null,

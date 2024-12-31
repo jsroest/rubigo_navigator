@@ -8,6 +8,8 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
 
   List<SCREEN_ID> toListOfScreenId() => map((e) => e.screenId).toList();
 
+  List<Widget> toListOfWidget() => map((e) => e.screenWidget).toList();
+
   RubigoScreen<SCREEN_ID> findByScreenId(SCREEN_ID screenId) =>
       firstWhere((e) => e.screenId == screenId);
 

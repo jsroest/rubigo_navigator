@@ -14,15 +14,14 @@ class RubigoRouter<SCREEN_ID extends Enum>
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   RubigoRouter({
-    Widget? splashWidget,
+    required this.availableScreens,
+    required this.splashScreenId,
     ProtectWrapper? protectWrapper,
-  })  : splashWidget = splashWidget ??= Container(),
-        protectWrapper = protectWrapper ??=
+  }) : protectWrapper = protectWrapper ??=
             ((Future<void> Function() function) => function());
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
-    required ListOfRubigoScreens<SCREEN_ID> availableScreens,
     RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
         rubigoStackManager,
     LogNavigation? logNavigation,
@@ -52,9 +51,10 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   bool _isInitialized = false;
 
-  bool get isInitialized => _isInitialized;
+  // bool get isInitialized => _isInitialized;
 
-  final Widget splashWidget;
+  final SCREEN_ID splashScreenId;
+  final ListOfRubigoScreens<SCREEN_ID> availableScreens;
 
   late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;
@@ -67,7 +67,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
       _rubigoStackManager.screenStackNotifier;
 
   @override
-  List<RubigoScreen<SCREEN_ID>> get screens => _rubigoStackManager.screens;
+  List<RubigoScreen<SCREEN_ID>> get screens => _isInitialized
+      ? _rubigoStackManager.screens
+      : [availableScreens.findByScreenId(splashScreenId)];
 
   @override
   Future<void> pop() => protectWrapper(() => _rubigoStackManager.pop());

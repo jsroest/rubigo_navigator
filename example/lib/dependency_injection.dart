@@ -18,7 +18,6 @@ Future<void> setup() async {
       await Future<void>.delayed(const Duration(seconds: 2));
       return Screens.s100;
     },
-    availableScreens: availableScreens,
   );
   //endregion
 }

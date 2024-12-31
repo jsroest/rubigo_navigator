@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class SplashWidget extends StatelessWidget {
-  const SplashWidget({super.key});
+class SplashScreen extends StatelessWidget with RubigoScreenMixin {
+  SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
