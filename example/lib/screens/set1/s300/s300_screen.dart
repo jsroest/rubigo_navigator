@@ -20,7 +20,7 @@ class S300Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S300',
-            breadCrumbsNotifier: breadCrumbsNotifier,
+            screenStackListener: rubigoRouter.screenStackNotifier,
           ),
         ),
         body: Center(
@@ -31,7 +31,7 @@ class S300Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) => screenStack.hasScreenBelow(),
                 onPressed: controller.onPopButtonPressed,
                 child: const Text('Pop'),
@@ -40,7 +40,7 @@ class S300Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) =>
                     screenStack.containsScreenBelow(Screens.s100),
                 onPressed: controller.onPopToS100ButtonPressed,
@@ -50,7 +50,7 @@ class S300Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) =>
                     screenStack.containsScreenBelow(Screens.s200),
                 onPressed: controller.onRemoveS200ButtonPressed,
@@ -60,7 +60,7 @@ class S300Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) =>
                     screenStack.containsScreenBelow(Screens.s100),
                 onPressed: controller.onRemoveS100ButtonPressed,

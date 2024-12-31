@@ -1,15 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class AppBarTitle extends StatelessWidget {
+class AppBarTitle<SCREEN_ID extends Enum> extends StatelessWidget {
   const AppBarTitle({
     required this.title,
-    required this.breadCrumbsNotifier,
+    required this.screenStackListener,
     super.key,
   });
 
   final String title;
-  final ValueListenable<String> breadCrumbsNotifier;
+  final ValueListenable<List<SCREEN_ID>> screenStackListener;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +19,9 @@ class AppBarTitle extends StatelessWidget {
       children: [
         Text('Screen: $title'),
         ValueListenableBuilder(
-          valueListenable: breadCrumbsNotifier,
-          builder: (context, value, child) => Text(breadCrumbsNotifier.value),
+          valueListenable: screenStackListener,
+          builder: (context, value, child) =>
+              Text(screenStackListener.value.printBreadCrumbs()),
         ),
       ],
     );

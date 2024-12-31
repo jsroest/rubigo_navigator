@@ -11,7 +11,7 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
   RubigoScreen<SCREEN_ID> findByScreenId(SCREEN_ID screenId) =>
       firstWhere((e) => e.screenId == screenId);
 
-  String printStack() => map((e) => e.screenId.name).toList().join(' => ');
+  String printStack() => map((e) => e.screenId.name).join('→').toUpperCase();
 }
 
 extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
@@ -27,4 +27,6 @@ extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
     ListOfRubigoScreens<SCREEN_ID> availableScreens,
   ) =>
       map((screenId) => availableScreens.findByScreenId(screenId)).toList();
+
+  String printBreadCrumbs() => map((e) => e.name).join('→').toUpperCase();
 }

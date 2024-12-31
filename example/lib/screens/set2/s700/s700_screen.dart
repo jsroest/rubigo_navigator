@@ -20,7 +20,7 @@ class S700Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S700',
-            breadCrumbsNotifier: breadCrumbsNotifier,
+            screenStackListener: rubigoRouter.screenStackNotifier,
           ),
         ),
         body: Center(
@@ -31,7 +31,7 @@ class S700Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) => screenStack.hasScreenBelow(),
                 onPressed: controller.onPopButtonPressed,
                 child: const Text('Pop'),
@@ -40,7 +40,7 @@ class S700Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) =>
                     screenStack.containsScreenBelow(Screens.s500),
                 onPressed: controller.onPopToS500ButtonPressed,
@@ -50,7 +50,7 @@ class S700Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) =>
                     screenStack.containsScreenBelow(Screens.s600),
                 onPressed: controller.onRemoveS600ButtonPressed,
@@ -60,7 +60,7 @@ class S700Screen extends StatelessWidget
                 height: 16,
               ),
               NavigateButton(
-                screenStackNotifier: screenStackNotifier,
+                screenStackListener: rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) =>
                     screenStack.containsScreenBelow(Screens.s500),
                 onPressed: controller.onRemoveS500ButtonPressed,

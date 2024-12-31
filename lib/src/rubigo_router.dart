@@ -57,7 +57,12 @@ class RubigoRouter<SCREEN_ID extends Enum>
   late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;
 
+  // This function can be used to protect the app from user input while navigating.
   final Future<T> Function<T>(Future<T> Function() function) protect;
+
+  @override
+  ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
+      _rubigoStackManager.screenStackNotifier;
 
   @override
   List<RubigoScreen<SCREEN_ID>> get screens => _rubigoStackManager.screens;
