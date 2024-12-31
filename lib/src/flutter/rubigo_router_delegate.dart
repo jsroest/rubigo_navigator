@@ -2,11 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
+enum BackCallback {
+  onDidRemovePage,
+  onPopPage,
+}
+
 class RubigoRouterDelegate<SCREEN_ID extends Enum>
     extends RouterDelegate<SCREEN_ID>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
-  RubigoRouterDelegate(this._rubigoRouter) {
-    _rubigoRouter.addListener(notifyListeners);
+  RubigoRouterDelegate({
+    required this.rubigoRouter,
+    required this.backCallback,
+  }) {
+    rubigoRouter.addListener(notifyListeners);
   }
 
   @override
@@ -15,16 +23,21 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   @override
   Future<void> setNewRoutePath(SCREEN_ID configuration) async {}
 
-  final RubigoRouter<SCREEN_ID> _rubigoRouter;
+  final RubigoRouter<SCREEN_ID> rubigoRouter;
+  final BackCallback backCallback;
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
-      pages: _rubigoRouter.isInitialized
-          ? _rubigoRouter.screens.toMaterialPages()
-          : _rubigoRouter.splashWidget.toMaterialPages(),
-      //onDidRemovePage: _rubigoRouter.onDidRemovePage,
-      onPopPage: _rubigoRouter.onPopPage,
+      pages: rubigoRouter.isInitialized
+          ? rubigoRouter.screens.toMaterialPages()
+          : rubigoRouter.splashWidget.toMaterialPages(),
+      onDidRemovePage: backCallback == BackCallback.onDidRemovePage
+          ? rubigoRouter.onDidRemovePage
+          : null,
+      onPopPage: backCallback == BackCallback.onPopPage
+          ? rubigoRouter.onPopPage
+          : null,
     );
   }
 }

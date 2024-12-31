@@ -16,7 +16,10 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    _routerDelegate = RubigoRouterDelegate(rubigoRouter);
+    _routerDelegate = RubigoRouterDelegate(
+      rubigoRouter: rubigoRouter,
+      backCallback: BackCallback.onPopPage,
+    );
   }
 
   @override
