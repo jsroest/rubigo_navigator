@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
@@ -14,9 +14,10 @@ class RubigoRouter<SCREEN_ID extends Enum>
     implements
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   RubigoRouter({
-    required this.splashWidget,
+    Widget? splashWidget,
     ProtectWrapper? protectWrapper,
-  }) : protectWrapper = protectWrapper ??=
+  })  : splashWidget = splashWidget ??= Container(),
+        protectWrapper = protectWrapper ??=
             ((Future<void> Function() function) => function());
 
   Future<void> init({
