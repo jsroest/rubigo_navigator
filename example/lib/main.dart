@@ -12,7 +12,7 @@ void main() {
   getIt.registerSingleton(rubigoBusyService);
   final rubigoRouter = RubigoRouter<Screens>(
     splashWidget: const SplashWidget(),
-    protect: rubigoBusyService.protect,
+    protectWrapper: rubigoBusyService.protectWrapper,
   );
   getIt.registerSingleton(rubigoRouter);
 

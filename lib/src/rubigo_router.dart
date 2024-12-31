@@ -15,8 +15,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
         RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
   RubigoRouter({
     required this.splashWidget,
-    required this.protect,
-  });
+    ProtectWrapper? protectWrapper,
+  }) : protectWrapper = protectWrapper ??=
+            ((Future<void> Function() function) => function());
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
@@ -58,7 +59,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
       _rubigoStackManager;
 
   // This function can be used to protect the app from user input while navigating.
-  final Future<T> Function<T>(Future<T> Function() function) protect;
+  final ProtectWrapper protectWrapper;
 
   @override
   ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
@@ -68,23 +69,23 @@ class RubigoRouter<SCREEN_ID extends Enum>
   List<RubigoScreen<SCREEN_ID>> get screens => _rubigoStackManager.screens;
 
   @override
-  Future<void> pop() => protect(() => _rubigoStackManager.pop());
+  Future<void> pop() => protectWrapper(() => _rubigoStackManager.pop());
 
   @override
   Future<void> popTo(SCREEN_ID screenId) =>
-      protect(() => _rubigoStackManager.popTo(screenId));
+      protectWrapper(() => _rubigoStackManager.popTo(screenId));
 
   @override
   Future<void> push(SCREEN_ID screenId) =>
-      protect(() => _rubigoStackManager.push(screenId));
+      protectWrapper(() => _rubigoStackManager.push(screenId));
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) =>
-      protect(() => _rubigoStackManager.onDidRemovePage(page));
+      protectWrapper(() => _rubigoStackManager.onDidRemovePage(page));
 
   @override
   Future<void> replaceStack(List<SCREEN_ID> screens) =>
-      protect(() => _rubigoStackManager.replaceStack(screens));
+      protectWrapper(() => _rubigoStackManager.replaceStack(screens));
 
   @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);

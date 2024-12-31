@@ -8,7 +8,7 @@ class RubigoBusyService extends ChangeNotifier {
   late final _deBouncer =
       _DeBouncer(() => _showProgressIndicatorSetter(isBusy));
 
-  Future<T> protect<T>(Future<T> Function() function) async {
+  Future<T> protectWrapper<T>(Future<T> Function() function) async {
     try {
       _addBusy();
       return await function();
