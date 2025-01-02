@@ -9,19 +9,19 @@ class S700Controller with RubigoController<Screens> {
   }
 
   Future<void> onPopToS500ButtonPressed() async {
-    await rubigoRouter.popTo(Screens.s500);
+    await rubigoRouter.whenNotBusy?.popTo(Screens.s500);
   }
 
   Future<void> onRemoveS600ButtonPressed() async {
-    rubigoRouter.remove(Screens.s600);
+    rubigoRouter.whenNotBusy?.remove(Screens.s600);
   }
 
   Future<void> onRemoveS500ButtonPressed() async {
-    rubigoRouter.remove(Screens.s500);
+    rubigoRouter.whenNotBusy?.remove(Screens.s500);
   }
 
   Future<void> resetStack() async {
-    await rubigoRouter.replaceStack([
+    await rubigoRouter.whenNotBusy?.replaceStack([
       Screens.s500,
       Screens.s600,
       Screens.s700,

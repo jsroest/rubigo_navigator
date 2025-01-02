@@ -13,10 +13,10 @@ class S200Controller with RubigoController<Screens> {
   }
 
   Future<void> onS300ButtonPressed() async {
-    await rubigoRouter.push(Screens.s300);
+    await rubigoRouter.whenNotBusy?.push(Screens.s300);
   }
 
   Future<void> onPopButtonPressed() async {
-    await rubigoRouter.pop();
+    await rubigoRouter.whenNotBusy?.pop();
   }
 }

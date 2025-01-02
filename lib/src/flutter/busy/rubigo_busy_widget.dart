@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_event.dart';
 
-class RubigoBusy extends StatelessWidget {
-  const RubigoBusy({
+class RubigoBusyWidget extends StatelessWidget {
+  const RubigoBusyWidget({
     required this.child,
     required this.listener,
     this.progressIndicator,

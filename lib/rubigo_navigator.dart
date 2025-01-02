@@ -1,6 +1,6 @@
 export 'src/extensions/extensions.dart';
-export 'src/flutter/busy/rubigo_busy.dart';
 export 'src/flutter/busy/rubigo_busy_service.dart';
+export 'src/flutter/busy/rubigo_busy_widget.dart';
 export 'src/flutter/rubigo_material_app.dart';
 export 'src/flutter/rubigo_router_delegate.dart';
 export 'src/mixins/rubigo_screen_mixin.dart';

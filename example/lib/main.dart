@@ -5,21 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 void main() {
-  // Create a RubigoBusyService.
-  // This sample demonstrates the usage of the RubigoBusyService.
-  // For this to work, a busyWrapper needs to be passed to the RubigoRouter.
-  final rubigoBusyService = RubigoBusyService();
   // Create a RubigoRouter for the set of screens defined by the Screens enum.
   final rubigoRouter = RubigoRouter<Screens>(
     availableScreens: availableScreens,
     splashScreenId: Screens.splashScreen,
-    rubigoBusyService: rubigoBusyService,
   );
   unawaited(
-    // Calling init mandatory. While init loads, the splashScreen is shown.
+    // Calling init is mandatory. While init loads, the splashScreen is shown.
     // Init returns the first screen to show to the user.
     // This callback can be used to initialize the application and only allows
-    // user interaction when it's ready.
+    // user interaction when it's ready. For this to work, the splashScreen
+    // should not accept any user interaction.
     rubigoRouter.init(
       getFirstScreenAsync: () async {
         await Future<void>.delayed(const Duration(seconds: 2));
@@ -31,7 +27,11 @@ void main() {
     RubigoMaterialApp(
       routerDelegate: RubigoRouterDelegate(
         rubigoRouter: rubigoRouter,
-        backCallback: BackCallback.onDidRemovePage,
+        widgetToPage: (screen) => MaterialPage(
+          child: screen.screenWidget,
+          //key: screen.pageKey,
+        ),
+        backCallback: BackCallback.onPopPage,
       ),
     ),
   );

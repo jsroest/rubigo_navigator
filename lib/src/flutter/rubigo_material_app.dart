@@ -15,15 +15,10 @@ class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatelessWidget {
       backButtonDispatcher: RootBackButtonDispatcher(),
       routerDelegate: routerDelegate,
       builder: (context, child) {
-        final notifier =
-            routerDelegate.rubigoRouter.rubigoBusyService?.notifier;
-        if (notifier != null) {
-          return RubigoBusy(
-            listener: notifier,
-            child: child!,
-          );
-        }
-        return child!;
+        return RubigoBusyWidget(
+          listener: routerDelegate.rubigoRouter.rubigoBusy.notifier,
+          child: child!,
+        );
       },
     );
   }

@@ -5,23 +5,23 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S300Controller with RubigoController<Screens> {
   Future<void> onPopButtonPressed() async {
-    await rubigoRouter.pop();
+    await rubigoRouter.whenNotBusy?.pop();
   }
 
   Future<void> onPopToS100ButtonPressed() async {
-    await rubigoRouter.popTo(Screens.s100);
+    await rubigoRouter.whenNotBusy?.popTo(Screens.s100);
   }
 
   Future<void> onRemoveS200ButtonPressed() async {
-    rubigoRouter.remove(Screens.s200);
+    rubigoRouter.whenNotBusy?.remove(Screens.s200);
   }
 
   Future<void> onRemoveS100ButtonPressed() async {
-    rubigoRouter.remove(Screens.s100);
+    rubigoRouter.whenNotBusy?.remove(Screens.s100);
   }
 
   Future<void> resetStack() async {
-    await rubigoRouter.replaceStack([
+    await rubigoRouter.whenNotBusy?.replaceStack([
       Screens.s100,
       Screens.s200,
       Screens.s300,
