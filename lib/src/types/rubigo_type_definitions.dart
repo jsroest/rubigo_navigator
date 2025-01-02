@@ -10,5 +10,4 @@ typedef LogNavigation = Future<void> Function(String message);
 
 typedef ScreenListToPageList = List<Page<void>> Function(List<Widget> screen);
 
-typedef ProtectWrapper = Future<void> Function(
-    Future<void> Function() function);
+typedef BusyWrapper = Future<void> Function(Future<void> Function() function);

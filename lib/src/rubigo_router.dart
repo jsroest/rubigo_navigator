@@ -16,9 +16,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
   RubigoRouter({
     required this.availableScreens,
     required this.splashScreenId,
-    ProtectWrapper? protectWrapper,
-  }) : protectWrapper = protectWrapper ??=
-            ((Future<void> Function() function) => function());
+    BusyWrapper? busyWrapper,
+  }) : protectWrapper =
+            busyWrapper ??= ((Future<void> Function() function) => function());
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
@@ -60,7 +60,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
       _rubigoStackManager;
 
   // This function can be used to protect the app from user input while navigating.
-  final ProtectWrapper protectWrapper;
+  final BusyWrapper protectWrapper;
 
   @override
   ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>

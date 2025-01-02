@@ -8,14 +8,13 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 void main() {
   final rubigoBusyService = RubigoBusyService();
-  getIt.registerSingleton(rubigoBusyService);
   final rubigoRouter = RubigoRouter<Screens>(
     availableScreens: availableScreens,
     splashScreenId: Screens.splashScreen,
-    protectWrapper: rubigoBusyService.protectWrapper,
+    busyWrapper: rubigoBusyService.busyWrapper,
   );
   getIt.registerSingleton(rubigoRouter);
 
   unawaited(setup());
-  runApp(const App());
+  runApp(App(rubigoBusyService: rubigoBusyService));
 }
