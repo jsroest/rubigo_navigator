@@ -1,10 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
 import 'helpers/helpers.dart';
-import 'helpers/rubigo_router.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
 import 'helpers/screens/s200/s200_controller.dart';
@@ -28,20 +26,12 @@ ListOfRubigoScreens<Screens> get createAvailableScreens => [
     ];
 
 void main() {
-  late List<RubigoScreen<Screens>> availableScreens;
-  setUp(
-    () async {
-      availableScreens = createAvailableScreens;
-      await GetIt.instance.reset();
-      GetIt.instance.registerSingleton(
-        RubigoRouter<Screens>(
-          splashScreenId: Screens.splashScreen,
-          availableScreens: availableScreens,
-        ),
-      );
-    },
-  );
   test('Test s100-s200-s300 pop', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -72,6 +62,11 @@ void main() {
   test(
     'Test s100 pop',
     () async {
+      final availableScreens = createAvailableScreens;
+      final rubigoRouter = RubigoRouter<Screens>(
+        splashScreenId: Screens.splashScreen,
+        availableScreens: availableScreens,
+      );
       await rubigoRouter.init(
         getFirstScreenAsync: () async => Screens.s100,
       );
@@ -97,6 +92,11 @@ void main() {
   );
 
   test('Test s100-s200-s300 popTo s100', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -125,6 +125,11 @@ void main() {
   test(
     'Test s100-s200 popTo s300',
     () async {
+      final availableScreens = createAvailableScreens;
+      final rubigoRouter = RubigoRouter<Screens>(
+        splashScreenId: Screens.splashScreen,
+        availableScreens: availableScreens,
+      );
       await rubigoRouter.init(
         getFirstScreenAsync: () async => Screens.s100,
       );
@@ -153,6 +158,11 @@ void main() {
   );
 
   test('Test s100 push s200', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -177,6 +187,11 @@ void main() {
   });
 
   test('Test s100-s200-s300 remove s200', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -203,6 +218,11 @@ void main() {
   });
 
   test('Test s100-s200 remove s300', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -236,12 +256,9 @@ void main() {
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
-    await GetIt.instance.reset();
-    GetIt.instance.registerSingleton(
-      RubigoRouter<Screens>(
-        splashScreenId: Screens.splashScreen,
-        availableScreens: availableScreens,
-      ),
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
     );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
@@ -268,17 +285,14 @@ void main() {
   });
 
   test('Test s100-s200-s300 pop s100', () async {
-    availableScreens = [
+    final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
-    await GetIt.instance.reset();
-    GetIt.instance.registerSingleton(
-      RubigoRouter<Screens>(
-        splashScreenId: Screens.splashScreen,
-        availableScreens: availableScreens,
-      ),
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
     );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
@@ -306,19 +320,15 @@ void main() {
   });
 
   test('Push in willShow', () async {
-    availableScreens = [
+    final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerWillShowPush()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
-    await GetIt.instance.reset();
-    GetIt.instance.registerSingleton(
-      RubigoRouter<Screens>(
-        splashScreenId: Screens.splashScreen,
-        availableScreens: availableScreens,
-      ),
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
     );
-
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -336,7 +346,7 @@ void main() {
   });
 
   test('Pop in willShow', () async {
-    availableScreens = [
+    final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,
@@ -345,14 +355,10 @@ void main() {
       ),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
     ];
-    await GetIt.instance.reset();
-    GetIt.instance.registerSingleton(
-      RubigoRouter<Screens>(
-        splashScreenId: Screens.splashScreen,
-        availableScreens: availableScreens,
-      ),
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
     );
-
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -370,7 +376,7 @@ void main() {
   });
 
   test('Pop in mayPop', () async {
-    availableScreens = [
+    final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,
@@ -378,14 +384,10 @@ void main() {
         S200ControllerMayPopPop(),
       ),
     ];
-    await GetIt.instance.reset();
-    GetIt.instance.registerSingleton(
-      RubigoRouter<Screens>(
-        splashScreenId: Screens.splashScreen,
-        availableScreens: availableScreens,
-      ),
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
     );
-
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -404,7 +406,7 @@ void main() {
   });
 
   test('Push in mayPop', () async {
-    availableScreens = [
+    final availableScreens = [
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,
@@ -412,14 +414,10 @@ void main() {
         S200ControllerMayPopPush(),
       ),
     ];
-    await GetIt.instance.reset();
-    GetIt.instance.registerSingleton(
-      RubigoRouter<Screens>(
-        splashScreenId: Screens.splashScreen,
-        availableScreens: availableScreens,
-      ),
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
     );
-
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );

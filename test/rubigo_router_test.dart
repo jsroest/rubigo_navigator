@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
 import 'helpers/helpers.dart';
-import 'helpers/rubigo_router.dart';
 import 'helpers/screens/s100/s100_controller.dart';
 import 'helpers/screens/s100/s100_screen.dart';
 import 'helpers/screens/s200/s200_controller.dart';
@@ -26,22 +24,12 @@ List<RubigoScreen<Screens>> get createAvailableScreens => [
     ];
 
 void main() {
-  late List<RubigoScreen<Screens>> availableScreens;
-  setUp(
-    () async {
-      availableScreens = createAvailableScreens;
-      await GetIt.instance.reset();
-      GetIt.instance.allowReassignment = true;
-      GetIt.instance.registerSingleton(
-        RubigoRouter<Screens>(
-          splashScreenId: Screens.splashScreen,
-          availableScreens: availableScreens,
-        ),
-      );
-    },
-  );
-
   test('Navigator with list of MaterialPages', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -60,6 +48,11 @@ void main() {
   });
 
   test('Navigator with list of CupertinoPages', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -78,6 +71,11 @@ void main() {
   });
 
   test('Navigator with list of UnsupportedPages', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -100,6 +98,11 @@ void main() {
   });
 
   test('onDidRemovePage last MaterialPage', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -123,6 +126,11 @@ void main() {
   });
 
   test('onDidRemovePage last CupertinoPage', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -146,6 +154,11 @@ void main() {
   });
 
   test('onDidRemovePage middle MaterialPage', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );
@@ -170,6 +183,11 @@ void main() {
   });
 
   test('onPopPage last page', () async {
+    final availableScreens = createAvailableScreens;
+    final rubigoRouter = RubigoRouter<Screens>(
+      splashScreenId: Screens.splashScreen,
+      availableScreens: availableScreens,
+    );
     await rubigoRouter.init(
       getFirstScreenAsync: () async => Screens.s100,
     );

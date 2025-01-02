@@ -38,6 +38,9 @@ class RubigoRouter<SCREEN_ID extends Enum>
     _rubigoStackManager = rubigoStackManager;
 
     for (final screenSet in availableScreens) {
+      //Wire up the rubigoRouter in each controller
+      final controller = screenSet.controller;
+      controller.rubigoRouter = this;
       //Wire up the controller in each screenWidget that has the RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
       if (screenWidget is RubigoScreenMixin) {

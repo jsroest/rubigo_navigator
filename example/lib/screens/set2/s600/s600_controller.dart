@@ -1,4 +1,3 @@
-import 'package:example/dependency_injection.dart';
 import 'package:example/screens/screens.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:example/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 void main() {
@@ -16,10 +15,6 @@ void main() {
     splashScreenId: Screens.splashScreen,
     busyWrapper: rubigoBusyService.busyWrapper,
   );
-  // Register the rubigoRouter to make it globally accessible in the
-  // controllers
-  GetIt.I.registerSingleton(rubigoRouter);
-
   unawaited(
     // Calling init mandatory. While init loads, the splashScreen is shown.
     // Init returns the first screen to show to the user.

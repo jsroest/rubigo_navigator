@@ -1,4 +1,3 @@
-import 'package:example/dependency_injection.dart';
 import 'package:example/screens/set2/s500/s500_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ class S500Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S500',
-            screenStackListener: rubigoRouter.screenStackNotifier,
+            screenStackListener: controller.rubigoRouter.screenStackNotifier,
           ),
         ),
         body: Column(

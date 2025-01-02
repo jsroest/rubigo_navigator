@@ -1,4 +1,3 @@
-import 'package:example/dependency_injection.dart';
 import 'package:example/screens/set1/s200/s200_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
 import 'package:example/widgets/navigate_button.dart';
@@ -19,7 +18,7 @@ class S200Screen extends StatelessWidget
         appBar: AppBar(
           title: AppBarTitle(
             title: 'S200',
-            screenStackListener: rubigoRouter.screenStackNotifier,
+            screenStackListener: controller.rubigoRouter.screenStackNotifier,
           ),
         ),
         body: Center(
@@ -35,7 +34,8 @@ class S200Screen extends StatelessWidget
               ),
               const SizedBox(height: 16),
               NavigateButton(
-                screenStackListener: rubigoRouter.screenStackNotifier,
+                screenStackListener:
+                    controller.rubigoRouter.screenStackNotifier,
                 isEnabled: (screenStack) => screenStack.hasScreenBelow(),
                 onPressed: controller.onPopButtonPressed,
                 child: const Text('Pop'),

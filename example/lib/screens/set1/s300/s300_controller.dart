@@ -1,4 +1,3 @@
-import 'package:example/dependency_injection.dart';
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/screen_stack_backup_set1.dart';
 import 'package:example/screens/set2/screen_stack_backup_set2.dart';
