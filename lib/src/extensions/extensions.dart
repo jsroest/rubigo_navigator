@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_navigator/src/rubigo_screen.dart';
+import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
     on ListOfRubigoScreens<SCREEN_ID> {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
+import 'package:rubigo_navigator/src/rubigo_router.dart';
+import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
 enum BackCallback {
   onDidRemovePage,

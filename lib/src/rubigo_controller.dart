@@ -1,4 +1,4 @@
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_navigator/src/rubigo_router.dart';
 
 mixin RubigoController<SCREEN_ID extends Enum> {
   late RubigoRouter<SCREEN_ID> rubigoRouter;
