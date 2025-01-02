@@ -5,10 +5,13 @@ import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_event.dart';
 
 class RubigoBusyService {
   int _busyCounter = 0;
+  Timer? _timer;
 
-  late final _delayer = _Delayer(
-    () => notifier.value = notifier.value.copyWith(
-      showProgressIndicator: notifier.value.isBusy,
+  final notifier = ValueNotifier(
+    const RubigoBusyEvent(
+      isBusy: false,
+      enabled: true,
+      showProgressIndicator: false,
     ),
   );
 
@@ -27,7 +30,7 @@ class RubigoBusyService {
       isBusy: true,
     );
     if (_busyCounter == 1) {
-      _delayer.run();
+      _timer ??= _setTimer();
     }
   }
 
@@ -36,6 +39,7 @@ class RubigoBusyService {
       _busyCounter--;
     }
     if (_busyCounter == 0) {
+      _cancelTimer();
       notifier.value = notifier.value.copyWith(
         showProgressIndicator: false,
         isBusy: false,
@@ -43,28 +47,23 @@ class RubigoBusyService {
     }
   }
 
-  final notifier = ValueNotifier(
-    const RubigoBusyEvent(
-      isBusy: false,
-      enabled: true,
-      showProgressIndicator: false,
-    ),
-  );
-}
+  void _cancelTimer() {
+    _timer?.cancel();
+    _timer = null;
+  }
 
-class _Delayer {
-  _Delayer(this.action);
-
-  final VoidCallback? action;
-  Timer? _timer;
-
-  void run() {
-    // This will not work as intended if there are multiple calls within a short
-    // period (< 300 ms).
-    //TODO: make this perfect
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-    _timer = Timer(const Duration(milliseconds: 300), action!);
+  Timer _setTimer() {
+    return Timer(
+      const Duration(milliseconds: 300),
+      () {
+        _timer = null;
+        notifier.value = notifier.value.copyWith(
+          // Instead of setting the value to true, set the value to the current
+          // value of isBusy. This is to prevent edge cases where the app might
+          // stay unresponsive due to an unforeseen race condition.
+          showProgressIndicator: notifier.value.isBusy,
+        );
+      },
+    );
   }
 }
