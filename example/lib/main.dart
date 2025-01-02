@@ -13,7 +13,7 @@ void main() {
   final rubigoRouter = RubigoRouter<Screens>(
     availableScreens: availableScreens,
     splashScreenId: Screens.splashScreen,
-    busyWrapper: rubigoBusyService.busyWrapper,
+    rubigoBusyService: rubigoBusyService,
   );
   unawaited(
     // Calling init mandatory. While init loads, the splashScreen is shown.
@@ -29,8 +29,10 @@ void main() {
   );
   runApp(
     RubigoMaterialApp(
-      rubigoRouter: rubigoRouter,
-      rubigoBusyService: rubigoBusyService,
+      routerDelegate: RubigoRouterDelegate(
+        rubigoRouter: rubigoRouter,
+        backCallback: BackCallback.onDidRemovePage,
+      ),
     ),
   );
 }

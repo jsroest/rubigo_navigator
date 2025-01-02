@@ -1,46 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy.dart';
-import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_service.dart';
-import 'package:rubigo_navigator/src/flutter/rubigo_router_delegate.dart';
-import 'package:rubigo_navigator/src/rubigo_router.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
+class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatelessWidget {
   const RubigoMaterialApp({
-    required this.rubigoRouter,
-    this.rubigoBusyService,
+    required this.routerDelegate,
     super.key,
   });
 
-  final RubigoRouter<SCREEN_ID> rubigoRouter;
-  final RubigoBusyService? rubigoBusyService;
-
-  @override
-  State<RubigoMaterialApp<SCREEN_ID>> createState() =>
-      _RubigoMaterialAppState<SCREEN_ID>();
-}
-
-class _RubigoMaterialAppState<SCREEN_ID extends Enum>
-    extends State<RubigoMaterialApp<SCREEN_ID>> {
-  late final RubigoRouterDelegate<SCREEN_ID> _routerDelegate;
-
-  @override
-  void initState() {
-    super.initState();
-    _routerDelegate = RubigoRouterDelegate(
-      rubigoRouter: widget.rubigoRouter,
-    );
-  }
+  final RubigoRouterDelegate<SCREEN_ID> routerDelegate;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       backButtonDispatcher: RootBackButtonDispatcher(),
-      routerDelegate: _routerDelegate,
+      routerDelegate: routerDelegate,
       builder: (context, child) {
-        final rubigoBusyService = widget.rubigoBusyService;
-        if (rubigoBusyService != null) {
+        final notifier =
+            routerDelegate.rubigoRouter.rubigoBusyService?.notifier;
+        if (notifier != null) {
           return RubigoBusy(
-            listener: rubigoBusyService.notifier,
+            listener: notifier,
             child: child!,
           );
         }

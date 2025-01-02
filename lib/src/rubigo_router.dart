@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
+import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_service.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
@@ -16,9 +17,10 @@ class RubigoRouter<SCREEN_ID extends Enum>
   RubigoRouter({
     required this.availableScreens,
     required this.splashScreenId,
-    BusyWrapper? busyWrapper,
-  }) : protectWrapper =
-            busyWrapper ??= ((Future<void> Function() function) => function());
+    this.rubigoBusyService,
+  }) : _busyWrapper = rubigoBusyService != null
+            ? rubigoBusyService.busyWrapper
+            : ((Future<void> Function() function) => function());
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
@@ -54,16 +56,15 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   bool _isInitialized = false;
 
-  // bool get isInitialized => _isInitialized;
-
-  final SCREEN_ID splashScreenId;
   final ListOfRubigoScreens<SCREEN_ID> availableScreens;
+  final SCREEN_ID splashScreenId;
+  final RubigoBusyService? rubigoBusyService;
 
   late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;
 
   // This function can be used to protect the app from user input while navigating.
-  final BusyWrapper protectWrapper;
+  final BusyWrapper _busyWrapper;
 
   @override
   ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
@@ -75,23 +76,23 @@ class RubigoRouter<SCREEN_ID extends Enum>
       : [availableScreens.findByScreenId(splashScreenId)];
 
   @override
-  Future<void> pop() => protectWrapper(() => _rubigoStackManager.pop());
+  Future<void> pop() => _busyWrapper(() => _rubigoStackManager.pop());
 
   @override
   Future<void> popTo(SCREEN_ID screenId) =>
-      protectWrapper(() => _rubigoStackManager.popTo(screenId));
+      _busyWrapper(() => _rubigoStackManager.popTo(screenId));
 
   @override
   Future<void> push(SCREEN_ID screenId) =>
-      protectWrapper(() => _rubigoStackManager.push(screenId));
+      _busyWrapper(() => _rubigoStackManager.push(screenId));
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) =>
-      protectWrapper(() => _rubigoStackManager.onDidRemovePage(page));
+      _busyWrapper(() => _rubigoStackManager.onDidRemovePage(page));
 
   @override
   Future<void> replaceStack(List<SCREEN_ID> screens) =>
-      protectWrapper(() => _rubigoStackManager.replaceStack(screens));
+      _busyWrapper(() => _rubigoStackManager.replaceStack(screens));
 
   @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
