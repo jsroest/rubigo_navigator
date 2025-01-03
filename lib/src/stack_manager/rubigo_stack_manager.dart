@@ -27,21 +27,8 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   final LogNavigation _logNavigation;
 
-  late final _screenStackNotifier =
-      ValueNotifier<List<SCREEN_ID>>(_screenStack.toListOfScreenId());
-
-  @override
-  ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
-      _screenStackNotifier;
-
   @override
   List<RubigoScreen<SCREEN_ID>> get screens {
-    unawaited(
-      _logNavigation(
-        'Screen stack: ${_screenStack.printStack()}.',
-      ),
-    );
-    _screenStackNotifier.value = _screenStack.toListOfScreenId();
     return _screenStack;
   }
 
@@ -156,9 +143,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         );
 
         _screenStack.add(
-          _availableScreens.firstWhere(
-            (e) => e.screenId == navigationType.screenId,
-          ),
+          _availableScreens.findByScreenId(navigationType.screenId),
         );
         _eventCounter++;
         await _screenStack.last.controller.onTop(changeInfo);

@@ -8,8 +8,6 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
     RUBIGO_CONTROLLER extends RubigoController<SCREEN_ID>> with ChangeNotifier {
   List<RubigoScreen<SCREEN_ID>> get screens;
 
-  ValueNotifier<List<SCREEN_ID>> get screenStackNotifier;
-
   Future<void> pop();
 
   Future<void> popTo(SCREEN_ID screenId);

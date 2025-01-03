@@ -19,26 +19,26 @@ class RubigoRouter<SCREEN_ID extends Enum>
     required this.splashScreenId,
     RubigoBusyService? rubigoBusyService,
     LogNavigation? logNavigation,
+    RubigoStackManagerType<SCREEN_ID>? rubigoStackManager,
   })  : rubigoBusy = rubigoBusyService ?? RubigoBusyService(),
         _logNavigation =
-            logNavigation ?? ((message) async => debugPrint(message));
+            logNavigation ?? ((message) async => debugPrint(message)),
+        _rubigoStackManager = rubigoStackManager ??
+            RubigoStackManager(
+              [availableScreens.findByScreenId(splashScreenId)],
+              availableScreens,
+              logNavigation ?? ((message) async => debugPrint(message)),
+            );
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
-    RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>?
-        rubigoStackManager,
     LogNavigation? logNavigation,
   }) async {
-    final firstScreen = await getFirstScreenAsync();
-    logNavigation ??= (message) async => debugPrint(message);
-    rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
-      [firstScreen].toListOfRubigoScreen(availableScreens),
-      availableScreens,
-      _logNavigation,
-    );
-
-    rubigoStackManager.addListener(notifyListeners);
-    _rubigoStackManager = rubigoStackManager;
+    _rubigoStackManager.addListener(notifyListeners);
+    _rubigoStackManager.addListener(() {
+      _screenStackNotifier.value =
+          _rubigoStackManager.screens.toListOfScreenId();
+    });
 
     for (final screenSet in availableScreens) {
       //Wire up the rubigoRouter in each controller
@@ -50,31 +50,36 @@ class RubigoRouter<SCREEN_ID extends Enum>
         (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
       }
     }
-
-    _isInitialized = true;
-    notifyListeners();
+    final firstScreen = await getFirstScreenAsync();
+    await _rubigoStackManager.replaceStack([firstScreen]);
   }
 
-  bool _isInitialized = false;
-
+  final LogNavigation _logNavigation;
   final ListOfRubigoScreens<SCREEN_ID> availableScreens;
   final SCREEN_ID splashScreenId;
   final RubigoBusyService rubigoBusy;
+  final RubigoStackManagerType<SCREEN_ID> _rubigoStackManager;
 
-  late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
-      _rubigoStackManager;
+  late final _screenStackNotifier = ValueNotifier<List<SCREEN_ID>>(
+    _rubigoStackManager.screens.toListOfScreenId(),
+  );
 
-  @override
   ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
-      _rubigoStackManager.screenStackNotifier;
+      _screenStackNotifier;
 
   @override
-  List<RubigoScreen<SCREEN_ID>> get screens => _isInitialized
-      ? _rubigoStackManager.screens
-      : [availableScreens.findByScreenId(splashScreenId)];
+  List<RubigoScreen<SCREEN_ID>> get screens {
+    final result = _rubigoStackManager.screens;
+    unawaited(
+      _logNavigation.call(
+        'Screen stack: ${_screenStackNotifier.value.printBreadCrumbs()}.',
+      ),
+    );
+    return result;
+  }
 
   @override
-  Future<void> pop() => rubigoBusy.busyWrapper(() => _rubigoStackManager.pop());
+  Future<void> pop() => rubigoBusy.busyWrapper(_rubigoStackManager.pop);
 
   @override
   Future<void> popTo(SCREEN_ID screenId) =>

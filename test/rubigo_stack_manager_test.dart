@@ -259,6 +259,7 @@ void main() {
 
   test('Test s100 push s100-s200-s300', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
@@ -293,6 +294,7 @@ void main() {
 
   test('Test s100-s200-s300 pop s100', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
@@ -328,6 +330,7 @@ void main() {
 
   test('Push in willShow', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200ControllerWillShowPush()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
@@ -354,6 +357,7 @@ void main() {
 
   test('Pop in willShow', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,
@@ -384,6 +388,7 @@ void main() {
 
   test('Pop in mayPop', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,
@@ -414,6 +419,7 @@ void main() {
 
   test('Push in mayPop', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,
@@ -444,6 +450,7 @@ void main() {
 
   test('Test s100-s200-s300 replaceStack s500-s600-s700', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200Controller()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
@@ -490,6 +497,7 @@ void main() {
 
   test('Test screens equals screenStackNotifier', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(Screens.s200, S200Screen(), S200Controller()),
       RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
@@ -514,6 +522,7 @@ void main() {
 
   test('Test s100-s200 pop when mayPop returns false', () async {
     final availableScreens = [
+      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
       RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
       RubigoScreen(
         Screens.s200,

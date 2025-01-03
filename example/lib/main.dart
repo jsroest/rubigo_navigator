@@ -29,7 +29,7 @@ void main() {
         rubigoRouter: rubigoRouter,
         widgetToPage: (screen) => MaterialPage(
           child: screen.screenWidget,
-          //key: screen.pageKey,
+          key: screen.pageKey,
         ),
         backCallback: BackCallback.onPopPage,
       ),
