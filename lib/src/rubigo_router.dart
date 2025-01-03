@@ -17,7 +17,11 @@ class RubigoRouter<SCREEN_ID extends Enum>
   RubigoRouter({
     required this.availableScreens,
     required this.splashScreenId,
-  });
+    RubigoBusyService? rubigoBusyService,
+    LogNavigation? logNavigation,
+  })  : rubigoBusy = rubigoBusyService ?? RubigoBusyService(),
+        _logNavigation =
+            logNavigation ?? ((message) async => debugPrint(message));
 
   Future<void> init({
     required Future<SCREEN_ID> Function() getFirstScreenAsync,
@@ -30,7 +34,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
     rubigoStackManager ??= RubigoStackManager<SCREEN_ID>(
       [firstScreen].toListOfRubigoScreen(availableScreens),
       availableScreens,
-      logNavigation,
+      _logNavigation,
     );
 
     rubigoStackManager.addListener(notifyListeners);
@@ -55,7 +59,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   final ListOfRubigoScreens<SCREEN_ID> availableScreens;
   final SCREEN_ID splashScreenId;
-  final rubigoBusy = RubigoBusyService();
+  final RubigoBusyService rubigoBusy;
 
   late RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>
       _rubigoStackManager;
