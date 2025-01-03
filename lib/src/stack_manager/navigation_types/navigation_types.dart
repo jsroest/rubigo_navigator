@@ -5,7 +5,7 @@ sealed class NavigationType<SCREEN_ID> {
 class Push<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
   Push(this.screenId);
 
-  SCREEN_ID screenId;
+  final SCREEN_ID screenId;
 }
 
 class Pop<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
@@ -15,5 +15,11 @@ class Pop<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
 class PopTo<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
   PopTo(this.screenId);
 
-  SCREEN_ID screenId;
+  final SCREEN_ID screenId;
+}
+
+class ReplaceStack<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
+  ReplaceStack(this.screenStack);
+
+  final List<SCREEN_ID> screenStack;
 }

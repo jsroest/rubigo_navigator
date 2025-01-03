@@ -15,13 +15,20 @@ mixin RubigoController<SCREEN_ID extends Enum> {
 }
 
 class RubigoChangeInfo<SCREEN_ID> {
-  RubigoChangeInfo(this.stackChange, this.previousScreen);
+  RubigoChangeInfo(
+    this.eventType,
+    this.previousScreen,
+    this.screenStack,
+  );
 
-  final StackChange stackChange;
+  final EventType eventType;
   final SCREEN_ID? previousScreen;
+  final List<SCREEN_ID> screenStack;
 }
 
-enum StackChange {
-  isPushed,
-  isRevealed,
+enum EventType {
+  push,
+  pop,
+  popTo,
+  replaceStack,
 }
