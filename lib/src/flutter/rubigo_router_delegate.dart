@@ -21,8 +21,10 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
     rubigoRouter.addListener(notifyListeners);
   }
 
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => GlobalKey();
+  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   @override
   Future<void> setNewRoutePath(SCREEN_ID configuration) async {}
@@ -34,6 +36,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   @override
   Widget build(BuildContext context) {
     return Navigator(
+      key: navigatorKey,
       pages: rubigoRouter.screens.map(widgetToPage).toList(),
       onDidRemovePage: backCallback == BackCallback.onDidRemovePage
           ? rubigoRouter.onDidRemovePage
