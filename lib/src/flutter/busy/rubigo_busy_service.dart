@@ -24,6 +24,11 @@ class RubigoBusyService {
     }
   }
 
+  bool get enabled => notifier.value.enabled;
+
+  set enabled(bool value) =>
+      notifier.value = notifier.value.copyWith(enabled: value);
+
   void _addBusy() {
     _busyCounter++;
     notifier.value = notifier.value.copyWith(
