@@ -24,40 +24,42 @@ enum Screens {
   s700,
 }
 
+final holder = RubigoControllerHolder<Screens>();
+
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(
     Screens.splashScreen,
     SplashScreen(),
-    SplashController(),
+    () => holder.get(SplashController.new),
   ),
   RubigoScreen(
     Screens.s100,
     S100Screen(),
-    S100Controller(),
+    () => holder.get(S100Controller.new),
   ),
   RubigoScreen(
     Screens.s200,
     S200Screen(),
-    S200Controller(),
+    () => holder.get(S200Controller.new),
   ),
   RubigoScreen(
     Screens.s300,
     S300Screen(),
-    S300Controller(),
+    () => holder.get(S300Controller.new),
   ),
   RubigoScreen(
     Screens.s500,
     S500Screen(),
-    S500Controller(),
+    () => holder.get(S500Controller.new),
   ),
   RubigoScreen(
     Screens.s600,
     S600Screen(),
-    S600Controller(),
+    () => holder.get(S600Controller.new),
   ),
   RubigoScreen(
     Screens.s700,
     S700Screen(),
-    S700Controller(),
+    () => holder.get(S700Controller.new),
   ),
 ];

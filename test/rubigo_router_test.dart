@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
+import 'package:rubigo_navigator/src/rubigo_controller_holder.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
@@ -16,16 +17,32 @@ import 'helpers/screens/splash_screen/splash_controller.dart';
 import 'helpers/screens/splash_screen/splash_screen.dart';
 import 'helpers/unsupported_page.dart';
 
-List<RubigoScreen<Screens>> get createAvailableScreens => [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200Controller()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
-    ];
-
 void main() {
   test('Navigator with list of MaterialPages', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -48,7 +65,30 @@ void main() {
   });
 
   test('Navigator with list of CupertinoPages', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -71,7 +111,30 @@ void main() {
   });
 
   test('Navigator with list of UnsupportedPages', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -98,7 +161,30 @@ void main() {
   });
 
   test('onDidRemovePage last MaterialPage', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -126,7 +212,30 @@ void main() {
   });
 
   test('onDidRemovePage last CupertinoPage', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -154,7 +263,30 @@ void main() {
   });
 
   test('onDidRemovePage middle MaterialPage', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -183,7 +315,30 @@ void main() {
   });
 
   test('onPopPage last page', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,

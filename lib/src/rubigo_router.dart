@@ -39,18 +39,18 @@ class RubigoRouter<SCREEN_ID extends Enum>
       _screenStackNotifier.value =
           _rubigoStackManager.screens.toListOfScreenId();
     });
-
+    final firstScreen = await getFirstScreenAsync();
     for (final screenSet in availableScreens) {
       //Wire up the rubigoRouter in each controller
-      final controller = screenSet.controller;
-      controller.rubigoRouter = this;
+      final controller = screenSet.getController;
+      controller().rubigoRouter = this;
       //Wire up the controller in each screenWidget that has the RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
       if (screenWidget is RubigoScreenMixin) {
-        (screenWidget as RubigoScreenMixin).controller = screenSet.controller;
+        (screenWidget as RubigoScreenMixin).controller =
+            screenSet.getController();
       }
     }
-    final firstScreen = await getFirstScreenAsync();
     await _rubigoStackManager.replaceStack([firstScreen]);
   }
 

@@ -146,7 +146,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
           _availableScreens.findByScreenId(navigationType.screenId),
         );
         _eventCounter++;
-        await _screenStack.last.controller.onTop(changeInfo);
+        await _screenStack.last.getController().onTop(changeInfo);
         _eventCounter--;
 
       case Pop():
@@ -154,7 +154,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
           return;
         }
         _inMayPop = true;
-        final mayPop = await _screenStack.last.controller.mayPop();
+        final mayPop = await _screenStack.last.getController().mayPop();
         _inMayPop = false;
         if (!mayPop) {
           notifyListeners();
@@ -173,7 +173,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
           );
         }
         _eventCounter++;
-        await _screenStack.last.controller.onTop(changeInfo);
+        await _screenStack.last.getController().onTop(changeInfo);
         _eventCounter--;
 
       case PopTo<SCREEN_ID>():
@@ -192,7 +192,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
           if (_screenStack.last.screenId == navigationType.screenId) {
             _eventCounter++;
             final currentRubigoScreen = _screenStack.last;
-            await currentRubigoScreen.controller.onTop(changeInfo);
+            await currentRubigoScreen.getController().onTop(changeInfo);
             _eventCounter--;
             break;
           }
@@ -209,17 +209,17 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         );
         _eventCounter++;
         final currentRubigoScreen = _screenStack.last;
-        await currentRubigoScreen.controller.onTop(changeInfo);
+        await currentRubigoScreen.getController().onTop(changeInfo);
         _eventCounter--;
     }
 
     if (_eventCounter == 0) {
       _inWillShow = true;
-      await _screenStack.last.controller.willShow(changeInfo);
+      await _screenStack.last.getController().willShow(changeInfo);
       _inWillShow = false;
       notifyListeners();
       await Future<void>.delayed(const Duration(milliseconds: 100));
-      await _screenStack.last.controller.isShown(changeInfo);
+      await _screenStack.last.getController().isShown(changeInfo);
     }
   }
 }

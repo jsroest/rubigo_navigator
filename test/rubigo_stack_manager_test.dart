@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
+import 'package:rubigo_navigator/src/rubigo_controller_holder.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
@@ -25,16 +26,32 @@ import 'helpers/screens/screens.dart';
 import 'helpers/screens/splash_screen/splash_controller.dart';
 import 'helpers/screens/splash_screen/splash_screen.dart';
 
-ListOfRubigoScreens<Screens> get createAvailableScreens => [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200Controller()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
-    ];
-
 void main() {
   test('Test s100-s200-s300 pop', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -69,7 +86,30 @@ void main() {
   test(
     'Test s100 pop',
     () async {
-      final availableScreens = createAvailableScreens;
+      final holder = RubigoControllerHolder<Screens>();
+      final availableScreens = [
+        RubigoScreen(
+          Screens.splashScreen,
+          SplashScreen(),
+          () => holder.get(SplashController.new),
+        ),
+        RubigoScreen(
+            Screens.s100,
+            S100Screen(),
+            () => holder.get(
+                  S100Controller.new,
+                )),
+        RubigoScreen(
+          Screens.s200,
+          S200Screen(),
+          () => holder.get(S200Controller.new),
+        ),
+        RubigoScreen(
+          Screens.s300,
+          S300Screen(),
+          () => holder.get(S300Controller.new),
+        ),
+      ];
       final rubigoRouter = RubigoRouter<Screens>(
         splashScreenId: Screens.splashScreen,
         availableScreens: availableScreens,
@@ -99,7 +139,30 @@ void main() {
   );
 
   test('Test s100-s200-s300 popTo s100', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -132,7 +195,30 @@ void main() {
   test(
     'Test s100-s200 popTo s300',
     () async {
-      final availableScreens = createAvailableScreens;
+      final holder = RubigoControllerHolder<Screens>();
+      final availableScreens = [
+        RubigoScreen(
+          Screens.splashScreen,
+          SplashScreen(),
+          () => holder.get(SplashController.new),
+        ),
+        RubigoScreen(
+            Screens.s100,
+            S100Screen(),
+            () => holder.get(
+                  S100Controller.new,
+                )),
+        RubigoScreen(
+          Screens.s200,
+          S200Screen(),
+          () => holder.get(S200Controller.new),
+        ),
+        RubigoScreen(
+          Screens.s300,
+          S300Screen(),
+          () => holder.get(S300Controller.new),
+        ),
+      ];
       final rubigoRouter = RubigoRouter<Screens>(
         splashScreenId: Screens.splashScreen,
         availableScreens: availableScreens,
@@ -165,7 +251,30 @@ void main() {
   );
 
   test('Test s100 push s200', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -194,7 +303,30 @@ void main() {
   });
 
   test('Test s100-s200-s300 remove s200', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -225,7 +357,30 @@ void main() {
   });
 
   test('Test s100-s200 remove s300', () async {
-    final availableScreens = createAvailableScreens;
+    final holder = RubigoControllerHolder<Screens>();
+    final availableScreens = [
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+          Screens.s100,
+          S100Screen(),
+          () => holder.get(
+                S100Controller.new,
+              )),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+    ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
       availableScreens: availableScreens,
@@ -258,11 +413,24 @@ void main() {
   });
 
   test('Test s100 push s100-s200-s300', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+      RubigoScreen<Screens>(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200ControllerOnTopPushAndPop.new),
+      ),
+      RubigoScreen(Screens.s300, S300Screen(), S300Controller.new),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
@@ -293,11 +461,26 @@ void main() {
   });
 
   test('Test s100-s200-s300 pop s100', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200ControllerOnTopPushAndPop()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(Screens.s100, S100Screen(), S100Controller.new),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(
+          S200ControllerOnTopPushAndPop.new,
+        ),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
@@ -329,11 +512,28 @@ void main() {
   });
 
   test('Push in willShow', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200ControllerWillShowPush()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200ControllerWillShowPush.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
@@ -356,15 +556,28 @@ void main() {
   });
 
   test('Pop in willShow', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
-        S200ControllerWillShowPop(),
+        () => holder.get(S200ControllerWillShowPop.new),
       ),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
@@ -387,13 +600,22 @@ void main() {
   });
 
   test('Pop in mayPop', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
-        S200ControllerMayPopPop(),
+        () => holder.get(S200ControllerMayPopPop.new),
       ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
@@ -418,13 +640,22 @@ void main() {
   });
 
   test('Push in mayPop', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
-        S200ControllerMayPopPush(),
+        () => holder.get(S200ControllerMayPopPush.new),
       ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
@@ -449,14 +680,43 @@ void main() {
   });
 
   test('Test s100-s200-s300 replaceStack s500-s600-s700', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200Controller()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
-      RubigoScreen(Screens.s500, S500Screen(), S500Controller()),
-      RubigoScreen(Screens.s600, S600Screen(), S600Controller()),
-      RubigoScreen(Screens.s700, S700Screen(), S700Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s500,
+        S500Screen(),
+        () => holder.get(S500Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s600,
+        S600Screen(),
+        () => holder.get(S600Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s700,
+        S700Screen(),
+        () => holder.get(S700Controller.new),
+      ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
@@ -496,11 +756,28 @@ void main() {
   });
 
   test('Test screens equals screenStackNotifier', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
-      RubigoScreen(Screens.s200, S200Screen(), S200Controller()),
-      RubigoScreen(Screens.s300, S300Screen(), S300Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s200,
+        S200Screen(),
+        () => holder.get(S200Controller.new),
+      ),
+      RubigoScreen(
+        Screens.s300,
+        S300Screen(),
+        () => holder.get(S300Controller.new),
+      ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(
       splashScreenId: Screens.splashScreen,
@@ -521,13 +798,22 @@ void main() {
   });
 
   test('Test s100-s200 pop when mayPop returns false', () async {
+    final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
-      RubigoScreen(Screens.splashScreen, SplashScreen(), SplashController()),
-      RubigoScreen(Screens.s100, S100Screen(), S100Controller()),
+      RubigoScreen(
+        Screens.splashScreen,
+        SplashScreen(),
+        () => holder.get(SplashController.new),
+      ),
+      RubigoScreen(
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(S100Controller.new),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
-        S200ControllerMayPopReturnsFalse(),
+        () => holder.get(S200ControllerMayPopReturnsFalse.new),
       ),
     ];
     final rubigoRouter = RubigoRouter<Screens>(

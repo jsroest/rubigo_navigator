@@ -5,11 +5,11 @@ class RubigoScreen<SCREEN_ID extends Enum> {
   RubigoScreen(
     this.screenId,
     this.screenWidget,
-    this.controller,
+    this.getController,
   ) : pageKey = ValueKey(screenId);
 
   final ValueKey<SCREEN_ID> pageKey;
   final SCREEN_ID screenId;
   final Widget screenWidget;
-  final RubigoController<SCREEN_ID> controller;
+  final RubigoController<SCREEN_ID> Function() getController;
 }
