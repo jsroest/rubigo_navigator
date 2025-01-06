@@ -77,8 +77,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       );
     }
     _screenStack.removeAt(index);
-    _shadowScreenStack = [..._screenStack]; //Create a copy
-    notifyListeners();
+    _notifyListeners();
   }
 
   @override
@@ -155,15 +154,15 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         if (_screenStack.isEmpty) {
           return;
         }
+        changeInfo = RubigoChangeInfo(
+          EventType.pop,
+          _screenStack.last.screenId,
+          _screenStack.toListOfScreenId(),
+        );
         _inMayPop = true;
         final mayPop = await _screenStack.last.getController().mayPop();
         _inMayPop = false;
         if (mayPop) {
-          changeInfo = RubigoChangeInfo(
-            EventType.pop,
-            _screenStack.last.screenId,
-            _screenStack.toListOfScreenId(),
-          );
           _screenStack.removeLast();
           if (_screenStack.isEmpty) {
             throw UnsupportedError(
@@ -215,10 +214,14 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       _inWillShow = true;
       await _screenStack.last.getController().willShow(changeInfo);
       _inWillShow = false;
-      _shadowScreenStack = [..._screenStack]; //Create a copy
-      notifyListeners();
+      _notifyListeners();
       await Future<void>.delayed(const Duration(milliseconds: 100));
       await _screenStack.last.getController().isShown(changeInfo);
     }
+  }
+
+  void _notifyListeners() {
+    _shadowScreenStack = [..._screenStack]; //Create a copy
+    notifyListeners();
   }
 }
