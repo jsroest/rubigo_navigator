@@ -10,21 +10,20 @@ void main() {
     availableScreens: availableScreens,
     splashScreenId: Screens.splashScreen,
   );
-  unawaited(
-    // Calling init is mandatory. While init loads, the splashScreen is shown.
-    // Init returns the first screen to show to the user.
-    // This callback can be used to initialize the application and only allows
-    // user interaction when it's ready. For this to work, the splashScreen
-    // should not accept any user interaction.
-    rubigoRouter.init(
-      initAndGetFirstScreen: () async {
-        await Future<void>.delayed(const Duration(seconds: 2));
-        return Screens.s100;
-      },
-    ),
-  );
+
+  // Calling init is mandatory. While init loads, the splashScreen is shown.
+  // Init returns the first screen to show to the user.
+  // This callback can be used to initialize the application and only allows
+  // user interaction when it's ready. For this to work, the splashScreen
+  // should not accept any user interaction.
+  Future<Screens> initAndGetFirstScreen() async {
+    await Future<void>.delayed(const Duration(seconds: 2));
+    return Screens.s100;
+  }
+
   runApp(
     RubigoMaterialApp(
+      initAndGetFirstScreen: initAndGetFirstScreen,
       routerDelegate: RubigoRouterDelegate(
         rubigoRouter: rubigoRouter,
         widgetToPage: (screen) => MaterialPage(
