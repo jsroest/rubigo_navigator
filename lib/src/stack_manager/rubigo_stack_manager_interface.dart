@@ -21,10 +21,6 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
 //region Events required by the Flutter navigator
   Future<void> onDidRemovePage(Page<Object?> page);
 
-  @Deprecated(
-    'Use onDidRemovePage instead. '
-    'This feature was deprecated after v3.16.0-17.0.pre.',
-  )
   bool onPopPage(Route<dynamic> route, dynamic result);
 //endregion
 }

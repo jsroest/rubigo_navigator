@@ -106,10 +106,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     }
   }
 
-  @Deprecated(
-    'Use onDidRemovePage instead. '
-    'This feature was deprecated after v3.16.0-17.0.pre.',
-  )
   @override
   bool onPopPage(Route<dynamic> route, dynamic result) {
     unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
