@@ -16,6 +16,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   RubigoRouterDelegate({
     required this.rubigoRouter,
     this.backCallback = BackCallback.onPopPage,
+    this.observers,
     RubigoScreenToPage? widgetToPage,
   }) : widgetToPage = widgetToPage ??= ((e) => e.toMaterialPage()) {
     rubigoRouter.addListener(notifyListeners);
@@ -32,10 +33,12 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   final RubigoRouter<SCREEN_ID> rubigoRouter;
   final BackCallback backCallback;
   final RubigoScreenToPage widgetToPage;
+  final List<NavigatorObserver>? observers;
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
+      observers: observers ?? const <NavigatorObserver>[],
       key: navigatorKey,
       pages: rubigoRouter.screens.map(widgetToPage).toList(),
       onDidRemovePage: backCallback == BackCallback.onDidRemovePage
