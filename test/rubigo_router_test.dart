@@ -20,7 +20,7 @@ import 'helpers/screens/splash_screen/splash_screen.dart';
 import 'helpers/unsupported_page.dart';
 
 void main() {
-  test('Navigator with list of MaterialPages', () async {
+  test('Router with list of MaterialPages', () async {
     final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
       RubigoScreen(
@@ -57,17 +57,17 @@ void main() {
     await rubigoRouter.push(Screens.s300);
     final actualPages = rubigoRouter.screens.toListOfMaterialPage();
     final expectedScreenWidgets = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ].toListOfWidget(availableScreens);
+      availableScreens[1],
+      availableScreens[2],
+      availableScreens[3],
+    ].toListOfWidget();
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
-  test('Navigator with list of CupertinoPages', () async {
+  test('Router with list of CupertinoPages', () async {
     final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
       RubigoScreen(
@@ -104,17 +104,17 @@ void main() {
     await rubigoRouter.push(Screens.s300);
     final actualPages = rubigoRouter.screens.toListOfCupertinoPage();
     final expectedScreenWidgets = [
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ].toListOfWidget(availableScreens);
+      availableScreens[1],
+      availableScreens[2],
+      availableScreens[3],
+    ].toListOfWidget();
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
   });
 
-  test('Navigator with list of UnsupportedPages', () async {
+  test('Router with list of UnsupportedPages', () async {
     final holder = RubigoControllerHolder<Screens>();
     final availableScreens = [
       RubigoScreen(
@@ -208,9 +208,9 @@ void main() {
     );
     final actualPages = rubigoRouter.screens.toListOfMaterialPage();
     final expectedScreenWidgets = [
-      availableScreens[1].screenWidget,
-      availableScreens[2].screenWidget,
-    ];
+      availableScreens[1],
+      availableScreens[2],
+    ].toListOfWidget();
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
@@ -260,9 +260,9 @@ void main() {
     );
     final actualPages = rubigoRouter.screens.toListOfCupertinoPage();
     final expectedScreenWidgets = [
-      availableScreens[1].screenWidget,
-      availableScreens[2].screenWidget,
-    ];
+      availableScreens[1],
+      availableScreens[2],
+    ].toListOfWidget();
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
@@ -312,15 +312,20 @@ void main() {
     );
     final actualPages = rubigoRouter.screens.toListOfMaterialPage();
     final expectedScreenWidgets = [
-      availableScreens[1].screenWidget,
-      availableScreens[2].screenWidget,
-      availableScreens[3].screenWidget,
-    ];
+      availableScreens[1],
+      availableScreens[2],
+      availableScreens[3],
+    ].toListOfWidget();
     checkPages(
       actualPages: actualPages,
       expectedScreenWidgets: expectedScreenWidgets,
     );
   });
+
+  // test(
+  //   'onDidRemovePage when busy',
+  //   () {},
+  // );
 
   test('onPopPage last page', () async {
     final holder = RubigoControllerHolder<Screens>();
