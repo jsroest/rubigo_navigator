@@ -57,7 +57,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -116,7 +116,7 @@ void main() {
         availableScreens: availableScreens,
       );
       await rubigoRouter.init(
-        getFirstScreenAsync: () async => Screens.s100,
+        initAndGetFirstScreen: () async => Screens.s100,
       );
       final actualPages = rubigoRouter.screens.toListOfMaterialPage();
       final expectedScreenWidgets =
@@ -170,7 +170,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -227,7 +227,7 @@ void main() {
         availableScreens: availableScreens,
       );
       await rubigoRouter.init(
-        getFirstScreenAsync: () async => Screens.s100,
+        initAndGetFirstScreen: () async => Screens.s100,
       );
       await rubigoRouter.push(Screens.s200);
       final actualPages = rubigoRouter.screens.toListOfMaterialPage();
@@ -284,7 +284,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     final actualPages = rubigoRouter.screens.toListOfMaterialPage();
     final expectedScreenWidgets1 = [
@@ -337,7 +337,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -392,7 +392,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     final actualPages = rubigoRouter.screens.toListOfMaterialPage();
@@ -443,7 +443,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     final expectedScreenWidgets1 = [
       Screens.s100,
@@ -493,7 +493,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     final expectedScreenWidgets1 = [
@@ -546,7 +546,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     expect(
       () async => rubigoRouter.push(Screens.s200),
@@ -590,7 +590,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     expect(
       () async => rubigoRouter.push(Screens.s200),
@@ -629,7 +629,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     expect(
@@ -669,7 +669,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     expect(
@@ -729,7 +729,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -790,7 +790,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -827,7 +827,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     final actualPages = rubigoRouter.screens.toListOfMaterialPage();

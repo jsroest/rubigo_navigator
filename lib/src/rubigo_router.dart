@@ -31,7 +31,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
             );
 
   Future<void> init({
-    required Future<SCREEN_ID> Function() getFirstScreenAsync,
+    required Future<SCREEN_ID> Function() initAndGetFirstScreen,
     LogNavigation? logNavigation,
   }) async {
     _rubigoStackManager.addListener(notifyListeners);
@@ -39,7 +39,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
       _screenStackNotifier.value =
           _rubigoStackManager.screens.toListOfScreenId();
     });
-    final firstScreen = await getFirstScreenAsync();
+    final firstScreen = await initAndGetFirstScreen();
     for (final screenSet in availableScreens) {
       //Wire up the rubigoRouter in each controller
       final controller = screenSet.getController;

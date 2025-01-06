@@ -17,7 +17,7 @@ void main() {
     // user interaction when it's ready. For this to work, the splashScreen
     // should not accept any user interaction.
     rubigoRouter.init(
-      getFirstScreenAsync: () async {
+      initAndGetFirstScreen: () async {
         await Future<void>.delayed(const Duration(seconds: 2));
         return Screens.s100;
       },

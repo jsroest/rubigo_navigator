@@ -51,7 +51,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -98,7 +98,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -145,7 +145,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -196,7 +196,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -248,7 +248,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -300,7 +300,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
@@ -353,7 +353,7 @@ void main() {
       availableScreens: availableScreens,
     );
     await rubigoRouter.init(
-      getFirstScreenAsync: () async => Screens.s100,
+      initAndGetFirstScreen: () async => Screens.s100,
     );
     await rubigoRouter.push(Screens.s200);
     await rubigoRouter.push(Screens.s300);
