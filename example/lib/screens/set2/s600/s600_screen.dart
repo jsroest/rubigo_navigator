@@ -12,36 +12,32 @@ class S600Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: controller.canPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: AppBarTitle(
-            title: 'S600',
-            screenStackListener: controller.rubigoRouter.screenStackNotifier,
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: AppBarTitle(
+          title: 'S600',
+          screenStackListener: controller.rubigoRouter.screenStackNotifier,
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              ElevatedButton(
-                onPressed: controller.onS700ButtonPressed,
-                child: const Text('Push S700'),
-              ),
-              const SizedBox(height: 16),
-              NavigateButton(
-                screenStackListener:
-                    controller.rubigoRouter.screenStackNotifier,
-                isEnabled: (screenStack) => screenStack.hasScreenBelow(),
-                onPressed: controller.onPopButtonPressed,
-                child: const Text('Pop'),
-              ),
-            ],
-          ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 16,
+            ),
+            ElevatedButton(
+              onPressed: controller.onS700ButtonPressed,
+              child: const Text('Push S700'),
+            ),
+            const SizedBox(height: 16),
+            NavigateButton(
+              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+              onPressed: controller.onPopButtonPressed,
+              child: const Text('Pop'),
+            ),
+          ],
         ),
       ),
     );

@@ -9,25 +9,22 @@ class S100Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: controller.canPop,
-      child: Scaffold(
-        appBar: AppBar(
-          title: AppBarTitle(
-            title: 'S100',
-            screenStackListener: controller.rubigoRouter.screenStackNotifier,
+    return Scaffold(
+      appBar: AppBar(
+        title: AppBarTitle(
+          title: 'S100',
+          screenStackListener: controller.rubigoRouter.screenStackNotifier,
+        ),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(width: double.infinity, height: 16),
+          ElevatedButton(
+            onPressed: controller.onS200ButtonPressed,
+            child: const Text('Push S200'),
           ),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: double.infinity, height: 16),
-            ElevatedButton(
-              onPressed: controller.onS200ButtonPressed,
-              child: const Text('Push S200'),
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

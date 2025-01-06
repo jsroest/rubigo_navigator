@@ -10,8 +10,6 @@ mixin RubigoController<SCREEN_ID extends Enum> {
   Future<void> isShown(RubigoChangeInfo<SCREEN_ID?> changeInfo) async {}
 
   Future<bool> mayPop() => Future.value(true);
-
-  bool get canPop => true;
 }
 
 class RubigoChangeInfo<SCREEN_ID> {
