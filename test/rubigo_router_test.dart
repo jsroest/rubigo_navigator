@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 import 'package:rubigo_navigator/src/rubigo_controller_holder.dart';
+import 'package:rubigo_navigator/src/rubigo_router.dart';
+import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/screens/s100/s100_controller.dart';
@@ -27,11 +29,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
@@ -73,11 +76,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
@@ -119,11 +123,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
@@ -169,11 +174,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
@@ -220,11 +226,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
@@ -271,11 +278,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
@@ -323,11 +331,12 @@ void main() {
         () => holder.get(SplashController.new),
       ),
       RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-                S100Controller.new,
-              )),
+        Screens.s100,
+        S100Screen(),
+        () => holder.get(
+          S100Controller.new,
+        ),
+      ),
       RubigoScreen(
         Screens.s200,
         S200Screen(),
