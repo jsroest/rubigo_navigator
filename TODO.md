@@ -11,6 +11,11 @@ Done.
 
 
 
-1. 2.Add a splash screen while the app is loading (during app startup).
+1. Add a splash screen while the app is loading (during app startup).
 
 Done.
+
+1. Add a shadow stack to allow updates to the stack to happen invisibly. Otherwise, when the app rebuilds, the screen stack at that time is shown. 
+Like, when the Android back button is pressed when the navigation takes some time. The back button is ignored, but the app rebuilds and shows
+the new screen too soon.
+

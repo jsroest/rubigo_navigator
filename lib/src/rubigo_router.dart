@@ -90,15 +90,29 @@ class RubigoRouter<SCREEN_ID extends Enum>
       rubigoBusy.busyWrapper(() => _rubigoStackManager.push(screenId));
 
   @override
-  Future<void> onDidRemovePage(Page<Object?> page) =>
-      rubigoBusy.busyWrapper(() => _rubigoStackManager.onDidRemovePage(page));
-
-  @override
   Future<void> replaceStack(List<SCREEN_ID> screens) =>
       rubigoBusy.busyWrapper(() => _rubigoStackManager.replaceStack(screens));
 
   @override
   void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
+
+  @override
+  Future<void> onDidRemovePage(Page<Object?> page) async {
+    if (!rubigoBusy.notifier.value.isBusy) {
+      await rubigoBusy.busyWrapper(
+        () => _rubigoStackManager.onDidRemovePage(page),
+      );
+    } else {
+      // Notify Flutter about the current page stack, this might result in two
+      // animations (pop/push), but there is nothing we can do here because we
+      // are informed when the stack has already changed by the user. For
+      // example, on iOS with a swipe back gesture. This can be prevented in
+      // several ways:
+      // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
+      // 2. Use the RubigoBusyService and widget, which blocks user interaction.
+      notifyListeners();
+    }
+  }
 
   @override
   bool onPopPage(Route<dynamic> route, dynamic result) =>
