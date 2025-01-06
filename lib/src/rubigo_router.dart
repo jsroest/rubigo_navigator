@@ -102,7 +102,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   @override
   bool onPopPage(Route<dynamic> route, dynamic result) =>
-      _rubigoStackManager.onPopPage(route, result);
+      whenNotBusy?._rubigoStackManager.onPopPage(route, result) ?? false;
 
   RubigoRouter<SCREEN_ID>? get whenNotBusy =>
       rubigoBusy.notifier.value.isBusy ? null : this;
