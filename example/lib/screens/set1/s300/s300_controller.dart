@@ -4,6 +4,16 @@ import 'package:example/screens/set2/screen_stack_backup_set2.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S300Controller with RubigoController<Screens> {
+  @override
+  Future<void> onTop(RubigoChangeInfo<Screens?> changeInfo) async {
+    if (changeInfo.eventType == EventType.push) {
+      // Simulate slow backend, demonstrate we are not able to push any buttons
+      // while this is in progress. As opposed of consumer apps this is a
+      // perfect fit for Line of Business apps
+      await Future<void>.delayed(const Duration(seconds: 2));
+    }
+  }
+
   Future<void> onPopButtonPressed() async {
     await rubigoRouter.whenNotBusy?.pop();
   }

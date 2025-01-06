@@ -17,10 +17,15 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     this._screenStack,
     this._availableScreens,
     this._logNavigation,
-  );
+  ) {
+    _shadowScreenStack = [..._screenStack];
+  }
 
   //This is the actual screen stack
   ListOfRubigoScreens<SCREEN_ID> _screenStack;
+
+  //This is a shadow of the screen stack;
+  ListOfRubigoScreens<SCREEN_ID> _shadowScreenStack = [];
 
   //This is a list of all available screens
   final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
@@ -29,7 +34,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   @override
   List<RubigoScreen<SCREEN_ID>> get screens {
-    return _screenStack;
+    return _shadowScreenStack;
   }
 
   @override
@@ -72,6 +77,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       );
     }
     _screenStack.removeAt(index);
+    _shadowScreenStack = [..._screenStack]; //Create a copy
     notifyListeners();
   }
 
@@ -152,26 +158,22 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         _inMayPop = true;
         final mayPop = await _screenStack.last.getController().mayPop();
         _inMayPop = false;
-        if (!mayPop) {
-          notifyListeners();
-          return;
-        }
-
-        changeInfo = RubigoChangeInfo(
-          EventType.pop,
-          _screenStack.last.screenId,
-          _screenStack.toListOfScreenId(),
-        );
-        _screenStack.removeLast();
-        if (_screenStack.isEmpty) {
-          throw UnsupportedError(
-            'Developer: Pop was called on the last screen. The screen stack may not be empty.',
+        if (mayPop) {
+          changeInfo = RubigoChangeInfo(
+            EventType.pop,
+            _screenStack.last.screenId,
+            _screenStack.toListOfScreenId(),
           );
+          _screenStack.removeLast();
+          if (_screenStack.isEmpty) {
+            throw UnsupportedError(
+              'Developer: Pop was called on the last screen. The screen stack may not be empty.',
+            );
+          }
+          _eventCounter++;
+          await _screenStack.last.getController().onTop(changeInfo);
+          _eventCounter--;
         }
-        _eventCounter++;
-        await _screenStack.last.getController().onTop(changeInfo);
-        _eventCounter--;
-
       case PopTo<SCREEN_ID>():
         changeInfo = RubigoChangeInfo(
           EventType.pop,
@@ -213,6 +215,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
       _inWillShow = true;
       await _screenStack.last.getController().willShow(changeInfo);
       _inWillShow = false;
+      _shadowScreenStack = [..._screenStack]; //Create a copy
       notifyListeners();
       await Future<void>.delayed(const Duration(milliseconds: 100));
       await _screenStack.last.getController().isShown(changeInfo);

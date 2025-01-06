@@ -19,6 +19,7 @@ Done.
 Like, when the Android back button is pressed when the navigation takes some time. The back button is ignored, but the app rebuilds and shows
 the new screen too soon.
 
+Done.
 
 1. Call rubigoRouter.init from a StateFullWidget. I think this is needed when, for example, Riverpod is used, where the objects are stored in a widget (ProviderScope).
 
