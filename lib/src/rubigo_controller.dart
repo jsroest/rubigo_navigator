@@ -14,7 +14,7 @@ mixin RubigoController<SCREEN_ID extends Enum> {
 }
 
 @immutable
-class RubigoChangeInfo<SCREEN_ID> {
+class RubigoChangeInfo<SCREEN_ID extends Enum> {
   const RubigoChangeInfo(
     this.eventType,
     this.previousScreen,
