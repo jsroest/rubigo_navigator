@@ -9,18 +9,19 @@ import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
 import 'helpers/helpers.dart';
 import 'helpers/rubigo_screen_creators.dart';
+import 'helpers/screens/mocks/mock_controller.dart';
 import 'helpers/screens/s300/s300_screen.dart';
 import 'helpers/screens/screens.dart';
 import 'helpers/unsupported_page.dart';
 
 void main() {
-  late RubigoControllerHolder<Screens> holder;
+  late RubigoControllerHolder<MockController<Screens>> holder;
   late List<RubigoScreen<Screens>> availableScreens;
   late RubigoRouter<Screens> rubigoRouter;
 
   setUp(
     () async {
-      holder = RubigoControllerHolder<Screens>();
+      holder = RubigoControllerHolder<MockController<Screens>>();
       availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),

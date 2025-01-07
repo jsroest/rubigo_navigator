@@ -5,6 +5,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'helpers/rubigo_navigator_observer.dart';
 import 'helpers/rubigo_navigator_observer.mocks.dart';
 import 'helpers/rubigo_screen_creators.dart';
+import 'helpers/screens/mocks/mock_controller.dart';
 import 'helpers/screens/screens.dart';
 
 void main() {
@@ -19,7 +20,7 @@ void main() {
   testWidgets(
     'test splashWidget => S100',
     (tester) async {
-      final holder = RubigoControllerHolder<Screens>();
+      final holder = RubigoControllerHolder<MockController<Screens>>();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),

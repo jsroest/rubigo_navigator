@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
-import '../screens.dart';
-
 sealed class CallBack {}
 
 class MayPopCallBack extends CallBack {}
 
 @immutable
-class _ChangeInfoCallBack extends CallBack {
+class _ChangeInfoCallBack<SCREEN_ID extends Enum> extends CallBack {
   _ChangeInfoCallBack(this.changeInfo);
 
-  final RubigoChangeInfo<Screens> changeInfo;
+  final RubigoChangeInfo<SCREEN_ID> changeInfo;
 
   @override
   bool operator ==(Object other) {

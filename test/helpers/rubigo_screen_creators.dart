@@ -1,5 +1,6 @@
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
+import 'screens/mocks/mock_controller.dart';
 import 'screens/s100/s100_controller.dart';
 import 'screens/s100/s100_screen.dart';
 import 'screens/s200/s200_controller.dart';
@@ -22,7 +23,9 @@ import 'screens/screens.dart';
 import 'screens/splash_screen/splash_controller.dart';
 import 'screens/splash_screen/splash_screen.dart';
 
-RubigoScreen<Screens> getSplashScreen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getSplashScreen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.splashScreen,
     SplashScreen(),
@@ -30,7 +33,9 @@ RubigoScreen<Screens> getSplashScreen(RubigoControllerHolder<Screens> holder) {
   );
 }
 
-RubigoScreen<Screens> getS100Screen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getS100Screen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.s100,
     S100Screen(),
@@ -38,7 +43,9 @@ RubigoScreen<Screens> getS100Screen(RubigoControllerHolder<Screens> holder) {
   );
 }
 
-RubigoScreen<Screens> getS200Screen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getS200Screen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
@@ -47,7 +54,7 @@ RubigoScreen<Screens> getS200Screen(RubigoControllerHolder<Screens> holder) {
 }
 
 RubigoScreen<Screens> getS200ScreenOnTopPushAndPop(
-  RubigoControllerHolder<Screens> holder,
+  RubigoControllerHolder<MockController<Screens>> holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -57,7 +64,7 @@ RubigoScreen<Screens> getS200ScreenOnTopPushAndPop(
 }
 
 RubigoScreen<Screens> getS200ScreenWillShowPush(
-  RubigoControllerHolder<Screens> holder,
+  RubigoControllerHolder<MockController<Screens>> holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -67,7 +74,7 @@ RubigoScreen<Screens> getS200ScreenWillShowPush(
 }
 
 RubigoScreen<Screens> getS200ScreenWillShowPop(
-  RubigoControllerHolder<Screens> holder,
+  RubigoControllerHolder<MockController<Screens>> holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -77,7 +84,7 @@ RubigoScreen<Screens> getS200ScreenWillShowPop(
 }
 
 RubigoScreen<Screens> getS200ScreenMayPopPop(
-  RubigoControllerHolder<Screens> holder,
+  RubigoControllerHolder<MockController<Screens>> holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -87,7 +94,7 @@ RubigoScreen<Screens> getS200ScreenMayPopPop(
 }
 
 RubigoScreen<Screens> getS200ScreenMayPopPush(
-  RubigoControllerHolder<Screens> holder,
+  RubigoControllerHolder<MockController<Screens>> holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -97,7 +104,7 @@ RubigoScreen<Screens> getS200ScreenMayPopPush(
 }
 
 RubigoScreen<Screens> getS200ScreenMayPopReturnsFalse(
-  RubigoControllerHolder<Screens> holder,
+  RubigoControllerHolder<MockController<Screens>> holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -106,7 +113,9 @@ RubigoScreen<Screens> getS200ScreenMayPopReturnsFalse(
   );
 }
 
-RubigoScreen<Screens> getS300Screen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getS300Screen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.s300,
     S300Screen(),
@@ -114,7 +123,9 @@ RubigoScreen<Screens> getS300Screen(RubigoControllerHolder<Screens> holder) {
   );
 }
 
-RubigoScreen<Screens> getS500Screen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getS500Screen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.s500,
     S500Screen(),
@@ -122,7 +133,9 @@ RubigoScreen<Screens> getS500Screen(RubigoControllerHolder<Screens> holder) {
   );
 }
 
-RubigoScreen<Screens> getS600Screen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getS600Screen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.s600,
     S600Screen(),
@@ -130,7 +143,9 @@ RubigoScreen<Screens> getS600Screen(RubigoControllerHolder<Screens> holder) {
   );
 }
 
-RubigoScreen<Screens> getS700Screen(RubigoControllerHolder<Screens> holder) {
+RubigoScreen<Screens> getS700Screen(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
   return RubigoScreen(
     Screens.s700,
     S700Screen(),
