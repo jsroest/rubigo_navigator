@@ -27,8 +27,10 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
   @override
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
+  // coverage:ignore-start
   @override
   Future<void> setNewRoutePath(SCREEN_ID configuration) async {}
+  // coverage:ignore-end
 
   final RubigoRouter<SCREEN_ID> rubigoRouter;
   final BackCallback backCallback;
