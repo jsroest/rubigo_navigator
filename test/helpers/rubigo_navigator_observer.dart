@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mockito/annotations.dart';
 
+@GenerateNiceMocks([MockSpec<NavigatorObserver>()])
 class RubigoNavigatorObserver<SCREEN_ID extends Enum>
     extends NavigatorObserver {
   late SCREEN_ID currentScreenId;

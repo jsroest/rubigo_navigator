@@ -1,15 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 import 'helpers/rubigo_navigator_observer.dart';
+import 'helpers/rubigo_navigator_observer.mocks.dart';
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/screens.dart';
-import 'widget_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<NavigatorObserver>()])
 void main() {
   late MockNavigatorObserver mockNavigatorObserver;
   late RubigoNavigatorObserver rubigoNavigatorObserver;
