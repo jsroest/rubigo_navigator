@@ -24,7 +24,7 @@ enum Screens {
   s700,
 }
 
-final holder = RubigoControllerHolder<Screens>();
+final holder = RubigoControllerHolder<RubigoController<Screens>>();
 
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(

@@ -10,13 +10,13 @@ extension _IterableExtension<T> on Iterable<T> {
   }
 }
 
-class RubigoControllerHolder<SCREEN_ID extends Enum> {
-  final controllerCache = <RubigoController<SCREEN_ID>>[];
+class RubigoControllerHolder<RUBIGO_CONTROLLER extends RubigoController> {
+  final controllerCache = <RUBIGO_CONTROLLER>[];
 
-  RubigoController<SCREEN_ID> get<T extends RubigoController<SCREEN_ID>>([
-    T Function()? function,
+  RUBIGO_CONTROLLER get<SEARCH extends RUBIGO_CONTROLLER>([
+    SEARCH Function()? function,
   ]) {
-    var controller = controllerCache._firstWhereOrNull((e) => e is T);
+    var controller = controllerCache._firstWhereOrNull((e) => e is SEARCH);
     if (controller != null) {
       return controller;
     }
