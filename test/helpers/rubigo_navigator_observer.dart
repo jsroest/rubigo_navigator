@@ -15,7 +15,7 @@ class RubigoNavigatorObserver<SCREEN_ID extends Enum>
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
-    currentScreenId = routeToKey(route);
+    currentScreenId = routeToKey(previousRoute!);
   }
 
   SCREEN_ID routeToKey(Route<dynamic> route) {
