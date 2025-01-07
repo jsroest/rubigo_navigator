@@ -18,8 +18,10 @@ void main() {
     },
   );
 
-  Future<void> _widgetTest(
-      WidgetTester tester, BackCallback backCallback) async {
+  Future<void> widgetTest(
+    WidgetTester tester,
+    BackCallback backCallback,
+  ) async {
     final holder = RubigoControllerHolder<MockController<Screens>>();
     final availableScreens = [
       getSplashScreen(holder),
@@ -79,14 +81,14 @@ void main() {
   testWidgets(
     'test onPopPage SplashWidget S100 S200 pop',
     (tester) async {
-      await _widgetTest(tester, BackCallback.onPopPage);
+      await widgetTest(tester, BackCallback.onPopPage);
     },
   );
 
   testWidgets(
     'test onDidRemovePage SplashWidget S100 S200 pop',
     (tester) async {
-      await _widgetTest(tester, BackCallback.onDidRemovePage);
+      await widgetTest(tester, BackCallback.onDidRemovePage);
     },
   );
 }

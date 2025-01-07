@@ -30,7 +30,8 @@ void main() {
           child: screen.screenWidget,
           key: screen.pageKey,
         ),
-        backCallback: BackCallback.onPopPage,
+        //backCallback: BackCallback.onPopPage,
+        //backCallback: BackCallback.onDidRemovePage,
       ),
     ),
   );

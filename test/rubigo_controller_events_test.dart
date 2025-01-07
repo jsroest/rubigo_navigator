@@ -74,11 +74,6 @@ void main() {
             ),
           ),
         ];
-        print(
-            (actualCallBackHistory[0] as OnTopCallBack).changeInfo.runtimeType);
-        print((expectedCallBackHistory[0] as OnTopCallBack)
-            .changeInfo
-            .runtimeType);
         expect(actualCallBackHistory, expectedCallBackHistory);
         expect(
           actualCallBackHistory[0].hashCode,
