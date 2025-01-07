@@ -1,8 +1,6 @@
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import '../mocks/mock_controller.dart';
 
-import '../screens.dart';
-
-class S200ControllerMayPopPush with RubigoController<Screens> {
+class S200ControllerMayPopPush extends MockController {
   @override
   Future<bool> mayPop() async {
     await rubigoRouter.pop();

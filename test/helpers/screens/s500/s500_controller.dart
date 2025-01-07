@@ -1,5 +1,3 @@
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import '../mocks/mock_controller.dart';
 
-import '../screens.dart';
-
-class S500Controller with RubigoController<Screens> {}
+class S500Controller extends MockController {}
