@@ -8,15 +8,9 @@ import 'package:rubigo_navigator/src/rubigo_router.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
 import 'helpers/helpers.dart';
-import 'helpers/screens/s100/s100_controller.dart';
-import 'helpers/screens/s100/s100_screen.dart';
-import 'helpers/screens/s200/s200_controller.dart';
-import 'helpers/screens/s200/s200_screen.dart';
-import 'helpers/screens/s300/s300_controller.dart';
+import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/s300/s300_screen.dart';
 import 'helpers/screens/screens.dart';
-import 'helpers/screens/splash_screen/splash_controller.dart';
-import 'helpers/screens/splash_screen/splash_screen.dart';
 import 'helpers/unsupported_page.dart';
 
 void main() {
@@ -28,28 +22,10 @@ void main() {
     () async {
       holder = RubigoControllerHolder<Screens>();
       availableScreens = [
-        RubigoScreen(
-          Screens.splashScreen,
-          SplashScreen(),
-          () => holder.get(SplashController.new),
-        ),
-        RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.get(
-            S100Controller.new,
-          ),
-        ),
-        RubigoScreen(
-          Screens.s200,
-          S200Screen(),
-          () => holder.get(S200Controller.new),
-        ),
-        RubigoScreen(
-          Screens.s300,
-          S300Screen(),
-          () => holder.get(S300Controller.new),
-        ),
+        getSplashScreen(holder),
+        getS100Screen(holder),
+        getS200Screen(holder),
+        getS300Screen(holder),
       ];
       rubigoRouter = RubigoRouter<Screens>(
         splashScreenId: Screens.splashScreen,
