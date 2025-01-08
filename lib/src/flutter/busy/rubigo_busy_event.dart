@@ -26,12 +26,15 @@ class RubigoBusyEvent {
   }
 
   @override
-  bool operator ==(Object other) =>
-      other is RubigoBusyEvent &&
-      other.runtimeType == runtimeType &&
-      other.enabled == enabled &&
-      other.isBusy == isBusy &&
-      other.showProgressIndicator == showProgressIndicator;
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is RubigoBusyEvent &&
+        other.runtimeType == runtimeType &&
+        other.enabled == enabled &&
+        other.isBusy == isBusy &&
+        other.showProgressIndicator == showProgressIndicator;
+  }
 
   @override
   int get hashCode => Object.hashAll([
