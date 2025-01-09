@@ -88,22 +88,22 @@ class RubigoRouter<SCREEN_ID extends Enum>
   //endregion
 
   @override
-  Future<void> pop({bool isUserAction = false}) async {
-    if (_canNavigate(isUserAction: isUserAction)) {
+  Future<void> pop({bool ignoreWhenBusy = false}) async {
+    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy.busyWrapper(_rubigoStackManager.pop);
     }
   }
 
   @override
-  Future<void> popTo(SCREEN_ID screenId, {bool isUserAction = false}) async {
-    if (_canNavigate(isUserAction: isUserAction)) {
+  Future<void> popTo(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
+    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy.busyWrapper(() => _rubigoStackManager.popTo(screenId));
     }
   }
 
   @override
-  Future<void> push(SCREEN_ID screenId, {bool isUserAction = false}) async {
-    if (_canNavigate(isUserAction: isUserAction)) {
+  Future<void> push(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
+    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy.busyWrapper(() => _rubigoStackManager.push(screenId));
     }
   }
@@ -111,24 +111,24 @@ class RubigoRouter<SCREEN_ID extends Enum>
   @override
   Future<void> replaceStack(
     List<SCREEN_ID> screens, {
-    bool isUserAction = false,
+    bool ignoreWhenBusy = false,
   }) async {
-    if (_canNavigate(isUserAction: isUserAction)) {
+    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy
           .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
     }
   }
 
   @override
-  void remove(SCREEN_ID screenId, {bool isUserAction = false}) {
-    if (_canNavigate(isUserAction: isUserAction)) {
+  void remove(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) {
+    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       _rubigoStackManager.remove(screenId);
     }
   }
 
   //region Flutter events onDidRemovePage and onPopPage
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    if (!_canNavigate(isUserAction: true)) {
+    if (!_canNavigate(ignoreWhenBusy: true)) {
       // Notify Flutter about the current page stack, this might result in two
       // animations (pop/push), but there is nothing we can do here because we
       // are informed when the stack has already changed by the user. For
@@ -168,7 +168,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   bool onPopPage(Route<dynamic> route, dynamic result) {
     unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
-    if (_canNavigate(isUserAction: true)) {
+    if (_canNavigate(ignoreWhenBusy: true)) {
       unawaited(pop());
     } else {
       unawaited(_logNavigation('but rubigoRouter was busy navigating.'));
@@ -178,8 +178,8 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   //endregion
 
-  bool _canNavigate({required bool isUserAction}) {
-    if (!isUserAction) {
+  bool _canNavigate({required bool ignoreWhenBusy}) {
+    if (!ignoreWhenBusy) {
       return true;
     }
     return !rubigoBusy.isBusy;
