@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
 import 'helpers/extensions.dart';
 import 'helpers/helpers.dart';
