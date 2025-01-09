@@ -26,10 +26,7 @@ void main() {
       initAndGetFirstScreen: initAndGetFirstScreen,
       routerDelegate: RubigoRouterDelegate(
         rubigoRouter: rubigoRouter,
-        widgetToPage: (screen) => MaterialPage(
-          child: screen.screenWidget,
-          key: screen.pageKey,
-        ),
+        rubigoScreenToPage: (e) => e.toMaterialPage(),
         //backCallback: BackCallback.onPopPage,
         //backCallback: BackCallback.onDidRemovePage,
       ),
