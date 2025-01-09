@@ -21,7 +21,7 @@ class AppBarTitle<SCREEN_ID extends Enum> extends StatelessWidget {
         ValueListenableBuilder(
           valueListenable: screenStackListener,
           builder: (context, value, child) =>
-              Text(screenStackListener.value.printBreadCrumbs()),
+              Text(screenStackListener.value.breadCrumbs()),
         ),
       ],
     );

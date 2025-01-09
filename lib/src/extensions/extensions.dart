@@ -22,9 +22,14 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
   List<Widget> toListOfWidget() => map((e) => e.screenWidget).toList();
 }
 
+/// A collection of extension methods on List<ScreenId>
 extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
+  /// Check if there is at least one screen available below the current screen.
+  /// This could be an appropriate check before calling [pop()].
   bool hasScreenBelow() => length > 1;
 
+  /// Check if this specific screenId is available below the current screen.
+  /// This could be an appropriate check before calling [popTo()].
   bool containsScreenBelow(SCREEN_ID screenId) {
     final lastPageIndex = length - 1;
     final belowLastPageIndex = lastPageIndex - 1;
@@ -32,13 +37,17 @@ extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
     return indexFound != -1;
   }
 
+  /// Converts a list of screenId to a list of screenWidget
   List<Widget> toListOfWidget(ListOfRubigoScreens availableScreens) =>
       map((screenId) => availableScreens.findScreenWidget(screenId)).toList();
 
+  /// Converts a list of screenId to a list of RubigoScreen
   List<RubigoScreen<SCREEN_ID>> toListOfRubigoScreen(
     ListOfRubigoScreens<SCREEN_ID> availableScreens,
   ) =>
       map((screenId) => availableScreens.find(screenId)).toList();
 
-  String printBreadCrumbs() => map((e) => e.name).join('→').toUpperCase();
+  /// Converts a list of screenId to a breadcrumbs String.
+  /// S100→S200→S300
+  String breadCrumbs() => map((e) => e.name).join('→').toUpperCase();
 }

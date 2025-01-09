@@ -69,7 +69,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
     final result = _rubigoStackManager.screens;
     unawaited(
       _logNavigation.call(
-        'Screen stack: ${_screenStackNotifier.value.printBreadCrumbs()}.',
+        'Screen stack: ${_screenStackNotifier.value.breadCrumbs()}.',
       ),
     );
     return result;
