@@ -4,6 +4,7 @@ import 'screens/mocks/mock_controller.dart';
 import 'screens/s100/s100_controller.dart';
 import 'screens/s100/s100_screen.dart';
 import 'screens/s200/s200_controller.dart';
+import 'screens/s200/s200_controller_delay_in_on_top.dart';
 import 'screens/s200/s200_controller_may_pop_pop.dart';
 import 'screens/s200/s200_controller_may_pop_push.dart';
 import 'screens/s200/s200_controller_may_pop_returns_false.dart';
@@ -50,6 +51,16 @@ RubigoScreen<Screens> getS200Screen(
     Screens.s200,
     S200Screen(),
     () => holder.get(S200Controller.new),
+  );
+}
+
+RubigoScreen<Screens> getS200ScreenDelayInOnTop(
+  RubigoControllerHolder<MockController<Screens>> holder,
+) {
+  return RubigoScreen(
+    Screens.s200,
+    S200Screen(),
+    () => holder.get(S200ControllerDelayInOnTop.new),
   );
 }
 
