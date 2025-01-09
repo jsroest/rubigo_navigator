@@ -60,6 +60,10 @@ class RubigoRouter<SCREEN_ID extends Enum>
   final RubigoBusyService rubigoBusy;
   final RubigoStackManagerType<SCREEN_ID> _rubigoStackManager;
 
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
+
   late final _screenStackNotifier = ValueNotifier<List<SCREEN_ID>>(
     _rubigoStackManager.screens.toListOfScreenId(),
   );

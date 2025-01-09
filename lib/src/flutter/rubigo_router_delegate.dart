@@ -22,10 +22,8 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
     rubigoRouter.addListener(notifyListeners);
   }
 
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-
   @override
-  GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
+  GlobalKey<NavigatorState> get navigatorKey => rubigoRouter.navigatorKey;
 
   // coverage:ignore-start
   @override
