@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 import 'callbacks.dart';
@@ -7,6 +8,7 @@ class MockController<SCREEN_ID extends Enum> with RubigoController<SCREEN_ID> {
 
   final bool _mayPop;
 
+  @mustCallSuper
   @override
   Future<bool> mayPop() async {
     callBackHistory.add(MayPopCallBack());
@@ -14,18 +16,21 @@ class MockController<SCREEN_ID extends Enum> with RubigoController<SCREEN_ID> {
     return _mayPop;
   }
 
+  @mustCallSuper
   @override
   Future<void> onTop(RubigoChangeInfo<SCREEN_ID> changeInfo) async {
     callBackHistory.add(OnTopCallBack(changeInfo));
     return super.onTop(changeInfo);
   }
 
+  @mustCallSuper
   @override
   Future<void> willShow(RubigoChangeInfo<SCREEN_ID> changeInfo) async {
     callBackHistory.add(WillShowCallBack(changeInfo));
     return super.willShow(changeInfo);
   }
 
+  @mustCallSuper
   @override
   Future<void> isShown(RubigoChangeInfo<SCREEN_ID> changeInfo) async {
     callBackHistory.add(IsShownCallBack(changeInfo));

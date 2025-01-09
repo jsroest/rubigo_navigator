@@ -6,6 +6,7 @@ import '../screens.dart';
 class S200ControllerOnTopPushAndPop extends MockController<Screens> {
   @override
   Future<void> onTop(RubigoChangeInfo<Screens> changeInfo) async {
+    await super.onTop(changeInfo);
     //Here you can set conditions to push the next screen on the stack in one go.
     if (changeInfo.eventType == EventType.push &&
         changeInfo.previousScreen == Screens.s100) {
