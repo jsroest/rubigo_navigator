@@ -15,31 +15,37 @@ class S300Controller with RubigoController<Screens> {
   }
 
   Future<void> onPopButtonPressed() async {
-    await rubigoRouter.whenNotBusy?.pop();
+    await rubigoRouter.pop(ignoreWhenBusy: true);
   }
 
   Future<void> onPopToS100ButtonPressed() async {
-    await rubigoRouter.whenNotBusy?.popTo(Screens.s100);
+    await rubigoRouter.popTo(Screens.s100, ignoreWhenBusy: true);
   }
 
   Future<void> onRemoveS200ButtonPressed() async {
-    rubigoRouter.whenNotBusy?.remove(Screens.s200);
+    rubigoRouter.remove(Screens.s200, ignoreWhenBusy: true);
   }
 
   Future<void> onRemoveS100ButtonPressed() async {
-    rubigoRouter.whenNotBusy?.remove(Screens.s100);
+    rubigoRouter.remove(Screens.s100, ignoreWhenBusy: true);
   }
 
   Future<void> resetStack() async {
-    await rubigoRouter.whenNotBusy?.replaceStack([
-      Screens.s100,
-      Screens.s200,
-      Screens.s300,
-    ]);
+    await rubigoRouter.replaceStack(
+      [
+        Screens.s100,
+        Screens.s200,
+        Screens.s300,
+      ],
+      ignoreWhenBusy: true,
+    );
   }
 
   Future<void> toSet2() async {
     screenStackBackupSet1 = rubigoRouter.screenStackNotifier.value;
-    await rubigoRouter.replaceStack(screenStackBackupSet2);
+    await rubigoRouter.replaceStack(
+      screenStackBackupSet2,
+      ignoreWhenBusy: true,
+    );
   }
 }

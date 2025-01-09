@@ -3,10 +3,10 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S600Controller with RubigoController<Screens> {
   Future<void> onS700ButtonPressed() async {
-    await rubigoRouter.whenNotBusy?.push(Screens.s700);
+    await rubigoRouter.push(Screens.s700, ignoreWhenBusy: true);
   }
 
   Future<void> onPopButtonPressed() async {
-    await rubigoRouter.whenNotBusy?.pop();
+    await rubigoRouter.pop(ignoreWhenBusy: true);
   }
 }
