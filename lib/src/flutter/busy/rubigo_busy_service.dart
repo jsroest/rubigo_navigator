@@ -1,12 +1,16 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_event.dart';
 
+/// This service is used to keep track if the application is busy.
 class RubigoBusyService {
   int _busyCounter = 0;
   Timer? _timer;
 
+  /// This notifier has the current value of the busy values represented by a
+  /// [RubigoBusyEvent] and will inform it's listeners when the value changes.
   final notifier = ValueNotifier(
     const RubigoBusyEvent(
       isBusy: false,
@@ -15,6 +19,10 @@ class RubigoBusyService {
     ),
   );
 
+  /// Prevent user interaction during long lasting calls by wrapping these calls
+  /// with this wrapper. This function can be called recursively. The UI is
+  /// blocked immediately with a [IgnorePointer]. After 300ms a progress
+  /// indicator shown.
   Future<T> busyWrapper<T>(Future<T> Function() function) async {
     try {
       _addBusy();
@@ -24,10 +32,14 @@ class RubigoBusyService {
     }
   }
 
+  /// A shortcut to get the current value of isBusy from the notifier.
   bool get isBusy => notifier.value.isBusy;
 
+  /// A shortcut to get the current value of enabled from the notifier.
   bool get enabled => notifier.value.enabled;
 
+  /// Temporarily disable the [IgnorePointer] in the [RubigoBusyWidget] by
+  /// setting the value to false. When done, set the value back to true.
   set enabled(bool value) =>
       notifier.value = notifier.value.copyWith(enabled: value);
 
