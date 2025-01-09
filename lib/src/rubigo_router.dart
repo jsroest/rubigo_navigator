@@ -64,13 +64,6 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  late final _screenStackNotifier = ValueNotifier<List<SCREEN_ID>>(
-    _rubigoStackManager.screens.toListOfScreenId(),
-  );
-
-  ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
-      _screenStackNotifier;
-
   @override
   List<RubigoScreen<SCREEN_ID>> get screens {
     final result = _rubigoStackManager.screens;
@@ -82,8 +75,17 @@ class RubigoRouter<SCREEN_ID extends Enum>
     return result;
   }
 
-  @override
-  Future<void> pop() => rubigoBusy.busyWrapper(_rubigoStackManager.pop);
+  //region screenStackNotifier
+  late final _screenStackNotifier = ValueNotifier<List<SCREEN_ID>>(
+    _rubigoStackManager.screens.toListOfScreenId(),
+  );
+
+  ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
+      _screenStackNotifier;
+
+  List<SCREEN_ID> get screenStack => _screenStackNotifier.value;
+
+  //endregion
 
   @override
   Future<void> pop({bool isUserAction = false}) async {
