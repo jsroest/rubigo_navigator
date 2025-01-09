@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_service.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
-import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
@@ -12,14 +11,13 @@ import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 class RubigoRouter<SCREEN_ID extends Enum>
     with ChangeNotifier
-    implements
-        RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
+    implements RubigoStackManagerInterface<SCREEN_ID> {
   RubigoRouter({
     required this.availableScreens,
     required this.splashScreenId,
     RubigoBusyService? rubigoBusyService,
     LogNavigation? logNavigation,
-    RubigoStackManagerType<SCREEN_ID>? rubigoStackManager,
+    RubigoStackManager<SCREEN_ID>? rubigoStackManager,
   })  : rubigoBusy = rubigoBusyService ?? RubigoBusyService(),
         _logNavigation =
             logNavigation ?? ((message) async => debugPrint(message)),
@@ -58,7 +56,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
   final ListOfRubigoScreens<SCREEN_ID> availableScreens;
   final SCREEN_ID splashScreenId;
   final RubigoBusyService rubigoBusy;
-  final RubigoStackManagerType<SCREEN_ID> _rubigoStackManager;
+  final RubigoStackManager<SCREEN_ID> _rubigoStackManager;
 
   final _navigatorKey = GlobalKey<NavigatorState>();
 

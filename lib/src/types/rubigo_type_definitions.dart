@@ -8,10 +8,3 @@ typedef ListOfRubigoScreens<SCREEN_ID extends Enum>
     = List<RubigoScreen<SCREEN_ID>>;
 
 typedef LogNavigation = Future<void> Function(String message);
-
-typedef ScreenListToPageList = List<Page<void>> Function(List<Widget> screen);
-
-typedef BusyWrapper = Future<void> Function(Future<void> Function() function);
-
-typedef RubigoStackManagerType<SCREEN_ID extends Enum>
-    = RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>>;

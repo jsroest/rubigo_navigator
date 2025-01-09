@@ -11,8 +11,7 @@ import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 class RubigoStackManager<SCREEN_ID extends Enum>
     with ChangeNotifier
-    implements
-        RubigoStackManagerInterface<SCREEN_ID, RubigoController<SCREEN_ID>> {
+    implements RubigoStackManagerInterface<SCREEN_ID> {
   RubigoStackManager(
     this._screenStack,
     this._availableScreens,
