@@ -86,21 +86,45 @@ class RubigoRouter<SCREEN_ID extends Enum>
   Future<void> pop() => rubigoBusy.busyWrapper(_rubigoStackManager.pop);
 
   @override
-  Future<void> popTo(SCREEN_ID screenId) =>
-      rubigoBusy.busyWrapper(() => _rubigoStackManager.popTo(screenId));
+  Future<void> pop({bool isUserAction = false}) async {
+    if (_canNavigate(isUserAction: isUserAction)) {
+      await rubigoBusy.busyWrapper(_rubigoStackManager.pop);
+    }
+  }
 
   @override
-  Future<void> push(SCREEN_ID screenId) =>
-      rubigoBusy.busyWrapper(() => _rubigoStackManager.push(screenId));
+  Future<void> popTo(SCREEN_ID screenId, {bool isUserAction = false}) async {
+    if (_canNavigate(isUserAction: isUserAction)) {
+      await rubigoBusy.busyWrapper(() => _rubigoStackManager.popTo(screenId));
+    }
+  }
 
   @override
-  Future<void> replaceStack(List<SCREEN_ID> screens) =>
-      rubigoBusy.busyWrapper(() => _rubigoStackManager.replaceStack(screens));
+  Future<void> push(SCREEN_ID screenId, {bool isUserAction = false}) async {
+    if (_canNavigate(isUserAction: isUserAction)) {
+      await rubigoBusy.busyWrapper(() => _rubigoStackManager.push(screenId));
+    }
+  }
 
   @override
-  void remove(SCREEN_ID screenId) => _rubigoStackManager.remove(screenId);
+  Future<void> replaceStack(
+    List<SCREEN_ID> screens, {
+    bool isUserAction = false,
+  }) async {
+    if (_canNavigate(isUserAction: isUserAction)) {
+      await rubigoBusy
+          .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
+    }
+  }
 
   @override
+  void remove(SCREEN_ID screenId, {bool isUserAction = false}) {
+    if (_canNavigate(isUserAction: isUserAction)) {
+      _rubigoStackManager.remove(screenId);
+    }
+  }
+
+  //region Flutter events onDidRemovePage and onPopPage
   Future<void> onDidRemovePage(Page<Object?> page) async {
     if (!_canNavigate(isUserAction: true)) {
       // Notify Flutter about the current page stack, this might result in two
