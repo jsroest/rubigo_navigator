@@ -25,7 +25,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
             logNavigation ?? ((message) async => debugPrint(message)),
         _rubigoStackManager = rubigoStackManager ??
             RubigoStackManager(
-              [availableScreens.findByScreenId(splashScreenId)],
+              [availableScreens.find(splashScreenId)],
               availableScreens,
               logNavigation ?? ((message) async => debugPrint(message)),
             );

@@ -106,7 +106,7 @@ class RubigoStackManager<SCREEN_ID extends Enum>
         );
 
         _screenStack.add(
-          _availableScreens.findByScreenId(navigationType.screenId),
+          _availableScreens.find(navigationType.screenId),
         );
         _eventCounter++;
         await _screenStack.last.getController().onTop(changeInfo);
