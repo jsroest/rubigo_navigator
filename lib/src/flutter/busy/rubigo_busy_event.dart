@@ -1,17 +1,30 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
+/// This class contains the data that the [RubigoBusyWidget] needs to rebuild
+/// itself in the correct configuration.
 @immutable
 class RubigoBusyEvent {
+  /// Create a new RubigoBusyEvent with the provided values.
   const RubigoBusyEvent({
     required this.enabled,
     required this.isBusy,
     required this.showProgressIndicator,
   });
 
+  /// Is used to disable the [IgnorePointer], even when isBusy is true.
+  /// This allows user interaction, for example for when showing a dialog when
+  /// isBusy is true.
   final bool enabled;
+
+  /// Is used to instantly disable any screen interaction.
   final bool isBusy;
+
+  /// Is used to show a progress indicator, to let the user know the system is
+  /// busy.
   final bool showProgressIndicator;
 
+  /// Copy this [RubigoBusyEvent], with these values.
   RubigoBusyEvent copyWith({
     bool? enabled,
     bool? isBusy,
