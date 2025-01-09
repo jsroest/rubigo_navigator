@@ -7,11 +7,13 @@ class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
   const RubigoMaterialApp({
     required this.routerDelegate,
     required this.initAndGetFirstScreen,
+    this.progressIndicator,
     super.key,
   });
 
   final RubigoRouterDelegate<SCREEN_ID> routerDelegate;
   final Future<SCREEN_ID> Function() initAndGetFirstScreen;
+  final Widget? progressIndicator;
 
   @override
   State<RubigoMaterialApp<SCREEN_ID>> createState() =>
@@ -37,6 +39,7 @@ class _RubigoMaterialAppState<SCREEN_ID extends Enum>
       routerDelegate: widget.routerDelegate,
       builder: (context, child) {
         return RubigoBusyWidget(
+          progressIndicator: widget.progressIndicator,
           listener: widget.routerDelegate.rubigoRouter.rubigoBusy.notifier,
           child: child!,
         );
