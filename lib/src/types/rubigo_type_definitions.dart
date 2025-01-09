@@ -3,10 +3,9 @@ import 'package:rubigo_navigator/src/rubigo_controller.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 
-typedef TypeRubigoScreen<SCREEN_ID extends Enum> = RubigoScreen<SCREEN_ID>;
-
+/// Typedef for a list of RubigoScreen.
 typedef ListOfRubigoScreens<SCREEN_ID extends Enum>
-    = List<TypeRubigoScreen<SCREEN_ID>>;
+    = List<RubigoScreen<SCREEN_ID>>;
 
 typedef LogNavigation = Future<void> Function(String message);
 
