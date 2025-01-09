@@ -136,8 +136,8 @@ class RubigoRouter<SCREEN_ID extends Enum>
       // several ways:
       // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
       // 2. Use the RubigoBusyService and widget, which blocks user interaction.
-      // 3. Use [push/pop/popTo/replaceStack]whenNotBusy functions when the
-      // interaction is started by the user.
+      // 3. Use the ignoreWhenBusy parameter with [push/pop/popTo/replaceStack]
+      // when the interaction is started by the user.
       notifyListeners();
       return;
     }
