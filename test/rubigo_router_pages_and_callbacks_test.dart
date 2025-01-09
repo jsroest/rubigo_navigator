@@ -7,6 +7,7 @@ import 'package:rubigo_navigator/src/rubigo_controller_holder.dart';
 import 'package:rubigo_navigator/src/rubigo_router.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
+import 'helpers/extensions.dart';
 import 'helpers/helpers.dart';
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/mocks/mock_controller.dart';

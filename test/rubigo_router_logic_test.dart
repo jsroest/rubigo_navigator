@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 
+import 'helpers/extensions.dart';
 import 'helpers/helpers.dart';
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/mocks/mock_controller.dart';
