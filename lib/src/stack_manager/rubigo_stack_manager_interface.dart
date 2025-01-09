@@ -17,10 +17,4 @@ abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum,
   Future<void> replaceStack(List<SCREEN_ID> screens);
 
   void remove(SCREEN_ID screenId);
-
-//region Events required by the Flutter navigator
-  Future<void> onDidRemovePage(Page<Object?> page);
-
-  bool onPopPage(Route<dynamic> route, dynamic result);
-//endregion
 }

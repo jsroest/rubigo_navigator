@@ -80,44 +80,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     _notifyListeners();
   }
 
-  @override
-  Future<void> onDidRemovePage(Page<Object?> page) async {
-    final pageKey = page.key;
-    if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
-      throw UnsupportedError(
-        'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
-      );
-    }
-    final removedScreenId = pageKey.value;
-    unawaited(
-      _logNavigation(
-        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
-      ),
-    );
-    final lastScreenId = _screenStack.last.screenId;
-    if (removedScreenId != lastScreenId) {
-      unawaited(
-        _logNavigation('but ignored by us.'),
-      );
-      //onDidRemovePage was initiated by the business logic.
-      //In this case the screenStack is already valid
-    } else {
-      //onDidRemovePage was initiated by the backButton/predictiveBackGesture (Android) or swipeBack (iOS).
-      //In this case we still need to adjust the screenStack accordingly
-      unawaited(
-        _logNavigation('and redirected to pop().'),
-      );
-      await pop();
-    }
-  }
-
-  @override
-  bool onPopPage(Route<dynamic> route, dynamic result) {
-    unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
-    unawaited(pop());
-    return false;
-  }
-
   bool _inWillShow = false;
   bool _inMayPop = false;
   int _eventCounter = 0;

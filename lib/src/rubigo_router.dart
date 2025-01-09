@@ -102,11 +102,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    if (!rubigoBusy.isBusy) {
-      await rubigoBusy.busyWrapper(
-        () => _rubigoStackManager.onDidRemovePage(page),
-      );
-    } else {
+    if (!_canNavigate(isUserAction: true)) {
       // Notify Flutter about the current page stack, this might result in two
       // animations (pop/push), but there is nothing we can do here because we
       // are informed when the stack has already changed by the user. For
@@ -114,13 +110,52 @@ class RubigoRouter<SCREEN_ID extends Enum>
       // several ways:
       // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
       // 2. Use the RubigoBusyService and widget, which blocks user interaction.
+      // 3. Use [push/pop/popTo/replaceStack]whenNotBusy functions when the
+      // interaction is started by the user.
       notifyListeners();
+      return;
+    }
+    final pageKey = page.key;
+    if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
+      throw UnsupportedError(
+        'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
+      );
+    }
+    final removedScreenId = pageKey.value;
+    unawaited(
+      _logNavigation(
+        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
+      ),
+    );
+    final lastScreenId = screenStack.last;
+    if (removedScreenId != lastScreenId) {
+      unawaited(_logNavigation('but ignored by us.'));
+      //onDidRemovePage was initiated by the business logic.
+      //In this case the screenStack is already valid
+    } else {
+      //onDidRemovePage was initiated by the backButton/predictiveBackGesture (Android) or swipeBack (iOS).
+      //In this case we still need to adjust the screenStack accordingly
+      unawaited(_logNavigation('and redirected to pop().'));
+      await pop();
     }
   }
 
-  @override
-  bool onPopPage(Route<dynamic> route, dynamic result) =>
-      whenNotBusy?._rubigoStackManager.onPopPage(route, result) ?? false;
+  bool onPopPage(Route<dynamic> route, dynamic result) {
+    unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
+    if (_canNavigate(isUserAction: true)) {
+      unawaited(pop());
+    } else {
+      unawaited(_logNavigation('but rubigoRouter was busy navigating.'));
+    }
+    return false;
+  }
 
-  RubigoRouter<SCREEN_ID>? get whenNotBusy => rubigoBusy.isBusy ? null : this;
+  //endregion
+
+  bool _canNavigate({required bool isUserAction}) {
+    if (!isUserAction) {
+      return true;
+    }
+    return !rubigoBusy.isBusy;
+  }
 }
