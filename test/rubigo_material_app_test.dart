@@ -82,6 +82,7 @@ void main() {
       () async {
         await rubigoRouter.rubigoBusy.busyWrapper(
           () async {
+            expect(rubigoRouter.rubigoBusy.isBusy, true);
             await Future<void>.delayed(const Duration(milliseconds: 500));
             rubigoRouter.rubigoBusy.enabled = false;
             await tester.pump(const Duration(milliseconds: 10));

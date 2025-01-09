@@ -24,6 +24,8 @@ class RubigoBusyService {
     }
   }
 
+  bool get isBusy => notifier.value.isBusy;
+
   bool get enabled => notifier.value.enabled;
 
   set enabled(bool value) =>

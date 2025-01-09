@@ -98,7 +98,7 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   @override
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    if (!rubigoBusy.notifier.value.isBusy) {
+    if (!rubigoBusy.isBusy) {
       await rubigoBusy.busyWrapper(
         () => _rubigoStackManager.onDidRemovePage(page),
       );
@@ -118,6 +118,5 @@ class RubigoRouter<SCREEN_ID extends Enum>
   bool onPopPage(Route<dynamic> route, dynamic result) =>
       whenNotBusy?._rubigoStackManager.onPopPage(route, result) ?? false;
 
-  RubigoRouter<SCREEN_ID>? get whenNotBusy =>
-      rubigoBusy.notifier.value.isBusy ? null : this;
+  RubigoRouter<SCREEN_ID>? get whenNotBusy => rubigoBusy.isBusy ? null : this;
 }
