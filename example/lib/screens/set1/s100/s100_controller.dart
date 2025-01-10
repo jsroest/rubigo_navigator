@@ -4,7 +4,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 class S100Controller with RubigoController<Screens> {
   Future<void> onS200ButtonPressed() async {
-    if (rubigoRouter.rubigoBusy.isBusy) {
+    if (rubigoRouter.busyService.isBusy) {
       return;
     }
     if (await areYouSure(rubigoRouter)) {

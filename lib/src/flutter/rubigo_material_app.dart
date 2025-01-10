@@ -54,7 +54,7 @@ class _RubigoMaterialAppState<SCREEN_ID extends Enum>
       builder: (context, child) {
         return RubigoBusyWidget(
           progressIndicator: widget.progressIndicator,
-          listener: widget.routerDelegate.rubigoRouter.rubigoBusy.notifier,
+          listener: widget.routerDelegate.rubigoRouter.busyService.notifier,
           child: child!,
         );
       },

@@ -74,21 +74,21 @@ void main() {
       ],
     );
     expect(rubigoNavigatorObserver.currentScreenId, Screens.s100);
-    expect(rubigoRouter.rubigoBusy.enabled, true);
+    expect(rubigoRouter.busyService.enabled, true);
     await tester.runAsync(() => rubigoRouter.push(Screens.s200));
     await tester.pump(const Duration(seconds: 2));
-    expect(rubigoRouter.rubigoBusy.enabled, true);
+    expect(rubigoRouter.busyService.enabled, true);
     await tester.runAsync(
       () async {
-        await rubigoRouter.rubigoBusy.busyWrapper(
+        await rubigoRouter.busyService.busyWrapper(
           () async {
-            expect(rubigoRouter.rubigoBusy.isBusy, true);
+            expect(rubigoRouter.busyService.isBusy, true);
             await Future<void>.delayed(const Duration(milliseconds: 500));
-            rubigoRouter.rubigoBusy.enabled = false;
+            rubigoRouter.busyService.enabled = false;
             await tester.pump(const Duration(milliseconds: 10));
             await Future<void>.delayed(const Duration(milliseconds: 10));
             await tester.pump(const Duration(milliseconds: 10));
-            rubigoRouter.rubigoBusy.enabled = true;
+            rubigoRouter.busyService.enabled = true;
             await Future<void>.delayed(const Duration(milliseconds: 10));
             await tester.pump(const Duration(milliseconds: 10));
           },
@@ -100,12 +100,12 @@ void main() {
     await tester.pump(const Duration(milliseconds: 200));
     await tester.runAsync(
       () async {
-        await rubigoRouter.rubigoBusy.busyWrapper(
+        await rubigoRouter.busyService.busyWrapper(
           () async {
-            rubigoRouter.rubigoBusy.enabled = false;
+            rubigoRouter.busyService.enabled = false;
             await tester.pump(const Duration(milliseconds: 100));
             await tester.pageBack();
-            rubigoRouter.rubigoBusy.enabled = true;
+            rubigoRouter.busyService.enabled = true;
             await tester.pumpAndSettle();
           },
         );
