@@ -3,7 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
+/// A sample how to wire-up Flutter's [MaterialApp.router] with
+/// [RubigoRouterDelegate] and [RubigoBusyWidget].
+/// This is a [StatefulWidget] and [RubigoRouter.init] is called in
+/// [State.didChangeDependencies] to be sure that it is called once and only
+/// when the BuildContext is stable.
 class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
+  /// Creates a RubigoMaterialApp
   const RubigoMaterialApp({
     required this.routerDelegate,
     required this.initAndGetFirstScreen,
@@ -11,8 +17,16 @@ class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
     super.key,
   });
 
+  /// The router delegate to pass to [MaterialApp.router]
   final RubigoRouterDelegate<SCREEN_ID> routerDelegate;
+
+  /// In this function the application can be initialized. During this phase
+  /// a SplashScreen is shown. After initialisation this functions returns the
+  /// first screen to navigate to, which is done with a
+  /// [RubigoRouter.replaceStack].
   final Future<SCREEN_ID> Function() initAndGetFirstScreen;
+
+  /// A custom progressIndicator widget.
   final Widget? progressIndicator;
 
   @override
