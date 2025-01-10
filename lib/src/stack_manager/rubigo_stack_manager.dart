@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
-import 'package:rubigo_navigator/src/rubigo_change_info.dart';
-import 'package:rubigo_navigator/src/rubigo_screen.dart';
+import 'package:flutter/foundation.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
-import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
+/// This manages the screen stack. It provides functions to manipulate the stack and
+/// it fires events like [RubigoController.onTop] and
+/// [RubigoController.willShow]
 class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
+  /// Creates a RubigoStackManager
   RubigoStackManager(
     this._screenStack,
     this._availableScreens,
@@ -25,40 +25,25 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   //This is a list of all available screens
   final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
 
-  final LogNavigation _logNavigation;
+  /// Returns the current stable version of the screen stack. It is only updated
+  /// when navigation is complete.
+  List<RubigoScreen<SCREEN_ID>> get screens => _shadowScreenStack;
 
-  List<RubigoScreen<SCREEN_ID>> get screens {
-    return _shadowScreenStack;
-  }
+  /// Pops a screen from the stack. This call can generate more navigation calls.
+  Future<void> pop() => _navigate(Pop<SCREEN_ID>());
 
-  Future<void> pop() async {
-    unawaited(_logNavigation('pop() called.'));
-    await _navigate(Pop<SCREEN_ID>());
-  }
+  /// Pop directly to a specific screen on the stack. This call can generate more navigation calls.
+  Future<void> popTo(SCREEN_ID screenId) => _navigate(PopTo(screenId));
 
-  Future<void> popTo(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('popTo(${screenId.name}) called.'));
-    await _navigate(PopTo(screenId));
-  }
+  /// Push a specific screen on the stack. This call can generate more navigation calls.
+  Future<void> push(SCREEN_ID screenId) => _navigate(Push(screenId));
 
-  Future<void> push(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('push(${screenId.name}) called.'));
-    await _navigate(Push(screenId));
-  }
+  /// Replace the stack with a new list of screens. This call can generate more navigation calls.
+  Future<void> replaceStack(List<SCREEN_ID> screens) =>
+      _navigate(ReplaceStack(screens));
 
-  Future<void> replaceStack(List<SCREEN_ID> screens) async {
-    unawaited(
-      _logNavigation(
-        'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
-      ),
-    );
-    await _navigate(ReplaceStack(screens));
-  }
-
+  /// Remove a screen silently from the stack. This call can not generate more navigation calls.
   void remove(SCREEN_ID screenId) {
-    unawaited(
-      _logNavigation('remove(${screenId.name}) called.'),
-    );
     final index = _screenStack.indexWhere((e) => e.screenId == screenId);
     if (index == -1) {
       throw UnsupportedError(
