@@ -14,6 +14,7 @@ import 'package:example/screens/splash_screen/splash_controller.dart';
 import 'package:example/screens/splash_screen/splash_screen.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
+// All screens are defined here.
 enum Screens {
   splashScreen,
   s100,
@@ -24,8 +25,10 @@ enum Screens {
   s700,
 }
 
+// A simple service locator to hold controllers.
 final holder = RubigoControllerHolder<RubigoController<Screens>>();
 
+// All available screens are defined here.
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(
     Screens.splashScreen,

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
 
+// This AppBar shows a title and the current screen stack as breadcrumbs.
 class AppBarTitle<SCREEN_ID extends Enum> extends StatelessWidget {
   const AppBarTitle({
     required this.title,

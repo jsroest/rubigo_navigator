@@ -6,6 +6,7 @@ import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 void main() {
   // Create a RubigoRouter for the set of screens defined by the Screens enum.
+  // Pass it all available screens and the one to use as a splash screen.
   final rubigoRouter = RubigoRouter<Screens>(
     availableScreens: availableScreens,
     splashScreenId: Screens.splashScreen,
@@ -13,22 +14,22 @@ void main() {
 
   // Calling init is mandatory. While init loads, the splashScreen is shown.
   // Init returns the first screen to show to the user.
-  // This callback can be used to initialize the application and only allows
-  // user interaction when it's ready. For this to work, the splashScreen
-  // should not accept any user interaction.
+  // This callback can be used to initialize the application.For this to work,
+  // the splashScreen should not accept any user interaction.
   Future<Screens> initAndGetFirstScreen() async {
     await Future<void>.delayed(const Duration(seconds: 2));
     return Screens.s100;
   }
 
   runApp(
+    // Here we use a RubigoMaterialApp to reduce the complexity of this example.
+    // You might want to replicate the contents of the RubigoMaterialApp and
+    // adjust it to your needs for more complex scenarios.
     RubigoMaterialApp(
       initAndGetFirstScreen: initAndGetFirstScreen,
       routerDelegate: RubigoRouterDelegate(
         rubigoRouter: rubigoRouter,
         rubigoScreenToPage: (e) => e.toMaterialPage(),
-        //backCallback: BackCallback.onPopPage,
-        //backCallback: BackCallback.onDidRemovePage,
       ),
     ),
   );

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+// A button that rebuilds on screen stack changes. On rebuild it determines with
+// the isEnabled functions if the button is enabled.
 class NavigateButton<SCREEN_ID extends Enum> extends StatelessWidget {
   const NavigateButton({
     required this.screenStackListener,
