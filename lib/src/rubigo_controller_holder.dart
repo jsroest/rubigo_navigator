@@ -1,4 +1,4 @@
-import 'package:rubigo_navigator/src/rubigo_controller.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 /// A minimalistic service locator for [RubigoController]. Although it does what
 /// it should, this class is only here to limit external dependencies.

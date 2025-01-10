@@ -1,12 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
-import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_service.dart';
-import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
-import 'package:rubigo_navigator/src/rubigo_screen.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
-import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 /// A router based on [RubigoScreen]'s.
 /// * Use the init function to initialize your app. When the initialization is

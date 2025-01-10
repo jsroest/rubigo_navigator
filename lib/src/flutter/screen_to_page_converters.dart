@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/src/rubigo_screen.dart';
+import 'package:rubigo_navigator/rubigo_navigator.dart';
 
 /// Extensions on [RubigoScreen]
 extension ExtensionOnRubigoScreen on RubigoScreen {
