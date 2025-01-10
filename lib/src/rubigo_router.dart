@@ -22,7 +22,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
             RubigoStackManager(
               [availableScreens.find(splashScreenId)],
               availableScreens,
-              logNavigation ?? ((message) async => debugPrint(message)),
             );
 
   Future<void> init({
@@ -46,7 +45,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
             screenSet.getController();
       }
     }
-    await _rubigoStackManager.replaceStack([firstScreen]);
+    await replaceStack([firstScreen]);
   }
 
   final LogNavigation _logNavigation;
@@ -83,18 +82,21 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   Future<void> pop({bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
+      unawaited(_logNavigation('pop() called.'));
       await rubigoBusy.busyWrapper(_rubigoStackManager.pop);
     }
   }
 
   Future<void> popTo(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
+      unawaited(_logNavigation('popTo(${screenId.name}) called.'));
       await rubigoBusy.busyWrapper(() => _rubigoStackManager.popTo(screenId));
     }
   }
 
   Future<void> push(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
+      unawaited(_logNavigation('push(${screenId.name}) called.'));
       await rubigoBusy.busyWrapper(() => _rubigoStackManager.push(screenId));
     }
   }
@@ -104,6 +106,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     bool ignoreWhenBusy = false,
   }) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
+      unawaited(
+        _logNavigation(
+          'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
+        ),
+      );
       await rubigoBusy
           .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
     }
@@ -111,6 +118,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   void remove(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
+      unawaited(
+        _logNavigation('remove(${screenId.name}) called.'),
+      );
       _rubigoStackManager.remove(screenId);
     }
   }

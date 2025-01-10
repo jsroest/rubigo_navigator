@@ -12,7 +12,6 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   RubigoStackManager(
     this._screenStack,
     this._availableScreens,
-    this._logNavigation,
   ) {
     _shadowScreenStack = [..._screenStack];
   }
