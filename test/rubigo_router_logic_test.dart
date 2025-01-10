@@ -81,7 +81,8 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: Pop was called on the last screen. The screen stack may not be empty.',
+                    'Developer: Pop was called on the last screen. The screen '
+                        'stack may not be empty.',
           ),
         ),
       );
@@ -162,7 +163,8 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: With popTo, you tried to navigate to s300, which was not on the stack.',
+                    'Developer: With popTo, you tried to navigate to s300, '
+                        'which was not on the stack.',
           ),
         ),
       );
@@ -281,7 +283,8 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: You can only remove screens that exist on the stack (s300 not found).',
+                    'Developer: You can only remove screens that exist on the '
+                        'stack (s300 not found).',
           ),
         ),
       );
@@ -391,7 +394,8 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: you may not Push or Pop in the willShow method.',
+                    'Developer: you may not Push or Pop in the willShow '
+                        'method.',
           ),
         ),
       );
@@ -422,7 +426,8 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: you may not Push or Pop in the willShow method.',
+                    'Developer: you may not Push or Pop in the willShow '
+                        'method.',
           ),
         ),
       );

@@ -52,7 +52,8 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
     final index = _screenStack.indexWhere((e) => e.screenId == screenId);
     if (index == -1) {
       throw UnsupportedError(
-        'Developer: You can only remove screens that exist on the stack (${screenId.name} not found).',
+        'Developer: You can only remove screens that exist on the stack '
+        '(${screenId.name} not found).',
       );
     }
     _screenStack.removeAt(index);
@@ -107,7 +108,8 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           _screenStack.removeLast();
           if (_screenStack.isEmpty) {
             throw UnsupportedError(
-              'Developer: Pop was called on the last screen. The screen stack may not be empty.',
+              'Developer: Pop was called on the last screen. The screen stack '
+              'may not be empty.',
             );
           }
           _eventCounter++;
@@ -124,7 +126,8 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           _screenStack.removeLast();
           if (_screenStack.isEmpty) {
             throw UnsupportedError(
-              'Developer: With popTo, you tried to navigate to ${navigationEvent.screenId.name}, which was not on the stack.',
+              'Developer: With popTo, you tried to navigate to '
+              '${navigationEvent.screenId.name}, which was not on the stack.',
             );
           }
           if (_screenStack.last.screenId == navigationEvent.screenId) {

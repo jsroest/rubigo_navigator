@@ -69,7 +69,8 @@ void main() {
             (e) =>
                 e is ArgumentError &&
                 e.message ==
-                    'The number of pages (1) is not equal to the number of screens (2).',
+                    'The number of pages (1) is not equal to the number of '
+                        'screens (2).',
           ),
         ),
       );

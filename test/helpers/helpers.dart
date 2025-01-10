@@ -10,7 +10,8 @@ void checkPages({
   final nrOfScreens = expectedScreenWidgets.length;
   if (nrOfPages != nrOfScreens) {
     throw ArgumentError(
-      'The number of pages ($nrOfPages) is not equal to the number of screens ($nrOfScreens).',
+      'The number of pages ($nrOfPages) is not equal to the number of screens '
+      '($nrOfScreens).',
     );
   }
   final Type pageType;
