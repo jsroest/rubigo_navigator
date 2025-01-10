@@ -1,13 +1,13 @@
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 
-/// Base class to distinguish the different navigation types internally
+/// Base class to distinguish the different navigation events internally
 /// It is only used by the [RubigoStackManager._navigate] function.
-sealed class NavigationType<SCREEN_ID> {
-  NavigationType();
+sealed class NavigationEvent<SCREEN_ID> {
+  NavigationEvent();
 }
 
 /// Defines a Push event
-class Push<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
+class Push<SCREEN_ID extends Enum> extends NavigationEvent<SCREEN_ID> {
   /// Creates a Push object.
   Push(this.screenId);
 
@@ -16,13 +16,13 @@ class Push<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
 }
 
 /// Defines a Pop event
-class Pop<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
+class Pop<SCREEN_ID extends Enum> extends NavigationEvent<SCREEN_ID> {
   /// Creates a Pop object.
   Pop();
 }
 
 /// Defines a PopTo event
-class PopTo<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
+class PopTo<SCREEN_ID extends Enum> extends NavigationEvent<SCREEN_ID> {
   /// Creates a PopTo object.
   PopTo(this.screenId);
 
@@ -31,7 +31,7 @@ class PopTo<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
 }
 
 /// Defines a ReplaceStack event
-class ReplaceStack<SCREEN_ID extends Enum> extends NavigationType<SCREEN_ID> {
+class ReplaceStack<SCREEN_ID extends Enum> extends NavigationEvent<SCREEN_ID> {
   /// Creates a ReplaceStack object
   ReplaceStack(this.screenStack);
 

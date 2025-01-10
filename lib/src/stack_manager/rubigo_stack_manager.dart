@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
+import 'package:rubigo_navigator/src/stack_manager/navigation_events/navigation_events.dart';
 
 /// This manages the screen stack. It provides functions to manipulate the stack and
 /// it fires events like [RubigoController.onTop] and
@@ -58,7 +58,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   bool _inMayPop = false;
   int _eventCounter = 0;
 
-  Future<void> _navigate(NavigationType<SCREEN_ID> navigationType) async {
+  Future<void> _navigate(NavigationEvent<SCREEN_ID> navigationEvent) async {
     if (_inWillShow) {
       throw UnsupportedError(
         'Developer: you may not Push or Pop in the willShow method.',
@@ -70,7 +70,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
       );
     }
     late RubigoChangeInfo<SCREEN_ID> changeInfo;
-    switch (navigationType) {
+    switch (navigationEvent) {
       case Push<SCREEN_ID>():
         final previousScreen = _screenStack.lastOrNull;
         changeInfo = RubigoChangeInfo<SCREEN_ID>(
@@ -80,7 +80,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
         );
 
         _screenStack.add(
-          _availableScreens.find(navigationType.screenId),
+          _availableScreens.find(navigationEvent.screenId),
         );
         _eventCounter++;
         await _screenStack.last.getController().onTop(changeInfo);
@@ -119,10 +119,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           _screenStack.removeLast();
           if (_screenStack.isEmpty) {
             throw UnsupportedError(
-              'Developer: With popTo, you tried to navigate to ${navigationType.screenId.name}, which was not on the stack.',
+              'Developer: With popTo, you tried to navigate to ${navigationEvent.screenId.name}, which was not on the stack.',
             );
           }
-          if (_screenStack.last.screenId == navigationType.screenId) {
+          if (_screenStack.last.screenId == navigationEvent.screenId) {
             _eventCounter++;
             final currentRubigoScreen = _screenStack.last;
             await currentRubigoScreen.getController().onTop(changeInfo);
@@ -134,7 +134,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
       case ReplaceStack<SCREEN_ID>():
         final previousScreen = _screenStack.last;
         _screenStack =
-            navigationType.screenStack.toListOfRubigoScreen(_availableScreens);
+            navigationEvent.screenStack.toListOfRubigoScreen(_availableScreens);
         changeInfo = RubigoChangeInfo(
           EventType.replaceStack,
           previousScreen.screenId,
