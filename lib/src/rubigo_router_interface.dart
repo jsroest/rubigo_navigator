@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
-abstract class RubigoStackManagerInterface<SCREEN_ID extends Enum>
+abstract class RubigoRouterInterface<SCREEN_ID extends Enum>
     with ChangeNotifier {
   List<RubigoScreen<SCREEN_ID>> get screens;
 

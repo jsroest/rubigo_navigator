@@ -4,14 +4,14 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_service.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
+import 'package:rubigo_navigator/src/rubigo_router_interface.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
-import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
 class RubigoRouter<SCREEN_ID extends Enum>
     with ChangeNotifier
-    implements RubigoStackManagerInterface<SCREEN_ID> {
+    implements RubigoRouterInterface<SCREEN_ID> {
   RubigoRouter({
     required this.availableScreens,
     required this.splashScreenId,
