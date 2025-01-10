@@ -1,23 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/flutter/screen_to_page_converters.dart';
 import 'package:rubigo_navigator/src/rubigo_router.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 
+/// The call back system to use.
 enum BackCallback {
+  /// [Navigator.onDidRemovePage] -> New, but with some issues [See](https://github.com/flutter/flutter/issues/160463).
   onDidRemovePage,
+
+  //ignore:deprecated_member_use
+  /// [Navigator.onPopPage] => Works, but deprecated
   onPopPage,
 }
 
-typedef RubigoScreenToPage = Page<void> Function(RubigoScreen screen);
-
+/// Use this class to wrap a [RubigoRouter] or use it as a blue-print for your
+/// own [RouterDelegate].
 class RubigoRouterDelegate<SCREEN_ID extends Enum>
     extends RouterDelegate<SCREEN_ID>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+  /// Creates a [RubigoRouterDelegate]
   RubigoRouterDelegate({
     required this.rubigoRouter,
     this.backCallback = BackCallback.onPopPage,
     this.observers,
-    RubigoScreenToPage? rubigoScreenToPage,
+    Page<void> Function(RubigoScreen screen)? rubigoScreenToPage,
   }) : rubigoScreenToPage = rubigoScreenToPage ??= ((e) => e.toMaterialPage()) {
     rubigoRouter.addListener(notifyListeners);
   }
@@ -31,9 +37,18 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
 
   // coverage:ignore-end
 
+  /// The [RubigoRouter] that is in this instance.
   final RubigoRouter<SCREEN_ID> rubigoRouter;
+
+  /// The [BackCallback] system that this delegate uses.
   final BackCallback backCallback;
-  final RubigoScreenToPage rubigoScreenToPage;
+
+  /// This function converts a [RubigoScreen] to a [Page]. The default
+  /// implementation uses [ExtensionOnRubigoScreen.toMaterialPage].
+  final Page<void> Function(RubigoScreen screen) rubigoScreenToPage;
+
+  /// The list of [NavigatorObserver] passed to the [Navigator]. Added for
+  /// testing purposes, but may have other use cases.
   final List<NavigatorObserver>? observers;
 
   @override
