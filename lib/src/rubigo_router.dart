@@ -4,14 +4,11 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_service.dart';
 import 'package:rubigo_navigator/src/mixins/rubigo_screen_mixin.dart';
-import 'package:rubigo_navigator/src/rubigo_router_interface.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
-class RubigoRouter<SCREEN_ID extends Enum>
-    with ChangeNotifier
-    implements RubigoRouterInterface<SCREEN_ID> {
+class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   RubigoRouter({
     required this.availableScreens,
     required this.splashScreenId,
@@ -62,7 +59,6 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  @override
   List<RubigoScreen<SCREEN_ID>> get screens {
     final result = _rubigoStackManager.screens;
     unawaited(
@@ -85,28 +81,24 @@ class RubigoRouter<SCREEN_ID extends Enum>
 
   //endregion
 
-  @override
   Future<void> pop({bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy.busyWrapper(_rubigoStackManager.pop);
     }
   }
 
-  @override
   Future<void> popTo(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy.busyWrapper(() => _rubigoStackManager.popTo(screenId));
     }
   }
 
-  @override
   Future<void> push(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       await rubigoBusy.busyWrapper(() => _rubigoStackManager.push(screenId));
     }
   }
 
-  @override
   Future<void> replaceStack(
     List<SCREEN_ID> screens, {
     bool ignoreWhenBusy = false,
@@ -117,7 +109,6 @@ class RubigoRouter<SCREEN_ID extends Enum>
     }
   }
 
-  @override
   void remove(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       _rubigoStackManager.remove(screenId);

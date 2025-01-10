@@ -4,14 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
 import 'package:rubigo_navigator/src/rubigo_change_info.dart';
-import 'package:rubigo_navigator/src/rubigo_router_interface.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
 import 'package:rubigo_navigator/src/types/rubigo_type_definitions.dart';
 
-class RubigoStackManager<SCREEN_ID extends Enum>
-    with ChangeNotifier
-    implements RubigoRouterInterface<SCREEN_ID> {
+class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   RubigoStackManager(
     this._screenStack,
     this._availableScreens,
@@ -31,30 +28,25 @@ class RubigoStackManager<SCREEN_ID extends Enum>
 
   final LogNavigation _logNavigation;
 
-  @override
   List<RubigoScreen<SCREEN_ID>> get screens {
     return _shadowScreenStack;
   }
 
-  @override
   Future<void> pop() async {
     unawaited(_logNavigation('pop() called.'));
     await _navigate(Pop<SCREEN_ID>());
   }
 
-  @override
   Future<void> popTo(SCREEN_ID screenId) async {
     unawaited(_logNavigation('popTo(${screenId.name}) called.'));
     await _navigate(PopTo(screenId));
   }
 
-  @override
   Future<void> push(SCREEN_ID screenId) async {
     unawaited(_logNavigation('push(${screenId.name}) called.'));
     await _navigate(Push(screenId));
   }
 
-  @override
   Future<void> replaceStack(List<SCREEN_ID> screens) async {
     unawaited(
       _logNavigation(
@@ -64,7 +56,6 @@ class RubigoStackManager<SCREEN_ID extends Enum>
     await _navigate(ReplaceStack(screens));
   }
 
-  @override
   void remove(SCREEN_ID screenId) {
     unawaited(
       _logNavigation('remove(${screenId.name}) called.'),
