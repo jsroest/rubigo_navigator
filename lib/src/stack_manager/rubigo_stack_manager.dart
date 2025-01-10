@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_navigator/src/extensions/extensions.dart';
-import 'package:rubigo_navigator/src/rubigo_controller.dart';
+import 'package:rubigo_navigator/src/rubigo_change_info.dart';
 import 'package:rubigo_navigator/src/rubigo_screen.dart';
 import 'package:rubigo_navigator/src/stack_manager/navigation_types/navigation_types.dart';
 import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager_interface.dart';
