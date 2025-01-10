@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
-import 'helpers/rubigo_navigator_observer.dart';
-import 'helpers/rubigo_navigator_observer.mocks.dart';
+import 'helpers/rubigo_router_observer.dart';
+import 'helpers/rubigo_router_observer.mocks.dart';
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/mocks/mock_controller.dart';
 import 'helpers/screens/screens.dart';

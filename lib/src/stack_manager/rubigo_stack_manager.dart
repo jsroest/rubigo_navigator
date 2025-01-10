@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/stack_manager/navigation_events/navigation_events.dart';
+import 'package:rubigo_router/rubigo_router.dart';
+import 'package:rubigo_router/src/stack_manager/navigation_events/navigation_events.dart';
 
 /// This manages the screen stack. It provides functions to manipulate the stack
 /// and it fires events like [RubigoController.onTop] and

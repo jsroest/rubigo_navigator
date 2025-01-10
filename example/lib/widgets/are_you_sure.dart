@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 // A dialog that let the user choose between Yes and No.
 // This dialog is pushed with the standard Flutter Navigator.

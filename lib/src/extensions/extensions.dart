@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 /// A collection of extension methods on ListOfRubigoScreens
 extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>

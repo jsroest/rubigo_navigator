@@ -1,4 +1,4 @@
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 /// Apply this mixin for easy access to the corresponding controller.
 /// This is wired up during [RubigoRouter.init] for each [RubigoScreen] in the

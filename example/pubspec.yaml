@@ -33,7 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
-  rubigo_navigator:
+  rubigo_router:
     path: ../
 
 dev_dependencies:

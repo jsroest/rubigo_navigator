@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/flutter/busy/rubigo_busy_event.dart';
+import 'package:rubigo_router/rubigo_router.dart';
+import 'package:rubigo_router/src/flutter/busy/rubigo_busy_event.dart';
 
 /// This widget protect its children by any screen user interaction
 /// by placing an [IgnorePointer] above them in a stack.

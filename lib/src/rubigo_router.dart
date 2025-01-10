@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
-import 'package:rubigo_navigator/src/stack_manager/rubigo_stack_manager.dart';
+import 'package:rubigo_router/rubigo_router.dart';
+import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 
 /// A router based on [RubigoScreen]'s.
 /// * Use the init function to initialize your app. When the initialization is

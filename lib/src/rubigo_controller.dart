@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 /// Adds functionality to any class that is used as a 'controller' for a screen.
 /// The [RubigoController.rubigoRouter] is wired-up when [RubigoRouter.init]

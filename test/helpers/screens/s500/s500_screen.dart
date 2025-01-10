@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 class S500Screen extends StatelessWidget with RubigoScreenMixin {
   S500Screen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 sealed class CallBack {}
 

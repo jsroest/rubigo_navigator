@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:example/screens/screens.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 void main() {
   // Create a RubigoRouter for the set of screens defined by the Screens enum.

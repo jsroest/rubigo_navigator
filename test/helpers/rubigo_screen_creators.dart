@@ -1,4 +1,4 @@
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 import 'screens/mocks/mock_controller.dart';
 import 'screens/s100/s100_controller.dart';

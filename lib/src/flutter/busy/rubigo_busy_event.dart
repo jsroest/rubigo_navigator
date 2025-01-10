@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 /// This class contains the data that the [RubigoBusyWidget] needs to rebuild
 /// itself in the correct configuration.

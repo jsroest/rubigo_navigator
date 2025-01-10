@@ -1,6 +1,6 @@
 import 'package:example/screens/screens.dart';
 import 'package:example/widgets/are_you_sure.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 class S200Controller with RubigoController<Screens> {
   @override

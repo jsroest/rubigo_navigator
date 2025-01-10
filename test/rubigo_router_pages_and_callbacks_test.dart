@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rubigo_navigator/src/extensions/extensions.dart';
-import 'package:rubigo_navigator/src/rubigo_controller_holder.dart';
-import 'package:rubigo_navigator/src/rubigo_router.dart';
-import 'package:rubigo_navigator/src/rubigo_screen.dart';
+import 'package:rubigo_router/src/extensions/extensions.dart';
+import 'package:rubigo_router/src/rubigo_controller_holder.dart';
+import 'package:rubigo_router/src/rubigo_router.dart';
+import 'package:rubigo_router/src/rubigo_screen.dart';
 
 import 'helpers/extensions.dart';
 import 'helpers/helpers.dart';

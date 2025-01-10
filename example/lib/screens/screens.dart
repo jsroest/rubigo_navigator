@@ -12,7 +12,7 @@ import 'package:example/screens/set2/s700/s700_controller.dart';
 import 'package:example/screens/set2/s700/s700_screen.dart';
 import 'package:example/screens/splash_screen/splash_controller.dart';
 import 'package:example/screens/splash_screen/splash_screen.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 // All screens are defined here.
 enum Screens {

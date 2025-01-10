@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 /// A sample how to wire-up Flutter's [MaterialApp.router] with
 /// [RubigoRouterDelegate] and [RubigoBusyWidget].

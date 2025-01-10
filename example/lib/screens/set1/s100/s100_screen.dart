@@ -1,7 +1,7 @@
 import 'package:example/screens/set1/s100/s100_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 class S100Screen extends StatelessWidget
     with RubigoScreenMixin<S100Controller> {

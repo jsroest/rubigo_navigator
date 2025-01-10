@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/mocks/callbacks.dart';

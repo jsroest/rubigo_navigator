@@ -1,7 +1,7 @@
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/screen_stack_backup_set1.dart';
 import 'package:example/screens/set2/screen_stack_backup_set2.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 class S300Controller with RubigoController<Screens> {
   Future<void> onPopButtonPressed() async {

@@ -1,5 +1,5 @@
 import 'package:example/screens/screens.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 class S100Controller with RubigoController<Screens> {
   Future<void> onS200ButtonPressed() async {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 extension ExtensionOnListOfRubigoScreen on List<RubigoScreen> {
   List<MaterialPage<void>> toListOfMaterialPage() =>

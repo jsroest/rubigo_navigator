@@ -1,4 +1,4 @@
-import 'package:rubigo_navigator/rubigo_navigator.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
 /// A list of RubigoScreen.
 typedef ListOfRubigoScreens<SCREEN_ID extends Enum>
