@@ -53,7 +53,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       //Wire up the rubigoRouter in each controller
       final controller = screenSet.getController;
       controller().rubigoRouter = this;
-      //Wire up the controller in each screenWidget that has the RubigoControllerMixin
+      //Wire up the controller in each screenWidget that has the
+      // RubigoControllerMixin
       final screenWidget = screenSet.screenWidget;
       if (screenWidget is RubigoScreenMixin) {
         (screenWidget as RubigoScreenMixin).controller =
@@ -95,8 +96,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   /// This is the getter used by the [Navigator.pages] property.
-  /// When this object calls [notifyListeners], the [Navigator] rebuilds and gets
-  /// a fresh list of pages from this router.
+  /// When this object calls [notifyListeners], the [Navigator] rebuilds and
+  /// gets a fresh list of pages from this router.
   List<RubigoScreen<SCREEN_ID>> get screens {
     final result = _rubigoStackManager.screens;
     unawaited(

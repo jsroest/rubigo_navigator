@@ -15,7 +15,8 @@ enum EventType {
   replaceStack,
 }
 
-/// This class contains information about the navigation event class RubigoChangeInfo<SCREEN_ID extends Enum> {
+/// This class contains information about the navigation event class
+/// RubigoChangeInfo<SCREEN_ID extends Enum> {
 @immutable
 class RubigoChangeInfo<SCREEN_ID extends Enum> {
   /// Creates a RubigoChangeInfo

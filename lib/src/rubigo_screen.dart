@@ -21,7 +21,8 @@ class RubigoScreen<SCREEN_ID extends Enum> {
 
   /// The widget that represents this screen. By default this widget is wrapped
   /// in a [MaterialPage], but you can pass your own rubigoScreenToPage function
-  /// in the rubigoScreenToPage parameter in the [RubigoRouterDelegate] constructor.
+  /// in the rubigoScreenToPage parameter in the [RubigoRouterDelegate]
+  /// constructor.
   final Widget screenWidget;
 
   /// Return the instance of the controller. You can use any dependency
