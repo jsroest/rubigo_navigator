@@ -1,5 +1,25 @@
 import 'package:rubigo_navigator/src/rubigo_controller.dart';
 
+/// A minimalistic service locator for [RubigoController]. Although it does what
+/// it should, this class is only here to limit external dependencies.
+class RubigoControllerHolder<RUBIGO_CONTROLLER extends RubigoController> {
+  final _controllerCache = <RUBIGO_CONTROLLER>[];
+
+  /// Returns the controller from the cache.
+  /// If not found, it creates a new controller with the provided function.
+  RUBIGO_CONTROLLER get<SEARCH extends RUBIGO_CONTROLLER>([
+    SEARCH Function()? function,
+  ]) {
+    var controller = _controllerCache._firstWhereOrNull((e) => e is SEARCH);
+    if (controller != null) {
+      return controller;
+    }
+    controller = function!.call();
+    _controllerCache.add(controller);
+    return controller;
+  }
+}
+
 extension _IterableExtension<T> on Iterable<T> {
   /// The first element satisfying [test], or `null` if there are none.
   T? _firstWhereOrNull(bool Function(T element) test) {
@@ -7,21 +27,5 @@ extension _IterableExtension<T> on Iterable<T> {
       if (test(element)) return element;
     }
     return null;
-  }
-}
-
-class RubigoControllerHolder<RUBIGO_CONTROLLER extends RubigoController> {
-  final controllerCache = <RUBIGO_CONTROLLER>[];
-
-  RUBIGO_CONTROLLER get<SEARCH extends RUBIGO_CONTROLLER>([
-    SEARCH Function()? function,
-  ]) {
-    var controller = controllerCache._firstWhereOrNull((e) => e is SEARCH);
-    if (controller != null) {
-      return controller;
-    }
-    controller = function!.call();
-    controllerCache.add(controller);
-    return controller;
   }
 }
