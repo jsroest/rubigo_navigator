@@ -158,7 +158,6 @@ final rubigoRouter = RubigoRouter<Screens>(
 Create a `RubigoRouterDelegate`, and pass it the `rubigoRouter`.
 
 ```dart
-
 final routerDelegate = RubigoRouterDelegate(
   rubigoRouter: rubigoRouter,
 );
@@ -197,7 +196,7 @@ code. This controller is wired up during the initialization phase.
 
 ### example usage
 
-```
+```dart
 ElevatedButton(
   onPressed: controller.onS200ButtonPressed,
   child: const Text('Push S200'),
@@ -259,7 +258,7 @@ class RubigoChangeInfo<SCREEN_ID extends Enum> {
 
 If the controller has the `RubigoControllerMixin, you can manipulate the stack with these functions.
 
-```
+```dart
 await rubigoRouter.pop();
 await rubigoRouter.popTo(screenId);
 await rubigoRouter.push(screenId);
@@ -276,7 +275,7 @@ app is busy. Be careful that keyboard events are not blocked by this mechanism.
 
 Check if the app is busy.
 
-```
+```dart
 if (!rubigoRouter.busyService.isBusy) {
 //Do something only when the app is not busy
 }
@@ -284,7 +283,7 @@ if (!rubigoRouter.busyService.isBusy) {
 
 Mark the app busy while some code executes:
 
-```
+```dart
 await rubigoRouter.busyService.busyWrapper(() async {
   //Do something lengthy here that the use may not interrupt.
 });
@@ -293,7 +292,6 @@ await rubigoRouter.busyService.busyWrapper(() async {
 If you want to get notified when the app is marked as busy you can use the notifier.
 
 ```dart
-
 final notifier = rubigoRouter.busyService.notifier;
 ```
 
@@ -309,7 +307,8 @@ Future<void> onS200ButtonPressed() async {
 
 ## Additional information
 
-I am using this way of working screens, controllers and navigation with Flutter apps since 2020.
+I am using this way of working with screens, controllers and navigation with Flutter apps since
+2020.
 But the first implementation goes back to WindowsCE. It always served me well and has never let me
 down.
 
