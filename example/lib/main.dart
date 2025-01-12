@@ -12,7 +12,12 @@ void main() {
     splashScreenId: Screens.splashScreen,
   );
 
-  // Calling init is mandatory. While init loads, the splashScreen is shown.
+  // Create a RubigoRouterDelegate.
+  final routerDelegate = RubigoRouterDelegate(
+    rubigoRouter: rubigoRouter,
+  );
+
+  // Calling init is mandatory. While init executes, the splashScreen is shown.
   // Init returns the first screen to show to the user.
   // This callback can be used to initialize the application.For this to work,
   // the splashScreen should not accept any user interaction.
@@ -27,10 +32,7 @@ void main() {
     // adjust it to your needs for more complex scenarios.
     RubigoMaterialApp(
       initAndGetFirstScreen: initAndGetFirstScreen,
-      routerDelegate: RubigoRouterDelegate(
-        rubigoRouter: rubigoRouter,
-        rubigoScreenToPage: (e) => e.toMaterialPage(),
-      ),
+      routerDelegate: routerDelegate,
     ),
   );
 }
