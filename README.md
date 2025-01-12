@@ -71,9 +71,9 @@ At the time of writing, this package requires:
 * dart sdk: 3.0.0 or greater
 * flutter version 3.10.0 or greater
 
-## Usage
+## Setting up the app
 
-Create an enum with all your screens:
+Create an enum to uniquely identify each an every screen.
 
 ```dart
 enum Screens {
@@ -85,7 +85,9 @@ enum Screens {
 
 Create a list that combines the enum, with a widget and a controller.
 ```dart
-// holder = your favorite service locator and/or dependency injection package
+// holder = your favorite service locator and/or dependency injection package.
+// It's important that the controllers are registered as singletons, unless you
+// know what you are doing :-)
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(
     Screens.splashScreen,
@@ -110,7 +112,7 @@ final ListOfRubigoScreens<Screens> availableScreens = [
 ];
 ```
 
-Create a `RubigoRouter` and pass the `availableScreens` and the `splashScreenId`.
+Create a `RubigoRouter` and pass the `availableScreens` and splash screen.
 
 ```dart
 final rubigoRouter = RubigoRouter<Screens>(
@@ -119,7 +121,15 @@ final rubigoRouter = RubigoRouter<Screens>(
 );
 ```
 
-Create a function that holds you initialization code and that returns the screen to show when the initialization is complete.
+Create a `RubigoRouterDelegate`, and pass it the `rubigoRouter`.  
+
+```dart
+  final routerDelegate = RubigoRouterDelegate(
+    rubigoRouter: rubigoRouter,
+  );
+```
+
+Create a function that holds your initialization code and that returns the first screen.
 
 ```dart
 Future<Screens> initAndGetFirstScreen() async {
@@ -130,21 +140,122 @@ Future<Screens> initAndGetFirstScreen() async {
 }
 ```
 
-Create a `RubigoMaterialApp` or implement your own and pass it to `runApp`
+Create a `RubigoMaterialApp`, pass the `initAndGetFirstScreen` and `routerDelegate`.  
 
 ```dart
-void main() {
-  runApp(
-    RubigoMaterialApp(
-      initAndGetFirstScreen: initAndGetFirstScreen,
-      routerDelegate: RubigoRouterDelegate(
-        rubigoRouter: rubigoRouter,
-      ),
-    ),
+runApp(
+  RubigoMaterialApp(
+    initAndGetFirstScreen: initAndGetFirstScreen,
+    routerDelegate: routerDelegate,
+  ),
+);
+```
+
+## Setting up screens  
+You can use any widget as a screen widget.  
+
+If you add the `RubigoScreenMixin`, you can access the controller of your page directly in your code. This controller is wired up during the initialization phase.
+
+### example usage
+
+```dart
+ElevatedButton(
+  onPressed: controller.onS200ButtonPressed,
+  child: const Text('Push S200'),
+),
+```
+
+## Setting up controllers  
+You can use any class as a controller for your screen.  
+
+If you add the `RubigoControllerMixin`, you can access the router of you app directly in your code. The router is wired up during the initialization phase.
+
+### Navigation events  
+Each controller with the `RubigoControllerMixin` gets access to the following navigation events:
+
+```dart
+@override
+Future<void> onTop(RubigoChangeInfo<Screens> changeInfo) async {}
+
+@override
+Future<void> willShow(RubigoChangeInfo<Screens> changeInfo) async {}
+
+@override
+Future<void> isShown(RubigoChangeInfo<Screens> changeInfo) async {}
+
+@override
+Future<bool> mayPop() => Future.value(true);
+```
+
+The `onTop` event allows further navigation. After navigating and finishing all events, the Flutter framework is informed about the new  state of the screen stack. This will result in a single page transition, from the old screen to the new screen.
+
+The application logic can use the data provided in the `RubigoChangeInfo` to decide what to do next.
+
+```dart
+enum EventType {
+  push,
+  pop,
+  popTo,
+  replaceStack,
+}
+
+class RubigoChangeInfo<SCREEN_ID extends Enum> {
+  const RubigoChangeInfo(
+    this.eventType,
+    this.previousScreen,
+    this.screenStack,
   );
+  final EventType eventType;
+  final Screens? previousScreen;
+  final List<Screens> screenStack;
+}
+
+```
+
+### Navigating from controller code
+If the controller has the `RubigoControllerMixin, you can manipulate the stack with these functions.  
+
+```dart
+await rubigoRouter.pop();
+await rubigoRouter.popTo(screenId);
+await rubigoRouter.push(screenId);
+await rubigoRouter.replaceStack(screens);
+rubigoRouter.remove(screenId);
+```
+
+### Check if the app is busy  
+
+The `RubigoRouter` can be used to mark and track wether the app is busy and should accept user interaction. By default, the navigator places an `IgnorePointer` widget above the app, while the app is marked as busy. This prevents the user from tampering with the app with touch events, while the app is busy. Be careful that keyboard events are not blocked by this mechanism.
+
+Check if the app is busy.
+
+```dart
+if (!rubigoRouter.busyService.isBusy) {
+  //Do something only when the app is not busy
 }
 ```
 
+Mark the app busy while some code executes:
+
+```dart
+await rubigoRouter.busyService.busyWrapper(() async {
+  //Do something lengthy here that the use may not interrupt.
+});
+```
+
+If you want to get notified when the app is marked as busy you can use the notifier.  
+
+```dart
+final notifier = rubigoRouter.busyService.notifier;
+```
+
+All stack manipulation functions have the optional parameter `ignoreWhenBusy`. You can use this if you only want to perform the navigation when the app is not busy. This is useful if you wire up a button pressed event directly to a navigating function.
+
+```dart
+Future<void> onS200ButtonPressed() async {
+  await rubigoRouter.push(Screens.s200, ignoreWhenBusy: true);
+}
+```
 
 TODO: Include short and useful examples for package users. Add longer examples  
 to `/example` folder.
