@@ -2,7 +2,7 @@ import 'package:example/screens/screens.dart';
 import 'package:example/widgets/are_you_sure.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S200Controller with RubigoController<Screens> {
+class S200Controller with RubigoControllerMixin<Screens> {
   @override
   Future<void> onTop(RubigoChangeInfo<Screens> changeInfo) async {
     //Only execute this when we are pushed on top.

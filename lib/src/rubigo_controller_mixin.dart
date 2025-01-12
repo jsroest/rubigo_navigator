@@ -2,9 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 /// Adds functionality to any class that is used as a 'controller' for a screen.
-/// The [RubigoController.rubigoRouter] is wired-up when [RubigoRouter.init]
+/// The [RubigoControllerMixin.rubigoRouter] is wired-up when [RubigoRouter.init]
 /// is called
-mixin RubigoController<SCREEN_ID extends Enum> {
+mixin RubigoControllerMixin<SCREEN_ID extends Enum> {
   /// Provides easy access to the [RubigoRouter] that is in charge of this
   /// controller.
   late RubigoRouter<SCREEN_ID> rubigoRouter;

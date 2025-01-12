@@ -3,7 +3,8 @@ import 'package:rubigo_router/rubigo_router.dart';
 
 import 'callbacks.dart';
 
-class MockController<SCREEN_ID extends Enum> with RubigoController<SCREEN_ID> {
+class MockController<SCREEN_ID extends Enum>
+    with RubigoControllerMixin<SCREEN_ID> {
   MockController({bool mayPop = true}) : _mayPop = mayPop;
 
   final bool _mayPop;

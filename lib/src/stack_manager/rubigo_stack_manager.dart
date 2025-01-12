@@ -5,8 +5,8 @@ import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/stack_manager/navigation_events/navigation_events.dart';
 
 /// This manages the screen stack. It provides functions to manipulate the stack
-/// and it fires events like [RubigoController.onTop] and
-/// [RubigoController.willShow]
+/// and it fires events like [RubigoControllerMixin.onTop] and
+/// [RubigoControllerMixin.willShow]
 class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   /// Creates a RubigoStackManager
   RubigoStackManager(

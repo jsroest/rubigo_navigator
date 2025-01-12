@@ -1,8 +1,8 @@
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// A minimalistic service locator for [RubigoController]. Although it does what
+/// A minimalistic service locator for [RubigoControllerMixin]. Although it does what
 /// it should, this class is only here to limit external dependencies.
-class RubigoControllerHolder<RUBIGO_CONTROLLER extends RubigoController> {
+class RubigoControllerHolder<RUBIGO_CONTROLLER extends RubigoControllerMixin> {
   final _controllerCache = <RUBIGO_CONTROLLER>[];
 
   /// Returns the controller from the cache.
