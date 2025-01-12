@@ -1,3 +1,6 @@
+/// This file exports all public api
+library rubigo_router;
+
 export 'src/extensions/extensions.dart';
 export 'src/flutter/busy/rubigo_busy_service.dart';
 export 'src/flutter/busy/rubigo_busy_widget.dart';

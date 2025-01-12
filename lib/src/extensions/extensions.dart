@@ -21,7 +21,7 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
   List<Widget> toListOfWidget() => map((e) => e.screenWidget).toList();
 }
 
-/// A collection of extension methods on List<ScreenId>
+/// A collection of extension methods on list of ScreenId.
 extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
   /// Check if there is at least one screen available below the current screen.
   /// This could be an appropriate check before calling [RubigoRouter.pop].

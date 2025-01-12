@@ -1,7 +1,9 @@
 name: rubigo_router
-description: "A router well suited for Line Of Business Apps"
+description: "RubigoRouter is a minimalistic router for Flutter apps. It can also add navigation events. With these events, the controller can act on
+and influence navigation while it happens."
 version: 0.0.1
-homepage:
+homepage: https://yapb.dev
+repository: https://github.com/jsroest/rubigo_router
 
 environment:
   sdk: ^3.0.0
