@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/flutter/busy/rubigo_busy_event.dart';
 
-/// This widget protect its children by any screen user interaction
-/// by placing an [IgnorePointer] above them in a stack.
+/// This widget protects its children by any touch events by placing an
+/// [IgnorePointer] above them in a stack.
 /// ```dart
 /// MaterialApp.router(
 ///   backButtonDispatcher: RootBackButtonDispatcher(),

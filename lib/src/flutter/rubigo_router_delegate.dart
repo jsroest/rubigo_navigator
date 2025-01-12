@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// The call back system to use.
+/// Use [Navigator.onDidRemovePage], or the deprecated [Navigator.onPopPage].
 enum BackCallback {
   /// [Navigator.onDidRemovePage] -> New, but with some issues [See](https://github.com/flutter/flutter/issues/160463).
   onDidRemovePage,

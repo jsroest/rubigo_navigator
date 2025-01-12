@@ -5,9 +5,9 @@ import 'package:rubigo_router/rubigo_router.dart';
 
 /// A sample how to wire-up Flutter's [MaterialApp.router] with
 /// [RubigoRouterDelegate] and [RubigoBusyWidget].
-/// This is a [StatefulWidget] and [RubigoRouter.init] is called in
-/// [State.didChangeDependencies] to be sure that it is called once and only
-/// when the BuildContext is stable.
+/// This is a [StatefulWidget]. [RubigoRouter.init] is called in
+/// [State.didChangeDependencies] to be sure that it is called **once** and only
+/// when the BuildContext is **stable**.
 class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
   /// Creates a RubigoMaterialApp
   const RubigoMaterialApp({

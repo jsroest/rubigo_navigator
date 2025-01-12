@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-/// The cause of this navigation event
+/// All available navigation events, like push/replaceStack
 enum EventType {
   /// This screen is on-top because of a push
   push,
@@ -15,8 +15,7 @@ enum EventType {
   replaceStack,
 }
 
-/// This class contains information about the navigation event class
-/// RubigoChangeInfo<SCREEN_ID extends Enum> {
+/// This class contains information about the navigation event.
 @immutable
 class RubigoChangeInfo<SCREEN_ID extends Enum> {
   /// Creates a RubigoChangeInfo

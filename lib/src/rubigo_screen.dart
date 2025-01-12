@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// A unique screenId is bundled to a screenWidget and a controller-getter
+/// Wires a screen widget and a controller together with a unique id.
 class RubigoScreen<SCREEN_ID extends Enum> {
   /// Creates a RubigoScreen
   RubigoScreen(

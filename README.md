@@ -22,41 +22,56 @@ Managing the stack was never easier. 🥳 🚀
 ## Features
 
 ### Navigation
-* **push**, push a specific screen on the stack.
-* **pop**, pop the topmost screen from the stack.
-* **popTo**, pop directly to a specific screen.
-* **replaceStack**, instantly replace the stack with a new stack.
-* **remove**, silently remove  a screen from the stack.
+* **push**  
+  Push a specific screen on the stack.
+* **pop**  
+  Pop the topmost screen from the stack.
+* **popTo**  
+  Pop directly to a specific screen.
+* **replaceStack**  
+  Replace the stack with a new stack.
+* **remove**  
+  Silently remove  a screen from the stack.
 
 ### Coding convenience
 * From your **screen widget**, you have **direct access** to the corresponding **controller**.
-* From your **controller**, you have direct access to the ```RubigoRouter``` and Flutter's ```Navigator```.
+* From your **controller**, you have direct access to the ```RubigoRouter``` and other cool stuff (like the Flutter's ```Navigator```, a busyService, screen stack). 
 
 ### Navigation events
-#### Each controller is informed about the following navigation events:
+#### Each controller that has the `RubigoControllerMixin` is informed about the following navigation events:
 
-* **onTop(** changeData **)** is called when the screen is on top of the stack.  
+* **onTop(changeData)**  
+  This event is called when the screen is on top of the stack.  
   Further navigation **is** allowed.
-* **willShow(** changeData **)** is called when the screen is on top of the stack and **will** be shown.  
-  Further navigation is **not** allowed.
-* **isShown(** changeData **)** is called when the screen is on top of the stack and is actually shown.  
-  Further navigation is **not** allowed.
-* **bool mayPop()** is called when the screen is about to be popped from the stack.  
+* **willShow(changeData)**  
+  This event is called when the screen is on top of the stack and **will** be shown.  
+  Further navigation **is not** allowed.
+* **isShown(changeData)**  
+  This event is called when the screen is on top of the stack and is actually shown.  
+  Further navigation **is not** allowed.
+* **bool mayPop()**  
+  This event is called when the screen is about to be popped from the stack.  
   If you return ```false```, the pop is cancelled.  
-  Further navigation is **not** allowed.
+  Further navigation **is not** allowed.
 
 #### changeData contains the following data:
-* **eventType:** push, pop, popTo or replaceStack.
-* **previousScreen:** the screen where we are coming from.
-* **screenStack:** a copy of the current screen stack.
+* **eventType:**  
+  The event type can be push, pop, popTo or replaceStack.
+* **previousScreen:**  
+  This is the screen where we are coming from.
+* **screenStack:**  
+  This is a copy of the current screen stack.
 
-With this data, the controller can decide what to do next.
+With this data, the controller can decide what to do next, like navigate further or load data from an asynchronous source.
 
 #### Typical use cases
 
-* **onTop()**, Navigate to other screens without the user noticing it.
-* **willShow()**, Get data from an asynchronous source, like a local database. The screen will be shown as soon as the data has arrived.
-* **isShown()**: If you want to be sure that page is shown before starting some lengthy processing. If you call code that is heavy on the UI thread, this makes sure that at least the page is shown before the processing starts.
+* **onTop()**  
+  Navigate to other screens without the user noticing it.
+* **willShow()**  
+  Get data from an asynchronous source, like a local database. The screen will be shown as soon as the data has arrived.
+* **isShown()**  
+  If you want to be sure that page is shown before starting some lengthy processing. If you call code that is heavy on the UI thread, this makes sure that at least the page is shown before the processing starts.
 
 ### Know when the app is busy and absorb touch events
 This is not mandatory to use, but it is a nice addition, especially for Line of Business apps.  
