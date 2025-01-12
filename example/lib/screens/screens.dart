@@ -80,5 +80,5 @@ final ListOfRubigoScreens<Screens> availableScreens = [
     Screens.s800,
     const S800Screen(),
     () => holder.get(S800Controller.new),
-  )
+  ),
 ];
