@@ -10,19 +10,19 @@ import 'helpers/screens/s300/s300_controller.dart';
 import 'helpers/screens/screens.dart';
 import 'helpers/screens/splash_screen/splash_controller.dart';
 
-extension GetExtension<SCREEN_ID extends Enum>
-    on RubigoControllerHolder<MockController<SCREEN_ID>> {
+extension GetExtension<SCREEN_ID extends Enum> on RubigoControllerHolder {
   MockController<SCREEN_ID>
-      getController<T extends MockController<SCREEN_ID>>() => get<T>();
+      getController<T extends MockController<SCREEN_ID>>() =>
+          get<T>() as MockController<SCREEN_ID>;
 }
 
 void main() {
-  late RubigoControllerHolder<MockController<Screens>> holder;
+  late RubigoControllerHolder holder;
   late RubigoRouter<Screens> rubigoRouter;
 
   setUp(
     () async {
-      holder = RubigoControllerHolder<MockController<Screens>>();
+      holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -42,7 +42,7 @@ void main() {
   test(
     'Test events splashScreen s100',
     () async {
-      final splashController = holder.get<SplashController>();
+      final splashController = holder.getController<SplashController>();
       {
         final actualCallBackHistory = splashController.callBackHistory;
         final expectedCallBackHistory = <CallBack>[];

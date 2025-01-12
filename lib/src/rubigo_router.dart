@@ -46,15 +46,17 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     });
     final firstScreen = await initAndGetFirstScreen();
     for (final screenSet in availableScreens) {
-      //Wire up the rubigoRouter in each controller
-      final controller = screenSet.getController;
-      controller().rubigoRouter = this;
-      //Wire up the controller in each screenWidget that has the
+      // Wire up the rubigoRouter in each controller, if it is a
       // RubigoControllerMixin
-      final screenWidget = screenSet.screenWidget;
-      if (screenWidget is RubigoScreenMixin) {
-        (screenWidget as RubigoScreenMixin).controller =
-            screenSet.getController();
+      final controller = screenSet.getController();
+      if (controller is RubigoControllerMixin<SCREEN_ID>) {
+        controller.rubigoRouter = this;
+      }
+      // Wire up the controller in each screenWidget that is a RubigoScreenMixin
+      if (screenSet.screenWidget is RubigoScreenMixin &&
+          controller is RubigoControllerMixin<SCREEN_ID>) {
+        final screenWidget = screenSet.screenWidget as RubigoScreenMixin;
+        screenWidget.controller = controller;
       }
     }
     await replaceStack([firstScreen]);

@@ -89,7 +89,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           _availableScreens.find(navigationEvent.screenId),
         );
         _eventCounter++;
-        await _screenStack.last.getController().onTop(changeInfo);
+        final controller = _screenStack.last.getController();
+        if (controller is RubigoControllerMixin) {
+          await controller.onTop(changeInfo);
+        }
         _eventCounter--;
 
       case Pop():
@@ -102,7 +105,13 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           _screenStack.toListOfScreenId(),
         );
         _inMayPop = true;
-        final mayPop = await _screenStack.last.getController().mayPop();
+        final controller = _screenStack.last.getController();
+        final bool mayPop;
+        if (controller is RubigoControllerMixin) {
+          mayPop = await controller.mayPop();
+        } else {
+          mayPop = true;
+        }
         _inMayPop = false;
         if (mayPop) {
           _screenStack.removeLast();
@@ -113,7 +122,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
             );
           }
           _eventCounter++;
-          await _screenStack.last.getController().onTop(changeInfo);
+          final controller = _screenStack.last.getController();
+          if (controller is RubigoControllerMixin) {
+            await controller.onTop(changeInfo);
+          }
           _eventCounter--;
         }
       case PopTo<SCREEN_ID>():
@@ -132,8 +144,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           }
           if (_screenStack.last.screenId == navigationEvent.screenId) {
             _eventCounter++;
-            final currentRubigoScreen = _screenStack.last;
-            await currentRubigoScreen.getController().onTop(changeInfo);
+            final controller = _screenStack.last.getController();
+            if (controller is RubigoControllerMixin) {
+              await controller.onTop(changeInfo);
+            }
             _eventCounter--;
             break;
           }
@@ -149,18 +163,28 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
           _screenStack.toListOfScreenId(),
         );
         _eventCounter++;
-        final currentRubigoScreen = _screenStack.last;
-        await currentRubigoScreen.getController().onTop(changeInfo);
+        final controller = _screenStack.last.getController();
+        if (controller is RubigoControllerMixin) {
+          await controller.onTop(changeInfo);
+        }
         _eventCounter--;
     }
 
     if (_eventCounter == 0) {
       _inWillShow = true;
-      await _screenStack.last.getController().willShow(changeInfo);
+      {
+        final controller = _screenStack.last.getController();
+        if (controller is RubigoControllerMixin) {
+          await controller.willShow(changeInfo);
+        }
+      }
       _inWillShow = false;
       _notifyListeners();
       await Future<void>.delayed(const Duration(milliseconds: 100));
-      await _screenStack.last.getController().isShown(changeInfo);
+      final controller = _screenStack.last.getController();
+      if (controller is RubigoControllerMixin) {
+        await controller.isShown(changeInfo);
+      }
     }
   }
 

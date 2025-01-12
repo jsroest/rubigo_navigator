@@ -4,14 +4,13 @@ import 'package:rubigo_router/rubigo_router.dart';
 import 'helpers/extensions.dart';
 import 'helpers/helpers.dart';
 import 'helpers/rubigo_screen_creators.dart';
-import 'helpers/screens/mocks/mock_controller.dart';
 import 'helpers/screens/screens.dart';
 
 void main() {
   test(
     'Test s100-s200-s300 pop',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -53,7 +52,7 @@ void main() {
   test(
     'Test s100 pop',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -92,7 +91,7 @@ void main() {
   test(
     'Test s100-s200-s300 popTo s100',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -132,7 +131,7 @@ void main() {
   test(
     'Test s100-s200 popTo s300',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -174,7 +173,7 @@ void main() {
   test(
     'Test s100 push s200',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -212,7 +211,7 @@ void main() {
   test(
     'Test s100-s200-s300 remove s200',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -252,7 +251,7 @@ void main() {
   test(
     'Test s100-s200 remove s300',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -294,7 +293,7 @@ void main() {
   test(
     'Test s100 push s100-s200-s300',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -333,7 +332,7 @@ void main() {
   test(
     'Test s100-s200-s300 pop s100',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -373,7 +372,7 @@ void main() {
   test(
     'Push in willShow',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -405,7 +404,7 @@ void main() {
   test(
     'Pop in willShow',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -437,7 +436,7 @@ void main() {
   test(
     'Pop in mayPop',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -469,7 +468,7 @@ void main() {
   test(
     'Push in mayPop',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -501,7 +500,7 @@ void main() {
   test(
     'Test s100-s200-s300 replaceStack s500-s600-s700',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -552,7 +551,7 @@ void main() {
   test(
     'Test screens equals screenStackNotifier',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),
@@ -581,7 +580,7 @@ void main() {
   test(
     'Test s100-s200 pop when mayPop returns false',
     () async {
-      final holder = RubigoControllerHolder<MockController<Screens>>();
+      final holder = RubigoControllerHolder();
       final availableScreens = [
         getSplashScreen(holder),
         getS100Screen(holder),

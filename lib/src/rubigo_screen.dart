@@ -28,5 +28,5 @@ class RubigoScreen<SCREEN_ID extends Enum> {
   /// Return the instance of the controller. You can use any dependency
   /// injection package in this function, as long as it always returns the same
   /// instance for the controller (singleton).
-  final RubigoControllerMixin<SCREEN_ID> Function() getController;
+  final Object Function() getController;
 }

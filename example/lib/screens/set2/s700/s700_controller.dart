@@ -4,6 +4,10 @@ import 'package:example/screens/set2/screen_stack_backup_set2.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S700Controller with RubigoControllerMixin<Screens> {
+  Future<void> onS800ButtonPressed() async {
+    await rubigoRouter.push(Screens.s800, ignoreWhenBusy: true);
+  }
+
   Future<void> onPopButtonPressed() async {
     await rubigoRouter.pop(ignoreWhenBusy: true);
   }

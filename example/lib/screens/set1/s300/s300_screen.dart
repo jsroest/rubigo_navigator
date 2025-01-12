@@ -30,6 +30,15 @@ class S300Screen extends StatelessWidget
             NavigateButton(
               screenStackListener: controller.rubigoRouter.screenStackNotifier,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+              onPressed: controller.onS400ButtonPressed,
+              child: const Text('Push S400'),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            NavigateButton(
+              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
               child: const Text('Pop'),
             ),
