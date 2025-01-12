@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
+//ignore: deprecated_member_use
 /// Use [Navigator.onDidRemovePage], or the deprecated [Navigator.onPopPage].
 enum BackCallback {
   /// [Navigator.onDidRemovePage] -> New, but with some issues [See](https://github.com/flutter/flutter/issues/160463).
@@ -58,6 +59,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
       onDidRemovePage: backCallback == BackCallback.onDidRemovePage
           ? rubigoRouter.onDidRemovePage
           : null,
+      //ignore: deprecated_member_use
       onPopPage: backCallback == BackCallback.onPopPage
           ? rubigoRouter.onPopPage
           : null,
