@@ -40,7 +40,7 @@ void main() {
   );
 
   test('Router with list of MaterialPages', () async {
-    final actualPages = rubigoRouter.screens.toListOfMaterialPage();
+    final actualPages = rubigoRouter.screens.value.toListOfMaterialPage();
     final expectedScreenWidgets = [
       availableScreens[1],
       availableScreens[2],
@@ -53,7 +53,7 @@ void main() {
   });
 
   test('Router with list of CupertinoPages', () async {
-    final actualPages = rubigoRouter.screens.toListOfCupertinoPage();
+    final actualPages = rubigoRouter.screens.value.toListOfCupertinoPage();
     final expectedScreenWidgets = [
       availableScreens[1],
       availableScreens[2],
@@ -89,7 +89,7 @@ void main() {
         child: availableScreens[3].screenWidget,
       ),
     );
-    final actualPages = rubigoRouter.screens.toListOfMaterialPage();
+    final actualPages = rubigoRouter.screens.value.toListOfMaterialPage();
     final expectedScreenWidgets = [
       availableScreens[1],
       availableScreens[2],
@@ -107,7 +107,7 @@ void main() {
         child: availableScreens[3].screenWidget,
       ),
     );
-    final actualPages = rubigoRouter.screens.toListOfCupertinoPage();
+    final actualPages = rubigoRouter.screens.value.toListOfCupertinoPage();
     final expectedScreenWidgets = [
       availableScreens[1],
       availableScreens[2],
@@ -125,7 +125,7 @@ void main() {
         child: availableScreens[2].screenWidget,
       ),
     );
-    final actualPages = rubigoRouter.screens.toListOfMaterialPage();
+    final actualPages = rubigoRouter.screens.value.toListOfMaterialPage();
     final expectedScreenWidgets = [
       availableScreens[1],
       availableScreens[2],
@@ -144,7 +144,7 @@ void main() {
     );
     //Allow time for the pop to finish.
     await Future<void>.delayed(const Duration(milliseconds: 10));
-    final actualPages = rubigoRouter.screens.toListOfMaterialPage();
+    final actualPages = rubigoRouter.screens.value.toListOfMaterialPage();
     final expectedScreenWidgets = [
       availableScreens[1].screenWidget,
       availableScreens[2].screenWidget,

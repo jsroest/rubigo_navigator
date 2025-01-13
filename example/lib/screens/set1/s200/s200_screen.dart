@@ -16,7 +16,7 @@ class S200Screen extends StatelessWidget
       appBar: AppBar(
         title: AppBarTitle(
           title: 'S200',
-          screenStackListener: controller.rubigoRouter.screenStackNotifier,
+          screens: controller.rubigoRouter.screens,
         ),
       ),
       body: Center(
@@ -32,7 +32,7 @@ class S200Screen extends StatelessWidget
             ),
             const SizedBox(height: 16),
             NavigateButton(
-              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
               child: const Text('Pop'),

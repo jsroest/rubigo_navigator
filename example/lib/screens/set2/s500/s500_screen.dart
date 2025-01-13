@@ -15,7 +15,7 @@ class S500Screen extends StatelessWidget
       appBar: AppBar(
         title: AppBarTitle(
           title: 'S500',
-          screenStackListener: controller.rubigoRouter.screenStackNotifier,
+          screens: controller.rubigoRouter.screens,
         ),
       ),
       body: Column(

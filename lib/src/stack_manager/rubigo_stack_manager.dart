@@ -7,27 +7,25 @@ import 'package:rubigo_router/src/stack_manager/navigation_events/navigation_eve
 /// This manages the screen stack. It provides functions to manipulate the stack
 /// and it fires events like [RubigoControllerMixin.onTop] and
 /// [RubigoControllerMixin.willShow]
-class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
+class RubigoStackManager<SCREEN_ID extends Enum> {
   /// Creates a RubigoStackManager
   RubigoStackManager(
     this._screenStack,
     this._availableScreens,
-  ) {
-    _shadowScreenStack = [..._screenStack];
-  }
+    this._logNavigation,
+  ) : screens = ValueNotifier<List<RubigoScreen<SCREEN_ID>>>([..._screenStack]);
 
-  //This is the actual screen stack
+  //This is the actual screen stack, which can be
   ListOfRubigoScreens<SCREEN_ID> _screenStack;
-
-  //This is a shadow of the screen stack;
-  ListOfRubigoScreens<SCREEN_ID> _shadowScreenStack = [];
 
   //This is a list of all available screens
   final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
 
-  /// Returns the current stable version of the screen stack. It is only updated
+  final LogNavigation _logNavigation;
+
+  /// The current stable version of the screen stack. It is only updated
   /// when navigation is complete.
-  List<RubigoScreen<SCREEN_ID>> get screens => _shadowScreenStack;
+  final ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> screens;
 
   /// Pops a screen from the stack. This call can generate more navigation
   /// calls.
@@ -57,7 +55,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
       );
     }
     _screenStack.removeAt(index);
-    _notifyListeners();
+    _updateScreens();
   }
 
   bool _inWillShow = false;
@@ -179,7 +177,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
         }
       }
       _inWillShow = false;
-      _notifyListeners();
+      _updateScreens();
       await Future<void>.delayed(const Duration(milliseconds: 100));
       final controller = _screenStack.last.getController();
       if (controller is RubigoControllerMixin) {
@@ -188,8 +186,8 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
     }
   }
 
-  void _notifyListeners() {
-    _shadowScreenStack = [..._screenStack]; //Create a copy
-    notifyListeners();
+  void _updateScreens() {
+    screens.value = [..._screenStack];
+    unawaited(_logNavigation(screens.value.toListOfScreenId().breadCrumbs()));
   }
 }

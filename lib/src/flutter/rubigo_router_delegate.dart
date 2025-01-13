@@ -55,7 +55,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
     return Navigator(
       observers: observers ?? const <NavigatorObserver>[],
       key: navigatorKey,
-      pages: rubigoRouter.screens.map(rubigoScreenToPage).toList(),
+      pages: rubigoRouter.screens.value.map(rubigoScreenToPage).toList(),
       onDidRemovePage: backCallback == BackCallback.onDidRemovePage
           ? rubigoRouter.onDidRemovePage
           : null,

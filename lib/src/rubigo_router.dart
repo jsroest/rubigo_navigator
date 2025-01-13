@@ -22,14 +22,20 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     RubigoBusyService? rubigoBusyService,
     LogNavigation? logNavigation,
     RubigoStackManager<SCREEN_ID>? rubigoStackManager,
+    // If busyService was not given, create one ourselves.
   })  : busyService = rubigoBusyService ?? RubigoBusyService(),
-        _logNavigation =
-            logNavigation ?? ((message) async => debugPrint(message)),
+        // If a logNavigation function was not given, create one ourselves.
+        _logNavigation = logNavigation ?? _defaultLogNavigation,
+        // If a rubigoStackManager was not given, create one ourselves.
         _rubigoStackManager = rubigoStackManager ??
             RubigoStackManager(
               [availableScreens.find(splashScreenId)],
               availableScreens,
-            );
+              logNavigation ?? _defaultLogNavigation,
+            ) {
+    //listen to changes on screens and notify our listeners
+    _rubigoStackManager.screens.addListener(notifyListeners);
+  }
 
   /// Call init to initialise the [RubigoRouter].
   /// Pass a function that handles your app initialisation first (like setting
@@ -39,11 +45,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     required Future<SCREEN_ID> Function() initAndGetFirstScreen,
     LogNavigation? logNavigation,
   }) async {
-    _rubigoStackManager.addListener(notifyListeners);
-    _rubigoStackManager.addListener(() {
-      _screenStackNotifier.value =
-          _rubigoStackManager.screens.toListOfScreenId();
-    });
     final firstScreen = await initAndGetFirstScreen();
     for (final screenSet in availableScreens) {
       // Wire up the rubigoRouter in each controller, if it is a
@@ -96,29 +97,22 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// This is the getter used by the [Navigator.pages] property.
   /// When this object calls [notifyListeners], the [Navigator] rebuilds and
   /// gets a fresh list of pages from this router.
-  List<RubigoScreen<SCREEN_ID>> get screens {
-    final result = _rubigoStackManager.screens;
-    unawaited(
-      _logNavigation.call(
-        'Screen stack: ${_screenStackNotifier.value.breadCrumbs()}.',
-      ),
-    );
-    return result;
-  }
+  ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> get screens =>
+      _rubigoStackManager.screens;
 
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
-  /// Use this method or [onDidRemovePage], not both.
+  /// Use this method or [onPopPage], not both.
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    if (!_canNavigate(ignoreWhenBusy: true)) {
-      // Notify Flutter about the current page stack, this might result in two
-      // animations (pop/push), but there is nothing we can do here because we
-      // are informed when the stack has already changed by the user. For
-      // example, on iOS with a swipe back gesture. This can be prevented in
-      // several ways:
+    if (busyService.isBusy) {
+      // We can not navigate, because we are busy.
+      // We have to inform Flutter that the change did not make it. This might
+      // result in two animations (pop/push), but there is nothing we can do
+      // here because we are informed that the stack has already changed by the
+      // user. For example, on iOS with a swipe back gesture. This can be
+      // prevented in several ways, but only in advance:
       // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
       // 2. Use the RubigoBusyService and widget, which blocks user interaction.
       // 3. Use the ignoreWhenBusy parameter with [push/pop/popTo/replaceStack]
-      // when the interaction is started by the user.
       notifyListeners();
       return;
     }
@@ -134,16 +128,25 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
       ),
     );
-    final lastScreenId = screenStack.last;
+    final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
     if (removedScreenId != lastScreenId) {
-      unawaited(_logNavigation('but ignored by us.'));
-      //onDidRemovePage was initiated by the business logic.
-      //In this case the screenStack is already valid
+      // onDidRemovePage was initiated by the business logic.
+      // In this case the screenStack is already valid
+      unawaited(
+        _logNavigation(
+          'The last page on the stack is ${lastScreenId.name}, therefore '
+          'we are ignoring this call.',
+        ),
+      );
     } else {
-      //onDidRemovePage was initiated by the backButton/predictiveBackGesture (Android) or swipeBack (iOS).
-      //In this case we still need to adjust the screenStack accordingly
+      // onDidRemovePage was initiated by the backButton/predictiveBackGesture
+      // (Android) or swipeBack (iOS). In this case we still need to adjust the
+      // screenStack accordingly
       unawaited(_logNavigation('and redirected to pop().'));
       await pop();
+      // Call notify listeners, because if the stack did not change in the pop()
+      // call, Flutter thinks the top page has popped.
+      notifyListeners();
     }
   }
 
@@ -157,24 +160,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     } else {
       unawaited(_logNavigation('but rubigoRouter was busy navigating.'));
     }
+    // Always return false and handle the pop() ourselves.
     return false;
   }
-
-  //endregion
-
-  //region ScreenStackNotifier
-  late final _screenStackNotifier = ValueNotifier<List<SCREEN_ID>>(
-    _rubigoStackManager.screens.toListOfScreenId(),
-  );
-
-  /// If your app wants to react on screen stack changes, you can listen to this
-  /// notifier. Don't use [RubigoRouter.screens] for this, as this will result
-  /// in multiple rows in the logging.
-  ValueNotifier<List<SCREEN_ID>> get screenStackNotifier =>
-      _screenStackNotifier;
-
-  /// Use this if you want to get the latest stable screen stack.
-  List<SCREEN_ID> get screenStack => _screenStackNotifier.value;
 
   //endregion
 
@@ -242,3 +230,5 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
 //endregion
 }
+
+Future<void> _defaultLogNavigation(String message) async => debugPrint(message);

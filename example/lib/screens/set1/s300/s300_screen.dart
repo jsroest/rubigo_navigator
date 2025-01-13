@@ -17,7 +17,7 @@ class S300Screen extends StatelessWidget
       appBar: AppBar(
         title: AppBarTitle(
           title: 'S300',
-          screenStackListener: controller.rubigoRouter.screenStackNotifier,
+          screens: controller.rubigoRouter.screens,
         ),
       ),
       body: Center(
@@ -28,7 +28,7 @@ class S300Screen extends StatelessWidget
               height: 16,
             ),
             NavigateButton(
-              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onS400ButtonPressed,
               child: const Text('Push S400'),
@@ -37,7 +37,7 @@ class S300Screen extends StatelessWidget
               height: 16,
             ),
             NavigateButton(
-              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
               child: const Text('Pop'),
@@ -46,7 +46,7 @@ class S300Screen extends StatelessWidget
               height: 16,
             ),
             NavigateButton(
-              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
                   screenStack.containsScreenBelow(Screens.s100),
               onPressed: controller.onPopToS100ButtonPressed,
@@ -56,7 +56,7 @@ class S300Screen extends StatelessWidget
               height: 16,
             ),
             NavigateButton(
-              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
                   screenStack.containsScreenBelow(Screens.s200),
               onPressed: controller.onRemoveS200ButtonPressed,
@@ -66,7 +66,7 @@ class S300Screen extends StatelessWidget
               height: 16,
             ),
             NavigateButton(
-              screenStackListener: controller.rubigoRouter.screenStackNotifier,
+              screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
                   screenStack.containsScreenBelow(Screens.s100),
               onPressed: controller.onRemoveS100ButtonPressed,

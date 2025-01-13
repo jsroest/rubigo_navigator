@@ -36,7 +36,7 @@ class S700Controller with RubigoControllerMixin<Screens> {
   }
 
   Future<void> toSet1() async {
-    screenStackBackupSet2 = rubigoRouter.screenStackNotifier.value;
+    screenStackBackupSet2 = rubigoRouter.screens.value.toListOfScreenId();
     await rubigoRouter.replaceStack(
       screenStackBackupSet1,
       ignoreWhenBusy: true,

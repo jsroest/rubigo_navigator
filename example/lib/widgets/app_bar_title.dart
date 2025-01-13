@@ -6,12 +6,12 @@ import 'package:rubigo_router/rubigo_router.dart';
 class AppBarTitle<SCREEN_ID extends Enum> extends StatelessWidget {
   const AppBarTitle({
     required this.title,
-    required this.screenStackListener,
+    required this.screens,
     super.key,
   });
 
   final String title;
-  final ValueListenable<List<SCREEN_ID>> screenStackListener;
+  final ValueListenable<ListOfRubigoScreens<SCREEN_ID>> screens;
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class AppBarTitle<SCREEN_ID extends Enum> extends StatelessWidget {
       children: [
         Text('Screen: $title'),
         ValueListenableBuilder(
-          valueListenable: screenStackListener,
+          valueListenable: screens,
           builder: (context, value, child) =>
-              Text(screenStackListener.value.breadCrumbs()),
+              Text(screens.value.toListOfScreenId().breadCrumbs()),
         ),
       ],
     );

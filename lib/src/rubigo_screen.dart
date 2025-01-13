@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 /// Wires a screen widget and a controller together with a unique id.
+@immutable
 class RubigoScreen<SCREEN_ID extends Enum> {
   /// Creates a RubigoScreen
   RubigoScreen(
@@ -29,4 +30,16 @@ class RubigoScreen<SCREEN_ID extends Enum> {
   /// injection package in this function, as long as it always returns the same
   /// instance for the controller (singleton).
   final Object Function() getController;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is RubigoScreen &&
+        other.runtimeType == runtimeType &&
+        other.screenId == screenId;
+  }
+
+  @override
+  int get hashCode => screenId.hashCode;
 }
