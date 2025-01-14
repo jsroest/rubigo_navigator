@@ -4,8 +4,6 @@ import 'screens/s100/s100_controller.dart';
 import 'screens/s100/s100_screen.dart';
 import 'screens/s200/s200_controller.dart';
 import 'screens/s200/s200_controller_delay_in_on_top.dart';
-import 'screens/s200/s200_controller_may_pop_pop.dart';
-import 'screens/s200/s200_controller_may_pop_push.dart';
 import 'screens/s200/s200_controller_may_pop_returns_false.dart';
 import 'screens/s200/s200_controller_on_top_push_and_pop.dart';
 import 'screens/s200/s200_controller_will_show_pop.dart';
@@ -92,26 +90,6 @@ RubigoScreen<Screens> getS200ScreenWillShowPop(
     Screens.s200,
     S200Screen(),
     () => holder.get(S200ControllerWillShowPop.new),
-  );
-}
-
-RubigoScreen<Screens> getS200ScreenMayPopPop(
-  RubigoControllerHolder holder,
-) {
-  return RubigoScreen(
-    Screens.s200,
-    S200Screen(),
-    () => holder.get(S200ControllerMayPopPop.new),
-  );
-}
-
-RubigoScreen<Screens> getS200ScreenMayPopPush(
-  RubigoControllerHolder holder,
-) {
-  return RubigoScreen(
-    Screens.s200,
-    S200Screen(),
-    () => holder.get(S200ControllerMayPopPush.new),
   );
 }
 
