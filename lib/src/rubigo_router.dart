@@ -108,11 +108,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       // We have to inform Flutter that the change did not make it. This might
       // result in two animations (pop/push), but there is nothing we can do
       // here because we are informed that the stack has already changed by the
-      // user. For example, on iOS with a swipe back gesture. This can be
-      // prevented in several ways, but only in advance:
+      // user, for example, on iOS with a swipe back gesture. This can be
+      // prevented in several ways, but only in advance and never asynchronous:
       // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
       // 2. Use the RubigoBusyService and widget, which blocks user interaction.
-      // 3. Use the ignoreWhenBusy parameter with [push/pop/popTo/replaceStack]
       notifyListeners();
       return;
     }
@@ -130,8 +129,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     );
     final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
     if (removedScreenId != lastScreenId) {
-      // onDidRemovePage was initiated by the business logic.
-      // In this case the screenStack is already valid
+      // With this new event, we also receive this event when pages are removed
+      // programmatically from the stack. Here onDidRemovePage was (probably)
+      // initiated by the business logic, as the last page on the stack is not
+      // the one that got removed. In this case the screenStack is already
+      // valid.
       unawaited(
         _logNavigation(
           'The last page on the stack is ${lastScreenId.name}, therefore '
@@ -139,13 +141,12 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         ),
       );
     } else {
-      // onDidRemovePage was initiated by the backButton/predictiveBackGesture
-      // (Android) or swipeBack (iOS). In this case we still need to adjust the
-      // screenStack accordingly
-      unawaited(_logNavigation('and redirected to pop().'));
-      await pop();
+      // onDidRemovePage was (probably) initiated by the backButton or
+      // predictiveBackGesture (Android) or swipeBack (iOS).
+      await _handlePop(removedScreenId);
       // Call notify listeners, because if the stack did not change in the pop()
-      // call, Flutter thinks the top page has popped.
+      // call, which can happen Flutter thinks the top page has popped and we
+      // are not in sync.
       notifyListeners();
     }
   }
@@ -153,15 +154,34 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   //ignore: deprecated_member_use
   /// This method must be passed to the [Navigator.onPopPage] property.
   /// Use this method or [onDidRemovePage], not both.
-  bool onPopPage(Route<dynamic> route, dynamic result) {
+  bool onPopPage(Route<dynamic> _, dynamic __) {
     unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
-    if (_canNavigate(ignoreWhenBusy: true)) {
-      unawaited(pop());
-    } else {
+    if (busyService.isBusy) {
       unawaited(_logNavigation('but rubigoRouter was busy navigating.'));
+    } else {
+      unawaited(_handlePop(_rubigoStackManager.screens.value.last.screenId));
     }
     // Always return false and handle the pop() ourselves.
     return false;
+  }
+
+  Future<void> _handlePop(SCREEN_ID screenId) async {
+    final controller = availableScreens.find(screenId).getController();
+    bool mayPop;
+    if (controller is RubigoControllerMixin<SCREEN_ID>) {
+      unawaited(_logNavigation('Call mayPop().'));
+      mayPop = await controller.mayPop();
+      unawaited(_logNavigation('The controller returned "$mayPop"'));
+    } else {
+      mayPop = true;
+      unawaited(
+        _logNavigation('The controller is not a RubigoControllerMixin, '
+            'mayPop is always "true"'),
+      );
+    }
+    if (mayPop) {
+      await pop();
+    }
   }
 
   //endregion
