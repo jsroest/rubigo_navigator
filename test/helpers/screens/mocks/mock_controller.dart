@@ -12,8 +12,8 @@ class MockController<SCREEN_ID extends Enum>
   @mustCallSuper
   @override
   Future<bool> mayPop() async {
-    callBackHistory.add(MayPopCallBack());
     await super.mayPop(); //Call this only for code coverage
+    callBackHistory.add(MayPopCallBack(mayPop: _mayPop));
     return _mayPop;
   }
 

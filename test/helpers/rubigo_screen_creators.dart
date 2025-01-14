@@ -13,6 +13,8 @@ import 'screens/s200/s200_controller_will_show_push.dart';
 import 'screens/s200/s200_screen.dart';
 import 'screens/s300/s300_controller.dart';
 import 'screens/s300/s300_screen.dart';
+import 'screens/s400/s400_controller.dart';
+import 'screens/s400/s400_screen.dart';
 import 'screens/s500/s500_controller.dart';
 import 'screens/s500/s500_screen.dart';
 import 'screens/s600/s600_controller.dart';
@@ -130,6 +132,16 @@ RubigoScreen<Screens> getS300Screen(
     Screens.s300,
     S300Screen(),
     () => holder.get(S300Controller.new),
+  );
+}
+
+RubigoScreen<Screens> getS400Screen(
+  RubigoControllerHolder holder,
+) {
+  return RubigoScreen(
+    Screens.s400,
+    S400Screen(),
+    () => holder.get(S400Controller.new),
   );
 }
 
