@@ -166,22 +166,26 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   }
 
   Future<void> _handlePop(SCREEN_ID screenId) async {
-    final controller = availableScreens.find(screenId).getController();
-    bool mayPop;
-    if (controller is RubigoControllerMixin<SCREEN_ID>) {
-      unawaited(_logNavigation('Call mayPop().'));
-      mayPop = await controller.mayPop();
-      unawaited(_logNavigation('The controller returned "$mayPop"'));
-    } else {
-      mayPop = true;
-      unawaited(
-        _logNavigation('The controller is not a RubigoControllerMixin, '
-            'mayPop is always "true"'),
-      );
-    }
-    if (mayPop) {
-      await pop();
-    }
+    await busyService.busyWrapper(
+      () async {
+        final controller = availableScreens.find(screenId).getController();
+        bool mayPop;
+        if (controller is RubigoControllerMixin<SCREEN_ID>) {
+          unawaited(_logNavigation('Call mayPop().'));
+          mayPop = await controller.mayPop();
+          unawaited(_logNavigation('The controller returned "$mayPop"'));
+        } else {
+          mayPop = true;
+          unawaited(
+            _logNavigation('The controller is not a RubigoControllerMixin, '
+                'mayPop is always "true"'),
+          );
+        }
+        if (mayPop) {
+          await pop();
+        }
+      },
+    );
   }
 
   //endregion
