@@ -9,11 +9,6 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
   RubigoScreen<SCREEN_ID> find(SCREEN_ID screenId) =>
       firstWhere((e) => e.screenId == screenId);
 
-  /// Finds the first RubigoScreen in the list with this screenId
-  /// and returns it's corresponding screenWidget.
-  /// This function throws an error if the screen is not found.
-  Widget findScreenWidget(SCREEN_ID screenId) => find(screenId).screenWidget;
-
   /// Converts this list to a list of ScreenIdl
   List<SCREEN_ID> toListOfScreenId() => map((e) => e.screenId).toList();
 
@@ -35,10 +30,6 @@ extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
     final indexFound = lastIndexOf(screenId, belowLastPageIndex);
     return indexFound != -1;
   }
-
-  /// Converts a list of screenId to a list of screenWidget
-  List<Widget> toListOfWidget(ListOfRubigoScreens availableScreens) =>
-      map((screenId) => availableScreens.findScreenWidget(screenId)).toList();
 
   /// Converts a list of screenId to a list of RubigoScreen
   List<RubigoScreen<SCREEN_ID>> toListOfRubigoScreen(
