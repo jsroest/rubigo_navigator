@@ -15,12 +15,14 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     this._logNavigation,
   ) : screens = ValueNotifier<List<RubigoScreen<SCREEN_ID>>>([..._screenStack]);
 
-  //This is the actual screen stack, which can be
+  // This is the actual screen stack, which can have other contents than
+  // 'screens' when the app is busy navigating and the stack is not stable yet.
   ListOfRubigoScreens<SCREEN_ID> _screenStack;
 
-  //This is a list of all available screens
+  // This is a list of all available screens.
   final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
 
+  // This function is called for logging purposes.
   final LogNavigation _logNavigation;
 
   /// The current stable version of the screen stack. It is only updated
@@ -45,7 +47,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       _navigate(ReplaceStack(screens));
 
   /// Remove a screen silently from the stack. This call can not generate more
-  /// navigation calls.
+  /// navigation calls, because it does not fire any events.
   void remove(SCREEN_ID screenId) {
     final index = _screenStack.indexWhere((e) => e.screenId == screenId);
     if (index == -1) {
@@ -58,9 +60,11 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     _updateScreens();
   }
 
+  //region _navigate
   bool _inWillShow = false;
-  bool _inMayPop = false;
   int _eventCounter = 0;
+
+  late RubigoChangeInfo<SCREEN_ID> _changeInfo;
 
   Future<void> _navigate(NavigationEvent<SCREEN_ID> navigationEvent) async {
     if (_inWillShow) {
@@ -68,123 +72,131 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
         'Developer: you may not Push or Pop in the willShow method.',
       );
     }
-    if (_inMayPop) {
-      throw UnsupportedError(
-        'Developer: you may not Push or Pop in the mayPop method.',
-      );
-    }
-    late RubigoChangeInfo<SCREEN_ID> changeInfo;
     switch (navigationEvent) {
       case Push<SCREEN_ID>():
-        final previousScreen = _screenStack.lastOrNull;
-        changeInfo = RubigoChangeInfo<SCREEN_ID>(
-          EventType.push,
-          previousScreen?.screenId,
-          _screenStack.toListOfScreenId(),
-        );
-
-        _screenStack.add(
-          _availableScreens.find(navigationEvent.screenId),
-        );
-        _eventCounter++;
-        final controller = _screenStack.last.getController();
-        if (controller is RubigoControllerMixin) {
-          await controller.onTop(changeInfo);
-        }
-        _eventCounter--;
-
+        _changeInfo = await _push(navigationEvent);
       case Pop():
-        if (_screenStack.isEmpty) {
-          return;
-        }
-        changeInfo = RubigoChangeInfo(
-          EventType.pop,
-          _screenStack.last.screenId,
-          _screenStack.toListOfScreenId(),
-        );
-        _inMayPop = true;
-        final controller = _screenStack.last.getController();
-        final bool mayPop;
-        if (controller is RubigoControllerMixin) {
-          mayPop = await controller.mayPop();
-        } else {
-          mayPop = true;
-        }
-        _inMayPop = false;
-        if (mayPop) {
-          _screenStack.removeLast();
-          if (_screenStack.isEmpty) {
-            throw UnsupportedError(
-              'Developer: Pop was called on the last screen. The screen stack '
-              'may not be empty.',
-            );
-          }
-          _eventCounter++;
-          final controller = _screenStack.last.getController();
-          if (controller is RubigoControllerMixin) {
-            await controller.onTop(changeInfo);
-          }
-          _eventCounter--;
-        }
+        _changeInfo = await _pop();
       case PopTo<SCREEN_ID>():
-        changeInfo = RubigoChangeInfo(
-          EventType.pop,
-          _screenStack.last.screenId,
-          _screenStack.toListOfScreenId(),
-        );
-        while (_screenStack.isNotEmpty) {
-          _screenStack.removeLast();
-          if (_screenStack.isEmpty) {
-            throw UnsupportedError(
-              'Developer: With popTo, you tried to navigate to '
-              '${navigationEvent.screenId.name}, which was not on the stack.',
-            );
-          }
-          if (_screenStack.last.screenId == navigationEvent.screenId) {
-            _eventCounter++;
-            final controller = _screenStack.last.getController();
-            if (controller is RubigoControllerMixin) {
-              await controller.onTop(changeInfo);
-            }
-            _eventCounter--;
-            break;
-          }
-        }
-
+        _changeInfo = await _popTo(navigationEvent);
       case ReplaceStack<SCREEN_ID>():
-        final previousScreen = _screenStack.last;
-        _screenStack =
-            navigationEvent.screenStack.toListOfRubigoScreen(_availableScreens);
-        changeInfo = RubigoChangeInfo(
-          EventType.replaceStack,
-          previousScreen.screenId,
-          _screenStack.toListOfScreenId(),
-        );
-        _eventCounter++;
-        final controller = _screenStack.last.getController();
-        if (controller is RubigoControllerMixin) {
-          await controller.onTop(changeInfo);
-        }
-        _eventCounter--;
+        _changeInfo = await _replaceStack(navigationEvent);
     }
 
     if (_eventCounter == 0) {
-      _inWillShow = true;
-      {
-        final controller = _screenStack.last.getController();
-        if (controller is RubigoControllerMixin) {
-          await controller.willShow(changeInfo);
-        }
-      }
-      _inWillShow = false;
-      _updateScreens();
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+      // When the eventCounter is 0, we know that no navigation functions have
+      // been called in the last onTop event.
       final controller = _screenStack.last.getController();
       if (controller is RubigoControllerMixin) {
-        await controller.isShown(changeInfo);
+        _inWillShow = true;
+        await controller.willShow(_changeInfo);
+        _inWillShow = false;
+      }
+      _updateScreens();
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      if (controller is RubigoControllerMixin) {
+        await controller.isShown(_changeInfo);
       }
     }
   }
+
+  Future<RubigoChangeInfo<SCREEN_ID>> _push(
+    Push<SCREEN_ID> navigationEvent,
+  ) async {
+    final previousScreen = _screenStack.last;
+    final newScreen = _availableScreens.find(navigationEvent.screenId);
+    _screenStack.add(newScreen);
+    final controller = newScreen.getController();
+    final changeInfo = RubigoChangeInfo<SCREEN_ID>(
+      EventType.push,
+      previousScreen.screenId,
+      _screenStack.toListOfScreenId(),
+    );
+    if (controller is RubigoControllerMixin) {
+      _eventCounter++;
+      await controller.onTop(changeInfo);
+      _eventCounter--;
+    }
+    return changeInfo;
+  }
+
+  Future<RubigoChangeInfo<SCREEN_ID>> _pop() async {
+    if (_screenStack.length < 2) {
+      throw UnsupportedError(
+        'Developer: Pop was called on the last screen. The screen stack '
+        'may not be empty.',
+      );
+    }
+    final previousScreen = _screenStack.last;
+    _screenStack.removeLast();
+    final newScreen = _screenStack.last;
+    final controller = newScreen.getController();
+    final changeInfo = RubigoChangeInfo(
+      EventType.pop,
+      previousScreen.screenId,
+      _screenStack.toListOfScreenId(),
+    );
+    if (controller is RubigoControllerMixin) {
+      _eventCounter++;
+      await controller.onTop(changeInfo);
+      _eventCounter--;
+    }
+    return changeInfo;
+  }
+
+  Future<RubigoChangeInfo<SCREEN_ID>> _popTo(
+    PopTo<SCREEN_ID> navigationEvent,
+  ) async {
+    final previousScreen = _screenStack.last;
+    final index = _screenStack.indexWhere(
+      (e) => e.screenId == navigationEvent.screenId,
+    );
+    // If not found, or the topmost one
+    if (index == -1 || index == _screenStack.length - 1) {
+      throw UnsupportedError(
+        'Developer: With popTo, you tried to navigate to '
+        '${navigationEvent.screenId.name}, which was not on the stack.',
+      );
+    }
+    _screenStack.removeRange(index + 1, _screenStack.length);
+
+    final newScreen = _screenStack.last;
+    final controller = newScreen.getController();
+    final changeInfo = RubigoChangeInfo(
+      EventType.popTo,
+      previousScreen.screenId,
+      _screenStack.toListOfScreenId(),
+    );
+    if (controller is RubigoControllerMixin) {
+      _eventCounter++;
+      await controller.onTop(changeInfo);
+      _eventCounter--;
+    }
+    return changeInfo;
+  }
+
+  Future<RubigoChangeInfo<SCREEN_ID>> _replaceStack(
+    ReplaceStack<SCREEN_ID> navigationEvent,
+  ) async {
+    final previousScreen = _screenStack.last;
+    _screenStack = navigationEvent.screenStack.toListOfRubigoScreen(
+      _availableScreens,
+    );
+    final controller = _screenStack.last.getController();
+    final changeInfo = RubigoChangeInfo(
+      EventType.replaceStack,
+      previousScreen.screenId,
+      _screenStack.toListOfScreenId(),
+    );
+    if (controller is RubigoControllerMixin) {
+      _eventCounter++;
+      await controller.onTop(changeInfo);
+      _eventCounter--;
+    }
+    return changeInfo;
+  }
+
+  //endregion navigate
 
   void _updateScreens() {
     screens.value = [..._screenStack];
