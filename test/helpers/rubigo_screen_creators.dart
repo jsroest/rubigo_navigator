@@ -24,131 +24,131 @@ import 'screens/splash_screen/splash_controller.dart';
 import 'screens/splash_screen/splash_screen.dart';
 
 RubigoScreen<Screens> getSplashScreen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.splashScreen,
     SplashScreen(),
-    () => holder.get(SplashController.new),
+    () => holder.getOrCreate<SplashController>(SplashController.new),
   );
 }
 
 RubigoScreen<Screens> getS100Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s100,
     S100Screen(),
-    () => holder.get(S100Controller.new),
+    () => holder.getOrCreate(S100Controller.new),
   );
 }
 
 RubigoScreen<Screens> getS200Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200Controller.new),
+    () => holder.getOrCreate(S200Controller.new),
   );
 }
 
 RubigoScreen<Screens> getS200ScreenDelayInOnTop(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200ControllerDelayInOnTop.new),
+    () => holder.getOrCreate(S200ControllerDelayInOnTop.new),
   );
 }
 
 RubigoScreen<Screens> getS200ScreenOnTopPushAndPop(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200ControllerOnTopPushAndPop.new),
+    () => holder.getOrCreate(S200ControllerOnTopPushAndPop.new),
   );
 }
 
 RubigoScreen<Screens> getS200ScreenWillShowPush(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200ControllerWillShowPush.new),
+    () => holder.getOrCreate(S200ControllerWillShowPush.new),
   );
 }
 
 RubigoScreen<Screens> getS200ScreenWillShowPop(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200ControllerWillShowPop.new),
+    () => holder.getOrCreate(S200ControllerWillShowPop.new),
   );
 }
 
 RubigoScreen<Screens> getS200ScreenMayPopReturnsFalse(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200ControllerMayPopReturnsFalse.new),
+    () => holder.getOrCreate(S200ControllerMayPopReturnsFalse.new),
   );
 }
 
 RubigoScreen<Screens> getS300Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s300,
     S300Screen(),
-    () => holder.get(S300Controller.new),
+    () => holder.getOrCreate(S300Controller.new),
   );
 }
 
 RubigoScreen<Screens> getS400Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s400,
     S400Screen(),
-    () => holder.get(S400Controller.new),
+    () => holder.getOrCreate(S400Controller.new),
   );
 }
 
 RubigoScreen<Screens> getS500Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s500,
     S500Screen(),
-    () => holder.get(S500Controller.new),
+    () => holder.getOrCreate(S500Controller.new),
   );
 }
 
 RubigoScreen<Screens> getS600Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s600,
     S600Screen(),
-    () => holder.get(S600Controller.new),
+    () => holder.getOrCreate(S600Controller.new),
   );
 }
 
 RubigoScreen<Screens> getS700Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s700,
     S700Screen(),
-    () => holder.get(S700Controller.new),
+    () => holder.getOrCreate(S700Controller.new),
   );
 }
