@@ -1,3 +1,4 @@
+import 'package:example/holder.dart';
 import 'package:example/screens/set1/s100/s100_controller.dart';
 import 'package:example/screens/set1/s100/s100_screen.dart';
 import 'package:example/screens/set1/s200/s200_controller.dart';
@@ -31,54 +32,51 @@ enum Screens {
   s800,
 }
 
-// A simple service locator to hold controllers.
-final holder = RubigoControllerHolder();
-
 // All available screens are defined here.
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(
     Screens.splashScreen,
     SplashScreen(),
-    () => holder.get(SplashController.new),
+    () => holder.getOrCreate(SplashController.new),
   ),
   RubigoScreen(
     Screens.s100,
     S100Screen(),
-    () => holder.get(S100Controller.new),
+    () => holder.getOrCreate(S100Controller.new),
   ),
   RubigoScreen(
     Screens.s200,
     S200Screen(),
-    () => holder.get(S200Controller.new),
+    () => holder.getOrCreate(S200Controller.new),
   ),
   RubigoScreen(
     Screens.s300,
     S300Screen(),
-    () => holder.get(S300Controller.new),
+    () => holder.getOrCreate(S300Controller.new),
   ),
   RubigoScreen(
     Screens.s400,
     const S400Screen(),
-    () => holder.get(S400Controller.new),
+    () => holder.getOrCreate(S400Controller.new),
   ),
   RubigoScreen(
     Screens.s500,
     S500Screen(),
-    () => holder.get(S500Controller.new),
+    () => holder.getOrCreate(S500Controller.new),
   ),
   RubigoScreen(
     Screens.s600,
     S600Screen(),
-    () => holder.get(S600Controller.new),
+    () => holder.getOrCreate(S600Controller.new),
   ),
   RubigoScreen(
     Screens.s700,
     S700Screen(),
-    () => holder.get(S700Controller.new),
+    () => holder.getOrCreate(S700Controller.new),
   ),
   RubigoScreen(
     Screens.s800,
     const S800Screen(),
-    () => holder.get(S800Controller.new),
+    () => holder.getOrCreate(S800Controller.new),
   ),
 ];

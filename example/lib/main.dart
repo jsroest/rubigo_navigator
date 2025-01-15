@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:example/holder.dart';
 import 'package:example/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
@@ -11,6 +12,9 @@ void main() {
     availableScreens: availableScreens,
     splashScreenId: Screens.splashScreen,
   );
+
+  // Add the router to the service locator.
+  holder.add(rubigoRouter);
 
   // Create a RubigoRouterDelegate.
   final routerDelegate = RubigoRouterDelegate(

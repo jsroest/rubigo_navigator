@@ -13,76 +13,79 @@ class S300Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: AppBarTitle(
-          title: 'S300',
-          screens: controller.rubigoRouter.screens,
+    return RubigoControllerPopScope(
+      controller: controller,
+      child: Scaffold(
+        appBar: AppBar(
+          title: AppBarTitle(
+            title: 'S300',
+            screens: controller.rubigoRouter.screens,
+          ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) => screenStack.hasScreenBelow(),
-              onPressed: controller.onS400ButtonPressed,
-              child: const Text('Push S400'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) => screenStack.hasScreenBelow(),
-              onPressed: controller.onPopButtonPressed,
-              child: const Text('Pop'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s100),
-              onPressed: controller.onPopToS100ButtonPressed,
-              child: const Text('PopTo S100'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s200),
-              onPressed: controller.onRemoveS200ButtonPressed,
-              child: const Text('Remove S200'),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s100),
-              onPressed: controller.onRemoveS100ButtonPressed,
-              child: const Text('Remove S100'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: controller.resetStack,
-              child: const Text('Reset stack'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: controller.toSet2,
-              child: const Text('Replace stack with set 2'),
-            ),
-          ],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 16,
+              ),
+              NavigateButton(
+                screens: controller.rubigoRouter.screens,
+                isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+                onPressed: controller.onS400ButtonPressed,
+                child: const Text('Push S400'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              NavigateButton(
+                screens: controller.rubigoRouter.screens,
+                isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+                onPressed: controller.onPopButtonPressed,
+                child: const Text('Pop'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              NavigateButton(
+                screens: controller.rubigoRouter.screens,
+                isEnabled: (screenStack) =>
+                    screenStack.containsScreenBelow(Screens.s100),
+                onPressed: controller.onPopToS100ButtonPressed,
+                child: const Text('PopTo S100'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              NavigateButton(
+                screens: controller.rubigoRouter.screens,
+                isEnabled: (screenStack) =>
+                    screenStack.containsScreenBelow(Screens.s200),
+                onPressed: controller.onRemoveS200ButtonPressed,
+                child: const Text('Remove S200'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              NavigateButton(
+                screens: controller.rubigoRouter.screens,
+                isEnabled: (screenStack) =>
+                    screenStack.containsScreenBelow(Screens.s100),
+                onPressed: controller.onRemoveS100ButtonPressed,
+                child: const Text('Remove S100'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: controller.resetStack,
+                child: const Text('Reset stack'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: controller.toSet2,
+                child: const Text('Replace stack with set 2'),
+              ),
+            ],
+          ),
         ),
       ),
     );

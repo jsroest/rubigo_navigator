@@ -11,22 +11,25 @@ class S500Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: AppBarTitle(
-          title: 'S500',
-          screens: controller.rubigoRouter.screens,
-        ),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(width: double.infinity, height: 16),
-          ElevatedButton(
-            onPressed: controller.onS600ButtonPressed,
-            child: const Text('Push S600'),
+    return RubigoControllerPopScope(
+      controller: controller,
+      child: Scaffold(
+        appBar: AppBar(
+          title: AppBarTitle(
+            title: 'S500',
+            screens: controller.rubigoRouter.screens,
           ),
-        ],
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(width: double.infinity, height: 16),
+            ElevatedButton(
+              onPressed: controller.onS600ButtonPressed,
+              child: const Text('Push S600'),
+            ),
+          ],
+        ),
       ),
     );
   }
