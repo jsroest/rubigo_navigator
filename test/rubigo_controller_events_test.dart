@@ -12,14 +12,14 @@ import 'helpers/screens/s700/s700_controller.dart';
 import 'helpers/screens/screens.dart';
 import 'helpers/screens/splash_screen/splash_controller.dart';
 
-extension GetExtension<SCREEN_ID extends Enum> on RubigoHolder {
+extension GetExtension<SCREEN_ID extends Enum> on RubigoControllerHolder {
   MockController<SCREEN_ID>
       getController<T extends MockController<SCREEN_ID>>() =>
           get<T>() as MockController<SCREEN_ID>;
 }
 
 void main() {
-  final holder = RubigoHolder();
+  final holder = RubigoControllerHolder();
   final splashScreen = getSplashScreen(holder);
   final s100Screen = getS100Screen(holder);
   final s200Screen = getS200ScreenMayPopReturnsFalse(holder);

@@ -23,7 +23,7 @@ void main() {
     required BackCallback backCallback,
     required Widget? progressIndicator,
   }) async {
-    final holder = RubigoHolder();
+    final holder = RubigoControllerHolder();
     final availableScreens = [
       getSplashScreen(holder),
       getS100Screen(holder),
