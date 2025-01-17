@@ -21,7 +21,7 @@ class RubigoHolder {
     return newInstance;
   }
 
-  /// Returns the object from the cache.
+  /// Returns an object from the holder.
   SEARCH get<SEARCH extends Object>() {
     final existingController =
         _controllerCache._firstWhereOrNull((e) => e is SEARCH);
@@ -33,6 +33,7 @@ class RubigoHolder {
     );
   }
 
+  /// Add an object to the holder.
   void add<OBJECT extends Object>(OBJECT object) {
     final existingController =
         _controllerCache._firstWhereOrNull((e) => e is OBJECT);

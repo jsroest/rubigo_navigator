@@ -15,7 +15,6 @@ import 'package:example/screens/set2/s700/s700_controller.dart';
 import 'package:example/screens/set2/s700/s700_screen.dart';
 import 'package:example/screens/set2/s800/s800_controller.dart';
 import 'package:example/screens/set2/s800/s800_screen.dart';
-import 'package:example/screens/splash_screen/splash_controller.dart';
 import 'package:example/screens/splash_screen/splash_screen.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -36,8 +35,8 @@ enum Screens {
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(
     Screens.splashScreen,
-    SplashScreen(),
-    () => holder.getOrCreate(SplashController.new),
+    const SplashScreen(),
+    Object.new,
   ),
   RubigoScreen(
     Screens.s100,

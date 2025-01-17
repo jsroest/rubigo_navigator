@@ -41,8 +41,7 @@ Managing the stack was never easier. 🥳 🚀
 ### Adds coding convenience
 
 * From your **screen widget**, you have **direct access** to the corresponding **controller**.
-* From your **controller**, you have direct access to the ```RubigoRouter``` and other cool stuff (
-  like the Flutter's ```Navigator```, a busyService, screen stack).
+* From your **controller**, you have direct access to the ```RubigoRouter``` and other cool stuff (like the Flutter's ```Navigator```, a busyService and a representation of the screen stack).
 
 ### Act on navigation events
 

@@ -13,7 +13,7 @@ import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 /// any way you like.
 /// * You can use the [RubigoBusyService] to handle situations where the app is
 /// busy and not ready for user actions/input. During navigation, the
-/// automatically marked busy.
+/// [RubigoRouter] automatically sets [RubigoBusyService.isBusy] to true.
 class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// Creates a RubigoRouter
   RubigoRouter({
@@ -25,7 +25,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     // If busyService was not given, create one ourselves.
   })  : busyService = rubigoBusyService ?? RubigoBusyService(),
         // If a logNavigation function was not given, create one ourselves.
-        _logNavigation = logNavigation ?? _defaultLogNavigation,
+        logNavigation = logNavigation ?? _defaultLogNavigation,
         // If a rubigoStackManager was not given, create one ourselves.
         _rubigoStackManager = rubigoStackManager ??
             RubigoStackManager(
@@ -74,9 +74,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// specified it will default to an instance of [RubigoBusyService].
   final RubigoBusyService busyService;
 
-  //region Private
-  final LogNavigation _logNavigation;
+  /// Log the behavior of the [RubigoRouter] and companions.
+  final LogNavigation logNavigation;
 
+  //region Private
   bool _canNavigate({required bool ignoreWhenBusy}) {
     if (!ignoreWhenBusy) {
       return true;
@@ -100,94 +101,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> get screens =>
       _rubigoStackManager.screens;
 
-  /// This method must be passed to the [Navigator.onDidRemovePage] property.
-  /// Use this method or [onPopPage], not both.
-  Future<void> onDidRemovePage(Page<Object?> page) async {
-    if (busyService.isBusy) {
-      // We can not navigate, because we are busy.
-      // We have to inform Flutter that the change did not make it. This might
-      // result in two animations (pop/push), but there is nothing we can do
-      // here because we are informed that the stack has already changed by the
-      // user, for example, on iOS with a swipe back gesture. This can be
-      // prevented in several ways, but only in advance and never asynchronous:
-      // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
-      // 2. Use the RubigoBusyService and widget, which blocks user interaction.
-      notifyListeners();
-      return;
-    }
-    final pageKey = page.key;
-    if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
-      throw UnsupportedError(
-        'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
-      );
-    }
-    final removedScreenId = pageKey.value;
-    unawaited(
-      _logNavigation(
-        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
-      ),
-    );
-    final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
-    if (removedScreenId != lastScreenId) {
-      // With this new event, we also receive this event when pages are removed
-      // programmatically from the stack. Here onDidRemovePage was (probably)
-      // initiated by the business logic, as the last page on the stack is not
-      // the one that got removed. In this case the screenStack is already
-      // valid.
-      unawaited(
-        _logNavigation(
-          'The last page on the stack is ${lastScreenId.name}, therefore '
-          'we are ignoring this call.',
-        ),
-      );
-    } else {
-      // onDidRemovePage was (probably) initiated by the backButton or
-      // predictiveBackGesture (Android) or swipeBack (iOS).
-      await _handlePop(removedScreenId);
-      // Call notify listeners, because if the stack did not change in the pop()
-      // call, which can happen Flutter thinks the top page has popped and we
-      // are not in sync.
-      notifyListeners();
-    }
-  }
-
-  //ignore: deprecated_member_use
-  /// This method must be passed to the [Navigator.onPopPage] property.
-  /// Use this method or [onDidRemovePage], not both.
-  bool onPopPage(Route<dynamic> _, dynamic __) {
-    unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
-    if (busyService.isBusy) {
-      unawaited(_logNavigation('but rubigoRouter was busy navigating.'));
-    } else {
-      unawaited(_handlePop(_rubigoStackManager.screens.value.last.screenId));
-    }
-    // Always return false and handle the pop() ourselves.
-    return false;
-  }
-
-  Future<void> _handlePop(SCREEN_ID screenId) async {
-    await busyService.busyWrapper(
-      () async {
-        final controller = availableScreens.find(screenId).getController();
-        bool mayPop;
-        if (controller is RubigoControllerMixin<SCREEN_ID>) {
-          unawaited(_logNavigation('Call mayPop().'));
-          mayPop = await controller.mayPop();
-          unawaited(_logNavigation('The controller returned "$mayPop"'));
-        } else {
-          mayPop = true;
-          unawaited(
-            _logNavigation('The controller is not a RubigoControllerMixin, '
-                'mayPop is always "true"'),
-          );
-        }
-        if (mayPop) {
-          await pop();
-        }
-      },
-    );
-  }
-
   //endregion
 
   //region Navigation functions
@@ -196,7 +109,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
   Future<void> pop({bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(_logNavigation('pop() called.'));
+      unawaited(logNavigation('pop() called.'));
       await busyService.busyWrapper(_rubigoStackManager.pop);
     }
   }
@@ -206,7 +119,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
   Future<void> popTo(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(_logNavigation('popTo(${screenId.name}) called.'));
+      unawaited(logNavigation('popTo(${screenId.name}) called.'));
       await busyService.busyWrapper(() => _rubigoStackManager.popTo(screenId));
     }
   }
@@ -216,7 +129,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
   Future<void> push(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(_logNavigation('push(${screenId.name}) called.'));
+      unawaited(logNavigation('push(${screenId.name}) called.'));
       await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
     }
   }
@@ -230,7 +143,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   }) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       unawaited(
-        _logNavigation(
+        logNavigation(
           'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
         ),
       );
@@ -246,7 +159,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   void remove(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       unawaited(
-        _logNavigation('remove(${screenId.name}) called.'),
+        logNavigation('remove(${screenId.name}) called.'),
       );
       _rubigoStackManager.remove(screenId);
     }
