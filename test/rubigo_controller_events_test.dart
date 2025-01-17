@@ -171,6 +171,24 @@ void main() {
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
 
+      //region onDidRemovePage(S200): S100=>S200
+      clearCallBackHistory();
+      final page = availableScreens.find(Screens.s200).toMaterialPage();
+      await rubigoRouter.onDidRemovePage(page);
+      expect(
+        screenStack(),
+        [
+          Screens.s100,
+          Screens.s200,
+        ],
+      );
+      expectedCallBackHistory = [MayPopCallBack(mayPop: false)];
+      checkCallBackHistory<S200ControllerMayPopReturnsFalse>(
+        expectedCallBackHistory,
+      );
+      expect(rubigoRouter.busyService.isBusy, false);
+      //endregion
+
       //region Pop(S200): S100
       clearCallBackHistory();
       await rubigoRouter.pop();
@@ -454,9 +472,10 @@ void main() {
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
 
-      //region pop(S700): S300=> S400
+      //region onDidRemovePage(S700): S300=> S400
       clearCallBackHistory();
-      await rubigoRouter.pop();
+      final page2 = availableScreens.find(Screens.s700).toMaterialPage();
+      await rubigoRouter.onDidRemovePage(page2);
       expect(
         screenStack(),
         [

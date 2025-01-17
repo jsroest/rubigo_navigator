@@ -1,3 +1,3 @@
-## 1.0.0
+## 0.0.1
 
-* The initial public release of RubigoRouter.
+* TODO: Describe initial release.

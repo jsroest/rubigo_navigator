@@ -14,7 +14,6 @@ void main() {
   );
 
   // Add the router to the service locator.
-  // Only needed if you access the router on
   holder.add(rubigoRouter);
 
   // Create a RubigoRouterDelegate.
