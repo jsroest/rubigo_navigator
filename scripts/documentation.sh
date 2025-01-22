@@ -1,0 +1,2 @@
+cd ..
+fvm dart doc
