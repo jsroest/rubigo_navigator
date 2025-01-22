@@ -4,6 +4,8 @@ and influence navigation while it happens."
 version: 0.0.1
 homepage: https://yapb.dev
 repository: https://github.com/jsroest/rubigo_router
+issue_tracker: https://github.com/jsroest/rubigo_router/issues
+documentation: https://pub.dev/documentation/rubigo_router/latest/
 
 environment:
   sdk: ^3.0.0
@@ -24,7 +26,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+# flutter:
 
   # To add assets to your package, add an assets section, like this:
   # assets:
