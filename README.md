@@ -16,12 +16,12 @@ and the Flutter guide for
 
 RubigoRouter is a simple to use, minimalistic router for Flutter projects.
 
-In kind of a way it is Navigator 1.0 **with** direct access to the page stack.
+In kind of a way it is Navigator 1.0 **with** direct access to the screen stack.
 
 It can also add navigation events to the controller. With these events, the controller can act on
 and influence navigation while it happens.
 
-Managing the stack was never easier. 🥳 🚀
+Managing the stack was never easier.™ 🥳 🚀
 
 ## Features
 
@@ -42,19 +42,19 @@ Managing the stack was never easier. 🥳 🚀
 
 * From your **screen widget**, you have **direct access** to the corresponding **controller**.
 * From your **controller**, you have direct access to the ```RubigoRouter``` and other cool stuff (
-  like the Flutter's ```Navigator```, a busyService, screen stack).
+  like the Flutter's ```Navigator```, a busyService and the current screen stack).
 
 ### Act on navigation events
 
 #### Each controller that has the `RubigoControllerMixin` is informed about the following navigation events:
 
-* **onTop(changeData)**  
+* **onTop(changeInfo)**  
   This event is called when the screen is on top of the stack.  
   Further navigation **is** allowed.
-* **willShow(changeData)**  
+* **willShow(changeInfo)**  
   This event is called when the screen is on top of the stack and **will** be shown.  
   Further navigation **is not** allowed.
-* **isShown(changeData)**  
+* **isShown(changeInfo)**  
   This event is called when the screen is on top of the stack and is actually shown.  
   Further navigation **is not** allowed.
 * **bool mayPop()**  
@@ -62,7 +62,7 @@ Managing the stack was never easier. 🥳 🚀
   If you return ```false```, the pop is cancelled.  
   Further navigation **is not** allowed.
 
-#### changeData contains the following data:
+#### changeInfo contains the following data:
 
 * **eventType:**  
   The event type can be push, pop, popTo or replaceStack.
@@ -79,8 +79,7 @@ an asynchronous source.
 * **onTop()**  
   Navigate to other screens without the user noticing it.
 * **willShow()**  
-  Get data from an asynchronous source, like a local database. The screen will be shown as soon as
-  the data has arrived.
+  Get data from an asynchronous source, like a local database. The navigation to this screen with the corresponding animation will start as soon as this event returns.
 * **isShown()**  
   If you want to be sure that page is shown before starting some lengthy processing. If you call
   code that is heavy on the UI thread, this makes sure that at least the page is shown before the
