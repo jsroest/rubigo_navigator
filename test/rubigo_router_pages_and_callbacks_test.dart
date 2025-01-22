@@ -136,22 +136,4 @@ void main() {
       expectedScreenWidgets: expectedScreenWidgets,
     );
   });
-
-  test('onPopPage top page', () async {
-    rubigoRouter.onPopPage(
-      MaterialPageRoute<void>(builder: (_) => const Placeholder()),
-      null,
-    );
-    //Allow time for the pop to finish.
-    await Future<void>.delayed(const Duration(milliseconds: 10));
-    final actualPages = rubigoRouter.screens.value.toListOfMaterialPage();
-    final expectedScreenWidgets = [
-      availableScreens[1].screenWidget,
-      availableScreens[2].screenWidget,
-    ];
-    checkPages(
-      actualPages: actualPages,
-      expectedScreenWidgets: expectedScreenWidgets,
-    );
-  });
 }

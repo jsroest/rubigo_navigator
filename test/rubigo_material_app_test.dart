@@ -20,7 +20,6 @@ void main() {
 
   Future<void> rubigoMaterialApp({
     required WidgetTester tester,
-    required BackCallback backCallback,
     required Widget? progressIndicator,
   }) async {
     final holder = RubigoControllerHolder();
@@ -46,7 +45,6 @@ void main() {
             rubigoNavigatorObserver,
           ],
           rubigoRouter: rubigoRouter,
-          backCallback: backCallback,
         ),
         initAndGetFirstScreen: () async {
           await Future<void>.delayed(const Duration(milliseconds: 200));
@@ -101,10 +99,8 @@ void main() {
       () async {
         await rubigoRouter.busyService.busyWrapper(
           () async {
-            rubigoRouter.busyService.enabled = false;
             await tester.pump(const Duration(milliseconds: 100));
             await tester.pageBack();
-            rubigoRouter.busyService.enabled = true;
             await tester.pumpAndSettle();
           },
         );
@@ -122,7 +118,6 @@ void main() {
     (tester) async {
       await rubigoMaterialApp(
         tester: tester,
-        backCallback: BackCallback.onPopPage,
         progressIndicator: null,
       );
     },
@@ -133,7 +128,6 @@ void main() {
     (tester) async {
       await rubigoMaterialApp(
         tester: tester,
-        backCallback: BackCallback.onDidRemovePage,
         progressIndicator: const CircularProgressIndicator(),
       );
     },

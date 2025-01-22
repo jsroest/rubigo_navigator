@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/stack_manager/navigation_events/navigation_events.dart';
 
@@ -31,7 +31,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   /// Pops a screen from the stack. This call can generate more navigation
   /// calls.
-  Future<void> pop() => _navigate(Pop<SCREEN_ID>());
+  Future<void> pop({bool notifyListeners = true}) => _navigate(
+        Pop<SCREEN_ID>(),
+        notifyListeners: notifyListeners,
+      );
 
   /// Pop directly to a specific screen on the stack. This call can generate
   /// more navigation calls.
@@ -57,7 +60,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       );
     }
     _screenStack.removeAt(index);
-    _updateScreens();
+    updateScreens();
   }
 
   //region _navigate
@@ -66,7 +69,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   late RubigoChangeInfo<SCREEN_ID> _changeInfo;
 
-  Future<void> _navigate(NavigationEvent<SCREEN_ID> navigationEvent) async {
+  Future<void> _navigate(
+    NavigationEvent<SCREEN_ID> navigationEvent, {
+    bool notifyListeners = true,
+  }) async {
     if (_inWillShow) {
       throw UnsupportedError(
         'Developer: you may not Push or Pop in the willShow method.',
@@ -92,7 +98,9 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
         await controller.willShow(_changeInfo);
         _inWillShow = false;
       }
-      _updateScreens();
+      if (notifyListeners) {
+        updateScreens();
+      }
       await Future<void>.delayed(const Duration(milliseconds: 100));
       if (controller is RubigoControllerMixin) {
         await controller.isShown(_changeInfo);
@@ -198,7 +206,11 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   //endregion navigate
 
-  void _updateScreens() {
+  /// Force Flutters [Navigator] to match our screen stack.
+  void updateScreens() {
+    // The ValueNotifier always calls it's listeners when we assign an new copy
+    // of the stack. Also if the contents are logically the same. In this case
+    // this is what we want, specifically in case of handling onDidRemovePage.
     screens.value = [..._screenStack];
     unawaited(_logNavigation(screens.value.toListOfScreenId().breadCrumbs()));
   }

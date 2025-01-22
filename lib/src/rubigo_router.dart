@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
@@ -33,7 +34,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
               availableScreens,
               logNavigation ?? _defaultLogNavigation,
             ) {
-    //listen to changes on screens and notify our listeners
+    //Listen to updates and notify our listener, the RouterDelegate
     _rubigoStackManager.screens.addListener(notifyListeners);
   }
 
@@ -100,21 +101,21 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> get screens =>
       _rubigoStackManager.screens;
 
+  /// Specify the delay to be taken into consideration when a screen is popped
+  /// from the stack by:
+  /// 1. AppBars back button.
+  /// 2. Android hardware back key.
+  /// 3. Back gesture on iOS.
+  /// 4. Predictive back gesture on Android.
+  /// Because the back animation starts directly in case of 1 and 2, we can
+  /// specify a delay here to minimize the ugliness in case we prevent the pop
+  /// in mayPop. This can happen if we don't preemptively disable back
+  /// navigation with a [PopScope] widget, because we have to check it at the
+  /// time of pressing the back button.
+  Duration onDidRemovePageDelay = const Duration(milliseconds: 300);
+
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
-  /// Use this method or [onPopPage], not both.
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    if (busyService.isBusy) {
-      // We can not navigate, because we are busy.
-      // We have to inform Flutter that the change did not make it. This might
-      // result in two animations (pop/push), but there is nothing we can do
-      // here because we are informed that the stack has already changed by the
-      // user, for example, on iOS with a swipe back gesture. This can be
-      // prevented in several ways, but only in advance and never asynchronous:
-      // 1. Use a PopScope widget with 'canPop is false', or equal to !isBusy
-      // 2. Use the RubigoBusyService and widget, which blocks user interaction.
-      notifyListeners();
-      return;
-    }
     final pageKey = page.key;
     if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
       throw UnsupportedError(
@@ -140,64 +141,95 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
           'we are ignoring this call.',
         ),
       );
-    } else {
-      // onDidRemovePage was (probably) initiated by the backButton or
-      // predictiveBackGesture (Android) or swipeBack (iOS).
-      await _handlePop(removedScreenId);
-      // Call notify listeners, because if the stack did not change in the pop()
-      // call, which can happen Flutter thinks the top page has popped and we
-      // are not in sync.
-      notifyListeners();
+      return;
     }
+    // onDidRemovePage was (probably) initiated by the backButton or
+    // predictiveBackGesture (Android) or swipeBack (iOS).
+    await _handleOnDidRemovePage(removedScreenId);
   }
 
-  //ignore: deprecated_member_use
-  /// This method must be passed to the [Navigator.onPopPage] property.
-  /// Use this method or [onDidRemovePage], not both.
-  bool onPopPage(Route<dynamic> _, dynamic __) {
-    unawaited(_logNavigation('onPopPage() called by Flutter framework.'));
-    if (busyService.isBusy) {
-      unawaited(_logNavigation('but rubigoRouter was busy navigating.'));
-    } else {
-      unawaited(_handlePop(_rubigoStackManager.screens.value.last.screenId));
-    }
-    // Always return false and handle the pop() ourselves.
-    return false;
-  }
+  List<SCREEN_ID> get _getScreenStack =>
+      _rubigoStackManager.screens.value.toListOfScreenId();
 
-  Future<void> _handlePop(SCREEN_ID screenId) async {
+  Future<void> _handleOnDidRemovePage(SCREEN_ID screenId) async {
+    // First, take notice if the app is busy while this function was called.
+    final isBusy = busyService.isBusy;
+    // Second, set isBusy to  true.
     await busyService.busyWrapper(
       () async {
-        final controller = availableScreens.find(screenId).getController();
-        bool mayPop;
-        if (controller is RubigoControllerMixin<SCREEN_ID>) {
-          unawaited(_logNavigation('Call mayPop().'));
-          mayPop = await controller.mayPop();
-          unawaited(_logNavigation('The controller returned "$mayPop"'));
-        } else {
-          mayPop = true;
-          unawaited(
-            _logNavigation('The controller is not a RubigoControllerMixin, '
-                'mayPop is always "true"'),
-          );
+        final stopWatch = Stopwatch()..start();
+        // We have to ask the page if we may pop.
+        var mayPop = true;
+        // Get a copy of the current screen stack.
+        final screenStackBefore = _getScreenStack;
+        // Only perform a call to the controllers mayPop if the app is not busy.
+        if (!isBusy) {
+          // Find the controller
+          final controller = availableScreens.find(screenId).getController();
+          if (controller is RubigoControllerMixin<SCREEN_ID>) {
+            // If the controller implements RubigoControllerMixin, call mayPop.
+            unawaited(_logNavigation('Call mayPop().'));
+            mayPop = await controller.mayPop();
+            unawaited(_logNavigation('The controller returned "$mayPop"'));
+          } else {
+            // Otherwise the screen may always be popped
+            unawaited(
+              _logNavigation('The controller is not a RubigoControllerMixin, '
+                  'mayPop is always "true"'),
+            );
+          }
+          if (mayPop) {
+            // Call pop to start navigating and await until it's done. Do not
+            // notifyListeners as we might want to add a delay later.
+            await _pop(notifyListeners: false);
+          }
         }
-        if (mayPop) {
-          await pop();
+        // Get a copy of the screenStack after handing pop, notice that it does
+        // not have to be 'screenStackBefore' without the last screen. The
+        // controllers can alter the screen stack in their onTop event.
+        final screenStackAfter = _getScreenStack;
+        final expectedScreenStack = [...screenStackBefore]..removeLast();
+        if (!listEquals(expectedScreenStack, screenStackAfter)) {
+          // In case of a back button press, the animation starts immediately.
+          // If we notify Flutter's Navigator immediately about the new stack,
+          // this results in an ugly animation, where back and forth are kind of
+          // mixed up. Therefore we wait a bit to give the back animation
+          // more time, before we start another one.
+          stopWatch.stop();
+          final minimumDelay = onDidRemovePageDelay;
+          final durationTakenSoFar =
+              Duration(milliseconds: stopWatch.elapsedMilliseconds);
+          final remainingDelay = minimumDelay - durationTakenSoFar;
+          if (!remainingDelay.isNegative) {
+            debugPrint('remainingDelay: $remainingDelay');
+            await Future<void>.delayed(remainingDelay);
+          }
         }
+        // Always call notifyListeners, as we can not risk that our screen stack
+        // and flutters screen stack are not in sync.
+        _rubigoStackManager.updateScreens();
       },
     );
   }
 
-  //endregion
+//endregion
 
   //region Navigation functions
   /// Pops the current screen from the stack
   /// If you wire this directly to a onButtonPressed event, you might want to
   /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
-  Future<void> pop({bool ignoreWhenBusy = false}) async {
+  Future<void> pop({bool ignoreWhenBusy = false}) =>
+      _pop(ignoreWhenBusy: ignoreWhenBusy);
+
+  Future<void> _pop({
+    bool ignoreWhenBusy = false,
+    bool notifyListeners = true,
+  }) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       unawaited(_logNavigation('pop() called.'));
-      await busyService.busyWrapper(_rubigoStackManager.pop);
+      await busyService.busyWrapper(
+        () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
+      );
     }
   }
 
