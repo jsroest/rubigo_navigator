@@ -1,14 +1,14 @@
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/screen_stack_backup_set1.dart';
 import 'package:example/screens/set2/screen_stack_backup_set2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S300Controller with RubigoControllerMixin<Screens> {
+  final backButtonAllowed = ValueNotifier(true);
+
   @override
-  Future<bool> mayPop() async {
-    await Future<void>.delayed(const Duration(milliseconds: 400));
-    return false;
-  }
+  Future<bool> mayPop() async => backButtonAllowed.value;
 
   Future<void> onS400ButtonPressed() async {
     await rubigoRouter.push(Screens.s400, ignoreWhenBusy: true);

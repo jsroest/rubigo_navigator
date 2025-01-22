@@ -29,7 +29,7 @@ class S700Screen extends StatelessWidget
             ),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+              isEnabled: (_) => true,
               onPressed: controller.onS800ButtonPressed,
               child: const Text('Push S800'),
             ),

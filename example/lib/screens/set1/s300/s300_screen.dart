@@ -27,9 +27,21 @@ class S300Screen extends StatelessWidget
             const SizedBox(
               height: 16,
             ),
+            const Text('mayPop on back button'),
+            ValueListenableBuilder(
+              valueListenable: controller.backButtonAllowed,
+              builder: (context, value, _) => Switch(
+                value: value,
+                onChanged: (value) =>
+                    controller.backButtonAllowed.value = value,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+              isEnabled: (_) => true,
               onPressed: controller.onS400ButtonPressed,
               child: const Text('Push S400'),
             ),

@@ -21,8 +21,10 @@ class AppBarTitle<SCREEN_ID extends Enum> extends StatelessWidget {
         Text('Screen: $title'),
         ValueListenableBuilder(
           valueListenable: screens,
-          builder: (context, value, child) =>
-              Text(screens.value.toListOfScreenId().breadCrumbs()),
+          builder: (context, value, child) => Text(
+            'Screenstack: ${screens.value.toListOfScreenId().breadCrumbs()}',
+            style: TextTheme.of(context).bodyMedium,
+          ),
         ),
       ],
     );

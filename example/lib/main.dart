@@ -13,7 +13,9 @@ void main() {
   );
 
   // Create a RubigoRouterDelegate.
-  final routerDelegate = RubigoRouterDelegate(rubigoRouter: rubigoRouter);
+  final routerDelegate = RubigoRouterDelegate(
+    rubigoRouter: rubigoRouter,
+  );
 
   // Calling init is mandatory. While init executes, the splashScreen is shown.
   // Init returns the first screen to show to the user.
