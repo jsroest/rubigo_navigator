@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 
+final globalStopWatch = Stopwatch();
+
 /// A router based on [RubigoScreen]'s.
 /// * Use the init function to initialize your app. When the initialization is
 /// done, you must return the first screen of the app.
@@ -116,6 +118,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
   Future<void> onDidRemovePage(Page<Object?> page) async {
+    globalStopWatch.stop();
+    globalStopWatch.reset();
+    globalStopWatch.start();
     final pageKey = page.key;
     if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
       throw UnsupportedError(
@@ -149,7 +154,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   }
 
   List<SCREEN_ID> get _getScreenStack =>
-      _rubigoStackManager.screens.value.toListOfScreenId();
+      _rubigoStackManager.screenStack.toListOfScreenId();
 
   Future<void> _handleOnDidRemovePage(SCREEN_ID screenId) async {
     // First, take notice if the app is busy while this function was called.
@@ -181,7 +186,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
           if (mayPop) {
             // Call pop to start navigating and await until it's done. Do not
             // notifyListeners as we might want to add a delay later.
+            debugPrint('${stopWatch.elapsedMilliseconds}');
             await _pop(notifyListeners: false);
+            debugPrint('${stopWatch.elapsedMilliseconds}');
           }
         }
         // Get a copy of the screenStack after handing pop, notice that it does
@@ -207,6 +214,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         }
         // Always call notifyListeners, as we can not risk that our screen stack
         // and flutters screen stack are not in sync.
+        debugPrint(
+            'Update screen called: ${globalStopWatch.elapsedMilliseconds}');
         _rubigoStackManager.updateScreens();
       },
     );

@@ -21,7 +21,7 @@ class S100Screen extends StatelessWidget
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(width: double.infinity, height: 16),
+          const SizedBox(width: double.infinity, height: 8),
           ElevatedButton(
             onPressed: controller.onS200ButtonPressed,
             child: const Text('Push S200'),

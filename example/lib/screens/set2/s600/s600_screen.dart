@@ -23,14 +23,12 @@ class S600Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: controller.onS700ButtonPressed,
               child: const Text('Push S700'),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),

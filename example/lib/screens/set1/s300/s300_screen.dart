@@ -24,9 +24,7 @@ class S300Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             const Text('mayPop on back button'),
             ValueListenableBuilder(
               valueListenable: controller.backButtonAllowed,
@@ -36,27 +34,22 @@ class S300Screen extends StatelessWidget
                     controller.backButtonAllowed.value = value,
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (_) => true,
               onPressed: controller.onS400ButtonPressed,
               child: const Text('Push S400'),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
+              showStopWatch: true,
               child: const Text('Pop'),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
@@ -64,9 +57,7 @@ class S300Screen extends StatelessWidget
               onPressed: controller.onPopToS100ButtonPressed,
               child: const Text('PopTo S100'),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
@@ -74,9 +65,7 @@ class S300Screen extends StatelessWidget
               onPressed: controller.onRemoveS200ButtonPressed,
               child: const Text('Remove S200'),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
@@ -84,12 +73,12 @@ class S300Screen extends StatelessWidget
               onPressed: controller.onRemoveS100ButtonPressed,
               child: const Text('Remove S100'),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: controller.resetStack,
               child: const Text('Reset stack'),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: controller.toSet2,
               child: const Text('Replace stack with set 2'),
