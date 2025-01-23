@@ -16,13 +16,6 @@ mixin RubigoControllerMixin<SCREEN_ID extends Enum> {
   /// further in this function.
   Future<void> willShow(RubigoChangeInfo<SCREEN_ID> changeInfo) async {}
 
-  /// With this function, the controller is informed that this screen is on
-  /// top of the stack, and is shown to the user. It is allowed to navigate
-  /// further in this function, but be aware if this really is what you want.
-  /// Depending on timings, it might show confusing page animations to the
-  /// user.
-  Future<void> isShown(RubigoChangeInfo<SCREEN_ID> changeInfo) async {}
-
   /// This function can be used to prevent (programmatically) back navigation in
   /// an asynchronous way, for example when you want to check with a backend, if
   /// to allow back navigation.

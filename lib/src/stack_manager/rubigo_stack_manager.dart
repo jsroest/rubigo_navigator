@@ -101,10 +101,6 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       if (notifyListeners) {
         updateScreens();
       }
-      //await Future<void>.delayed(const Duration(milliseconds: 100));
-      if (controller is RubigoControllerMixin) {
-        await controller.isShown(_changeInfo);
-      }
     }
   }
 

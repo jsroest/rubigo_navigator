@@ -48,7 +48,3 @@ class OnTopCallBack extends _ChangeInfoCallBack {
 class WillShowCallBack extends _ChangeInfoCallBack {
   WillShowCallBack(super.changeInfo);
 }
-
-class IsShownCallBack extends _ChangeInfoCallBack {
-  IsShownCallBack(super.changeInfo);
-}

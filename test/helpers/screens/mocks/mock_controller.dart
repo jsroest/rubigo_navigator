@@ -31,12 +31,5 @@ class MockController<SCREEN_ID extends Enum>
     return super.willShow(changeInfo);
   }
 
-  @mustCallSuper
-  @override
-  Future<void> isShown(RubigoChangeInfo<SCREEN_ID> changeInfo) async {
-    callBackHistory.add(IsShownCallBack(changeInfo));
-    return super.isShown(changeInfo);
-  }
-
   final List<CallBack> callBackHistory = [];
 }

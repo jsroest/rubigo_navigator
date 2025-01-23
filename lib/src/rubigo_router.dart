@@ -204,7 +204,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
           final remainingDelay = minimumDelay - durationTakenSoFar;
           if (!remainingDelay.isNegative) {
             debugPrint('remainingDelay: $remainingDelay');
-            await Future<void>.delayed(remainingDelay);
+            // TODO: find out if a delay is more easy on the eyes.
+            // Unfortunately we see no distinction between back-button events
+            // and back-gesture events.
+            //await Future<void>.delayed(remainingDelay);
           }
         }
         // Always call notifyListeners, as we can not risk that our screen stack

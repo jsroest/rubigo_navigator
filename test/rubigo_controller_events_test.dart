@@ -112,13 +112,6 @@ void main() {
             [Screens.s100],
           ),
         ),
-        IsShownCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.replaceStack,
-            Screens.splashScreen,
-            [Screens.s100],
-          ),
-        ),
       ];
       checkCallBackHistory<S100Controller>(expectedCallBackHistory);
       expect(rubigoRouter.busyService.isBusy, false);
@@ -146,16 +139,6 @@ void main() {
           ),
         ),
         WillShowCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.push,
-            Screens.s100,
-            [
-              Screens.s100,
-              Screens.s200,
-            ],
-          ),
-        ),
-        IsShownCallBack(
           const RubigoChangeInfo<Screens>(
             EventType.push,
             Screens.s100,
@@ -214,13 +197,6 @@ void main() {
             [Screens.s100],
           ),
         ),
-        IsShownCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.pop,
-            Screens.s200,
-            [Screens.s100],
-          ),
-        ),
       ];
       checkCallBackHistory<S100Controller>(expectedCallBackHistory);
       expect(rubigoRouter.busyService.isBusy, false);
@@ -245,13 +221,6 @@ void main() {
           ),
         ),
         WillShowCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.push,
-            Screens.s100,
-            [Screens.s100, Screens.s200],
-          ),
-        ),
-        IsShownCallBack(
           const RubigoChangeInfo<Screens>(
             EventType.push,
             Screens.s100,
@@ -291,13 +260,6 @@ void main() {
             [Screens.s100, Screens.s200, Screens.s300],
           ),
         ),
-        IsShownCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.push,
-            Screens.s200,
-            [Screens.s100, Screens.s200, Screens.s300],
-          ),
-        ),
       ];
       checkCallBackHistory<S300Controller>(expectedCallBackHistory);
       expect(rubigoRouter.busyService.isBusy, false);
@@ -324,13 +286,6 @@ void main() {
           ),
         ),
         WillShowCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.push,
-            Screens.s300,
-            [Screens.s100, Screens.s200, Screens.s300, Screens.s400],
-          ),
-        ),
-        IsShownCallBack(
           const RubigoChangeInfo<Screens>(
             EventType.push,
             Screens.s300,
@@ -367,13 +322,6 @@ void main() {
             [Screens.s100, Screens.s200],
           ),
         ),
-        IsShownCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.popTo,
-            Screens.s400,
-            [Screens.s100, Screens.s200],
-          ),
-        ),
       ];
       checkCallBackHistory<S200ControllerMayPopReturnsFalse>(
         expectedCallBackHistory,
@@ -400,13 +348,6 @@ void main() {
           ),
         ),
         WillShowCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.replaceStack,
-            Screens.s200,
-            [Screens.s300, Screens.s400],
-          ),
-        ),
-        IsShownCallBack(
           const RubigoChangeInfo<Screens>(
             EventType.replaceStack,
             Screens.s200,
@@ -496,16 +437,6 @@ void main() {
           ),
         ),
         WillShowCallBack(
-          const RubigoChangeInfo<Screens>(
-            EventType.pop,
-            Screens.s700,
-            [
-              Screens.s300,
-              Screens.s400,
-            ],
-          ),
-        ),
-        IsShownCallBack(
           const RubigoChangeInfo<Screens>(
             EventType.pop,
             Screens.s700,
