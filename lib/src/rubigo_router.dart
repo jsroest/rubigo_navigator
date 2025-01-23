@@ -5,8 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 
-final globalStopWatch = Stopwatch();
-
 /// A router based on [RubigoScreen]'s.
 /// * Use the init function to initialize your app. When the initialization is
 /// done, you must return the first screen of the app.
@@ -118,9 +116,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
   Future<void> onDidRemovePage(Page<Object?> page) async {
-    globalStopWatch.stop();
-    globalStopWatch.reset();
-    globalStopWatch.start();
     final pageKey = page.key;
     if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
       throw UnsupportedError(
@@ -214,8 +209,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         }
         // Always call notifyListeners, as we can not risk that our screen stack
         // and flutters screen stack are not in sync.
-        debugPrint(
-            'Update screen called: ${globalStopWatch.elapsedMilliseconds}');
         _rubigoStackManager.updateScreens();
       },
     );

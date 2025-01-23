@@ -10,7 +10,6 @@ class NavigateButton<SCREEN_ID extends Enum> extends StatelessWidget {
     required this.isEnabled,
     required this.onPressed,
     required this.child,
-    this.showStopWatch = false,
     super.key,
   });
 
@@ -18,16 +17,12 @@ class NavigateButton<SCREEN_ID extends Enum> extends StatelessWidget {
   final bool Function(List<Enum> screenStack) isEnabled;
   final VoidCallback onPressed;
   final Widget child;
-  final bool showStopWatch;
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: screens,
       builder: (context, value, _) {
-        if (showStopWatch) {
-          debugPrint('Button rebuild: ${globalStopWatch.elapsedMilliseconds}');
-        }
         return ElevatedButton(
           onPressed: isEnabled(
             screens.value.toListOfScreenId(),

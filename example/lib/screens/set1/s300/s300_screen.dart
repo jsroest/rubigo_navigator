@@ -46,7 +46,6 @@ class S300Screen extends StatelessWidget
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
-              showStopWatch: true,
               child: const Text('Pop'),
             ),
             const SizedBox(height: 8),
