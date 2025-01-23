@@ -54,9 +54,6 @@ Managing the stack was never easier.™ 🥳 🚀
 * **willShow(changeInfo)**  
   This event is called when the screen is on top of the stack and **will** be shown.  
   Further navigation **is not** allowed.
-* **isShown(changeInfo)**  
-  This event is called when the screen is on top of the stack and is actually shown.  
-  Further navigation **is not** allowed.
 * **bool mayPop()**  
   This event is called when the screen is about to be popped from the stack.  
   If you return ```false```, the pop is cancelled.  
@@ -80,10 +77,6 @@ an asynchronous source.
   Navigate to other screens without the user noticing it.
 * **willShow()**  
   Get data from an asynchronous source, like a local database. The navigation to this screen with the corresponding animation will start as soon as this event returns.
-* **isShown()**  
-  If you want to be sure that page is shown before starting some lengthy processing. If you call
-  code that is heavy on the UI thread, this makes sure that at least the page is shown before the
-  processing starts.
 
 ### Know when the app is busy and absorb touch events
 
@@ -219,9 +212,6 @@ Future<void> onTop(RubigoChangeInfo<Screens> changeInfo) async {}
 
 @override
 Future<void> willShow(RubigoChangeInfo<Screens> changeInfo) async {}
-
-@override
-Future<void> isShown(RubigoChangeInfo<Screens> changeInfo) async {}
 
 @override
 Future<bool> mayPop() => Future.value(true);
