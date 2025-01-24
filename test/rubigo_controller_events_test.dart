@@ -42,7 +42,6 @@ void main() {
     splashScreenId: Screens.splashScreen,
     availableScreens: availableScreens,
   );
-  rubigoRouter.onDidRemovePageDelay = Duration.zero;
 
   void clearCallBackHistory() {
     for (final screen in availableScreens) {

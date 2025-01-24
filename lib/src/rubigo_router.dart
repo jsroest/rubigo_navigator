@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
@@ -101,19 +100,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> get screens =>
       _rubigoStackManager.screens;
 
-  /// Specify the delay to be taken into consideration when a screen is popped
-  /// from the stack by:
-  /// 1. AppBars back button.
-  /// 2. Android hardware back key.
-  /// 3. Back gesture on iOS.
-  /// 4. Predictive back gesture on Android.
-  /// Because the back animation starts directly in case of 1 and 2, we can
-  /// specify a delay here to minimize the ugliness in case we prevent the pop
-  /// in mayPop. This can happen if we don't preemptively disable back
-  /// navigation with a [PopScope] widget, because we have to check it at the
-  /// time of pressing the back button.
-  Duration onDidRemovePageDelay = const Duration(milliseconds: 300);
-
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
   Future<void> onDidRemovePage(Page<Object?> page) async {
     final pageKey = page.key;
@@ -148,20 +134,14 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     await _handleOnDidRemovePage(removedScreenId);
   }
 
-  List<SCREEN_ID> get _getScreenStack =>
-      _rubigoStackManager.screenStack.toListOfScreenId();
-
   Future<void> _handleOnDidRemovePage(SCREEN_ID screenId) async {
     // First, take notice if the app is busy while this function was called.
     final isBusy = busyService.isBusy;
     // Second, set isBusy to  true.
     await busyService.busyWrapper(
       () async {
-        final stopWatch = Stopwatch()..start();
         // We have to ask the page if we may pop.
         var mayPop = true;
-        // Get a copy of the current screen stack.
-        final screenStackBefore = _getScreenStack;
         // Only perform a call to the controllers mayPop if the app is not busy.
         if (!isBusy) {
           // Find the controller
@@ -180,34 +160,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
           }
           if (mayPop) {
             // Call pop to start navigating and await until it's done. Do not
-            // notifyListeners as we might want to add a delay later.
-            debugPrint('${stopWatch.elapsedMilliseconds}');
+            // notifyListeners, we will do that here below.
             await _pop(notifyListeners: false);
-            debugPrint('${stopWatch.elapsedMilliseconds}');
-          }
-        }
-        // Get a copy of the screenStack after handing pop, notice that it does
-        // not have to be 'screenStackBefore' without the last screen. The
-        // controllers can alter the screen stack in their onTop event.
-        final screenStackAfter = _getScreenStack;
-        final expectedScreenStack = [...screenStackBefore]..removeLast();
-        if (!listEquals(expectedScreenStack, screenStackAfter)) {
-          // In case of a back button press, the animation starts immediately.
-          // If we notify Flutter's Navigator immediately about the new stack,
-          // this results in an ugly animation, where back and forth are kind of
-          // mixed up. Therefore we wait a bit to give the back animation
-          // more time, before we start another one.
-          stopWatch.stop();
-          final minimumDelay = onDidRemovePageDelay;
-          final durationTakenSoFar =
-              Duration(milliseconds: stopWatch.elapsedMilliseconds);
-          final remainingDelay = minimumDelay - durationTakenSoFar;
-          if (!remainingDelay.isNegative) {
-            debugPrint('remainingDelay: $remainingDelay');
-            // TODO: find out if a delay is more easy on the eyes.
-            // Unfortunately we see no distinction between back-button events
-            // and back-gesture events.
-            //await Future<void>.delayed(remainingDelay);
           }
         }
         // Always call notifyListeners, as we can not risk that our screen stack
