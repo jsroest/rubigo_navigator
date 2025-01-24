@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
+import 'package:rubigo_router/src/stack_manager/last_page_popped_exception.dart';
 
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/mocks/callbacks.dart';
@@ -491,7 +492,7 @@ void main() {
         throwsA(
           predicate(
             (e) =>
-                e is UnsupportedError &&
+                e is LastPagePoppedException &&
                 e.message ==
                     'Developer: Pop was called on the last screen. The screen '
                         'stack may not be empty.',

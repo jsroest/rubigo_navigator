@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
+import 'package:rubigo_router/src/stack_manager/last_page_popped_exception.dart';
 
 /// Use this widget to disable the back gesture, but react on
 /// - App back buttons
@@ -29,9 +31,17 @@ class RubigoPopScope extends StatelessWidget {
           return;
         }
         final screenId = rubigoRouter.screens.value.last.screenId;
-        unawaited(rubigoRouter.handleBackEvent(screenId));
+        unawaited(_handleBackEvent(screenId));
       },
       child: child,
     );
+  }
+
+  Future<void> _handleBackEvent(Enum screenId) async {
+    try {
+      await rubigoRouter.handleBackEvent(screenId);
+    } on LastPagePoppedException {
+      await SystemNavigator.pop();
+    }
   }
 }
