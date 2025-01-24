@@ -1,6 +1,7 @@
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/screen_stack_backup_set1.dart';
 import 'package:example/screens/set2/screen_stack_backup_set2.dart';
+import 'package:example/screens/set3/screen_stack_backup_set3.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -45,6 +46,14 @@ class S120Controller with RubigoControllerMixin<Screens> {
     screenStackBackupSet1 = rubigoRouter.screens.value.toListOfScreenId();
     await rubigoRouter.replaceStack(
       screenStackBackupSet2,
+      ignoreWhenBusy: true,
+    );
+  }
+
+  Future<void> toSet3() async {
+    screenStackBackupSet1 = rubigoRouter.screens.value.toListOfScreenId();
+    await rubigoRouter.replaceStack(
+      screenStackBackupSet3,
       ignoreWhenBusy: true,
     );
   }

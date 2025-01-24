@@ -14,6 +14,14 @@ import 'package:example/screens/set2/s220/s220_controller.dart';
 import 'package:example/screens/set2/s220/s220_screen.dart';
 import 'package:example/screens/set2/s230/s230_controller.dart';
 import 'package:example/screens/set2/s230/s230_screen.dart';
+import 'package:example/screens/set3/s300/s300_controller.dart';
+import 'package:example/screens/set3/s300/s300_screen.dart';
+import 'package:example/screens/set3/s310/s310_controller.dart';
+import 'package:example/screens/set3/s310/s310_screen.dart';
+import 'package:example/screens/set3/s320/s320_controller.dart';
+import 'package:example/screens/set3/s320/s320_screen.dart';
+import 'package:example/screens/set3/s330/s330_controller.dart';
+import 'package:example/screens/set3/s330/s330_screen.dart';
 import 'package:example/screens/splash_screen/splash_controller.dart';
 import 'package:example/screens/splash_screen/splash_screen.dart';
 import 'package:rubigo_router/rubigo_router.dart';
@@ -29,6 +37,10 @@ enum Screens {
   s210,
   s220,
   s230,
+  s300,
+  s310,
+  s320,
+  s330,
 }
 
 // A simple service locator to hold controllers.
@@ -80,5 +92,25 @@ final ListOfRubigoScreens<Screens> availableScreens = [
     Screens.s230,
     const S230Screen(),
     () => holder.get(S230Controller.new),
+  ),
+  RubigoScreen(
+    Screens.s300,
+    S300Screen(),
+    () => holder.get(S300Controller.new),
+  ),
+  RubigoScreen(
+    Screens.s310,
+    S310Screen(),
+    () => holder.get(S310Controller.new),
+  ),
+  RubigoScreen(
+    Screens.s320,
+    S320Screen(),
+    () => holder.get(S320Controller.new),
+  ),
+  RubigoScreen(
+    Screens.s330,
+    const S330Screen(),
+    () => holder.get(S330Controller.new),
   ),
 ];

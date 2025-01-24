@@ -82,6 +82,11 @@ class S120Screen extends StatelessWidget
               onPressed: controller.toSet2,
               child: const Text('Replace stack with set 2'),
             ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: controller.toSet3,
+              child: const Text('Replace stack with set 3'),
+            ),
           ],
         ),
       ),
