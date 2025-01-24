@@ -15,7 +15,7 @@ import 'helpers/screens/splash_screen/splash_controller.dart';
 extension GetExtension<SCREEN_ID extends Enum> on RubigoHolder {
   MockController<SCREEN_ID>
       getController<T extends MockController<SCREEN_ID>>() =>
-          get<T>() as MockController<SCREEN_ID>;
+          get<T>()! as MockController<SCREEN_ID>;
 }
 
 void main() {
