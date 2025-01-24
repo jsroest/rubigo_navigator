@@ -12,6 +12,11 @@ void main() {
     splashScreenId: Screens.splashScreen,
   );
 
+  // Add the router to the holder, so we have access to the router from all
+  // parts of our app. This is not needed if you use RubigoScreenMixin or
+  // RubigoControllerMixin
+  holder.add(rubigoRouter);
+
   // Create a RubigoRouterDelegate.
   final routerDelegate = RubigoRouterDelegate(
     rubigoRouter: rubigoRouter,
