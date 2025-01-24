@@ -7,7 +7,8 @@ void main() {
     () {
       final holder = RubigoHolder();
       final controller1 = holder.getOrCreate(ControllerScreens1.new);
-      final controller2 = holder.getOrCreate(ControllerScreens2.new);
+      final controller2 = ControllerScreens2();
+      holder.add(controller2);
 
       expect(controller1 is RubigoControllerMixin, true);
       expect(controller1 is RubigoControllerMixin<Screens>, true);
@@ -15,13 +16,20 @@ void main() {
       final tmp1 = holder.getOrCreate(ControllerScreens1.new);
       expect(identical(controller1, tmp1), true);
 
-      expect(controller2 is RubigoControllerMixin, true);
-      expect(controller2 is RubigoControllerMixin<Screens>, true);
-      expect(controller2 is ControllerScreens2, true);
       final tmp2 = holder.getOrCreate(ControllerScreens2.new);
       expect(identical(controller2, tmp2), true);
 
       expect(identical(controller1, controller2), false);
+
+      final newController1 = ControllerScreens1();
+      holder.add(newController1);
+      final tmp3 = holder.get<ControllerScreens1>();
+
+      expect(identical(newController1, tmp3), true);
+
+      final tmp4 = holder.getOrCreate(ControllerScreens1.new);
+
+      expect(identical(tmp3, tmp4), true);
     },
   );
 }
