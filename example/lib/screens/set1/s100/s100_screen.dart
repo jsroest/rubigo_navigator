@@ -18,15 +18,16 @@ class S100Screen extends StatelessWidget
           screens: controller.rubigoRouter.screens,
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(width: double.infinity, height: 8),
-          ElevatedButton(
-            onPressed: controller.onS110ButtonPressed,
-            child: const Text('Push S110'),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: controller.onS110ButtonPressed,
+              child: const Text('Push S110'),
+            ),
+          ],
+        ),
       ),
     );
   }

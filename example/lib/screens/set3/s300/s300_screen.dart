@@ -20,15 +20,16 @@ class S300Screen extends StatelessWidget
             screens: controller.rubigoRouter.screens,
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(width: double.infinity, height: 8),
-            ElevatedButton(
-              onPressed: controller.onS310ButtonPressed,
-              child: const Text('Push S310'),
-            ),
-          ],
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: controller.onS310ButtonPressed,
+                child: const Text('Push S310'),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -24,21 +24,18 @@ class S220Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (_) => true,
               onPressed: controller.onS230ButtonPressed,
               child: const Text('Push S230'),
             ),
-            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
               child: const Text('Pop'),
             ),
-            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
@@ -46,7 +43,6 @@ class S220Screen extends StatelessWidget
               onPressed: controller.onPopToS200ButtonPressed,
               child: const Text('PopTo S200'),
             ),
-            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
@@ -54,7 +50,6 @@ class S220Screen extends StatelessWidget
               onPressed: controller.onRemoveS210ButtonPressed,
               child: const Text('Remove S210'),
             ),
-            const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
@@ -62,17 +57,14 @@ class S220Screen extends StatelessWidget
               onPressed: controller.onRemoveS200ButtonPressed,
               child: const Text('Remove S200'),
             ),
-            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: controller.resetStack,
               child: const Text('Reset stack'),
             ),
-            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: controller.toSet1,
               child: const Text('Replace stack with set 1'),
             ),
-            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: controller.toSet3,
               child: const Text('Replace stack with set 3'),

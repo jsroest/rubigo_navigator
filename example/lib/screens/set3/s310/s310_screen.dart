@@ -25,12 +25,10 @@ class S310Screen extends StatelessWidget
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: controller.onS320ButtonPressed,
                 child: const Text('Push S320'),
               ),
-              const SizedBox(height: 8),
               NavigateButton(
                 screens: controller.rubigoRouter.screens,
                 isEnabled: (screenStack) => screenStack.hasScreenBelow(),

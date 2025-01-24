@@ -26,21 +26,27 @@ class S320Screen extends StatelessWidget
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 8),
+              const Text('mayPop on back button'),
+              ValueListenableBuilder(
+                valueListenable: controller.backButtonAllowed,
+                builder: (context, value, _) => Switch(
+                  value: value,
+                  onChanged: (value) =>
+                      controller.backButtonAllowed.value = value,
+                ),
+              ),
               NavigateButton(
                 screens: controller.rubigoRouter.screens,
                 isEnabled: (_) => true,
                 onPressed: controller.onS330ButtonPressed,
                 child: const Text('Push S330'),
               ),
-              const SizedBox(height: 8),
               NavigateButton(
                 screens: controller.rubigoRouter.screens,
                 isEnabled: (screenStack) => screenStack.hasScreenBelow(),
                 onPressed: controller.onPopButtonPressed,
                 child: const Text('Pop'),
               ),
-              const SizedBox(height: 8),
               NavigateButton(
                 screens: controller.rubigoRouter.screens,
                 isEnabled: (screenStack) =>
@@ -48,7 +54,6 @@ class S320Screen extends StatelessWidget
                 onPressed: controller.onPopToS300ButtonPressed,
                 child: const Text('PopTo S300'),
               ),
-              const SizedBox(height: 8),
               NavigateButton(
                 screens: controller.rubigoRouter.screens,
                 isEnabled: (screenStack) =>
@@ -56,7 +61,6 @@ class S320Screen extends StatelessWidget
                 onPressed: controller.onRemoveS310ButtonPressed,
                 child: const Text('Remove S310'),
               ),
-              const SizedBox(height: 8),
               NavigateButton(
                 screens: controller.rubigoRouter.screens,
                 isEnabled: (screenStack) =>
@@ -64,17 +68,14 @@ class S320Screen extends StatelessWidget
                 onPressed: controller.onRemoveS300ButtonPressed,
                 child: const Text('Remove S300'),
               ),
-              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: controller.resetStack,
                 child: const Text('Reset stack'),
               ),
-              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: controller.toSet1,
                 child: const Text('Replace stack with set 1'),
               ),
-              const SizedBox(height: 8),
               ElevatedButton(
                 onPressed: controller.toSet2,
                 child: const Text('Replace stack with set 2'),
