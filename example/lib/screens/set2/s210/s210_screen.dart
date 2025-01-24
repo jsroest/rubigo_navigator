@@ -1,5 +1,5 @@
 import 'package:example/screens/set2/s210/s210_controller.dart';
-import 'package:example/widgets/app_bar_title.dart';
+import 'package:example/widgets/app_bar_title_breadcrumbs.dart';
 import 'package:example/widgets/navigate_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
@@ -14,7 +14,7 @@ class S210Screen extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: AppBarTitle(
+        title: AppBarTitleBreadCrumbs(
           title: 'S210',
           screens: controller.rubigoRouter.screens,
         ),

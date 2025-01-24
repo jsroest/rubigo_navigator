@@ -1,3 +1,4 @@
+import 'package:example/widgets/app_bar_title.dart';
 import 'package:flutter/material.dart';
 
 class S230Screen extends StatelessWidget {
@@ -9,9 +10,12 @@ class S230Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('S230'),
+        title: const AppBarTitle(
+          title: 'S230',
+          subTitle: 'This screen uses no mixins',
+        ),
       ),
-      body: const Placeholder(),
+      body: Container(),
     );
   }
 }
