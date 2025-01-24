@@ -6,6 +6,12 @@ class S200Screen extends StatelessWidget with RubigoScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: const Placeholder());
+    return RubigoPopScope(
+      rubigoRouter: controller.rubigoRouter,
+      child: Scaffold(
+        appBar: AppBar(),
+        body: const Placeholder(),
+      ),
+    );
   }
 }
