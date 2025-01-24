@@ -131,10 +131,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     }
     // onDidRemovePage was (probably) initiated by the backButton or
     // predictiveBackGesture (Android) or swipeBack (iOS).
-    await _handleOnDidRemovePage(removedScreenId);
+    await handleBackEvent(removedScreenId);
   }
 
-  Future<void> _handleOnDidRemovePage(SCREEN_ID screenId) async {
+  /// Call this function to handle back events. Used by [RubigoPopScope].
+  Future<void> handleBackEvent(SCREEN_ID screenId) async {
     // First, take notice if the app is busy while this function was called.
     final isBusy = busyService.isBusy;
     // Second, set isBusy to  true.

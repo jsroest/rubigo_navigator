@@ -2,9 +2,15 @@ import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/screen_stack_backup_set1.dart';
 import 'package:example/screens/set2/screen_stack_backup_set2.dart';
 import 'package:example/screens/set3/screen_stack_backup_set3.dart';
+import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S320Controller with RubigoControllerMixin<Screens> {
+  final backButtonAllowed = ValueNotifier(true);
+
+  @override
+  Future<bool> mayPop() async => backButtonAllowed.value;
+
   Future<void> onS330ButtonPressed() async {
     await rubigoRouter.push(Screens.s330, ignoreWhenBusy: true);
   }
