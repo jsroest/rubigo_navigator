@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class S800Screen extends StatelessWidget {
-  const S800Screen({
+class S230Screen extends StatelessWidget {
+  const S230Screen({
     super.key,
   });
 
@@ -9,7 +9,7 @@ class S800Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('S800'),
+        title: const Text('S230'),
       ),
       body: const Placeholder(),
     );

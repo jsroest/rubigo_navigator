@@ -1,13 +1,13 @@
 import 'package:example/screens/screens.dart';
-import 'package:example/screens/set1/s300/s300_controller.dart';
+import 'package:example/screens/set1/s120/s120_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
 import 'package:example/widgets/navigate_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S300Screen extends StatelessWidget
-    with RubigoScreenMixin<S300Controller> {
-  S300Screen({
+class S120Screen extends StatelessWidget
+    with RubigoScreenMixin<S120Controller> {
+  S120Screen({
     super.key,
   });
 
@@ -16,7 +16,7 @@ class S300Screen extends StatelessWidget
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(
-          title: 'S300',
+          title: 'S120',
           screens: controller.rubigoRouter.screens,
         ),
       ),
@@ -38,8 +38,8 @@ class S300Screen extends StatelessWidget
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (_) => true,
-              onPressed: controller.onS400ButtonPressed,
-              child: const Text('Push S400'),
+              onPressed: controller.onS130ButtonPressed,
+              child: const Text('Push S130'),
             ),
             const SizedBox(height: 8),
             NavigateButton(
@@ -60,9 +60,9 @@ class S300Screen extends StatelessWidget
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s200),
-              onPressed: controller.onRemoveS200ButtonPressed,
-              child: const Text('Remove S200'),
+                  screenStack.containsScreenBelow(Screens.s110),
+              onPressed: controller.onRemoveS110ButtonPressed,
+              child: const Text('Remove S110'),
             ),
             const SizedBox(height: 8),
             NavigateButton(

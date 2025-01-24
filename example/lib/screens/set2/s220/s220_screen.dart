@@ -1,13 +1,13 @@
 import 'package:example/screens/screens.dart';
-import 'package:example/screens/set2/s700/s700_controller.dart';
+import 'package:example/screens/set2/s220/s220_controller.dart';
 import 'package:example/widgets/app_bar_title.dart';
 import 'package:example/widgets/navigate_button.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S700Screen extends StatelessWidget
-    with RubigoScreenMixin<S700Controller> {
-  S700Screen({
+class S220Screen extends StatelessWidget
+    with RubigoScreenMixin<S220Controller> {
+  S220Screen({
     super.key,
   });
 
@@ -16,7 +16,7 @@ class S700Screen extends StatelessWidget
     return Scaffold(
       appBar: AppBar(
         title: AppBarTitle(
-          title: 'S700',
+          title: 'S220',
           screens: controller.rubigoRouter.screens,
         ),
       ),
@@ -28,8 +28,8 @@ class S700Screen extends StatelessWidget
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (_) => true,
-              onPressed: controller.onS800ButtonPressed,
-              child: const Text('Push S800'),
+              onPressed: controller.onS230ButtonPressed,
+              child: const Text('Push S230'),
             ),
             const SizedBox(height: 8),
             NavigateButton(
@@ -42,25 +42,25 @@ class S700Screen extends StatelessWidget
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s500),
-              onPressed: controller.onPopToS500ButtonPressed,
-              child: const Text('PopTo S500'),
+                  screenStack.containsScreenBelow(Screens.s200),
+              onPressed: controller.onPopToS200ButtonPressed,
+              child: const Text('PopTo S200'),
             ),
             const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s600),
-              onPressed: controller.onRemoveS600ButtonPressed,
-              child: const Text('Remove S600'),
+                  screenStack.containsScreenBelow(Screens.s210),
+              onPressed: controller.onRemoveS210ButtonPressed,
+              child: const Text('Remove S210'),
             ),
             const SizedBox(height: 8),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s500),
-              onPressed: controller.onRemoveS500ButtonPressed,
-              child: const Text('Remove S500'),
+                  screenStack.containsScreenBelow(Screens.s200),
+              onPressed: controller.onRemoveS200ButtonPressed,
+              child: const Text('Remove S200'),
             ),
             const SizedBox(height: 8),
             ElevatedButton(

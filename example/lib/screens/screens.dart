@@ -1,19 +1,19 @@
 import 'package:example/screens/set1/s100/s100_controller.dart';
 import 'package:example/screens/set1/s100/s100_screen.dart';
-import 'package:example/screens/set1/s200/s200_controller.dart';
-import 'package:example/screens/set1/s200/s200_screen.dart';
-import 'package:example/screens/set1/s300/s300_controller.dart';
-import 'package:example/screens/set1/s300/s300_screen.dart';
-import 'package:example/screens/set1/s400/s400_controller.dart';
-import 'package:example/screens/set1/s400/s400_screen.dart';
-import 'package:example/screens/set2/s500/s500_controller.dart';
-import 'package:example/screens/set2/s500/s500_screen.dart';
-import 'package:example/screens/set2/s600/s600_controller.dart';
-import 'package:example/screens/set2/s600/s600_screen.dart';
-import 'package:example/screens/set2/s700/s700_controller.dart';
-import 'package:example/screens/set2/s700/s700_screen.dart';
-import 'package:example/screens/set2/s800/s800_controller.dart';
-import 'package:example/screens/set2/s800/s800_screen.dart';
+import 'package:example/screens/set1/s110/s110_controller.dart';
+import 'package:example/screens/set1/s110/s110_screen.dart';
+import 'package:example/screens/set1/s120/s120_controller.dart';
+import 'package:example/screens/set1/s120/s120_screen.dart';
+import 'package:example/screens/set1/s130/s130_controller.dart';
+import 'package:example/screens/set1/s130/s130_screen.dart';
+import 'package:example/screens/set2/s200/s200_controller.dart';
+import 'package:example/screens/set2/s200/s200_screen.dart';
+import 'package:example/screens/set2/s210/s210_controller.dart';
+import 'package:example/screens/set2/s210/s210_screen.dart';
+import 'package:example/screens/set2/s220/s220_controller.dart';
+import 'package:example/screens/set2/s220/s220_screen.dart';
+import 'package:example/screens/set2/s230/s230_controller.dart';
+import 'package:example/screens/set2/s230/s230_screen.dart';
 import 'package:example/screens/splash_screen/splash_controller.dart';
 import 'package:example/screens/splash_screen/splash_screen.dart';
 import 'package:rubigo_router/rubigo_router.dart';
@@ -22,13 +22,13 @@ import 'package:rubigo_router/rubigo_router.dart';
 enum Screens {
   splashScreen,
   s100,
+  s110,
+  s120,
+  s130,
   s200,
-  s300,
-  s400,
-  s500,
-  s600,
-  s700,
-  s800,
+  s210,
+  s220,
+  s230,
 }
 
 // A simple service locator to hold controllers.
@@ -47,38 +47,38 @@ final ListOfRubigoScreens<Screens> availableScreens = [
     () => holder.get(S100Controller.new),
   ),
   RubigoScreen(
+    Screens.s110,
+    S110Screen(),
+    () => holder.get(S110Controller.new),
+  ),
+  RubigoScreen(
+    Screens.s120,
+    S120Screen(),
+    () => holder.get(S120Controller.new),
+  ),
+  RubigoScreen(
+    Screens.s130,
+    const S130Screen(),
+    () => holder.get(S130Controller.new),
+  ),
+  RubigoScreen(
     Screens.s200,
     S200Screen(),
     () => holder.get(S200Controller.new),
   ),
   RubigoScreen(
-    Screens.s300,
-    S300Screen(),
-    () => holder.get(S300Controller.new),
+    Screens.s210,
+    S210Screen(),
+    () => holder.get(S210Controller.new),
   ),
   RubigoScreen(
-    Screens.s400,
-    const S400Screen(),
-    () => holder.get(S400Controller.new),
+    Screens.s220,
+    S220Screen(),
+    () => holder.get(S220Controller.new),
   ),
   RubigoScreen(
-    Screens.s500,
-    S500Screen(),
-    () => holder.get(S500Controller.new),
-  ),
-  RubigoScreen(
-    Screens.s600,
-    S600Screen(),
-    () => holder.get(S600Controller.new),
-  ),
-  RubigoScreen(
-    Screens.s700,
-    S700Screen(),
-    () => holder.get(S700Controller.new),
-  ),
-  RubigoScreen(
-    Screens.s800,
-    const S800Screen(),
-    () => holder.get(S800Controller.new),
+    Screens.s230,
+    const S230Screen(),
+    () => holder.get(S230Controller.new),
   ),
 ];

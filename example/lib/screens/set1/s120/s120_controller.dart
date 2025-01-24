@@ -4,14 +4,14 @@ import 'package:example/screens/set2/screen_stack_backup_set2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S300Controller with RubigoControllerMixin<Screens> {
+class S120Controller with RubigoControllerMixin<Screens> {
   final backButtonAllowed = ValueNotifier(true);
 
   @override
   Future<bool> mayPop() async => backButtonAllowed.value;
 
-  Future<void> onS400ButtonPressed() async {
-    await rubigoRouter.push(Screens.s400, ignoreWhenBusy: true);
+  Future<void> onS130ButtonPressed() async {
+    await rubigoRouter.push(Screens.s130, ignoreWhenBusy: true);
   }
 
   Future<void> onPopButtonPressed() async {
@@ -22,8 +22,8 @@ class S300Controller with RubigoControllerMixin<Screens> {
     await rubigoRouter.popTo(Screens.s100, ignoreWhenBusy: true);
   }
 
-  Future<void> onRemoveS200ButtonPressed() async {
-    rubigoRouter.remove(Screens.s200, ignoreWhenBusy: true);
+  Future<void> onRemoveS110ButtonPressed() async {
+    rubigoRouter.remove(Screens.s110, ignoreWhenBusy: true);
   }
 
   Future<void> onRemoveS100ButtonPressed() async {
@@ -34,8 +34,8 @@ class S300Controller with RubigoControllerMixin<Screens> {
     await rubigoRouter.replaceStack(
       [
         Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        Screens.s110,
+        Screens.s120,
       ],
       ignoreWhenBusy: true,
     );

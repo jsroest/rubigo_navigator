@@ -2,7 +2,7 @@ import 'package:example/screens/screens.dart';
 import 'package:example/widgets/are_you_sure.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S200Controller with RubigoControllerMixin<Screens> {
+class S110Controller with RubigoControllerMixin<Screens> {
   @override
   Future<void> onTop(RubigoChangeInfo<Screens> changeInfo) async {
     //Only execute this when we are pushed on top.
@@ -17,8 +17,8 @@ class S200Controller with RubigoControllerMixin<Screens> {
     }
   }
 
-  Future<void> onS300ButtonPressed() async {
-    await rubigoRouter.push(Screens.s300, ignoreWhenBusy: true);
+  Future<void> onS120ButtonPressed() async {
+    await rubigoRouter.push(Screens.s120, ignoreWhenBusy: true);
   }
 
   Future<void> onPopButtonPressed() async {

@@ -23,8 +23,8 @@ class S100Screen extends StatelessWidget
         children: [
           const SizedBox(width: double.infinity, height: 8),
           ElevatedButton(
-            onPressed: controller.onS200ButtonPressed,
-            child: const Text('Push S200'),
+            onPressed: controller.onS110ButtonPressed,
+            child: const Text('Push S110'),
           ),
         ],
       ),
