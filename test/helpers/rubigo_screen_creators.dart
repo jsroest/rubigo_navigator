@@ -24,7 +24,7 @@ import 'screens/splash_screen/splash_controller.dart';
 import 'screens/splash_screen/splash_screen.dart';
 
 RubigoScreen<Screens> getSplashScreen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.splashScreen,
@@ -34,7 +34,7 @@ RubigoScreen<Screens> getSplashScreen(
 }
 
 RubigoScreen<Screens> getS100Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s100,
@@ -44,7 +44,7 @@ RubigoScreen<Screens> getS100Screen(
 }
 
 RubigoScreen<Screens> getS200Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -54,7 +54,7 @@ RubigoScreen<Screens> getS200Screen(
 }
 
 RubigoScreen<Screens> getS200ScreenDelayInOnTop(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -64,7 +64,7 @@ RubigoScreen<Screens> getS200ScreenDelayInOnTop(
 }
 
 RubigoScreen<Screens> getS200ScreenOnTopPushAndPop(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -74,7 +74,7 @@ RubigoScreen<Screens> getS200ScreenOnTopPushAndPop(
 }
 
 RubigoScreen<Screens> getS200ScreenWillShowPush(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -84,7 +84,7 @@ RubigoScreen<Screens> getS200ScreenWillShowPush(
 }
 
 RubigoScreen<Screens> getS200ScreenWillShowPop(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -94,7 +94,7 @@ RubigoScreen<Screens> getS200ScreenWillShowPop(
 }
 
 RubigoScreen<Screens> getS200ScreenMayPopReturnsFalse(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s200,
@@ -104,7 +104,7 @@ RubigoScreen<Screens> getS200ScreenMayPopReturnsFalse(
 }
 
 RubigoScreen<Screens> getS300Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s300,
@@ -114,7 +114,7 @@ RubigoScreen<Screens> getS300Screen(
 }
 
 RubigoScreen<Screens> getS400Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s400,
@@ -124,7 +124,7 @@ RubigoScreen<Screens> getS400Screen(
 }
 
 RubigoScreen<Screens> getS500Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s500,
@@ -134,7 +134,7 @@ RubigoScreen<Screens> getS500Screen(
 }
 
 RubigoScreen<Screens> getS600Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s600,
@@ -144,7 +144,7 @@ RubigoScreen<Screens> getS600Screen(
 }
 
 RubigoScreen<Screens> getS700Screen(
-  RubigoControllerHolder holder,
+  RubigoHolder holder,
 ) {
   return RubigoScreen(
     Screens.s700,

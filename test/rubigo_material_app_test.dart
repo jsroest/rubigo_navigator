@@ -22,7 +22,7 @@ void main() {
     required WidgetTester tester,
     required Widget? progressIndicator,
   }) async {
-    final holder = RubigoControllerHolder();
+    final holder = RubigoHolder();
     final availableScreens = [
       getSplashScreen(holder),
       getS100Screen(holder),

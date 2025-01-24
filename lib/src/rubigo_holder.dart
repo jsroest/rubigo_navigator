@@ -1,7 +1,7 @@
 /// A minimalistic service locator for Objects. Although it does
 /// what it should, this class is only here to limit external dependencies in
 /// this package and samples.
-class RubigoControllerHolder {
+class RubigoHolder {
   final _controllerCache = <Object>[];
 
   /// Returns the controller from the cache.

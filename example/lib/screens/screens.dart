@@ -32,7 +32,7 @@ enum Screens {
 }
 
 // A simple service locator to hold controllers.
-final holder = RubigoControllerHolder();
+final holder = RubigoHolder();
 
 // All available screens are defined here.
 final ListOfRubigoScreens<Screens> availableScreens = [

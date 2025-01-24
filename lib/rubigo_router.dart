@@ -10,7 +10,7 @@ export 'src/flutter/screen_to_page_converters.dart';
 export 'src/mixins/rubigo_controller_mixin.dart';
 export 'src/mixins/rubigo_screen_mixin.dart';
 export 'src/rubigo_change_info.dart';
-export 'src/rubigo_controller_holder.dart';
+export 'src/rubigo_holder.dart';
 export 'src/rubigo_router.dart';
 export 'src/rubigo_screen.dart';
 export 'src/types/rubigo_type_definitions.dart';
