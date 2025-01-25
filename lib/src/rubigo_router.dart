@@ -133,9 +133,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 // region Programmatic navigation functions
   /// Pops the current screen from the stack
 
-  Future<void> pop() => _pop();
+  Future<void> pop() => _pop(notifyListeners: true);
 
-  Future<void> _pop({bool notifyListeners = true}) async {
+  Future<void> _pop({required bool notifyListeners}) async {
     unawaited(_logNavigation('pop() called.'));
     try {
       await busyService.busyWrapper(
@@ -184,7 +184,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 //region User Initiated (UI) navigation functions
   /// Use these navigation functions everywhere the origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
-  late final Ui ui = Ui<SCREEN_ID>(
+  late final Ui<SCREEN_ID> ui = Ui<SCREEN_ID>(
     pop: () async {
       if (busyService.isBusy) {
         unawaited(
@@ -192,7 +192,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      return _pop();
+      return _pop(notifyListeners: true);
     },
     popTo: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
