@@ -141,7 +141,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       await busyService.busyWrapper(
         () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
       );
-    } on LastPagePoppedException {
+    } on LastPagePoppedException catch (e) {
+      unawaited(_logNavigation(e.message));
       unawaited(_logNavigation('The app is closed.'));
       unawaited(SystemNavigator.pop());
     }
