@@ -15,6 +15,7 @@ class S220Screen extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: rubigoBackButton(context, controller.rubigoRouter),
         title: AppBarTitleBreadCrumbs(
           title: 'S220',
           screens: controller.rubigoRouter.screens,
@@ -24,6 +25,15 @@ class S220Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text('mayPop on back button'),
+            ValueListenableBuilder(
+              valueListenable: controller.backButtonAllowed,
+              builder: (context, value, _) => Switch(
+                value: value,
+                onChanged: (value) =>
+                    controller.backButtonAllowed.value = value,
+              ),
+            ),
             NavigateButton(
               screens: controller.rubigoRouter.screens,
               isEnabled: (_) => true,

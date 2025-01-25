@@ -14,6 +14,7 @@ class S330Screen extends StatelessWidget {
       rubigoRouter: holder.get<RubigoRouter>(),
       child: Scaffold(
         appBar: AppBar(
+          leading: rubigoBackButton(context, holder.get<RubigoRouter>()),
           title: const AppBarTitle(
             title: 'S330',
             subTitle: 'This screen uses no mixins',

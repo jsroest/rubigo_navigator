@@ -17,6 +17,7 @@ class S320Screen extends StatelessWidget
       rubigoRouter: controller.rubigoRouter,
       child: Scaffold(
         appBar: AppBar(
+          leading: rubigoBackButton(context, controller.rubigoRouter),
           title: AppBarTitleBreadCrumbs(
             title: 'S320',
             screens: controller.rubigoRouter.screens,

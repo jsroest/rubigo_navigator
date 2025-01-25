@@ -14,6 +14,7 @@ class S110Screen extends StatelessWidget
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: rubigoBackButton(context, controller.rubigoRouter),
         title: AppBarTitleBreadCrumbs(
           title: 'S110',
           screens: controller.rubigoRouter.screens,
