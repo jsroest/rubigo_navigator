@@ -12,8 +12,7 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
 
   @override
   Future<bool> didPopRoute() async {
-    final screenId = rubigoRouter.screens.value.last.screenId;
-    await rubigoRouter.handleBackEvent(screenId);
+    await rubigoRouter.handleBackEvent();
     return true;
   }
 }

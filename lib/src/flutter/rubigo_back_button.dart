@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -9,12 +7,7 @@ Widget? rubigoBackButton(
   BuildContext context,
   RubigoRouter rubigoRouter,
 ) {
-  final showBackButton = ModalRoute.canPopOf(context) ?? false;
-  final screenId = rubigoRouter.screens.value.last.screenId;
-
-  return showBackButton
-      ? BackButton(
-          onPressed: () => unawaited(rubigoRouter.handleBackEvent(screenId)),
-        )
+  return ModalRoute.canPopOf(context) ?? false
+      ? BackButton(onPressed: rubigoRouter.handleBackEvent)
       : null;
 }

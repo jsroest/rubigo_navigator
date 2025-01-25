@@ -30,16 +30,15 @@ class RubigoPopScope extends StatelessWidget {
         if (didPop) {
           return;
         }
-        final screenId = rubigoRouter.screens.value.last.screenId;
-        unawaited(_handleBackEvent(screenId));
+        unawaited(_handleBackEvent());
       },
       child: child,
     );
   }
 
-  Future<void> _handleBackEvent(Enum screenId) async {
+  Future<void> _handleBackEvent() async {
     try {
-      await rubigoRouter.handleBackEvent(screenId);
+      await rubigoRouter.handleBackEvent();
     } on LastPagePoppedException {
       await SystemNavigator.pop();
     }
