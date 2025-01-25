@@ -1,6 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
-import 'package:rubigo_router/src/stack_manager/last_page_popped_exception.dart';
 
 import 'helpers/rubigo_screen_creators.dart';
 import 'helpers/screens/mocks/callbacks.dart';
@@ -20,6 +20,7 @@ extension GetExtension<SCREEN_ID extends Enum> on RubigoHolder {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   final holder = RubigoHolder();
   final splashScreen = getSplashScreen(holder);
   final s100Screen = getS100Screen(holder);
@@ -364,7 +365,7 @@ void main() {
       //region Pop() when busy: S300=> S400
       clearCallBackHistory();
       await rubigoRouter.busyService.busyWrapper(() async {
-        await rubigoRouter.pop();
+        await rubigoRouter.ui.pop();
         expect(
           screenStack(),
           [
@@ -487,18 +488,8 @@ void main() {
       //region pop() => Exception
       clearCallBackHistory();
       expect(screenStack().hasScreenBelow(), false);
-      await expectLater(
-        () async => rubigoRouter.pop(),
-        throwsA(
-          predicate(
-            (e) =>
-                e is LastPagePoppedException &&
-                e.message ==
-                    'Developer: Pop was called on the last screen. The screen '
-                        'stack may not be empty.',
-          ),
-        ),
-      );
+      await rubigoRouter.pop();
+      //TODO: Test if the SystemNavigator.pop() is actually called.
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
 
@@ -520,4 +511,5 @@ void main() {
       //endregion
     },
   );
+  SystemChannels.platform.setMethodCallHandler(null);
 }

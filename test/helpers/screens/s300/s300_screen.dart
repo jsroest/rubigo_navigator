@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S300Screen extends StatelessWidget with RubigoScreenMixin {
@@ -6,6 +6,12 @@ class S300Screen extends StatelessWidget with RubigoScreenMixin {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return RubigoPopScope(
+      rubigoRouter: controller.rubigoRouter,
+      child: Scaffold(
+        appBar: AppBar(),
+        body: const Placeholder(),
+      ),
+    );
   }
 }

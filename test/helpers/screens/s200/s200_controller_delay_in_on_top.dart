@@ -7,6 +7,8 @@ class S200ControllerDelayInOnTop extends MockController<Screens> {
   @override
   Future<void> onTop(RubigoChangeInfo<Screens> changeInfo) async {
     await super.onTop(changeInfo);
-    await Future<void>.delayed(const Duration(milliseconds: 500));
+    if (changeInfo.previousScreen == Screens.s100) {
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+    }
   }
 }
