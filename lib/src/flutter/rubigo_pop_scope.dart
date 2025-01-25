@@ -38,7 +38,7 @@ class RubigoPopScope extends StatelessWidget {
 
   Future<void> _handleBackEvent() async {
     try {
-      await rubigoRouter.handleBackEvent();
+      await rubigoRouter.ui.handleBackEvent();
     } on LastPagePoppedException {
       await SystemNavigator.pop();
     }

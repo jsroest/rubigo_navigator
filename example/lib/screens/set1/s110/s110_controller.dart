@@ -18,10 +18,10 @@ class S110Controller with RubigoControllerMixin<Screens> {
   }
 
   Future<void> onS120ButtonPressed() async {
-    await rubigoRouter.push(Screens.s120, ignoreWhenBusy: true);
+    await rubigoRouter.ui.push(Screens.s120);
   }
 
   Future<void> onPopButtonPressed() async {
-    await rubigoRouter.pop(ignoreWhenBusy: true);
+    await rubigoRouter.ui.pop();
   }
 }

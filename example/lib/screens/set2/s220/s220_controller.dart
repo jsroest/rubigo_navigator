@@ -12,49 +12,42 @@ class S220Controller with RubigoControllerMixin<Screens> {
   Future<bool> mayPop() async => backButtonAllowed.value;
 
   Future<void> onS230ButtonPressed() async {
-    await rubigoRouter.push(Screens.s230, ignoreWhenBusy: true);
+    await rubigoRouter.ui.push(Screens.s230);
   }
 
   Future<void> onPopButtonPressed() async {
-    await rubigoRouter.pop(ignoreWhenBusy: true);
+    await rubigoRouter.ui.pop();
   }
 
   Future<void> onPopToS200ButtonPressed() async {
-    await rubigoRouter.popTo(Screens.s200, ignoreWhenBusy: true);
+    await rubigoRouter.ui.popTo(Screens.s200);
   }
 
   Future<void> onRemoveS210ButtonPressed() async {
-    rubigoRouter.remove(Screens.s210, ignoreWhenBusy: true);
+    rubigoRouter.ui.remove(Screens.s210);
   }
 
   Future<void> onRemoveS200ButtonPressed() async {
-    rubigoRouter.remove(Screens.s200, ignoreWhenBusy: true);
+    rubigoRouter.ui.remove(Screens.s200);
   }
 
   Future<void> resetStack() async {
-    await rubigoRouter.replaceStack(
+    await rubigoRouter.ui.replaceStack(
       [
         Screens.s200,
         Screens.s210,
         Screens.s220,
       ],
-      ignoreWhenBusy: true,
     );
   }
 
   Future<void> toSet1() async {
     screenStackBackupSet2 = rubigoRouter.screens.value.toListOfScreenId();
-    await rubigoRouter.replaceStack(
-      screenStackBackupSet1,
-      ignoreWhenBusy: true,
-    );
+    await rubigoRouter.ui.replaceStack(screenStackBackupSet1);
   }
 
   Future<void> toSet3() async {
     screenStackBackupSet2 = rubigoRouter.screens.value.toListOfScreenId();
-    await rubigoRouter.replaceStack(
-      screenStackBackupSet3,
-      ignoreWhenBusy: true,
-    );
+    await rubigoRouter.ui.replaceStack(screenStackBackupSet3);
   }
 }

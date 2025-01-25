@@ -364,7 +364,7 @@ void main() {
       //region Pop() when busy: S300=> S400
       clearCallBackHistory();
       await rubigoRouter.busyService.busyWrapper(() async {
-        await rubigoRouter.pop(ignoreWhenBusy: true);
+        await rubigoRouter.pop();
         expect(
           screenStack(),
           [

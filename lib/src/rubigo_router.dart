@@ -79,13 +79,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   //region Private
   final LogNavigation _logNavigation;
 
-  bool _canNavigate({required bool ignoreWhenBusy}) {
-    if (!ignoreWhenBusy) {
-      return true;
-    }
-    return !busyService.isBusy;
-  }
-
   final RubigoStackManager<SCREEN_ID> _rubigoStackManager;
 
   final _navigatorKey = GlobalKey<NavigatorState>();
@@ -132,127 +125,190 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       return;
     }
     // handle the back event.
-    await handleBackEvent();
-  }
-
-  /// Call this function to handle back events. Used by [RubigoPopScope].
-  Future<void> handleBackEvent() async {
-    // Get the page to pop from the stack.
-    final screenId = _rubigoStackManager.screens.value.last.screenId;
-    // First, take notice if the app is busy while this function was called.
-    final isBusy = busyService.isBusy;
-    // Second, set isBusy to  true.
-    await busyService.busyWrapper(
-      () async {
-        // We have to ask the page if we may pop.
-        var mayPop = true;
-        // Only perform a call to the controllers mayPop if the app is not busy.
-        if (!isBusy) {
-          // Find the controller
-          final controller = availableScreens.find(screenId).getController();
-          if (controller is RubigoControllerMixin<SCREEN_ID>) {
-            // If the controller implements RubigoControllerMixin, call mayPop.
-            unawaited(_logNavigation('Call mayPop().'));
-            mayPop = await controller.mayPop();
-            unawaited(_logNavigation('The controller returned "$mayPop"'));
-          } else {
-            // Otherwise the screen may always be popped
-            unawaited(
-              _logNavigation('The controller is not a RubigoControllerMixin, '
-                  'mayPop is always "true"'),
-            );
-          }
-          if (mayPop) {
-            // Call pop to start navigating and await until it's done. Do not
-            // notifyListeners, we will do that here below.
-            await _pop(notifyListeners: false);
-          }
-        }
-        // Always call notifyListeners, as we can not risk that our screen stack
-        // and flutters screen stack are not in sync.
-        _rubigoStackManager.updateScreens();
-      },
-    );
+    await ui.handleBackEvent();
   }
 
 //endregion
 
-  //region Navigation functions
+// region Programmatic navigation functions
   /// Pops the current screen from the stack
-  /// If you wire this directly to a onButtonPressed event, you might want to
-  /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
-  Future<void> pop({bool ignoreWhenBusy = false}) =>
-      _pop(ignoreWhenBusy: ignoreWhenBusy);
 
-  Future<void> _pop({
-    bool ignoreWhenBusy = false,
-    bool notifyListeners = true,
-  }) async {
-    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(_logNavigation('pop() called.'));
-      try {
-        await busyService.busyWrapper(
-          () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
-        );
-      } on LastPagePoppedException {
-        unawaited(_logNavigation('The app is closed.'));
-        unawaited(SystemNavigator.pop());
-      }
+  Future<void> pop() => _pop();
+
+  Future<void> _pop({bool notifyListeners = true}) async {
+    unawaited(_logNavigation('pop() called.'));
+    try {
+      await busyService.busyWrapper(
+        () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
+      );
+    } on LastPagePoppedException {
+      unawaited(_logNavigation('The app is closed.'));
+      unawaited(SystemNavigator.pop());
     }
   }
 
   /// Pop directly to the screen with [screenId].
-  /// If you wire this directly to a onButtonPressed event, you might want to
-  /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
-  Future<void> popTo(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
-    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(_logNavigation('popTo(${screenId.name}) called.'));
-      await busyService.busyWrapper(() => _rubigoStackManager.popTo(screenId));
-    }
+  Future<void> popTo(SCREEN_ID screenId) async {
+    unawaited(_logNavigation('popTo(${screenId.name}) called.'));
+    await busyService.busyWrapper(() => _rubigoStackManager.popTo(screenId));
   }
 
   /// Push screen with [screenId] on the stack.
-  /// If you wire this directly to a onButtonPressed event, you might want to
-  /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
-  Future<void> push(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) async {
-    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(_logNavigation('push(${screenId.name}) called.'));
-      await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
-    }
+  Future<void> push(SCREEN_ID screenId) async {
+    unawaited(_logNavigation('push(${screenId.name}) called.'));
+    await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
   }
 
   /// Replace the current screen stack with [screens].
-  /// If you wire this directly to a onButtonPressed event, you might want to
-  /// set [ignoreWhenBusy] to true, to ignore events when the router is busy.
-  Future<void> replaceStack(
-    List<SCREEN_ID> screens, {
-    bool ignoreWhenBusy = false,
-  }) async {
-    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(
-        _logNavigation(
-          'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
-        ),
-      );
-      await busyService
-          .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
-    }
+  Future<void> replaceStack(List<SCREEN_ID> screens) async {
+    unawaited(
+      _logNavigation(
+        'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
+      ),
+    );
+    await busyService
+        .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
   }
 
   /// Remove the screen with [screenId] silently from the stack.
-  /// It is not likely that you wire this directly to a onButtonPressed event
-  /// but if you want this call to be ignored when the router is busy, you can
-  /// set [ignoreWhenBusy] to true.
-  void remove(SCREEN_ID screenId, {bool ignoreWhenBusy = false}) {
-    if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
-      unawaited(
-        _logNavigation('remove(${screenId.name}) called.'),
-      );
-      _rubigoStackManager.remove(screenId);
-    }
+  void remove(SCREEN_ID screenId) {
+    unawaited(
+      _logNavigation('remove(${screenId.name}) called.'),
+    );
+    _rubigoStackManager.remove(screenId);
   }
 
 //endregion
+
+//region User Initiated (UI) navigation functions
+  /// Use these navigation functions everywhere the origin is user initiated.
+  /// these calls will be ignored automatically if the app is busy.
+  late final Ui ui = Ui<SCREEN_ID>(
+    pop: () async {
+      if (busyService.isBusy) {
+        unawaited(
+          _logNavigation('Pop was called by the user, but we are busy'),
+        );
+        return;
+      }
+      return _pop();
+    },
+    popTo: (SCREEN_ID screenId) async {
+      if (busyService.isBusy) {
+        unawaited(
+          _logNavigation('PopTo(${screenId.name}) was called by the user, '
+              'but we are busy'),
+        );
+        return;
+      }
+      return popTo(screenId);
+    },
+    push: (SCREEN_ID screenId) async {
+      if (busyService.isBusy) {
+        unawaited(
+          _logNavigation('Push(${screenId.name}) was called by the user, '
+              'but we are busy'),
+        );
+        return;
+      }
+      return push(screenId);
+    },
+    replaceStack: (List<SCREEN_ID> screens) async {
+      if (busyService.isBusy) {
+        unawaited(
+          _logNavigation(
+              'replaceStack(${screens.breadCrumbs()}) was called by the user, '
+              'but we are busy'),
+        );
+        return;
+      }
+      return replaceStack(screens);
+    },
+    remove: (SCREEN_ID screenId) {
+      if (busyService.isBusy) {
+        unawaited(
+          _logNavigation('remove(${screenId.name}) was called by the user, '
+              'but we are busy'),
+        );
+        return;
+      }
+      remove(screenId);
+    },
+    handleBackEvent: () async {
+      // Get the page to pop from the stack.
+      final screenId = _rubigoStackManager.screens.value.last.screenId;
+      // First, take notice if the app is busy while this function was called.
+      final isBusy = busyService.isBusy;
+      // Second, set isBusy to  true.
+      await busyService.busyWrapper(
+        () async {
+          // We have to ask the page if we may pop.
+          var mayPop = true;
+          // Only perform a call to the controllers mayPop if the app is not
+          // busy.
+          if (!isBusy) {
+            // Find the controller
+            final controller = availableScreens.find(screenId).getController();
+            if (controller is RubigoControllerMixin<SCREEN_ID>) {
+              // If the controller implements RubigoControllerMixin, call
+              // mayPop.
+              unawaited(_logNavigation('Call mayPop().'));
+              mayPop = await controller.mayPop();
+              unawaited(_logNavigation('The controller returned "$mayPop"'));
+            } else {
+              // Otherwise the screen may always be popped
+              unawaited(
+                _logNavigation('The controller is not a RubigoControllerMixin, '
+                    'mayPop is always "true"'),
+              );
+            }
+            if (mayPop) {
+              // Call pop to start navigating and await until it's done. Do not
+              // notifyListeners, we will do that here below.
+              await _pop(notifyListeners: false);
+            }
+          }
+          // Always call notifyListeners, as we can not risk that our screen
+          // stack and flutters screen stack are not in sync.
+          _rubigoStackManager.updateScreens();
+        },
+      );
+    },
+  );
+
+//endregion
+}
+
+/// This class groups al navigation functions, that are intended to be called
+/// on a user action. Each function will be ignored if the app is busy.
+class Ui<SCREEN_ID extends Enum> {
+  /// Creates a Ui class
+  Ui({
+    required this.pop,
+    required this.popTo,
+    required this.push,
+    required this.replaceStack,
+    required this.remove,
+    required this.handleBackEvent,
+  });
+
+  /// Use this function when the pop is user initiated.
+  final Future<void> Function() pop;
+
+  /// Use this function when the popTo is user initiated.
+  final Future<void> Function(SCREEN_ID screenId) popTo;
+
+  /// Use this function when the push is user initiated.
+  final Future<void> Function(SCREEN_ID screenId) push;
+
+  /// Use this function when the replaceStack is user initiated.
+  final Future<void> Function(List<SCREEN_ID> screens) replaceStack;
+
+  /// Use this function when the remove is user initiated.
+  final void Function(SCREEN_ID screenId) remove;
+
+  /// Use this function when the handleBackEvent is user initiated.
+  final Future<void> Function() handleBackEvent;
 }
 
 Future<void> _defaultLogNavigation(String message) async => debugPrint(message);
