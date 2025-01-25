@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
+import 'package:rubigo_router/src/stack_manager/last_page_popped_exception.dart';
 import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 
 /// A router based on [RubigoScreen]'s.
@@ -187,9 +189,14 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   }) async {
     if (_canNavigate(ignoreWhenBusy: ignoreWhenBusy)) {
       unawaited(_logNavigation('pop() called.'));
-      await busyService.busyWrapper(
-        () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
-      );
+      try {
+        await busyService.busyWrapper(
+          () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
+        );
+      } on LastPagePoppedException {
+        unawaited(_logNavigation('The app is closed.'));
+        unawaited(SystemNavigator.pop());
+      }
     }
   }
 

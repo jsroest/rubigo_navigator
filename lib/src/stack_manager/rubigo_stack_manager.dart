@@ -127,10 +127,8 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   Future<RubigoChangeInfo<SCREEN_ID>> _pop() async {
     if (screenStack.length < 2) {
-      throw LastPagePoppedException(
-        'Developer: Pop was called on the last screen. The screen stack '
-        'may not be empty.',
-      );
+      unawaited(_logNavigation('The last page is popped'));
+      throw LastPagePoppedException('The last page is popped.');
     }
     final previousScreen = screenStack.last;
     screenStack.removeLast();
