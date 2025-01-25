@@ -6,6 +6,7 @@ export 'src/flutter/busy/rubigo_busy_service.dart';
 export 'src/flutter/busy/rubigo_busy_widget.dart';
 export 'src/flutter/rubigo_material_app.dart';
 export 'src/flutter/rubigo_pop_scope.dart';
+export 'src/flutter/rubigo_root_back_button_dispatcher.dart';
 export 'src/flutter/rubigo_router_delegate.dart';
 export 'src/flutter/screen_to_page_converters.dart';
 export 'src/mixins/rubigo_controller_mixin.dart';

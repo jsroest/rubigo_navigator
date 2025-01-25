@@ -38,6 +38,7 @@ void main() {
     RubigoMaterialApp(
       initAndGetFirstScreen: initAndGetFirstScreen,
       routerDelegate: routerDelegate,
+      backButtonDispatcher: RubigoRootBackButtonDispatcher(rubigoRouter),
     ),
   );
 }

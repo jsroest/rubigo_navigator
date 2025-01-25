@@ -13,6 +13,7 @@ class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
   const RubigoMaterialApp({
     required this.routerDelegate,
     required this.initAndGetFirstScreen,
+    this.backButtonDispatcher,
     this.progressIndicator,
     super.key,
   });
@@ -25,6 +26,11 @@ class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
   /// first screen to navigate to, which is done with a
   /// [RubigoRouter.replaceStack].
   final Future<SCREEN_ID> Function() initAndGetFirstScreen;
+
+  /// The backButtonDispatcher to use. Most of the times you will want to pass
+  /// a [RubigoRootBackButtonDispatcher] which delegates hardware back button
+  /// events, like on Android, to the [RubigoRouter].
+  final BackButtonDispatcher? backButtonDispatcher;
 
   /// A custom progressIndicator widget.
   final Widget? progressIndicator;
@@ -49,7 +55,7 @@ class _RubigoMaterialAppState<SCREEN_ID extends Enum>
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      backButtonDispatcher: RootBackButtonDispatcher(),
+      backButtonDispatcher: widget.backButtonDispatcher,
       routerDelegate: widget.routerDelegate,
       builder: (context, child) {
         return RubigoBusyWidget(
