@@ -32,10 +32,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   /// Pops a screen from the stack. This call can generate more navigation
   /// calls.
-  Future<void> pop({bool notifyListeners = true}) => _navigate(
-        Pop<SCREEN_ID>(),
-        notifyListeners: notifyListeners,
-      );
+  Future<void> pop() => _navigate(Pop<SCREEN_ID>());
 
   /// Pop directly to a specific screen on the stack. This call can generate
   /// more navigation calls.
@@ -70,10 +67,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   late RubigoChangeInfo<SCREEN_ID> _changeInfo;
 
-  Future<void> _navigate(
-    NavigationEvent<SCREEN_ID> navigationEvent, {
-    bool notifyListeners = true,
-  }) async {
+  Future<void> _navigate(NavigationEvent<SCREEN_ID> navigationEvent) async {
     if (_inWillShow) {
       throw UnsupportedError(
         'Developer: you may not Push or Pop in the willShow method.',
@@ -99,9 +93,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
         await controller.willShow(_changeInfo);
         _inWillShow = false;
       }
-      if (notifyListeners) {
-        updateScreens();
-      }
+      updateScreens();
     }
   }
 

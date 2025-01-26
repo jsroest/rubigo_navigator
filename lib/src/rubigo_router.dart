@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
@@ -125,22 +126,23 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       return;
     }
     // handle the back event.
-    await ui.handleBackEvent();
+    await ui.pop();
+    // Always call notifyListeners, as we can not risk that our screen
+    // stack and flutters screen stack are not in sync.
+    // This is a bit of defencive programming, but at this point I'm more
+    // worried to miss an edge case than to rebuild the UI one time too many in
+    // certain cases.
+    _rubigoStackManager.updateScreens();
   }
 
 //endregion
 
 // region Programmatic navigation functions
   /// Pops the current screen from the stack
-
-  Future<void> pop() => _pop(notifyListeners: true);
-
-  Future<void> _pop({required bool notifyListeners}) async {
+  Future<void> pop() async {
     unawaited(_logNavigation('pop() called.'));
     try {
-      await busyService.busyWrapper(
-        () => _rubigoStackManager.pop(notifyListeners: notifyListeners),
-      );
+      await busyService.busyWrapper(_rubigoStackManager.pop);
     } on LastPagePoppedException catch (e) {
       unawaited(_logNavigation(e.message));
       unawaited(_logNavigation('The app is closed.'));
@@ -186,13 +188,42 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// these calls will be ignored automatically if the app is busy.
   late final Ui<SCREEN_ID> ui = Ui<SCREEN_ID>(
     pop: () async {
-      if (busyService.isBusy) {
-        unawaited(
-          _logNavigation('Pop was called by the user, but we are busy'),
-        );
-        return;
-      }
-      await _pop(notifyListeners: true);
+      // First, take notice if the app is busy while this function was called.
+      final isBusy = busyService.isBusy;
+      // Second, set isBusy to  true.
+      await busyService.busyWrapper(
+        () async {
+          if (isBusy) {
+            unawaited(
+              _logNavigation('Pop was called by the user, but we are busy'),
+            );
+            return;
+          }
+          // We have to ask the page if we may pop.
+          final bool mayPop;
+          // Get the page to pop from the stack.
+          final screenId = _rubigoStackManager.screens.value.last.screenId;
+          // Find the controller
+          final controller = availableScreens.find(screenId).getController();
+          if (controller is RubigoControllerMixin<SCREEN_ID>) {
+            // If the controller implements RubigoControllerMixin, call
+            // mayPop.
+            unawaited(_logNavigation('Call mayPop().'));
+            mayPop = await controller.mayPop();
+            unawaited(_logNavigation('The controller returned "$mayPop"'));
+          } else {
+            // Otherwise the screen may always be popped
+            mayPop = true;
+            unawaited(
+              _logNavigation('The controller is not a RubigoControllerMixin, '
+                  'mayPop is always "true"'),
+            );
+          }
+          if (mayPop) {
+            await pop();
+          }
+        },
+      );
     },
     popTo: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
@@ -235,50 +266,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       }
       remove(screenId);
     },
-    handleBackEvent: () async {
-      // Get the page to pop from the stack.
-      final screenId = _rubigoStackManager.screens.value.last.screenId;
-      // First, take notice if the app is busy while this function was called.
-      final isBusy = busyService.isBusy;
-      // Second, set isBusy to  true.
-      await busyService.busyWrapper(
-        () async {
-          // We have to ask the page if we may pop.
-          var mayPop = true;
-          // Only perform a call to the controllers mayPop if the app is not
-          // busy.
-          if (!isBusy) {
-            // Find the controller
-            final controller = availableScreens.find(screenId).getController();
-            if (controller is RubigoControllerMixin<SCREEN_ID>) {
-              // If the controller implements RubigoControllerMixin, call
-              // mayPop.
-              unawaited(_logNavigation('Call mayPop().'));
-              mayPop = await controller.mayPop();
-              unawaited(_logNavigation('The controller returned "$mayPop"'));
-            } else {
-              // Otherwise the screen may always be popped
-              unawaited(
-                _logNavigation('The controller is not a RubigoControllerMixin, '
-                    'mayPop is always "true"'),
-              );
-            }
-            if (mayPop) {
-              // Call pop to start navigating and await until it's done. Do not
-              // notifyListeners, we will do that here below.
-              await _pop(notifyListeners: false);
-            }
-          }
-          // Always call notifyListeners, as we can not risk that our screen
-          // stack and flutters screen stack are not in sync.
-          _rubigoStackManager.updateScreens();
-        },
-      );
-    },
   );
-
-//endregion
 }
+//endregion
 
 /// This class groups al navigation functions, that are intended to be called
 /// on a user action. Each function will be ignored if the app is busy.
@@ -290,26 +280,26 @@ class Ui<SCREEN_ID extends Enum> {
     required this.push,
     required this.replaceStack,
     required this.remove,
-    required this.handleBackEvent,
   });
 
-  /// Use this function when the pop is user initiated.
+  /// Use this function when the pop is initiated by the user.
   final Future<void> Function() pop;
 
-  /// Use this function when the popTo is user initiated.
+  /// Use this function when the popTo is initiated by the user.
   final Future<void> Function(SCREEN_ID screenId) popTo;
 
-  /// Use this function when the push is user initiated.
+  /// Use this function when the push is initiated by the user.
   final Future<void> Function(SCREEN_ID screenId) push;
 
-  /// Use this function when the replaceStack is user initiated.
+  /// Use this function when the replaceStack is initiated by the user.
   final Future<void> Function(List<SCREEN_ID> screens) replaceStack;
 
-  /// Use this function when the remove is user initiated.
+  /// Use this function when the remove is initiated by the user.
   final void Function(SCREEN_ID screenId) remove;
-
-  /// Use this function when the handleBackEvent is user initiated.
-  final Future<void> Function() handleBackEvent;
 }
 
-Future<void> _defaultLogNavigation(String message) async => debugPrint(message);
+Future<void> _defaultLogNavigation(String message) async {
+  if (kDebugMode) {
+    debugPrint(message);
+  }
+}

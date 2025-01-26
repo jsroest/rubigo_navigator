@@ -28,7 +28,7 @@ class RubigoPopScope extends StatelessWidget {
         if (didPop) {
           return;
         }
-        unawaited(rubigoRouter.ui.handleBackEvent());
+        unawaited(rubigoRouter.ui.pop());
       },
       child: child,
     );
