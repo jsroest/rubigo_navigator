@@ -10,13 +10,15 @@ import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 /// A router based on [RubigoScreen]'s.
 /// * Use the init function to initialize your app. When the initialization is
 /// done, you must return the first screen of the app.
-/// * During the initialisation the screen passed to splashScreenId is shown.
-/// * Use [RubigoRouter.prog].push, [RubigoRouter.prog].pop,
-/// [RubigoRouter.prog].popTo, [RubigoRouter.prog].replaceStack and
-/// [RubigoRouter.prog].remove to alter the stack in any way you like.
-/// * You can use the [RubigoBusyService] to handle situations where the app is
-/// busy and not ready for user actions/input. During navigation, the
-/// automatically marked busy.
+/// * During the initialisation a splashscreen is shown.
+/// * Use the navigation functions in [RubigoRouter.prog] when you want to
+/// change the stack.
+/// * Use the navigation functions in [RubigoRouter.ui] when you want to change
+/// the stack, but the action is initiated by the user. The call is ignored
+/// when the app is busy. See [RubigoBusyService].
+/// * During navigation, the app is automatically marked as busy, but you can
+/// set the app as busy by wrapping your code in
+/// [RubigoBusyService.busyWrapper].
 class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// Creates a RubigoRouter
   RubigoRouter({
