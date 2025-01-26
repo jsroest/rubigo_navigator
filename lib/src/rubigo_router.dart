@@ -192,7 +192,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      return _pop(notifyListeners: true);
+      await _pop(notifyListeners: true);
     },
     popTo: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
@@ -202,7 +202,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      return popTo(screenId);
+      await popTo(screenId);
     },
     push: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
@@ -212,7 +212,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      return push(screenId);
+      await push(screenId);
     },
     replaceStack: (List<SCREEN_ID> screens) async {
       if (busyService.isBusy) {
@@ -223,7 +223,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      return replaceStack(screens);
+      await replaceStack(screens);
     },
     remove: (SCREEN_ID screenId) {
       if (busyService.isBusy) {
