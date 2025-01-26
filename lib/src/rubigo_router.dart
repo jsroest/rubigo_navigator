@@ -186,7 +186,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 //region User Initiated (UI) navigation functions
   /// Use these navigation functions everywhere the origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
-  late final Ui<SCREEN_ID> ui = Ui<SCREEN_ID>(
+  late final NavigationFunctions<SCREEN_ID> ui = NavigationFunctions<SCREEN_ID>(
     pop: () async {
       // First, take notice if the app is busy while this function was called.
       final isBusy = busyService.isBusy;
@@ -272,9 +272,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
 /// This class groups al navigation functions, that are intended to be called
 /// on a user action. Each function will be ignored if the app is busy.
-class Ui<SCREEN_ID extends Enum> {
+class NavigationFunctions<SCREEN_ID extends Enum> {
   /// Creates a Ui class
-  Ui({
+  NavigationFunctions({
     required this.pop,
     required this.popTo,
     required this.push,

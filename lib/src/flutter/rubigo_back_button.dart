@@ -3,7 +3,7 @@ import 'package:rubigo_router/rubigo_router.dart';
 
 /// Use this function on [AppBar.leading] to show a standard BackButton (when
 /// appropriate) that delegates onPressed to the [RubigoRouter]'s
-/// [Ui.pop].
+/// ui pop functions.
 Widget? rubigoBackButton(
   BuildContext context,
   RubigoRouter rubigoRouter,
