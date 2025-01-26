@@ -25,7 +25,7 @@ class S220Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('mayPop on back button'),
+            const Text('mayPop on ui.pop'),
             ValueListenableBuilder(
               valueListenable: controller.backButtonAllowed,
               builder: (context, value, _) => Switch(
@@ -73,11 +73,11 @@ class S220Screen extends StatelessWidget
             ),
             ElevatedButton(
               onPressed: controller.toSet1,
-              child: const Text('Replace stack with set 1'),
+              child: const Text('Replace set 1'),
             ),
             ElevatedButton(
               onPressed: controller.toSet3,
-              child: const Text('Replace stack with set 3'),
+              child: const Text('Replace set 3'),
             ),
           ],
         ),

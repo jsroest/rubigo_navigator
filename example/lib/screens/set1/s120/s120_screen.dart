@@ -22,8 +22,10 @@ class S120Screen extends StatelessWidget
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Wrap(
+          direction: Axis.vertical,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 4,
           children: [
             const Text('Allow back gesture'),
             ValueListenableBuilder(
@@ -33,7 +35,7 @@ class S120Screen extends StatelessWidget
                 onChanged: (value) => controller.allowBackGesture.value = value,
               ),
             ),
-            const Text('mayPop on back button'),
+            const Text('mayPop ui.pop'),
             ValueListenableBuilder(
               valueListenable: controller.backButtonAllowed,
               builder: (context, value, _) => Switch(
@@ -81,11 +83,11 @@ class S120Screen extends StatelessWidget
             ),
             ElevatedButton(
               onPressed: controller.toSet2,
-              child: const Text('Replace stack with set 2'),
+              child: const Text('Replace set 2'),
             ),
             ElevatedButton(
               onPressed: controller.toSet3,
-              child: const Text('Replace stack with set 3'),
+              child: const Text('Replace set 3'),
             ),
           ],
         ),
