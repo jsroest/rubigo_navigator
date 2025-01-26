@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
-import 'package:rubigo_router/src/stack_manager/last_page_popped_exception.dart';
-import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
+import 'package:rubigo_router/src/rubigo_router/stack_manager/last_page_popped_exception.dart';
+import 'package:rubigo_router/src/rubigo_router/stack_manager/rubigo_stack_manager.dart';
 
 /// A router based on [RubigoScreen]'s.
 /// * Use the init function to initialize your app. When the initialization is

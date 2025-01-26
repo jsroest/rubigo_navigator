@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
-import 'package:rubigo_router/src/stack_manager/last_page_popped_exception.dart';
-import 'package:rubigo_router/src/stack_manager/navigation_events/navigation_events.dart';
+import 'package:rubigo_router/src/rubigo_router/stack_manager/last_page_popped_exception.dart';
+import 'package:rubigo_router/src/rubigo_router/stack_manager/navigation_events.dart';
 
 /// This manages the screen stack. It provides functions to manipulate the stack
 /// and it fires events like [RubigoControllerMixin.onTop] and

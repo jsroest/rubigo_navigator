@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:rubigo_router/src/flutter/busy/rubigo_busy_event.dart';
+import 'package:rubigo_router/src/rubigo_busy_service/rubigo_busy_event.dart';
 
 void main() {
   test(

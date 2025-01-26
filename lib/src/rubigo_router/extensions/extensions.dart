@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -41,4 +42,19 @@ extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
   /// Converts a list of screenId to a breadcrumbs String.
   /// S100→S200→S300
   String breadCrumbs() => map((e) => e.name).join('→').toUpperCase();
+}
+
+/// Extensions on [RubigoScreen]
+extension ExtensionOnRubigoScreen on RubigoScreen {
+  /// Converts a [RubigoScreen] to a [MaterialPage]
+  MaterialPage<void> toMaterialPage() => MaterialPage(
+        key: pageKey,
+        child: screenWidget,
+      );
+
+  /// Converts a [RubigoScreen] to a [CupertinoPage]
+  CupertinoPage<void> toCupertinoPage() => CupertinoPage(
+        key: pageKey,
+        child: screenWidget,
+      );
 }

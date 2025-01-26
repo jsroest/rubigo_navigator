@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
-import 'package:rubigo_router/src/flutter/busy/rubigo_busy_event.dart';
+import 'package:rubigo_router/src/rubigo_busy_service/rubigo_busy_event.dart';
 
 /// This service is used to keep track if the application is busy.
 class RubigoBusyService {

@@ -1,4 +1,4 @@
-import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
+import 'package:rubigo_router/src/rubigo_router/stack_manager/rubigo_stack_manager.dart';
 
 /// Base class to distinguish the different navigation events internally
 /// It is only used by the [RubigoStackManager._navigate] function.
