@@ -73,9 +73,9 @@ void main() {
     }
   }
 
-  test(
+  testWidgets(
     'Test controller events',
-    () async {
+    (tester) async {
       //region Startup: SplashScreen
       expect(
         screenStack(),
@@ -530,8 +530,17 @@ void main() {
       //region pop() => Exception
       clearCallBackHistory();
       expect(screenStack().hasScreenBelow(), false);
+      var message = '';
+
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (value) async {
+          message = value.method;
+          return null;
+        },
+      );
       await rubigoRouter.prog.pop();
-      //TODO: Test if the SystemNavigator.pop() is actually called.
+      expect(message, 'SystemNavigator.pop');
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
 
