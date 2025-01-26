@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S120Controller with RubigoControllerMixin<Screens> {
+  final allowBackGesture = ValueNotifier(false);
+
   final backButtonAllowed = ValueNotifier(true);
 
   @override

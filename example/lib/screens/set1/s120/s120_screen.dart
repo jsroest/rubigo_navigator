@@ -13,7 +13,7 @@ class S120Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final scaffold = Scaffold(
       appBar: AppBar(
         leading: rubigoBackButton(context, controller.rubigoRouter),
         title: AppBarTitleBreadCrumbs(
@@ -25,6 +25,14 @@ class S120Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text('Allow back gesture'),
+            ValueListenableBuilder(
+              valueListenable: controller.allowBackGesture,
+              builder: (context, value, _) => Switch(
+                value: value,
+                onChanged: (value) => controller.allowBackGesture.value = value,
+              ),
+            ),
             const Text('mayPop on back button'),
             ValueListenableBuilder(
               valueListenable: controller.backButtonAllowed,
@@ -82,6 +90,20 @@ class S120Screen extends StatelessWidget
           ],
         ),
       ),
+    );
+    return ValueListenableBuilder(
+      valueListenable: controller.allowBackGesture,
+      child: scaffold,
+      builder: (context, allowBackGesture, child) {
+        if (allowBackGesture) {
+          return child!;
+        } else {
+          return RubigoPopScope(
+            rubigoRouter: controller.rubigoRouter,
+            child: child!,
+          );
+        }
+      },
     );
   }
 }
