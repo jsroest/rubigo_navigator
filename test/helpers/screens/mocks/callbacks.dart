@@ -26,7 +26,7 @@ class MayPopCallBack extends CallBack {
 class _ChangeInfoCallBack<SCREEN_ID extends Enum> extends CallBack {
   _ChangeInfoCallBack(this.changeInfo);
 
-  final RubigoChangeInfo<SCREEN_ID> changeInfo;
+  final RubigoChangeInfo<SCREEN_ID>? changeInfo;
 
   @override
   bool operator ==(Object other) {
@@ -47,4 +47,8 @@ class OnTopCallBack extends _ChangeInfoCallBack {
 
 class WillShowCallBack extends _ChangeInfoCallBack {
   WillShowCallBack(super.changeInfo);
+}
+
+class RemovedFromStackCallBack extends _ChangeInfoCallBack {
+  RemovedFromStackCallBack() : super(null);
 }

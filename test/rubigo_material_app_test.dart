@@ -145,7 +145,7 @@ void main() {
       () async {
         await rubigoRouter.busyService.busyWrapper(
           () async {
-            rubigoRouter.ui.remove(Screens.s200);
+            await rubigoRouter.ui.remove(Screens.s200);
             await tester.pumpAndSettle();
           },
         );
@@ -157,7 +157,7 @@ void main() {
       Screens.s200,
       Screens.s300,
     ]);
-    rubigoRouter.ui.remove(Screens.s200);
+    await rubigoRouter.ui.remove(Screens.s200);
     await tester.pumpAndSettle();
     expect(rubigoRouter.screens.value.toListOfScreenId(), [
       Screens.s100,

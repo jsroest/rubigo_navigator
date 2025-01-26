@@ -31,5 +31,11 @@ class MockController<SCREEN_ID extends Enum>
     return super.willShow(changeInfo);
   }
 
+  @override
+  Future<void> removedFromStack() {
+    callBackHistory.add(RemovedFromStackCallBack());
+    return super.removedFromStack();
+  }
+
   final List<CallBack> callBackHistory = [];
 }

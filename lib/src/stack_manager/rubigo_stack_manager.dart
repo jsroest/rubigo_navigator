@@ -49,7 +49,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   /// Remove a screen silently from the stack. This call can not generate more
   /// navigation calls, because it does not fire any events.
-  void remove(SCREEN_ID screenId) {
+  Future<void> remove(SCREEN_ID screenId) async {
     final index = screenStack.indexWhere((e) => e.screenId == screenId);
     if (index == -1) {
       throw UnsupportedError(
@@ -58,7 +58,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       );
     }
     screenStack.removeAt(index);
-    updateScreens();
+    await updateScreens();
   }
 
   //region _navigate
@@ -93,7 +93,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
         await controller.willShow(_changeInfo);
         _inWillShow = false;
       }
-      updateScreens();
+      await updateScreens();
     }
   }
 
@@ -193,11 +193,20 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
   //endregion navigate
 
   /// Force Flutters [Navigator] to match our screen stack.
-  void updateScreens() {
+  Future<void> updateScreens() async {
+    final oldScreenSet = screens.value.toSet();
+    final newScreenSet = screenStack.toSet();
     // The ValueNotifier always calls it's listeners when we assign an new copy
     // of the stack. Also if the contents are logically the same. In this case
     // this is what we want, specifically in case of handling onDidRemovePage.
     screens.value = [...screenStack];
+    // Inform al controllers that were removed from the stack.
+    for (final screen in oldScreenSet.difference(newScreenSet)) {
+      final controller = screen.getController();
+      if (controller is RubigoControllerMixin<SCREEN_ID>) {
+        await controller.removedFromStack();
+      }
+    }
     unawaited(_logNavigation(screens.value.toListOfScreenId().breadCrumbs()));
   }
 }

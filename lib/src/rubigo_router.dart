@@ -132,7 +132,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     // This is a bit of defencive programming, but at this point I'm more
     // worried to miss an edge case than to rebuild the UI one time too many in
     // certain cases.
-    _rubigoStackManager.updateScreens();
+    await _rubigoStackManager.updateScreens();
   }
 
 //endregion
@@ -178,11 +178,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     },
 
     /// Remove the screen with [screenId] silently from the stack.
-    remove: (SCREEN_ID screenId) {
+    remove: (SCREEN_ID screenId) async {
       unawaited(
         _logNavigation('remove(${screenId.name}) called.'),
       );
-      _rubigoStackManager.remove(screenId);
+      await _rubigoStackManager.remove(screenId);
     },
   );
 
@@ -261,7 +261,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       }
       await prog.replaceStack(screens);
     },
-    remove: (SCREEN_ID screenId) {
+    remove: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
         unawaited(
           _logNavigation('remove(${screenId.name}) was called by the user, '
@@ -269,7 +269,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      prog.remove(screenId);
+      await prog.remove(screenId);
     },
   );
 //endregion
@@ -300,7 +300,7 @@ class NavigationFunctions<SCREEN_ID extends Enum> {
   final Future<void> Function(List<SCREEN_ID> screens) replaceStack;
 
   /// Use this function when the remove is initiated by the user.
-  final void Function(SCREEN_ID screenId) remove;
+  final Future<void> Function(SCREEN_ID screenId) remove;
 }
 
 Future<void> _defaultLogNavigation(String message) async {

@@ -23,4 +23,9 @@ mixin RubigoControllerMixin<SCREEN_ID extends Enum> {
   /// back gestures, but that requires a synchronous callback. It is what it is,
   /// [See predictive-back-gesture](https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture) is not compatible with asynchronous functions.
   Future<bool> mayPop() => Future.value(true);
+
+  /// With this function the controller is informed that it is removed from the
+  /// stack. The controller can use it to clean up or free memory. It is NOT
+  /// allowed to navigate further in this function.
+  Future<void> removedFromStack() async {}
 }

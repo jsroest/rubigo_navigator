@@ -24,11 +24,11 @@ class S320Controller with RubigoControllerMixin<Screens> {
   }
 
   Future<void> onRemoveS310ButtonPressed() async {
-    rubigoRouter.ui.remove(Screens.s310);
+    await rubigoRouter.ui.remove(Screens.s310);
   }
 
   Future<void> onRemoveS300ButtonPressed() async {
-    rubigoRouter.ui.remove(Screens.s300);
+    await rubigoRouter.ui.remove(Screens.s300);
   }
 
   Future<void> resetStack() async {
