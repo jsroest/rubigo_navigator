@@ -53,7 +53,7 @@ void main() {
   void checkCallBackHistory({
     required Enum screenId,
     required List<CallBack> expectedCallBackHistory,
-    List<Enum>? removedScreens,
+    required List<Enum> removedScreens,
   }) {
     for (final screen in availableScreens) {
       final controller = screen.getController();
@@ -65,7 +65,7 @@ void main() {
       }
       if (screen.screenId == screenId) {
         expect(callBackHistory, expectedCallBackHistory);
-      } else if (removedScreens?.contains(screen.screenId) ?? false) {
+      } else if (removedScreens.contains(screen.screenId)) {
         expect(callBackHistory, <CallBack>[RemovedFromStackCallBack()]);
       } else {
         expect(callBackHistory.length, 0);
@@ -85,6 +85,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.splashScreen,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -158,6 +159,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s200,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -177,6 +179,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s200,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
 
       expect(rubigoRouter.busyService.isBusy, false);
@@ -244,6 +247,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s200,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -278,6 +282,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s300,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -313,6 +318,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s400,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -400,6 +406,7 @@ void main() {
         checkCallBackHistory(
           screenId: Screens.s400,
           expectedCallBackHistory: expectedCallBackHistory,
+          removedScreens: [],
         );
       });
       expect(rubigoRouter.busyService.isBusy, false);
@@ -420,6 +427,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s700,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -478,6 +486,7 @@ void main() {
       checkCallBackHistory(
         screenId: Screens.s400,
         expectedCallBackHistory: expectedCallBackHistory,
+        removedScreens: [],
       );
 
       expect(rubigoRouter.busyService.isBusy, false);
