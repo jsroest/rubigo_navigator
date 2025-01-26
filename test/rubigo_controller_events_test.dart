@@ -120,7 +120,7 @@ void main() {
 
       //region Push(S200): S100=>S200
       clearCallBackHistory();
-      await rubigoRouter.push(Screens.s200);
+      await rubigoRouter.prog.push(Screens.s200);
       expect(
         screenStack(),
         [
@@ -176,7 +176,7 @@ void main() {
 
       //region Pop(S200): S100
       clearCallBackHistory();
-      await rubigoRouter.pop();
+      await rubigoRouter.prog.pop();
       expect(
         screenStack(),
         [
@@ -205,7 +205,7 @@ void main() {
 
       //region Push(S200): S100=>S200
       clearCallBackHistory();
-      await rubigoRouter.push(Screens.s200);
+      await rubigoRouter.prog.push(Screens.s200);
       expect(
         screenStack(),
         [
@@ -237,7 +237,7 @@ void main() {
 
       //region Push(S300): S100=>S200=>S300
       clearCallBackHistory();
-      await rubigoRouter.push(Screens.s300);
+      await rubigoRouter.prog.push(Screens.s300);
       expect(
         screenStack(),
         [
@@ -268,7 +268,7 @@ void main() {
 
       //region Push(S400): S100=>S200=>S300=>S400
       clearCallBackHistory();
-      await rubigoRouter.push(Screens.s400);
+      await rubigoRouter.prog.push(Screens.s400);
       expect(
         screenStack(),
         [
@@ -300,7 +300,7 @@ void main() {
 
       //region PopTo(S200): S100=>S200
       clearCallBackHistory();
-      await rubigoRouter.popTo(Screens.s200);
+      await rubigoRouter.prog.popTo(Screens.s200);
       expect(
         screenStack(),
         [
@@ -332,7 +332,7 @@ void main() {
 
       //region ReplaceStack([S300, S400]): S300=> S400
       clearCallBackHistory();
-      await rubigoRouter.replaceStack([Screens.s300, Screens.s400]);
+      await rubigoRouter.prog.replaceStack([Screens.s300, Screens.s400]);
       expect(
         screenStack(),
         [
@@ -381,7 +381,7 @@ void main() {
 
       //region Push(S700): S300=>S400=>S700
       clearCallBackHistory();
-      await rubigoRouter.push(Screens.s700);
+      await rubigoRouter.prog.push(Screens.s700);
       expect(
         screenStack(),
         [
@@ -401,7 +401,7 @@ void main() {
       clearCallBackHistory();
       expect(screenStack().containsScreenBelow(Screens.s500), false);
       await expectLater(
-        () async => rubigoRouter.popTo(Screens.s500),
+        () async => rubigoRouter.prog.popTo(Screens.s500),
         throwsA(
           predicate(
             (e) =>
@@ -456,7 +456,7 @@ void main() {
 
       //region remove(S300)
       clearCallBackHistory();
-      rubigoRouter.remove(Screens.s300);
+      rubigoRouter.prog.remove(Screens.s300);
       expect(
         screenStack(),
         [
@@ -471,7 +471,7 @@ void main() {
       //region remove(S300) => Exception
       clearCallBackHistory();
       expect(
-        () => rubigoRouter.remove(Screens.s300),
+        () => rubigoRouter.prog.remove(Screens.s300),
         throwsA(
           predicate(
             (e) =>
@@ -488,7 +488,7 @@ void main() {
       //region pop() => Exception
       clearCallBackHistory();
       expect(screenStack().hasScreenBelow(), false);
-      await rubigoRouter.pop();
+      await rubigoRouter.prog.pop();
       //TODO: Test if the SystemNavigator.pop() is actually called.
       expect(rubigoRouter.busyService.isBusy, false);
       //endregion
@@ -496,7 +496,7 @@ void main() {
       //region Push(S600) => Exception
       clearCallBackHistory();
       await expectLater(
-        () async => rubigoRouter.push(Screens.s600),
+        () async => rubigoRouter.prog.push(Screens.s600),
         throwsA(
           predicate(
             (e) =>

@@ -12,7 +12,7 @@ class S110Controller with RubigoControllerMixin<Screens> {
       // perfect fit for Line of Business apps
       await Future<void>.delayed(const Duration(milliseconds: 500));
       if (!await areYouSure(rubigoRouter)) {
-        await rubigoRouter.pop();
+        await rubigoRouter.prog.pop();
       }
     }
   }

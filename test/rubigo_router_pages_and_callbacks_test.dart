@@ -34,8 +34,8 @@ void main() {
       await rubigoRouter.init(
         initAndGetFirstScreen: () async => Screens.s100,
       );
-      await rubigoRouter.push(Screens.s200);
-      await rubigoRouter.push(Screens.s300);
+      await rubigoRouter.prog.push(Screens.s200);
+      await rubigoRouter.prog.push(Screens.s300);
     },
   );
 

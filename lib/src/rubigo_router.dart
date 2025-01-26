@@ -11,9 +11,9 @@ import 'package:rubigo_router/src/stack_manager/rubigo_stack_manager.dart';
 /// * Use the init function to initialize your app. When the initialization is
 /// done, you must return the first screen of the app.
 /// * During the initialisation the screen passed to splashScreenId is shown.
-/// * Use [RubigoRouter.push], [RubigoRouter.pop], [RubigoRouter.popTo],
-/// [RubigoRouter.replaceStack] and [RubigoRouter.remove] to alter the stack in
-/// any way you like.
+/// * Use [RubigoRouter.prog].push, [RubigoRouter.prog].pop,
+/// [RubigoRouter.prog].popTo, [RubigoRouter.prog].replaceStack and
+/// [RubigoRouter.prog].remove to alter the stack in any way you like.
 /// * You can use the [RubigoBusyService] to handle situations where the app is
 /// busy and not ready for user actions/input. During navigation, the
 /// automatically marked busy.
@@ -63,7 +63,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         screenWidget.controller = controller;
       }
     }
-    await replaceStack([firstScreen]);
+    await prog.replaceStack([firstScreen]);
   }
 
   /// This parameter contains all screens that are available for this router.
@@ -137,54 +137,59 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
 //endregion
 
-// region Programmatic navigation functions
-  /// Pops the current screen from the stack
-  Future<void> pop() async {
-    unawaited(_logNavigation('pop() called.'));
-    try {
-      await busyService.busyWrapper(_rubigoStackManager.pop);
-    } on LastPagePoppedException catch (e) {
-      unawaited(_logNavigation(e.message));
-      unawaited(_logNavigation('The app is closed.'));
-      unawaited(SystemNavigator.pop());
-    }
-  }
+  // region Program initiated (prog) navigation functions
+  /// Use these navigation functions everywhere when origin is programmatic.
+  /// these calls will not be ignored if the app is busy.
+  late final NavigationFunctions<SCREEN_ID> prog =
+      NavigationFunctions<SCREEN_ID>(
+    /// Pops the current screen from the stack
+    pop: () async {
+      unawaited(_logNavigation('pop() called.'));
+      try {
+        await busyService.busyWrapper(_rubigoStackManager.pop);
+      } on LastPagePoppedException catch (e) {
+        unawaited(_logNavigation(e.message));
+        unawaited(_logNavigation('The app is closed.'));
+        unawaited(SystemNavigator.pop());
+      }
+    },
 
-  /// Pop directly to the screen with [screenId].
-  Future<void> popTo(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('popTo(${screenId.name}) called.'));
-    await busyService.busyWrapper(() => _rubigoStackManager.popTo(screenId));
-  }
+    /// Pop directly to the screen with [screenId].
+    popTo: (SCREEN_ID screenId) async {
+      unawaited(_logNavigation('popTo(${screenId.name}) called.'));
+      await busyService.busyWrapper(() => _rubigoStackManager.popTo(screenId));
+    },
 
-  /// Push screen with [screenId] on the stack.
-  Future<void> push(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('push(${screenId.name}) called.'));
-    await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
-  }
+    /// Push screen with [screenId] on the stack.
+    push: (SCREEN_ID screenId) async {
+      unawaited(_logNavigation('push(${screenId.name}) called.'));
+      await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
+    },
 
-  /// Replace the current screen stack with [screens].
-  Future<void> replaceStack(List<SCREEN_ID> screens) async {
-    unawaited(
-      _logNavigation(
-        'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
-      ),
-    );
-    await busyService
-        .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
-  }
+    /// Replace the current screen stack with [screens].
+    replaceStack: (List<SCREEN_ID> screens) async {
+      unawaited(
+        _logNavigation(
+          'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
+        ),
+      );
+      await busyService
+          .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
+    },
 
-  /// Remove the screen with [screenId] silently from the stack.
-  void remove(SCREEN_ID screenId) {
-    unawaited(
-      _logNavigation('remove(${screenId.name}) called.'),
-    );
-    _rubigoStackManager.remove(screenId);
-  }
+    /// Remove the screen with [screenId] silently from the stack.
+    remove: (SCREEN_ID screenId) {
+      unawaited(
+        _logNavigation('remove(${screenId.name}) called.'),
+      );
+      _rubigoStackManager.remove(screenId);
+    },
+  );
 
-//endregion
+  //endregion
 
-//region User Initiated (UI) navigation functions
-  /// Use these navigation functions everywhere the origin is user initiated.
+  //region User initiated (ui) navigation functions
+  /// Use these navigation functions everywhere when origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
   late final NavigationFunctions<SCREEN_ID> ui = NavigationFunctions<SCREEN_ID>(
     pop: () async {
@@ -220,7 +225,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
             );
           }
           if (mayPop) {
-            await pop();
+            await prog.pop();
           }
         },
       );
@@ -233,7 +238,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      await popTo(screenId);
+      await prog.popTo(screenId);
     },
     push: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
@@ -243,7 +248,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      await push(screenId);
+      await prog.push(screenId);
     },
     replaceStack: (List<SCREEN_ID> screens) async {
       if (busyService.isBusy) {
@@ -254,7 +259,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      await replaceStack(screens);
+      await prog.replaceStack(screens);
     },
     remove: (SCREEN_ID screenId) {
       if (busyService.isBusy) {
@@ -264,14 +269,14 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         );
         return;
       }
-      remove(screenId);
+      prog.remove(screenId);
     },
   );
-}
 //endregion
+}
 
-/// This class groups al navigation functions, that are intended to be called
-/// on a user action. Each function will be ignored if the app is busy.
+/// This class groups navigation functions together, like for "ui" and "prog"
+/// use. A class is used for this, because dart lacks namespaces.
 class NavigationFunctions<SCREEN_ID extends Enum> {
   /// Creates a Ui class
   NavigationFunctions({
