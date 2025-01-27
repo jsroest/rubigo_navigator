@@ -53,6 +53,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   //region _navigate
   bool _inWillShow = false;
+  bool _inRemovedFromStack = false;
   int _eventCounter = 0;
 
   RubigoChangeInfo<SCREEN_ID>? _changeInfo;
@@ -63,7 +64,14 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     }
     if (_inWillShow) {
       throw UnsupportedError(
-        'Developer: you may not Push or Pop in the willShow method.',
+        'Developer: you may not call push, pop, popTo, replaceStack or remove '
+        'in the willShow method.',
+      );
+    }
+    if (_inRemovedFromStack) {
+      throw UnsupportedError(
+        'Developer: you may not call push, pop, popTo, replaceStack or remove '
+        'in the removedFromStack method.',
       );
     }
     switch (navigationEvent) {
@@ -217,7 +225,9 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     for (final screen in oldScreenSet.difference(newScreenSet)) {
       final controller = screen.getController();
       if (controller is RubigoControllerMixin<SCREEN_ID>) {
+        _inRemovedFromStack = true;
         await controller.removedFromStack();
+        _inRemovedFromStack = false;
       }
     }
     //TODO: Add a check if the developer does not navigate in removedFromStack

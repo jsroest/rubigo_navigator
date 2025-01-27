@@ -553,8 +553,8 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'Developer: you may not Push or Pop in the willShow '
-                        'method.',
+                    'Developer: you may not call push, pop, popTo, '
+                        'replaceStack or remove in the willShow method.',
           ),
         ),
       );
