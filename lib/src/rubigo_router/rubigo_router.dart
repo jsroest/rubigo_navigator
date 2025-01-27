@@ -107,11 +107,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       );
     }
     final removedScreenId = pageKey.value;
-    unawaited(
-      _logNavigation(
-        'onDidRemovePage(${removedScreenId.name}) called by Flutter framework.',
-      ),
-    );
     final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
     if (removedScreenId != lastScreenId) {
       // With this new event, we also receive this event when pages are removed
@@ -121,12 +116,17 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       // valid.
       unawaited(
         _logNavigation(
-          'The last page on the stack is ${lastScreenId.name}, therefore '
-          'we are ignoring this call.',
+          'onDidRemovePage(${removedScreenId.name}) called. Last page is '
+          '${lastScreenId.name}, ignoring.',
         ),
       );
       return;
     }
+    unawaited(
+      _logNavigation(
+        'onDidRemovePage(${removedScreenId.name}) called.',
+      ),
+    );
     // handle the back event.
     await ui.pop();
     // Always call notifyListeners, as we can not risk that our screen
