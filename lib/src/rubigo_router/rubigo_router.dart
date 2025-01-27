@@ -128,13 +128,14 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       ),
     );
     // handle the back event.
+    var updateScreensIsCalled = false;
+    void callback() => updateScreensIsCalled = true;
+    _rubigoStackManager.updateScreensCallBack.add(callback);
     await ui.pop();
-    // Always call notifyListeners, as we can not risk that our screen
-    // stack and flutters screen stack are not in sync.
-    // This is a bit of defencive programming, but at this point I'm more
-    // worried to miss an edge case than to rebuild the UI one time too many in
-    // certain cases.
-    await _rubigoStackManager.updateScreens();
+    if (!updateScreensIsCalled) {
+      await _rubigoStackManager.updateScreens();
+    }
+    _rubigoStackManager.updateScreensCallBack.remove(callback);
   }
 
 //endregion

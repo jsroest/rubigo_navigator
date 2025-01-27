@@ -222,5 +222,12 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     }
     //TODO: Add a check if the developer does not navigate in removedFromStack
     unawaited(_logNavigation(screens.value.toListOfScreenId().breadCrumbs()));
+    for (final callBack in updateScreensCallBack) {
+      callBack.call();
+    }
   }
+
+  /// Register a callback in this list, if you want to be notified if the
+  /// updateScreens function is called.
+  final updateScreensCallBack = <VoidCallback>[];
 }
