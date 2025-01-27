@@ -38,3 +38,12 @@ class ReplaceStack<SCREEN_ID extends Enum> extends NavigationEvent<SCREEN_ID> {
   /// The screenStack to replace the current stack with.
   final List<SCREEN_ID> screenStack;
 }
+
+/// Defines a Remove event
+class Remove<SCREEN_ID extends Enum> extends NavigationEvent<SCREEN_ID> {
+  /// Creates a Remove object.
+  Remove(this.screenId);
+
+  /// The screenId to remove.
+  final SCREEN_ID screenId;
+}

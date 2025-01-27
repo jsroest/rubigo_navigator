@@ -49,25 +49,18 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   /// Remove a screen silently from the stack. This call can not generate more
   /// navigation calls, because it does not fire any events.
-  Future<void> remove(SCREEN_ID screenId) async {
-    final index = screenStack.indexWhere((e) => e.screenId == screenId);
-    if (index == -1) {
-      throw UnsupportedError(
-        'Developer: You can only remove screens that exist on the stack '
-        '(${screenId.name} not found).',
-      );
-    }
-    screenStack.removeAt(index);
-    await updateScreens();
-  }
+  Future<void> remove(SCREEN_ID screenId) => _navigate(Remove(screenId));
 
   //region _navigate
   bool _inWillShow = false;
   int _eventCounter = 0;
 
-  late RubigoChangeInfo<SCREEN_ID> _changeInfo;
+  RubigoChangeInfo<SCREEN_ID>? _changeInfo;
 
   Future<void> _navigate(NavigationEvent<SCREEN_ID> navigationEvent) async {
+    if (_eventCounter == 0) {
+      _changeInfo = null;
+    }
     if (_inWillShow) {
       throw UnsupportedError(
         'Developer: you may not Push or Pop in the willShow method.',
@@ -82,16 +75,21 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
         _changeInfo = await _popTo(navigationEvent);
       case ReplaceStack<SCREEN_ID>():
         _changeInfo = await _replaceStack(navigationEvent);
+      case Remove<SCREEN_ID>():
+        _remove(navigationEvent);
     }
 
     if (_eventCounter == 0) {
       // When the eventCounter is 0, we know that no navigation functions have
       // been called in the last onTop event.
-      final controller = screenStack.last.getController();
-      if (controller is RubigoControllerMixin) {
-        _inWillShow = true;
-        await controller.willShow(_changeInfo);
-        _inWillShow = false;
+      final tmpChangeInfo = _changeInfo;
+      if (tmpChangeInfo != null) {
+        final controller = screenStack.last.getController();
+        if (controller is RubigoControllerMixin) {
+          _inWillShow = true;
+          await controller.willShow(tmpChangeInfo);
+          _inWillShow = false;
+        }
       }
       await updateScreens();
     }
@@ -188,6 +186,21 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       _eventCounter--;
     }
     return changeInfo;
+  }
+
+  void _remove(
+    Remove<SCREEN_ID> navigationEvent,
+  ) {
+    final index = screenStack.indexWhere(
+      (e) => e.screenId == navigationEvent.screenId,
+    );
+    if (index == -1) {
+      throw UnsupportedError(
+        'Developer: You can only remove screens that exist on the stack '
+        '(${navigationEvent.screenId.name} not found).',
+      );
+    }
+    screenStack.removeAt(index);
   }
 
   //endregion navigate
