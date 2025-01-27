@@ -41,14 +41,17 @@ class _ChangeInfoCallBack<SCREEN_ID extends Enum> extends CallBack {
   int get hashCode => changeInfo.hashCode;
 }
 
-class OnTopCallBack extends _ChangeInfoCallBack {
+class OnTopCallBack<SCREEN_ID extends Enum>
+    extends _ChangeInfoCallBack<SCREEN_ID> {
   OnTopCallBack(super.changeInfo);
 }
 
-class WillShowCallBack extends _ChangeInfoCallBack {
+class WillShowCallBack<SCREEN_ID extends Enum>
+    extends _ChangeInfoCallBack<SCREEN_ID> {
   WillShowCallBack(super.changeInfo);
 }
 
-class RemovedFromStackCallBack extends _ChangeInfoCallBack {
+class RemovedFromStackCallBack<SCREEN_ID extends Enum>
+    extends _ChangeInfoCallBack<SCREEN_ID> {
   RemovedFromStackCallBack() : super(null);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-import 'helpers/screens/screens.dart';
+import 'screens/screens.dart';
 
 void main() {
   final screenStacks = [
