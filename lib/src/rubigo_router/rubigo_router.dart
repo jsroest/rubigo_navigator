@@ -27,18 +27,27 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     RubigoBusyService? rubigoBusyService,
     LogNavigation? logNavigation,
     RubigoStackManager<SCREEN_ID>? rubigoStackManager,
-    // If busyService was not given, create one ourselves.
+    Future<void> Function()? onLastPagePopped,
+
+    /// If busyService was not given, create one ourselves.
   })  : busyService = rubigoBusyService ?? RubigoBusyService(),
-        // If a logNavigation function was not given, create one ourselves.
+
+        /// If a logNavigation function was not given use a default
+        /// implementation
         _logNavigation = logNavigation ?? _defaultLogNavigation,
-        // If a rubigoStackManager was not given, create one ourselves.
+
+        /// If a rubigoStackManager was not given, create one ourselves.
         _rubigoStackManager = rubigoStackManager ??
             RubigoStackManager(
               [availableScreens.find(splashScreenId)],
               availableScreens,
               logNavigation ?? _defaultLogNavigation,
-            ) {
-    //Listen to updates and notify our listener, the RouterDelegate
+            ),
+
+        /// If a onLastPagePopped function was not given use a default
+        /// implementation
+        _onLastPagePopped = onLastPagePopped ?? _defaultOnLastPagePopped {
+    ///Listen to updates and notify our listener, the RouterDelegate
     _rubigoStackManager.screens.addListener(notifyListeners);
   }
 
@@ -52,13 +61,13 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   }) async {
     final firstScreen = await initAndGetFirstScreen();
     for (final screenSet in availableScreens) {
-      // Wire up the rubigoRouter in each controller, if it is a
-      // RubigoControllerMixin
+// Wire up the rubigoRouter in each controller, if it is a
+// RubigoControllerMixin
       final controller = screenSet.getController();
       if (controller is RubigoControllerMixin<SCREEN_ID>) {
         controller.rubigoRouter = this;
       }
-      // Wire up the controller in each screenWidget that is a RubigoScreenMixin
+// Wire up the controller in each screenWidget that is a RubigoScreenMixin
       if (screenSet.screenWidget is RubigoScreenMixin &&
           controller is RubigoControllerMixin<SCREEN_ID>) {
         final screenWidget = screenSet.screenWidget as RubigoScreenMixin;
@@ -79,16 +88,18 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// specified it will default to an instance of [RubigoBusyService].
   final RubigoBusyService busyService;
 
-  //region Private
+//region Private
   final LogNavigation _logNavigation;
 
   final RubigoStackManager<SCREEN_ID> _rubigoStackManager;
 
+  final Future<void> Function() _onLastPagePopped;
+
   final _navigatorKey = GlobalKey<NavigatorState>();
 
-  //endregion
+//endregion
 
-  //region Properties to pass to Flutter's Navigator
+//region Properties to pass to Flutter's Navigator
   /// This is the navigator key that must be passed to Flutter's [Navigator].
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
@@ -109,11 +120,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     final removedScreenId = pageKey.value;
     final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
     if (removedScreenId != lastScreenId) {
-      // With this new event, we also receive this event when pages are removed
-      // programmatically from the stack. Here onDidRemovePage was (probably)
-      // initiated by the business logic, as the last page on the stack is not
-      // the one that got removed. In this case the screenStack is already
-      // valid.
+// With this new event, we also receive this event when pages are removed
+// programmatically from the stack. Here onDidRemovePage was (probably)
+// initiated by the business logic, as the last page on the stack is not
+// the one that got removed. In this case the screenStack is already
+// valid.
       unawaited(
         _logNavigation(
           'onDidRemovePage(${removedScreenId.name}) called. Last page is '
@@ -127,7 +138,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         'onDidRemovePage(${removedScreenId.name}) called.',
       ),
     );
-    // handle the back event.
+// handle the back event.
     var updateScreensIsCalled = false;
     void callback() => updateScreensIsCalled = true;
     _rubigoStackManager.updateScreensCallBack.add(callback);
@@ -140,7 +151,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
 //endregion
 
-  // region Program initiated (prog) navigation functions
+// region Program initiated (prog) navigation functions
   /// Use these navigation functions everywhere when origin is programmatic.
   /// these calls will not be ignored if the app is busy.
   late final NavigationFunctions<SCREEN_ID> prog =
@@ -151,9 +162,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       try {
         await busyService.busyWrapper(_rubigoStackManager.pop);
       } on LastPagePoppedException catch (e) {
-        unawaited(_logNavigation(e.message));
-        unawaited(_logNavigation('The app is closed.'));
-        unawaited(SystemNavigator.pop());
+        await _logNavigation(e.message);
+        await _logNavigation('The app is closed.');
+        await _onLastPagePopped();
       }
     },
 
@@ -189,16 +200,16 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     },
   );
 
-  //endregion
+//endregion
 
-  //region User initiated (ui) navigation functions
+//region User initiated (ui) navigation functions
   /// Use these navigation functions everywhere when origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
   late final NavigationFunctions<SCREEN_ID> ui = NavigationFunctions<SCREEN_ID>(
     pop: () async {
-      // First, take notice if the app is busy while this function was called.
+// First, take notice if the app is busy while this function was called.
       final isBusy = busyService.isBusy;
-      // Second, set isBusy to  true.
+// Second, set isBusy to  true.
       await busyService.busyWrapper(
         () async {
           if (isBusy) {
@@ -207,20 +218,20 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
             );
             return;
           }
-          // We have to ask the page if we may pop.
+// We have to ask the page if we may pop.
           final bool mayPop;
-          // Get the page to pop from the stack.
+// Get the page to pop from the stack.
           final screenId = _rubigoStackManager.screens.value.last.screenId;
-          // Find the controller
+// Find the controller
           final controller = availableScreens.find(screenId).getController();
           if (controller is RubigoControllerMixin<SCREEN_ID>) {
-            // If the controller implements RubigoControllerMixin, call
-            // mayPop.
+// If the controller implements RubigoControllerMixin, call
+// mayPop.
             unawaited(_logNavigation('Call mayPop().'));
             mayPop = await controller.mayPop();
             unawaited(_logNavigation('The controller returned "$mayPop"'));
           } else {
-            // Otherwise the screen may always be popped
+// Otherwise the screen may always be popped
             mayPop = true;
             unawaited(
               _logNavigation('The controller is not a RubigoControllerMixin, '
@@ -310,4 +321,8 @@ Future<void> _defaultLogNavigation(String message) async {
   if (kDebugMode) {
     debugPrint(message);
   }
+}
+
+Future<void> _defaultOnLastPagePopped() async {
+  await SystemNavigator.pop();
 }
