@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -12,7 +14,39 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
 
   @override
   Future<bool> didPopRoute() async {
-    await rubigoRouter.ui.pop();
+    unawaited(rubigoRouter.logNavigation('didPopRoute() called.'));
+    if (_currentRouteIsPage()) {
+      unawaited(rubigoRouter.logNavigation('Detected a page.'));
+      await rubigoRouter.ui.pop();
+      return true;
+    }
+    // This is for the default behaviour. For example to close a dialog when
+    // the user presses the Android hardware back button.
+    unawaited(
+      rubigoRouter.logNavigation(
+        'Detected a pageless route.\nsuper.didPopRoute() called.',
+      ),
+    );
+
+    await super.didPopRoute();
     return true;
+  }
+
+  bool _currentRouteIsPage() {
+    var isPage = false;
+    final context = rubigoRouter.navigatorKey.currentContext;
+    if (context == null) {
+      return false;
+    }
+    // https://stackoverflow.com/questions/50817086/how-to-check-which-the-current-route-is
+    Navigator.of(context).popUntil(
+      (route) {
+        if (route.settings is Page) {
+          isPage = true;
+        }
+        return true;
+      },
+    );
+    return isPage;
   }
 }

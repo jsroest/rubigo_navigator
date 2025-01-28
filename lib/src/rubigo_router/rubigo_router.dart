@@ -88,6 +88,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// specified it will default to an instance of [RubigoBusyService].
   final RubigoBusyService busyService;
 
+  /// This function can be used to log all that is related to navigation
+  LogNavigation get logNavigation => _logNavigation;
+
 //region Private
   final LogNavigation _logNavigation;
 
