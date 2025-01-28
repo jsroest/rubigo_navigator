@@ -28,7 +28,7 @@ void main() {
   // the splashScreen should not accept any user interaction.
   Future<Screens> initAndGetFirstScreen() async {
     await Future<void>.delayed(const Duration(seconds: 2));
-    return Screens.s100;
+    return Screens.s110;
   }
 
   runApp(

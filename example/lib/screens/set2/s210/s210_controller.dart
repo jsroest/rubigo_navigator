@@ -5,8 +5,4 @@ class S210Controller with RubigoControllerMixin<Screens> {
   Future<void> onS220ButtonPressed() async {
     await rubigoRouter.ui.push(Screens.s220);
   }
-
-  Future<void> onPopButtonPressed() async {
-    await rubigoRouter.ui.pop();
-  }
 }

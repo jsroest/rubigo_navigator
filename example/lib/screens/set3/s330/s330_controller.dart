@@ -1,1 +1,53 @@
-class S330Controller {}
+import 'package:example/screens/screens.dart';
+import 'package:example/screens/set1/screen_stack_backup_set1.dart';
+import 'package:example/screens/set2/screen_stack_backup_set2.dart';
+import 'package:example/screens/set3/screen_stack_backup_set3.dart';
+import 'package:flutter/widgets.dart';
+import 'package:rubigo_router/rubigo_router.dart';
+
+class S330Controller with RubigoControllerMixin<Screens> {
+  final backButtonAllowed = ValueNotifier(true);
+
+  @override
+  Future<bool> mayPop() async => backButtonAllowed.value;
+
+  Future<void> onS340ButtonPressed() async {
+    await rubigoRouter.ui.push(Screens.s340);
+  }
+
+  Future<void> onPopButtonPressed() async {
+    await rubigoRouter.ui.pop();
+  }
+
+  Future<void> onPopToS310ButtonPressed() async {
+    await rubigoRouter.ui.popTo(Screens.s310);
+  }
+
+  Future<void> onRemoveS320ButtonPressed() async {
+    await rubigoRouter.ui.remove(Screens.s320);
+  }
+
+  Future<void> onRemoveS310ButtonPressed() async {
+    await rubigoRouter.ui.remove(Screens.s310);
+  }
+
+  Future<void> resetStack() async {
+    await rubigoRouter.ui.replaceStack(
+      [
+        Screens.s310,
+        Screens.s320,
+        Screens.s330,
+      ],
+    );
+  }
+
+  Future<void> toSet1() async {
+    screenStackBackupSet3 = rubigoRouter.screens.value.toListOfScreenId();
+    await rubigoRouter.ui.replaceStack(screenStackBackupSet1);
+  }
+
+  Future<void> toSet2() async {
+    screenStackBackupSet3 = rubigoRouter.screens.value.toListOfScreenId();
+    await rubigoRouter.ui.replaceStack(screenStackBackupSet2);
+  }
+}

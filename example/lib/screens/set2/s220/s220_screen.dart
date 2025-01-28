@@ -1,4 +1,3 @@
-import 'package:example/screens/screens.dart';
 import 'package:example/screens/set2/s220/s220_controller.dart';
 import 'package:example/widgets/app_bar_title_breadcrumbs.dart';
 import 'package:example/widgets/navigate_button.dart';
@@ -25,18 +24,7 @@ class S220Screen extends StatelessWidget
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('mayPop on ui.pop'),
-            ValueListenableBuilder(
-              valueListenable: controller.backButtonAllowed,
-              builder: (context, value, _) => Switch(
-                value: value,
-                onChanged: (value) =>
-                    controller.backButtonAllowed.value = value,
-              ),
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (_) => true,
+            ElevatedButton(
               onPressed: controller.onS230ButtonPressed,
               child: const Text('Push S230'),
             ),
@@ -45,39 +33,6 @@ class S220Screen extends StatelessWidget
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: controller.onPopButtonPressed,
               child: const Text('Pop'),
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s200),
-              onPressed: controller.onPopToS200ButtonPressed,
-              child: const Text('PopTo S200'),
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s210),
-              onPressed: controller.onRemoveS210ButtonPressed,
-              child: const Text('Remove S210'),
-            ),
-            NavigateButton(
-              screens: controller.rubigoRouter.screens,
-              isEnabled: (screenStack) =>
-                  screenStack.containsScreenBelow(Screens.s200),
-              onPressed: controller.onRemoveS200ButtonPressed,
-              child: const Text('Remove S200'),
-            ),
-            ElevatedButton(
-              onPressed: controller.resetStack,
-              child: const Text('Reset stack'),
-            ),
-            ElevatedButton(
-              onPressed: controller.toSet1,
-              child: const Text('Replace set 1'),
-            ),
-            ElevatedButton(
-              onPressed: controller.toSet3,
-              child: const Text('Replace set 3'),
             ),
           ],
         ),
