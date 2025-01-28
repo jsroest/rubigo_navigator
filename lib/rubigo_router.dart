@@ -5,6 +5,7 @@ export 'src/rubigo_busy_service/rubigo_busy_service.dart';
 export 'src/rubigo_busy_service/rubigo_busy_widget.dart';
 export 'src/rubigo_holder/rubigo_holder.dart';
 export 'src/rubigo_router/extensions/extensions.dart';
+export 'src/rubigo_router/helpers/helpers.dart';
 export 'src/rubigo_router/mixins/rubigo_controller_mixin.dart';
 export 'src/rubigo_router/mixins/rubigo_screen_mixin.dart';
 export 'src/rubigo_router/rubigo_change_info.dart';

@@ -15,7 +15,7 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
   @override
   Future<bool> didPopRoute() async {
     unawaited(rubigoRouter.logNavigation('didPopRoute() called.'));
-    if (_currentRouteIsPage()) {
+    if (currentRouteIsPage(rubigoRouter)) {
       unawaited(rubigoRouter.logNavigation('Detected a page.'));
       await rubigoRouter.ui.pop();
       return true;
@@ -30,23 +30,5 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
 
     await super.didPopRoute();
     return true;
-  }
-
-  bool _currentRouteIsPage() {
-    var isPage = false;
-    final context = rubigoRouter.navigatorKey.currentContext;
-    if (context == null) {
-      return false;
-    }
-    // https://stackoverflow.com/questions/50817086/how-to-check-which-the-current-route-is
-    Navigator.of(context).popUntil(
-      (route) {
-        if (route.settings is Page) {
-          isPage = true;
-        }
-        return true;
-      },
-    );
-    return isPage;
   }
 }
