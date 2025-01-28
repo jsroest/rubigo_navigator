@@ -1,5 +1,5 @@
 import 'package:example/screens/set3/s310/s310_controller.dart';
-import 'package:example/widgets/app_bar_title_breadcrumbs.dart';
+import 'package:example/screens/widgets/sx10_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -11,28 +11,11 @@ class S310Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: rubigoBackButton(context, controller.rubigoRouter),
-          title: AppBarTitleBreadCrumbs(
-            title: 'S310',
-            screens: controller.rubigoRouter.screens,
-          ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: controller.onS320ButtonPressed,
-                child: const Text('Push S320'),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return Sx10Screen(
+      controller: controller,
+      title: 'S310',
+      onButtonPressed: controller.onS320ButtonPressed,
+      buttonText: 'Push 320',
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:example/screens/set2/s210/s210_controller.dart';
-import 'package:example/widgets/app_bar_title_breadcrumbs.dart';
+import 'package:example/screens/widgets/sx10_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -11,25 +11,11 @@ class S210Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: rubigoBackButton(context, controller.rubigoRouter),
-        title: AppBarTitleBreadCrumbs(
-          title: 'S210',
-          screens: controller.rubigoRouter.screens,
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: controller.onS220ButtonPressed,
-              child: const Text('Push S220'),
-            ),
-          ],
-        ),
-      ),
+    return Sx10Screen(
+      controller: controller,
+      title: 'S210',
+      onButtonPressed: controller.onS220ButtonPressed,
+      buttonText: 'Push 220',
     );
   }
 }
