@@ -15,4 +15,3 @@ export 'src/rubigo_router/rubigo_screen.dart';
 export 'src/rubigo_router/types/rubigo_type_definitions.dart';
 export 'src/rubigo_router/widgets/rubigo_back_button.dart';
 export 'src/rubigo_router/widgets/rubigo_material_app.dart';
-export 'src/rubigo_router/widgets/rubigo_pop_scope.dart';

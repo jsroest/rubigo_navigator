@@ -10,8 +10,8 @@ class S330Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RubigoPopScope(
-      rubigoRouter: holder.get<RubigoRouter>(),
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           leading: rubigoBackButton(context, holder.get<RubigoRouter>()),

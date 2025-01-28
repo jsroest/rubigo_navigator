@@ -11,8 +11,8 @@ class S300Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return RubigoPopScope(
-      rubigoRouter: controller.rubigoRouter,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           leading: rubigoBackButton(context, controller.rubigoRouter),

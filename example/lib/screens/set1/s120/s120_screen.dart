@@ -100,8 +100,8 @@ class S120Screen extends StatelessWidget
         if (allowBackGesture) {
           return child!;
         } else {
-          return RubigoPopScope(
-            rubigoRouter: controller.rubigoRouter,
+          return PopScope(
+            canPop: false,
             child: child!,
           );
         }
