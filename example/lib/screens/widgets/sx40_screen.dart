@@ -1,0 +1,27 @@
+import 'package:example/screens/screens.dart';
+import 'package:example/widgets/app_bar_title.dart';
+import 'package:flutter/material.dart';
+import 'package:rubigo_router/rubigo_router.dart';
+
+class Sx040Screen extends StatelessWidget {
+  const Sx040Screen({
+    required this.title,
+    super.key,
+  });
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: rubigoBackButton(context, holder.get<RubigoRouter>()),
+        title: AppBarTitle(
+          title: title,
+          subTitle: 'This screen uses no mixins',
+        ),
+      ),
+      body: Container(),
+    );
+  }
+}

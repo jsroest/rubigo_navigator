@@ -1,7 +1,5 @@
-import 'package:example/screens/screens.dart';
-import 'package:example/widgets/app_bar_title.dart';
+import 'package:example/screens/widgets/sx40_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:rubigo_router/rubigo_router.dart';
 
 class S140Screen extends StatelessWidget {
   const S140Screen({
@@ -10,15 +8,6 @@ class S140Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: rubigoBackButton(context, holder.get<RubigoRouter>()),
-        title: const AppBarTitle(
-          title: 'S140',
-          subTitle: 'This screen uses no mixins',
-        ),
-      ),
-      body: Container(),
-    );
+    return const Sx040Screen(title: 'S140');
   }
 }
