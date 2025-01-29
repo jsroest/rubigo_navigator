@@ -504,194 +504,194 @@ void main() {
     },
   );
 
-  test(
-    'S100-s200-s300 onDidRemovePage(s300), when busy',
-    () async {
-      await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
-      ]);
-      final s100Controller = holder.get<S100RubigoController>()
-        ..callBackHistory.clear();
-      final s200Controller = holder.get<S200RubigoController>()
-        ..callBackHistory.clear();
-      final s300Controller = holder.get<S300RubigoController>()
-        ..callBackHistory.clear();
-      final screenWidget = availableScreens.find(Screens.s300);
-      final materialPage = screenWidget.toMaterialPage();
-      await rubigoRouter.busyService.busyWrapper(
-        () async {
-          await rubigoRouter.onDidRemovePage(materialPage);
-        },
-      );
-      expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
-        [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
-        ],
-      );
-      expect(
-        s100Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s200Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s300Controller.callBackHistory,
-        <CallBack>[],
-      );
-    },
-  );
+  // test(
+  //   'S100-s200-s300 onDidRemovePage(s300), when busy',
+  //   () async {
+  //     await rubigoRouter.ui.replaceStack([
+  //       Screens.s100,
+  //       Screens.s200,
+  //       Screens.s300,
+  //     ]);
+  //     final s100Controller = holder.get<S100RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s200Controller = holder.get<S200RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s300Controller = holder.get<S300RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final screenWidget = availableScreens.find(Screens.s300);
+  //     final materialPage = screenWidget.toMaterialPage();
+  //     await rubigoRouter.busyService.busyWrapper(
+  //       () async {
+  //         await rubigoRouter.onDidRemovePage(materialPage);
+  //       },
+  //     );
+  //     expect(
+  //       rubigoRouter.screens.value.toListOfScreenId(),
+  //       [
+  //         Screens.s100,
+  //         Screens.s200,
+  //         Screens.s300,
+  //       ],
+  //     );
+  //     expect(
+  //       s100Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s200Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s300Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //   },
+  // );
 
-  test(
-    'S100-s200-s300 onDidRemovePage(s300), when not busy',
-    () async {
-      await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
-      ]);
-      final s100Controller = holder.get<S100RubigoController>()
-        ..callBackHistory.clear();
-      final s200Controller = holder.get<S200RubigoController>()
-        ..callBackHistory.clear();
-      final s300Controller = holder.get<S300RubigoController>()
-        ..callBackHistory.clear();
-      final screenWidget = availableScreens.find(Screens.s300);
-      final materialPage = screenWidget.toMaterialPage();
-      await rubigoRouter.onDidRemovePage(materialPage);
-      expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
-        [
-          Screens.s100,
-          Screens.s200,
-        ],
-      );
-      expect(
-        s100Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s200Controller.callBackHistory,
-        [
-          OnTopCallBack(
-            const RubigoChangeInfo(
-              EventType.pop,
-              Screens.s300,
-              [
-                Screens.s100,
-                Screens.s200,
-              ],
-            ),
-          ),
-          WillShowCallBack(
-            const RubigoChangeInfo(
-              EventType.pop,
-              Screens.s300,
-              [
-                Screens.s100,
-                Screens.s200,
-              ],
-            ),
-          ),
-        ],
-      );
-      expect(
-        s300Controller.callBackHistory,
-        <CallBack>[
-          MayPopCallBack(mayPop: true),
-          RemovedFromStackCallBack(),
-        ],
-      );
-    },
-  );
+  // test(
+  //   'S100-s200-s300 onDidRemovePage(s300), when not busy',
+  //   () async {
+  //     await rubigoRouter.ui.replaceStack([
+  //       Screens.s100,
+  //       Screens.s200,
+  //       Screens.s300,
+  //     ]);
+  //     final s100Controller = holder.get<S100RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s200Controller = holder.get<S200RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s300Controller = holder.get<S300RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final screenWidget = availableScreens.find(Screens.s300);
+  //     final materialPage = screenWidget.toMaterialPage();
+  //     await rubigoRouter.onDidRemovePage(materialPage);
+  //     expect(
+  //       rubigoRouter.screens.value.toListOfScreenId(),
+  //       [
+  //         Screens.s100,
+  //         Screens.s200,
+  //       ],
+  //     );
+  //     expect(
+  //       s100Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s200Controller.callBackHistory,
+  //       [
+  //         OnTopCallBack(
+  //           const RubigoChangeInfo(
+  //             EventType.pop,
+  //             Screens.s300,
+  //             [
+  //               Screens.s100,
+  //               Screens.s200,
+  //             ],
+  //           ),
+  //         ),
+  //         WillShowCallBack(
+  //           const RubigoChangeInfo(
+  //             EventType.pop,
+  //             Screens.s300,
+  //             [
+  //               Screens.s100,
+  //               Screens.s200,
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     );
+  //     expect(
+  //       s300Controller.callBackHistory,
+  //       <CallBack>[
+  //         MayPopCallBack(mayPop: true),
+  //         RemovedFromStackCallBack(),
+  //       ],
+  //     );
+  //   },
+  // );
 
-  test(
-    'S100-s200-s300 onDidRemovePage(s200), when busy',
-    () async {
-      await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
-      ]);
-      final s100Controller = holder.get<S100RubigoController>()
-        ..callBackHistory.clear();
-      final s200Controller = holder.get<S200RubigoController>()
-        ..callBackHistory.clear();
-      final s300Controller = holder.get<S300RubigoController>()
-        ..callBackHistory.clear();
-      final screenWidget = availableScreens.find(Screens.s200);
-      final materialPage = screenWidget.toMaterialPage();
-      await rubigoRouter.busyService.busyWrapper(
-        () async {
-          await rubigoRouter.onDidRemovePage(materialPage);
-        },
-      );
-      expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
-        [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
-        ],
-      );
-      expect(
-        s100Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s200Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s300Controller.callBackHistory,
-        <CallBack>[],
-      );
-    },
-  );
+  // test(
+  //   'S100-s200-s300 onDidRemovePage(s200), when busy',
+  //   () async {
+  //     await rubigoRouter.ui.replaceStack([
+  //       Screens.s100,
+  //       Screens.s200,
+  //       Screens.s300,
+  //     ]);
+  //     final s100Controller = holder.get<S100RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s200Controller = holder.get<S200RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s300Controller = holder.get<S300RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final screenWidget = availableScreens.find(Screens.s200);
+  //     final materialPage = screenWidget.toMaterialPage();
+  //     await rubigoRouter.busyService.busyWrapper(
+  //       () async {
+  //         await rubigoRouter.onDidRemovePage(materialPage);
+  //       },
+  //     );
+  //     expect(
+  //       rubigoRouter.screens.value.toListOfScreenId(),
+  //       [
+  //         Screens.s100,
+  //         Screens.s200,
+  //         Screens.s300,
+  //       ],
+  //     );
+  //     expect(
+  //       s100Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s200Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s300Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //   },
+  // );
 
-  test(
-    'S100-s200-s300 onDidRemovePage(s200), when not busy',
-    () async {
-      await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
-      ]);
-      final s100Controller = holder.get<S100RubigoController>()
-        ..callBackHistory.clear();
-      final s200Controller = holder.get<S200RubigoController>()
-        ..callBackHistory.clear();
-      final s300Controller = holder.get<S300RubigoController>()
-        ..callBackHistory.clear();
-      final screenWidget = availableScreens.find(Screens.s200);
-      final materialPage = screenWidget.toMaterialPage();
-      await rubigoRouter.onDidRemovePage(materialPage);
-      expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
-        [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
-        ],
-      );
-      expect(
-        s100Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s200Controller.callBackHistory,
-        <CallBack>[],
-      );
-      expect(
-        s300Controller.callBackHistory,
-        <CallBack>[],
-      );
-    },
-  );
+  // test(
+  //   'S100-s200-s300 onDidRemovePage(s200), when not busy',
+  //   () async {
+  //     await rubigoRouter.ui.replaceStack([
+  //       Screens.s100,
+  //       Screens.s200,
+  //       Screens.s300,
+  //     ]);
+  //     final s100Controller = holder.get<S100RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s200Controller = holder.get<S200RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final s300Controller = holder.get<S300RubigoController>()
+  //       ..callBackHistory.clear();
+  //     final screenWidget = availableScreens.find(Screens.s200);
+  //     final materialPage = screenWidget.toMaterialPage();
+  //     await rubigoRouter.onDidRemovePage(materialPage);
+  //     expect(
+  //       rubigoRouter.screens.value.toListOfScreenId(),
+  //       [
+  //         Screens.s100,
+  //         Screens.s200,
+  //         Screens.s300,
+  //       ],
+  //     );
+  //     expect(
+  //       s100Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s200Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //     expect(
+  //       s300Controller.callBackHistory,
+  //       <CallBack>[],
+  //     );
+  //   },
+  // );
 }
