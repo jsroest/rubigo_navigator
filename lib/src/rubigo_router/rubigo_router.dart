@@ -91,7 +91,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// This function can be used to log all that is related to navigation
   LogNavigation get logNavigation => _logNavigation;
 
-//region Private
+  //region Private
   final LogNavigation _logNavigation;
 
   final RubigoStackManager<SCREEN_ID> _rubigoStackManager;
@@ -100,9 +100,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   final _navigatorKey = GlobalKey<NavigatorState>();
 
-//endregion
+  //endregion
 
-//region Properties to pass to Flutter's Navigator
+  //region Properties to pass to Flutter's Navigator
   /// This is the navigator key that must be passed to Flutter's [Navigator].
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
@@ -186,9 +186,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     await callPop();
   }
 
-//endregion
+  //endregion
 
-// region Program initiated (prog) navigation functions
+  // region Program initiated (prog) navigation functions
   /// Use these navigation functions everywhere when origin is programmatic.
   /// these calls will not be ignored if the app is busy.
   late final NavigationFunctions<SCREEN_ID> prog =
@@ -237,9 +237,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     },
   );
 
-//endregion
+  //endregion
 
-//region User initiated (ui) navigation functions
+  //region User initiated (ui) navigation functions
   /// Use these navigation functions everywhere when origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
   late final NavigationFunctions<SCREEN_ID> ui = NavigationFunctions<SCREEN_ID>(
@@ -323,7 +323,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       await prog.remove(screenId);
     },
   );
-//endregion
+  //endregion
 }
 
 /// This class groups navigation functions together, like for "ui" and "prog"
