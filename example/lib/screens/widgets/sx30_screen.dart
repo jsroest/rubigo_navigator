@@ -11,8 +11,9 @@ class Sx30Screen extends StatelessWidget {
     required this.sX20Screen,
     required this.sX30Screen,
     required this.sX40Screen,
-    required this.allowBackGesture,
-    required this.backButtonAllowed,
+    required this.enableBackGesture,
+    required this.mayPop,
+    required this.confirmPop,
     required this.onPushSx040ButtonPressed,
     required this.onPopButtonPressed,
     required this.onPopToSx10ButtonPressed,
@@ -31,8 +32,9 @@ class Sx30Screen extends StatelessWidget {
   final Screens sX20Screen;
   final Screens sX30Screen;
   final Screens sX40Screen;
-  final ValueNotifier<bool> allowBackGesture;
-  final ValueNotifier<bool> backButtonAllowed;
+  final ValueNotifier<bool> enableBackGesture;
+  final ValueNotifier<bool> mayPop;
+  final ValueNotifier<bool> confirmPop;
   final VoidCallback onPushSx040ButtonPressed;
   final VoidCallback onPopButtonPressed;
   final VoidCallback onPopToSx10ButtonPressed;
@@ -47,7 +49,7 @@ class Sx30Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: allowBackGesture,
+      valueListenable: enableBackGesture,
       builder: (context, allowBackGesture, child) {
         return PopScope(
           canPop: allowBackGesture,
@@ -68,20 +70,28 @@ class Sx30Screen extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             spacing: 4,
             children: [
-              const Text('Allow back gesture'),
+              const Text('Enable back gesture'),
               ValueListenableBuilder(
-                valueListenable: allowBackGesture,
+                valueListenable: enableBackGesture,
                 builder: (context, value, _) => Switch(
                   value: value,
-                  onChanged: (value) => allowBackGesture.value = value,
+                  onChanged: (value) => enableBackGesture.value = value,
                 ),
               ),
-              const Text('mayPop ui.pop'),
+              const Text('mayPop'),
               ValueListenableBuilder(
-                valueListenable: backButtonAllowed,
+                valueListenable: mayPop,
                 builder: (context, value, _) => Switch(
                   value: value,
-                  onChanged: (value) => backButtonAllowed.value = value,
+                  onChanged: (value) => mayPop.value = value,
+                ),
+              ),
+              const Text('Confirm pop'),
+              ValueListenableBuilder(
+                valueListenable: confirmPop,
+                builder: (context, value, _) => Switch(
+                  value: value,
+                  onChanged: (value) => confirmPop.value = value,
                 ),
               ),
               NavigateButton(

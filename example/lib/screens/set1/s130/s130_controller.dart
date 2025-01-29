@@ -2,16 +2,27 @@ import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/screen_stack_backup_set1.dart';
 import 'package:example/screens/set2/screen_stack_backup_set2.dart';
 import 'package:example/screens/set3/screen_stack_backup_set3.dart';
+import 'package:example/widgets/are_you_sure.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S130Controller with RubigoControllerMixin<Screens> {
   final allowBackGesture = ValueNotifier(false);
 
-  final backButtonAllowed = ValueNotifier(true);
+  final mayPop_ = ValueNotifier(true);
+
+  final confirmPop = ValueNotifier(false);
 
   @override
-  Future<bool> mayPop() async => backButtonAllowed.value;
+  Future<bool> mayPop() async {
+    if (mayPop_.value == false) {
+      return false;
+    }
+    if (confirmPop.value == false) {
+      return true;
+    }
+    return areYouSure(rubigoRouter);
+  }
 
   Future<void> onPushS140ButtonPressed() async {
     await rubigoRouter.ui.push(Screens.s140);
