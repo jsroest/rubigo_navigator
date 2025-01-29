@@ -123,11 +123,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     final removedScreenId = pageKey.value;
     final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
     if (removedScreenId != lastScreenId) {
-// With this new event, we also receive this event when pages are removed
-// programmatically from the stack. Here onDidRemovePage was (probably)
-// initiated by the business logic, as the last page on the stack is not
-// the one that got removed. In this case the screenStack is already
-// valid.
+      // With this new event, we also receive this event when pages are removed
+      // programmatically from the stack. Here onDidRemovePage was (probably)
+      // initiated by the business logic, as the last page on the stack is not
+      // the one that got removed. In this case the screenStack is already
+      // valid.
       unawaited(
         _logNavigation(
           'onDidRemovePage(${removedScreenId.name}) called. Last page is '
@@ -136,47 +136,54 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       );
       return;
     }
+
+    // handle the back event.
     unawaited(
       _logNavigation(
         'onDidRemovePage(${removedScreenId.name}) called.',
       ),
     );
-// handle the back event.
-    var updateScreensIsCalled = false;
-    void callback() => updateScreensIsCalled = true;
 
-    final navigatorState = _navigatorKey.currentState;
-
-    if (navigatorState != null) {
-      Future<void> userGestureInProgressNotifier() async {
-        final inProgress = navigatorState.userGestureInProgress;
-        if (!inProgress) {
-          navigatorState.userGestureInProgressNotifier.removeListener(
-            userGestureInProgressNotifier,
-          );
-          screens.value =
-              screens.value.getRange(0, screens.value.length - 1).toList();
-          _rubigoStackManager.updateScreensCallBack.add(callback);
-          await ui.pop();
-          if (!updateScreensIsCalled) {
-            await _rubigoStackManager.updateScreens();
-          }
-          _rubigoStackManager.updateScreensCallBack.remove(callback);
-        }
+    Future<void> callPop() async {
+      // This function calls ui.pop and keeps track if updateScreens is being
+      // called, while executing ui.pop().
+      var updateScreensIsCalled = false;
+      void updateScreenCallback() => updateScreensIsCalled = true;
+      _rubigoStackManager.updateScreensCallBack.add(updateScreenCallback);
+      await ui.pop();
+      if (!updateScreensIsCalled) {
+        await _rubigoStackManager.updateScreens();
       }
+      _rubigoStackManager.updateScreensCallBack.remove(updateScreenCallback);
+    }
 
-      if (navigatorState.userGestureInProgress) {
-        navigatorState.userGestureInProgressNotifier
-            .addListener(userGestureInProgressNotifier);
-      } else {
-        _rubigoStackManager.updateScreensCallBack.add(callback);
-        await ui.pop();
-        if (!updateScreensIsCalled) {
-          await _rubigoStackManager.updateScreens();
-        }
-        _rubigoStackManager.updateScreensCallBack.remove(callback);
+    final navState = _navigatorKey.currentState;
+    if (navState == null) {
+      // We cannot continue if we cannot access Flutter's navigator.
+      return;
+    }
+
+    Future<void> gestureCallback() async {
+      final inProgress = navState.userGestureInProgress;
+      if (!inProgress) {
+        navState.userGestureInProgressNotifier.removeListener(gestureCallback);
+        // Remove the last page, so the screens is the same as Flutter expects.
+        // Just in case the widget tree rebuilds for some reason.
+        screens.value = screens.value..removeLast();
+        await callPop();
       }
     }
+
+    if (navState.userGestureInProgress) {
+      // We have to wait for the gesture to finish. Otherwise pageless routes,
+      // that might have been added in mayPop (like showDialog), are popped
+      // together with the page. That is how Navigator 2.0 works, nothing we
+      // can about that. Wait for the gesture to complete and the perform the
+      // pop().
+      navState.userGestureInProgressNotifier.addListener(gestureCallback);
+      return;
+    }
+    await callPop();
   }
 
 //endregion
