@@ -86,7 +86,7 @@ class Sx30Screen extends StatelessWidget {
                   onChanged: (value) => mayPop.value = value,
                 ),
               ),
-              const Text('Confirm pop'),
+              const Text('Confirm pop in mayPop'),
               ValueListenableBuilder(
                 valueListenable: confirmPop,
                 builder: (context, value, _) => Switch(

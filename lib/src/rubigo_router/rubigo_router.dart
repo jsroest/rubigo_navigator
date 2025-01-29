@@ -144,12 +144,39 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 // handle the back event.
     var updateScreensIsCalled = false;
     void callback() => updateScreensIsCalled = true;
-    _rubigoStackManager.updateScreensCallBack.add(callback);
-    await ui.pop();
-    if (!updateScreensIsCalled) {
-      await _rubigoStackManager.updateScreens();
+
+    final navigatorState = _navigatorKey.currentState;
+
+    if (navigatorState != null) {
+      Future<void> userGestureInProgressNotifier() async {
+        final inProgress = navigatorState.userGestureInProgress;
+        if (!inProgress) {
+          navigatorState.userGestureInProgressNotifier.removeListener(
+            userGestureInProgressNotifier,
+          );
+          screens.value =
+              screens.value.getRange(0, screens.value.length - 1).toList();
+          _rubigoStackManager.updateScreensCallBack.add(callback);
+          await ui.pop();
+          if (!updateScreensIsCalled) {
+            await _rubigoStackManager.updateScreens();
+          }
+          _rubigoStackManager.updateScreensCallBack.remove(callback);
+        }
+      }
+
+      if (navigatorState.userGestureInProgress) {
+        navigatorState.userGestureInProgressNotifier
+            .addListener(userGestureInProgressNotifier);
+      } else {
+        _rubigoStackManager.updateScreensCallBack.add(callback);
+        await ui.pop();
+        if (!updateScreensIsCalled) {
+          await _rubigoStackManager.updateScreens();
+        }
+        _rubigoStackManager.updateScreensCallBack.remove(callback);
+      }
     }
-    _rubigoStackManager.updateScreensCallBack.remove(callback);
   }
 
 //endregion
@@ -224,7 +251,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 // We have to ask the page if we may pop.
           final bool mayPop;
 // Get the page to pop from the stack.
-          final screenId = _rubigoStackManager.screens.value.last.screenId;
+          final screenId = _rubigoStackManager.screenStack.last.screenId;
 // Find the controller
           final controller = availableScreens.find(screenId).getController();
           if (controller is RubigoControllerMixin<SCREEN_ID>) {
