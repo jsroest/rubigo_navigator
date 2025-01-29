@@ -13,7 +13,7 @@ class S130Controller with RubigoControllerMixin<Screens> {
   @override
   Future<bool> mayPop() async => backButtonAllowed.value;
 
-  Future<void> onS140ButtonPressed() async {
+  Future<void> onPushS140ButtonPressed() async {
     await rubigoRouter.ui.push(Screens.s140);
   }
 
@@ -33,7 +33,7 @@ class S130Controller with RubigoControllerMixin<Screens> {
     await rubigoRouter.ui.remove(Screens.s110);
   }
 
-  Future<void> resetStack() async {
+  Future<void> onResetStackButtonPressed() async {
     await rubigoRouter.ui.replaceStack(
       [
         Screens.s110,
@@ -43,12 +43,12 @@ class S130Controller with RubigoControllerMixin<Screens> {
     );
   }
 
-  Future<void> toSet2() async {
+  Future<void> onToSetAButtonPressed() async {
     screenStackBackupSet1 = rubigoRouter.screens.value.toListOfScreenId();
     await rubigoRouter.ui.replaceStack(screenStackBackupSet2);
   }
 
-  Future<void> toSet3() async {
+  Future<void> onToSetBButtonPressed() async {
     screenStackBackupSet1 = rubigoRouter.screens.value.toListOfScreenId();
     await rubigoRouter.ui.replaceStack(screenStackBackupSet3);
   }

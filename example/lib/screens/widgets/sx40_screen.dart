@@ -5,11 +5,11 @@ import 'package:rubigo_router/rubigo_router.dart';
 
 class Sx040Screen extends StatelessWidget {
   const Sx040Screen({
-    required this.title,
+    required this.sX40Screen,
     super.key,
   });
 
-  final String title;
+  final Screens sX40Screen;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class Sx040Screen extends StatelessWidget {
       appBar: AppBar(
         leading: rubigoBackButton(context, holder.get<RubigoRouter>()),
         title: AppBarTitle(
-          title: title,
+          title: sX40Screen.name.toUpperCase(),
           subTitle: 'This screen uses no mixins',
         ),
       ),

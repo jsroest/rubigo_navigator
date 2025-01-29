@@ -1,3 +1,4 @@
+import 'package:example/screens/screens.dart';
 import 'package:example/screens/set1/s120/s120_controller.dart';
 import 'package:example/screens/widgets/sx20_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +14,10 @@ class S120Screen extends StatelessWidget
   Widget build(BuildContext context) {
     return Sx20Screen(
       controller: controller,
-      title: 'S120',
+      sX20Screen: Screens.s120,
+      sX30Screen: Screens.s130,
       onPushButtonPressed: controller.onS130ButtonPressed,
-      pushButtonText: 'Push 130',
       onPopButtonPressed: controller.onPopButtonPressed,
-      popButtonText: 'Pop',
     );
   }
 }

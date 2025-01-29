@@ -1,3 +1,4 @@
+import 'package:example/screens/screens.dart';
 import 'package:example/screens/set3/s310/s310_controller.dart';
 import 'package:example/screens/widgets/sx10_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,9 @@ class S310Screen extends StatelessWidget
   Widget build(BuildContext context) {
     return Sx10Screen(
       controller: controller,
-      title: 'S310',
-      onButtonPressed: controller.onS320ButtonPressed,
-      buttonText: 'Push 320',
+      sX10Screen: Screens.s310,
+      sX20Screen: Screens.s320,
+      onPushButtonPressed: controller.onS320ButtonPressed,
     );
   }
 }

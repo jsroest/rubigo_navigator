@@ -6,12 +6,14 @@ import 'package:flutter/foundation.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 class S230Controller with RubigoControllerMixin<Screens> {
+  final allowBackGesture = ValueNotifier(false);
+
   final backButtonAllowed = ValueNotifier(true);
 
   @override
   Future<bool> mayPop() async => backButtonAllowed.value;
 
-  Future<void> onS240ButtonPressed() async {
+  Future<void> onPushS240ButtonPressed() async {
     await rubigoRouter.ui.push(Screens.s240);
   }
 
@@ -31,7 +33,7 @@ class S230Controller with RubigoControllerMixin<Screens> {
     await rubigoRouter.ui.remove(Screens.s210);
   }
 
-  Future<void> resetStack() async {
+  Future<void> onResetStackButtonPressed() async {
     await rubigoRouter.ui.replaceStack(
       [
         Screens.s210,
@@ -41,12 +43,12 @@ class S230Controller with RubigoControllerMixin<Screens> {
     );
   }
 
-  Future<void> toSet1() async {
+  Future<void> onToSetAButtonPressed() async {
     screenStackBackupSet2 = rubigoRouter.screens.value.toListOfScreenId();
     await rubigoRouter.ui.replaceStack(screenStackBackupSet1);
   }
 
-  Future<void> toSet3() async {
+  Future<void> onToSetBButtonPressed() async {
     screenStackBackupSet2 = rubigoRouter.screens.value.toListOfScreenId();
     await rubigoRouter.ui.replaceStack(screenStackBackupSet3);
   }

@@ -1,7 +1,6 @@
 import 'package:example/screens/screens.dart';
 import 'package:example/screens/set3/s330/s330_controller.dart';
-import 'package:example/widgets/app_bar_title_breadcrumbs.dart';
-import 'package:example/widgets/navigate_button.dart';
+import 'package:example/screens/widgets/sx30_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -13,78 +12,24 @@ class S330Screen extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: rubigoBackButton(context, controller.rubigoRouter),
-          title: AppBarTitleBreadCrumbs(
-            title: 'S330',
-            screens: controller.rubigoRouter.screens,
-          ),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('mayPop on ui.pop'),
-              ValueListenableBuilder(
-                valueListenable: controller.backButtonAllowed,
-                builder: (context, value, _) => Switch(
-                  value: value,
-                  onChanged: (value) =>
-                      controller.backButtonAllowed.value = value,
-                ),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (_) => true,
-                onPressed: controller.onS340ButtonPressed,
-                child: const Text('Push S340'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) => screenStack.hasScreenBelow(),
-                onPressed: controller.onPopButtonPressed,
-                child: const Text('Pop'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) =>
-                    screenStack.containsScreenBelow(Screens.s310),
-                onPressed: controller.onPopToS310ButtonPressed,
-                child: const Text('PopTo S310'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) =>
-                    screenStack.containsScreenBelow(Screens.s320),
-                onPressed: controller.onRemoveS320ButtonPressed,
-                child: const Text('Remove S320'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) =>
-                    screenStack.containsScreenBelow(Screens.s310),
-                onPressed: controller.onRemoveS310ButtonPressed,
-                child: const Text('Remove S310'),
-              ),
-              ElevatedButton(
-                onPressed: controller.resetStack,
-                child: const Text('Reset stack'),
-              ),
-              ElevatedButton(
-                onPressed: controller.toSet1,
-                child: const Text('Replace set 1'),
-              ),
-              ElevatedButton(
-                onPressed: controller.toSet2,
-                child: const Text('Replace set 2'),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return Sx30Screen(
+      controller: controller,
+      sX10Screen: Screens.s310,
+      sX20Screen: Screens.s320,
+      sX30Screen: Screens.s330,
+      sX40Screen: Screens.s340,
+      allowBackGesture: controller.allowBackGesture,
+      backButtonAllowed: controller.backButtonAllowed,
+      onPushSx040ButtonPressed: controller.onPushS340ButtonPressed,
+      onPopButtonPressed: controller.onPopButtonPressed,
+      onPopToSx10ButtonPressed: controller.onPopToS310ButtonPressed,
+      onRemoveSx10ButtonPressed: controller.onRemoveS310ButtonPressed,
+      onRemoveSx20ButtonPressed: controller.onRemoveS320ButtonPressed,
+      onResetStackButtonPressed: controller.onResetStackButtonPressed,
+      onToSetAButtonPressed: controller.onToSetAButtonPressed,
+      toSetAButtonText: 'Replace set 1',
+      onToSetBButtonPressed: controller.onToSetBButtonPressed,
+      toSetBButtonText: 'Replace set 2',
     );
   }
 }
