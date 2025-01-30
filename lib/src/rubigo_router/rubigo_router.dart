@@ -163,13 +163,15 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       return;
     }
 
+    // Remove the last page, so the screens is the same as Flutter expects.
+    // Just in case the widget tree rebuilds for some reason.
+    // Note: this will not inform the listeners, this is intended behavior.
+    screens.value.removeLast();
+
     Future<void> gestureCallback() async {
       final inProgress = navState.userGestureInProgress;
       if (!inProgress) {
         navState.userGestureInProgressNotifier.removeListener(gestureCallback);
-        // Remove the last page, so the screens is the same as Flutter expects.
-        // Just in case the widget tree rebuilds for some reason.
-        screens.value = screens.value..removeLast();
         await callPop();
       }
     }
