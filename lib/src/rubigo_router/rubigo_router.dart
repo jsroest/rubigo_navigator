@@ -113,7 +113,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       _rubigoStackManager.screens;
 
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
-  Future<void> onDidRemovePage(Page<Object?> page) async {
+  void onDidRemovePage(Page<Object?> page) {
     final pageKey = page.key;
     if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
       throw UnsupportedError(
@@ -202,7 +202,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     // This can happen if a showDialog was used in the mayPop callback. The
     // assert should have caught this during development. This is a workaround
     // if this ends up in production.
-    await Future<void>.delayed(Duration.zero, callPop);
+    WidgetsBinding.instance.addPostFrameCallback((_) async => callPop());
   }
 
   //endregion
