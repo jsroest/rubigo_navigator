@@ -185,7 +185,24 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       navState.userGestureInProgressNotifier.addListener(gestureCallback);
       return;
     }
-    await callPop();
+
+    final warningText = '''
+      RubigoRouter warning.
+      'onDidRemovePage called' for ${removedScreenId.name}, but the source was not a userGesture. 
+      The cause is most likely that Navigator.maybePop(context) was (indirectly) called.
+      This can happen when:
+      - A regular BackButton was used to pop this page. Solution: Use a rubigoBackButton in the AppBar.
+      - The MaterialApp.backButtonDispatcher was not a RubigoRootBackButtonDispatcher.
+      ''';
+    assert(false, warningText);
+    unawaited(_logNavigation(warningText));
+
+    // This is a workaround for the following exception:
+    // Unhandled Exception: 'package:flutter/src/widgets/navigator.dart': Failed assertion: line 4931 pos 12: '!_debugLocked': is not true.
+    // This can happen if a showDialog was used in the mayPop callback. The
+    // assert should have caught this during development. This is a workaround
+    // if this ends up in production.
+    await Future<void>.delayed(Duration.zero, callPop);
   }
 
   //endregion
@@ -325,7 +342,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       await prog.remove(screenId);
     },
   );
-  //endregion
+//endregion
 }
 
 /// This class groups navigation functions together, like for "ui" and "prog"
