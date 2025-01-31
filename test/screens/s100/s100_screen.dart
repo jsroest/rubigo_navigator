@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S100Screen extends StatelessWidget with RubigoScreenMixin {
+import 's100_controller.dart';
+
+class S100Screen extends StatelessWidget
+    with RubigoScreenMixin<S100RubigoController> {
   S100Screen({super.key});
 
   @override
@@ -10,7 +13,16 @@ class S100Screen extends StatelessWidget with RubigoScreenMixin {
       appBar: AppBar(
         leading: rubigoBackButton(context, controller.rubigoRouter),
       ),
-      body: const Placeholder(),
+      body: ValueListenableBuilder(
+        valueListenable: controller.allowBackGesture,
+        builder: (context, value, child) {
+          return RubigoBackGesture(
+            allowBackGesture: value,
+            rubigoRouter: controller.rubigoRouter,
+            child: const Placeholder(),
+          );
+        },
+      ),
     );
   }
 }

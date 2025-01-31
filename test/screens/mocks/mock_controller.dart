@@ -4,8 +4,7 @@ import 'package:rubigo_router/rubigo_router.dart';
 import '../screens.dart';
 import 'callbacks.dart';
 
-class MockController<SCREEN_ID extends Enum>
-    with RubigoControllerMixin<Screens> {
+class MockController with RubigoControllerMixin<Screens> {
   Screens? onTopPush;
   Screens? willShowPush;
   Screens? removedFromStackPush;

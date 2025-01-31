@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-class S200Screen extends StatelessWidget with RubigoScreenMixin {
+import 's200_controller.dart';
+
+class S200Screen extends StatelessWidget
+    with RubigoScreenMixin<S200RubigoController> {
   S200Screen({super.key});
 
   @override

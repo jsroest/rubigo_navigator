@@ -1,6 +1,9 @@
-import '../mocks/mock_controller.dart';
-import '../screens.dart';
+import 'package:flutter/foundation.dart';
 
-class S100RubigoController extends MockController<Screens> {}
+import '../mocks/mock_controller.dart';
+
+class S100RubigoController extends MockController {
+  final allowBackGesture = ValueNotifier(false);
+}
 
 class S100Controller {}
