@@ -1,61 +1,35 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-import '../screens/s100/s100_controller.dart';
-import '../screens/s100/s100_screen.dart';
-import '../screens/s200/s200_controller.dart';
-import '../screens/s200/s200_screen.dart';
-import '../screens/s300/s300_controller.dart';
-import '../screens/s300/s300_screen.dart';
-import '../screens/s400/s400_controller.dart';
-import '../screens/s400/s400_screen.dart';
-import '../screens/s500/s500_controller.dart';
-import '../screens/s500/s500_screen.dart';
-import '../screens/screens.dart';
-import '../screens/splash_screen/splash_controller.dart';
-import '../screens/splash_screen/splash_screen.dart';
+import '../mock_controller/mock_controller.dart';
 
 void main() {
-  late RubigoRouter<Screens> rubigoRouter;
+  late RubigoRouter<_Screens> rubigoRouter;
 
   setUp(
     () {
       final holder = RubigoHolder();
       final availableScreens = [
         RubigoScreen(
-          Screens.splashScreen,
-          SplashScreen(),
-          () => holder.getOrCreate(SplashRubigoController.new),
+          _Screens.splashScreen,
+          const _SplashScreen(),
+          () => holder.getOrCreate(_SplashController.new),
         ),
         RubigoScreen(
-          Screens.s100,
-          S100Screen(),
-          () => holder.getOrCreate(S100RubigoController.new),
+          _Screens.s100,
+          _S100Screen(),
+          () => holder.getOrCreate(_S100Controller.new),
         ),
         RubigoScreen(
-          Screens.s200,
-          S200Screen(),
-          () => holder.getOrCreate(S200RubigoController.new),
-        ),
-        RubigoScreen(
-          Screens.s300,
-          S300Screen(),
-          () => holder.getOrCreate(S300RubigoController.new),
-        ),
-        RubigoScreen(
-          Screens.s400,
-          S400Screen(),
-          () => holder.getOrCreate(S400RubigoController.new),
-        ),
-        RubigoScreen(
-          Screens.s500,
-          S500Screen(),
-          () => holder.getOrCreate(S500RubigoController.new),
+          _Screens.s200,
+          _S200Screen(),
+          () => holder.getOrCreate(_S200Controller.new),
         ),
       ];
       rubigoRouter = RubigoRouter(
         availableScreens: availableScreens,
-        splashScreenId: Screens.splashScreen,
+        splashScreenId: _Screens.splashScreen,
       );
     },
   );
@@ -68,21 +42,81 @@ void main() {
           routerDelegate: RubigoRouterDelegate(
             rubigoRouter: rubigoRouter,
           ),
-          initAndGetFirstScreen: () async => Screens.s100,
+          initAndGetFirstScreen: () async => _Screens.s100,
         ),
       );
       await tester.pumpAndSettle();
-      await tester.runAsync(() async => rubigoRouter.ui.push(Screens.s200));
-      await tester.pumpAndSettle();
-      await tester.runAsync(() async => rubigoRouter.ui.push(Screens.s300));
-      await tester.pumpAndSettle();
-      await tester.runAsync(() async => rubigoRouter.ui.push(Screens.s400));
-      await tester.pumpAndSettle();
-      await tester.runAsync(() async => rubigoRouter.ui.push(Screens.s500));
+      await tester.runAsync(() async => rubigoRouter.ui.push(_Screens.s200));
       await tester.pumpAndSettle();
       await tester.pageBack();
       await tester.pumpAndSettle();
-      expect(find.byType(S500Screen), findsOne);
+      expect(find.byType(_S100Screen), findsOne);
     },
   );
 }
+
+enum _Screens {
+  splashScreen,
+  s100,
+  s200,
+}
+
+//region SplashScreen
+class _SplashScreen extends StatelessWidget {
+  //ignore: unused_element
+  const _SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+class _SplashController extends MockController<_Screens> {}
+//endregion
+
+//region S100Screen
+class _S100Screen extends StatelessWidget
+    with RubigoScreenMixin<_S100Controller> {
+  //ignore: unused_element
+  _S100Screen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: rubigoBackButton(context, controller.rubigoRouter),
+      ),
+      body: const Placeholder(),
+    );
+  }
+}
+
+class _S100Controller extends MockController<_Screens> {}
+//endregion
+
+//region S200Screen
+class _S200Screen extends StatelessWidget
+    with RubigoScreenMixin<_S200Controller> {
+  //ignore: unused_element
+  _S200Screen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return RubigoBackGesture(
+      allowBackGesture: false,
+      rubigoRouter: controller.rubigoRouter,
+      child: Scaffold(
+        appBar: AppBar(
+            // This needs to be commented out to test the RubigoBackGesture
+            // widget
+            //leading: rubigoBackButton(context, controller.rubigoRouter),
+            ),
+        body: const Placeholder(),
+      ),
+    );
+  }
+}
+
+class _S200Controller extends MockController<_Screens> {}
+//endregion
