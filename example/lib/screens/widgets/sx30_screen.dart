@@ -48,96 +48,101 @@ class Sx30Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RubigoBackGesture(
-      rubigoRouter: controller.rubigoRouter,
-      allowBackGesture: allowBackGesture,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: rubigoBackButton(context, controller.rubigoRouter),
-          title: AppBarTitleBreadCrumbs(
-            title: sX30Screen.name.toUpperCase(),
-            screens: controller.rubigoRouter.screens,
+    return ValueListenableBuilder(
+      valueListenable: allowBackGesture,
+      builder: (context, value, child) {
+        return RubigoBackGesture(
+          rubigoRouter: controller.rubigoRouter,
+          allowBackGesture: value,
+          child: Scaffold(
+            appBar: AppBar(
+              leading: rubigoBackButton(context, controller.rubigoRouter),
+              title: AppBarTitleBreadCrumbs(
+                title: sX30Screen.name.toUpperCase(),
+                screens: controller.rubigoRouter.screens,
+              ),
+            ),
+            body: Center(
+              child: Wrap(
+                direction: Axis.vertical,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 4,
+                children: [
+                  const Text('Enable back gesture'),
+                  ValueListenableBuilder(
+                    valueListenable: allowBackGesture,
+                    builder: (context, value, _) => Switch(
+                      value: value,
+                      onChanged: (value) => allowBackGesture.value = value,
+                    ),
+                  ),
+                  const Text('mayPop'),
+                  ValueListenableBuilder(
+                    valueListenable: mayPop,
+                    builder: (context, value, _) => Switch(
+                      value: value,
+                      onChanged: (value) => mayPop.value = value,
+                    ),
+                  ),
+                  const Text('Confirm pop in mayPop'),
+                  ValueListenableBuilder(
+                    valueListenable: confirmPop,
+                    builder: (context, value, _) => Switch(
+                      value: value,
+                      onChanged: (value) => confirmPop.value = value,
+                    ),
+                  ),
+                  NavigateButton(
+                    screens: controller.rubigoRouter.screens,
+                    isEnabled: (_) => true,
+                    onPressed: onPushSx040ButtonPressed,
+                    child: Text('Push ${sX40Screen.name.toUpperCase()}'),
+                  ),
+                  NavigateButton(
+                    screens: controller.rubigoRouter.screens,
+                    isEnabled: (screenStack) => screenStack.hasScreenBelow(),
+                    onPressed: onPopButtonPressed,
+                    child: const Text('Pop'),
+                  ),
+                  NavigateButton(
+                    screens: controller.rubigoRouter.screens,
+                    isEnabled: (screenStack) =>
+                        screenStack.containsScreenBelow(sX10Screen),
+                    onPressed: onPopToSx10ButtonPressed,
+                    child: Text('PopTo ${sX10Screen.name.toUpperCase()}'),
+                  ),
+                  NavigateButton(
+                    screens: controller.rubigoRouter.screens,
+                    isEnabled: (screenStack) =>
+                        screenStack.containsScreenBelow(sX10Screen),
+                    onPressed: onRemoveSx10ButtonPressed,
+                    child: Text('Remove ${sX10Screen.name.toUpperCase()}'),
+                  ),
+                  NavigateButton(
+                    screens: controller.rubigoRouter.screens,
+                    isEnabled: (screenStack) =>
+                        screenStack.containsScreenBelow(sX20Screen),
+                    onPressed: onRemoveSx20ButtonPressed,
+                    child: Text('Remove ${sX20Screen.name.toUpperCase()}'),
+                  ),
+                  ElevatedButton(
+                    onPressed: onResetStackButtonPressed,
+                    child: const Text('Reset stack'),
+                  ),
+                  ElevatedButton(
+                    onPressed: onToSetAButtonPressed,
+                    child: Text(toSetAButtonText),
+                  ),
+                  ElevatedButton(
+                    onPressed: onToSetBButtonPressed,
+                    child: Text(toSetBButtonText),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        body: Center(
-          child: Wrap(
-            direction: Axis.vertical,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 4,
-            children: [
-              const Text('Enable back gesture'),
-              ValueListenableBuilder(
-                valueListenable: allowBackGesture,
-                builder: (context, value, _) => Switch(
-                  value: value,
-                  onChanged: (value) => allowBackGesture.value = value,
-                ),
-              ),
-              const Text('mayPop'),
-              ValueListenableBuilder(
-                valueListenable: mayPop,
-                builder: (context, value, _) => Switch(
-                  value: value,
-                  onChanged: (value) => mayPop.value = value,
-                ),
-              ),
-              const Text('Confirm pop in mayPop'),
-              ValueListenableBuilder(
-                valueListenable: confirmPop,
-                builder: (context, value, _) => Switch(
-                  value: value,
-                  onChanged: (value) => confirmPop.value = value,
-                ),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (_) => true,
-                onPressed: onPushSx040ButtonPressed,
-                child: Text('Push ${sX40Screen.name.toUpperCase()}'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) => screenStack.hasScreenBelow(),
-                onPressed: onPopButtonPressed,
-                child: const Text('Pop'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) =>
-                    screenStack.containsScreenBelow(sX10Screen),
-                onPressed: onPopToSx10ButtonPressed,
-                child: Text('PopTo ${sX10Screen.name.toUpperCase()}'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) =>
-                    screenStack.containsScreenBelow(sX10Screen),
-                onPressed: onRemoveSx10ButtonPressed,
-                child: Text('Remove ${sX10Screen.name.toUpperCase()}'),
-              ),
-              NavigateButton(
-                screens: controller.rubigoRouter.screens,
-                isEnabled: (screenStack) =>
-                    screenStack.containsScreenBelow(sX20Screen),
-                onPressed: onRemoveSx20ButtonPressed,
-                child: Text('Remove ${sX20Screen.name.toUpperCase()}'),
-              ),
-              ElevatedButton(
-                onPressed: onResetStackButtonPressed,
-                child: const Text('Reset stack'),
-              ),
-              ElevatedButton(
-                onPressed: onToSetAButtonPressed,
-                child: Text(toSetAButtonText),
-              ),
-              ElevatedButton(
-                onPressed: onToSetBButtonPressed,
-                child: Text(toSetBButtonText),
-              ),
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
