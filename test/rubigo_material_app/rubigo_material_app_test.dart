@@ -14,8 +14,8 @@ import '../screens/s300/s300_screen.dart';
 import '../screens/screens.dart';
 import '../screens/splash_screen/splash_controller.dart';
 import '../screens/splash_screen/splash_screen.dart';
-import 'rubigo_router_observer.dart';
-import 'rubigo_router_observer.mocks.dart';
+import 'helpers/rubigo_router_observer.dart';
+import 'helpers/rubigo_router_observer.mocks.dart';
 
 void main() {
   late MockNavigatorObserver mockNavigatorObserver;
