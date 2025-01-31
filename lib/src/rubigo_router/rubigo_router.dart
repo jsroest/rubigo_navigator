@@ -259,8 +259,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   //endregion
 
   //region User initiated (ui) navigation functions
+  /// {@template rubigoRouter.ui.pop}
   /// Use these navigation functions everywhere when origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
+  /// {@endtemplate}
   late final NavigationFunctions<SCREEN_ID> ui = NavigationFunctions<SCREEN_ID>(
     pop: () async {
 // First, take notice if the app is busy while this function was called.
@@ -357,19 +359,19 @@ class NavigationFunctions<SCREEN_ID extends Enum> {
     required this.remove,
   });
 
-  /// Use this function when the pop is initiated by the user.
+  /// ui.pop() or prog.pop()
   final Future<void> Function() pop;
 
-  /// Use this function when the popTo is initiated by the user.
+  /// ui.popTo or prog.popTo
   final Future<void> Function(SCREEN_ID screenId) popTo;
 
-  /// Use this function when the push is initiated by the user.
+  /// ui.push or prog.push
   final Future<void> Function(SCREEN_ID screenId) push;
 
-  /// Use this function when the replaceStack is initiated by the user.
+  /// ui.replaceStack or prog.replaceStack
   final Future<void> Function(List<SCREEN_ID> screens) replaceStack;
 
-  /// Use this function when the remove is initiated by the user.
+  /// ui.remove or prog.remove
   final Future<void> Function(SCREEN_ID screenId) remove;
 }
 
