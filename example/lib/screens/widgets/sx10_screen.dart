@@ -29,6 +29,7 @@ class Sx10Screen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          spacing: 4,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
