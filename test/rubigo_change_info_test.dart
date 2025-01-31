@@ -1,28 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-import 'screens/screens.dart';
-
 void main() {
   final screenStacks = [
-    <Screens>[],
-    [Screens.s100],
-    [Screens.s100, Screens.s200],
-    [Screens.s100, Screens.s300],
+    <_Screens>[],
+    [_Screens.s100],
+    [_Screens.s100, _Screens.s200],
+    [_Screens.s100, _Screens.s300],
   ];
   test(
     'test rubigo_change_info ',
     () {
       final hashCodes = <int>[];
       for (final eventType in EventType.values) {
-        for (final screenId in Screens.values) {
+        for (final screenId in _Screens.values) {
           for (final screenStack in screenStacks) {
-            final changeInfo1 = RubigoChangeInfo<Screens>(
+            final changeInfo1 = RubigoChangeInfo<_Screens>(
               eventType,
               screenId,
               screenStack,
             );
-            final changeInfo2 = RubigoChangeInfo<Screens>(
+            final changeInfo2 = RubigoChangeInfo<_Screens>(
               eventType,
               screenId,
               screenStack,
@@ -38,4 +36,10 @@ void main() {
       }
     },
   );
+}
+
+enum _Screens {
+  s100,
+  s200,
+  s300,
 }
