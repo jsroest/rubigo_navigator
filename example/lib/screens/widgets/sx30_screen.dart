@@ -68,7 +68,7 @@ class Sx30Screen extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: 4,
                 children: [
-                  const Text('Enable back gesture'),
+                  const Text('Allow back gesture'),
                   ValueListenableBuilder(
                     valueListenable: allowBackGesture,
                     builder: (context, value, _) => Switch(

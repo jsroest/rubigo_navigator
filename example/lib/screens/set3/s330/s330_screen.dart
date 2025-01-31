@@ -18,7 +18,7 @@ class S330Screen extends StatelessWidget
       sX20Screen: Screens.s320,
       sX30Screen: Screens.s330,
       sX40Screen: Screens.s340,
-      allowBackGesture: controller.enableBackGesture,
+      allowBackGesture: controller.allowBackGesture,
       mayPop: controller.mayPop_,
       confirmPop: controller.confirmPop,
       onPushSx040ButtonPressed: controller.onPushS340ButtonPressed,
