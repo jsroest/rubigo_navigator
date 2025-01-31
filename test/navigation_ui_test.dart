@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-import 'screens/mocks/callbacks.dart';
+import 'mock_controller/callbacks.dart';
 import 'screens/s100/s100_controller.dart';
 import 'screens/s100/s100_screen.dart';
 import 'screens/s200/s200_controller.dart';
