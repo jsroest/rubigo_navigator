@@ -18,7 +18,7 @@ class S230Screen extends StatelessWidget
       sX20Screen: Screens.s220,
       sX30Screen: Screens.s230,
       sX40Screen: Screens.s230,
-      enableBackGesture: controller.allowBackGesture,
+      allowBackGesture: controller.allowBackGesture,
       mayPop: controller.mayPop_,
       confirmPop: controller.confirmPop,
       onPushSx040ButtonPressed: controller.onPushS240ButtonPressed,

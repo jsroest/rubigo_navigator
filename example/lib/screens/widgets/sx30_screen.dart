@@ -11,7 +11,7 @@ class Sx30Screen extends StatelessWidget {
     required this.sX20Screen,
     required this.sX30Screen,
     required this.sX40Screen,
-    required this.enableBackGesture,
+    required this.allowBackGesture,
     required this.mayPop,
     required this.confirmPop,
     required this.onPushSx040ButtonPressed,
@@ -32,7 +32,7 @@ class Sx30Screen extends StatelessWidget {
   final Screens sX20Screen;
   final Screens sX30Screen;
   final Screens sX40Screen;
-  final ValueNotifier<bool> enableBackGesture;
+  final ValueNotifier<bool> allowBackGesture;
   final ValueNotifier<bool> mayPop;
   final ValueNotifier<bool> confirmPop;
   final VoidCallback onPushSx040ButtonPressed;
@@ -48,14 +48,9 @@ class Sx30Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: enableBackGesture,
-      builder: (context, allowBackGesture, child) {
-        return PopScope(
-          canPop: allowBackGesture,
-          child: child!,
-        );
-      },
+    return RubigoBackGesture(
+      rubigoRouter: controller.rubigoRouter,
+      allowBackGesture: allowBackGesture,
       child: Scaffold(
         appBar: AppBar(
           leading: rubigoBackButton(context, controller.rubigoRouter),
@@ -72,10 +67,10 @@ class Sx30Screen extends StatelessWidget {
             children: [
               const Text('Enable back gesture'),
               ValueListenableBuilder(
-                valueListenable: enableBackGesture,
+                valueListenable: allowBackGesture,
                 builder: (context, value, _) => Switch(
                   value: value,
-                  onChanged: (value) => enableBackGesture.value = value,
+                  onChanged: (value) => allowBackGesture.value = value,
                 ),
               ),
               const Text('mayPop'),
