@@ -1,51 +1,42 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
-
-import 'screens/s100/s100_controller.dart';
-import 'screens/s100/s100_screen.dart';
-import 'screens/s200/s200_controller.dart';
-import 'screens/s200/s200_screen.dart';
-import 'screens/s300/s300_controller.dart';
-import 'screens/s300/s300_screen.dart';
-import 'screens/screens.dart';
-import 'screens/splash_screen/splash_controller.dart';
-import 'screens/splash_screen/splash_screen.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late RubigoHolder holder;
-  late List<RubigoScreen<Screens>> availableScreens;
-  late RubigoRouter<Screens> rubigoRouter;
+  late List<RubigoScreen<_Screens>> availableScreens;
+  late RubigoRouter<_Screens> rubigoRouter;
 
   setUp(() async {
     holder = RubigoHolder();
     availableScreens = [
       RubigoScreen(
-        Screens.splashScreen,
-        SplashScreen(),
-        () => holder.getOrCreate(SplashController.new),
+        _Screens.splashScreen,
+        const _SplashScreen(),
+        () => holder.getOrCreate(_SplashController.new),
       ),
       RubigoScreen(
-        Screens.s100,
-        S100Screen(),
-        () => holder.getOrCreate(S100Controller.new),
+        _Screens.s100,
+        const _S100Screen(),
+        () => holder.getOrCreate(_S100Controller.new),
       ),
       RubigoScreen(
-        Screens.s200,
-        S200Screen(),
-        () => holder.getOrCreate(S200Controller.new),
+        _Screens.s200,
+        const _S200Screen(),
+        () => holder.getOrCreate(_S200Controller.new),
       ),
       RubigoScreen(
-        Screens.s300,
-        S300Screen(),
-        () => holder.getOrCreate(S300Controller.new),
+        _Screens.s300,
+        const _S300Screen(),
+        () => holder.getOrCreate(_S300Controller.new),
       ),
     ];
     rubigoRouter = RubigoRouter(
       availableScreens: availableScreens,
-      splashScreenId: Screens.splashScreen,
+      splashScreenId: _Screens.splashScreen,
     );
-    await rubigoRouter.init(initAndGetFirstScreen: () async => Screens.s100);
+    await rubigoRouter.init(initAndGetFirstScreen: () async => _Screens.s100);
   });
 
   test(
@@ -53,13 +44,13 @@ void main() {
     () async {
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.ui.push(Screens.s200);
+          await rubigoRouter.ui.push(_Screens.s200);
         },
       );
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
+          _Screens.s100,
         ],
       );
     },
@@ -68,12 +59,12 @@ void main() {
   test(
     'S100 ui.push(S200), when not busy',
     () async {
-      await rubigoRouter.ui.push(Screens.s200);
+      await rubigoRouter.ui.push(_Screens.s200);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s200,
+          _Screens.s100,
+          _Screens.s200,
         ],
       );
     },
@@ -85,16 +76,16 @@ void main() {
       await rubigoRouter.busyService.busyWrapper(
         () async {
           await rubigoRouter.ui.replaceStack([
-            Screens.s100,
-            Screens.s200,
-            Screens.s300,
+            _Screens.s100,
+            _Screens.s200,
+            _Screens.s300,
           ]);
         },
       );
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
+          _Screens.s100,
         ],
       );
     },
@@ -104,16 +95,16 @@ void main() {
     'S100 ui.replaceStack(S100-S200-S300), when not busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
+          _Screens.s100,
+          _Screens.s200,
+          _Screens.s300,
         ],
       );
     },
@@ -123,9 +114,9 @@ void main() {
     'S100-s200-s300 ui.pop(), when busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
       await rubigoRouter.busyService.busyWrapper(
         () async {
@@ -135,9 +126,9 @@ void main() {
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
+          _Screens.s100,
+          _Screens.s200,
+          _Screens.s300,
         ],
       );
     },
@@ -147,16 +138,16 @@ void main() {
     'S100-s200-s300 ui.pop(), when not busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
       await rubigoRouter.ui.pop();
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s200,
+          _Screens.s100,
+          _Screens.s200,
         ],
       );
     },
@@ -166,21 +157,21 @@ void main() {
     'S100-s200-s300 ui.popTo(S100) when busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.ui.popTo(Screens.s100);
+          await rubigoRouter.ui.popTo(_Screens.s100);
         },
       );
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
+          _Screens.s100,
+          _Screens.s200,
+          _Screens.s300,
         ],
       );
     },
@@ -190,15 +181,15 @@ void main() {
     'S100-s200-s300 ui.popTo(S100) when not busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
-      await rubigoRouter.ui.popTo(Screens.s100);
+      await rubigoRouter.ui.popTo(_Screens.s100);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
+          _Screens.s100,
         ],
       );
     },
@@ -208,21 +199,21 @@ void main() {
     'S100-s200-s300 ui.remove(S200) when busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.ui.remove(Screens.s200);
+          await rubigoRouter.ui.remove(_Screens.s200);
         },
       );
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s200,
-          Screens.s300,
+          _Screens.s100,
+          _Screens.s200,
+          _Screens.s300,
         ],
       );
     },
@@ -232,18 +223,90 @@ void main() {
     'S100-s200-s300 ui.remove(S200) when not busy',
     () async {
       await rubigoRouter.ui.replaceStack([
-        Screens.s100,
-        Screens.s200,
-        Screens.s300,
+        _Screens.s100,
+        _Screens.s200,
+        _Screens.s300,
       ]);
-      await rubigoRouter.ui.remove(Screens.s200);
+      await rubigoRouter.ui.remove(_Screens.s200);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
-          Screens.s100,
-          Screens.s300,
+          _Screens.s100,
+          _Screens.s300,
         ],
       );
     },
   );
 }
+
+enum _Screens {
+  splashScreen,
+  s100,
+  s200,
+  s300,
+}
+
+//region SplashScreen
+class _SplashScreen extends StatelessWidget {
+  //ignore: unused_element
+  const _SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+class _SplashController {}
+//endregion
+
+//region S100Screen
+class _S100Screen extends StatelessWidget {
+  //ignore: unused_element
+  const _S100Screen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Placeholder(),
+    );
+  }
+}
+
+class _S100Controller {}
+//endregion
+
+//region S200Screen
+class _S200Screen extends StatelessWidget {
+  //ignore: unused_element
+  const _S200Screen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Placeholder(),
+    );
+  }
+}
+
+class _S200Controller {}
+//endregion
+
+//region S300Screen
+class _S300Screen extends StatelessWidget {
+  //ignore: unused_element
+  const _S300Screen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Placeholder(),
+    );
+  }
+}
+
+class _S300Controller {}
+//endregion
