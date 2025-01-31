@@ -193,16 +193,16 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       This can happen when:
       - A regular BackButton was used to pop this page. Solution: Use a rubigoBackButton in the AppBar.
       - The MaterialApp.backButtonDispatcher was not a RubigoRootBackButtonDispatcher.
+      - The pop was not caught by a RubigoBackGesture widget.
       ''';
-    assert(false, warningText);
     unawaited(_logNavigation(warningText));
 
     // This is a workaround for the following exception:
     // Unhandled Exception: 'package:flutter/src/widgets/navigator.dart': Failed assertion: line 4931 pos 12: '!_debugLocked': is not true.
-    // This can happen if a showDialog was used in the mayPop callback. The
-    // assert should have caught this during development. This is a workaround
-    // if this ends up in production.
-    WidgetsBinding.instance.addPostFrameCallback((_) async => callPop());
+    // Which can happen if a showDialog (or other pageless route) was pushed in
+    // the mayPop callback. This is a workaround and should not end up in
+    // production. Read the warning here above.
+    Future.delayed(Duration.zero, callPop);
   }
 
   //endregion
