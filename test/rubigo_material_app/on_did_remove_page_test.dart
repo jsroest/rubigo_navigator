@@ -160,7 +160,7 @@ class _S100Controller extends MockController<_Screens> {}
 
 //region S200Screen
 class _S200Screen extends StatelessWidget
-    with RubigoScreenMixin<_S100Controller> {
+    with RubigoScreenMixin<_S200Controller> {
   //ignore: unused_element
   _S200Screen({super.key});
 
