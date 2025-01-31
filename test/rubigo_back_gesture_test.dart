@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-import '../mock_controller/mock_controller.dart';
+import 'mock_controller/mock_controller.dart';
 
 void main() {
   late RubigoRouter<_Screens> rubigoRouter;
