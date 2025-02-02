@@ -80,6 +80,8 @@ void main() {
         ],
       );
       expectSync(logNavigation, [
+        'RubigoRouter.init() called.',
+        'RubigoRouter.init() ended. First screen will be s100.',
         'replaceStack(s100) called.',
         'Screens: S100',
       ]);

@@ -59,7 +59,13 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     required Future<SCREEN_ID> Function() initAndGetFirstScreen,
     LogNavigation? logNavigation,
   }) async {
+    unawaited(_logNavigation('RubigoRouter.init() called.'));
     final firstScreen = await initAndGetFirstScreen();
+    unawaited(
+      _logNavigation(
+        'RubigoRouter.init() ended. First screen will be ${firstScreen.name}.',
+      ),
+    );
     for (final screenSet in availableScreens) {
 // Wire up the rubigoRouter in each controller, if it is a
 // RubigoControllerMixin

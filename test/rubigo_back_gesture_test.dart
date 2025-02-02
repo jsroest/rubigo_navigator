@@ -57,6 +57,8 @@ void main() {
       expect(
         logNavigation,
         [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
           'replaceStack(s100) called.',
           'Screens: S100',
           'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
