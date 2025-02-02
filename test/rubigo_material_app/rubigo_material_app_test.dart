@@ -13,9 +13,11 @@ void main() {
   late MockNavigatorObserver mockNavigatorObserver;
   late RubigoNavigatorObserver rubigoNavigatorObserver;
   late RubigoRouter<_Screens> rubigoRouter;
+  final logNavigation = <String>[];
 
   setUp(
     () {
+      logNavigation.clear();
       mockNavigatorObserver = MockNavigatorObserver();
       rubigoNavigatorObserver = RubigoNavigatorObserver<_Screens>();
       final holder = RubigoHolder();
@@ -39,6 +41,7 @@ void main() {
       rubigoRouter = RubigoRouter(
         availableScreens: availableScreens,
         splashScreenId: _Screens.splashScreen,
+        logNavigation: (message) async => logNavigation.add(message),
       );
     },
   );
@@ -81,6 +84,15 @@ void main() {
       );
       expect(rubigoNavigatorObserver.currentScreenId, _Screens.s100);
       expect(rubigoRouter.busyService.enabled, true);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.'
+        ],
+      );
     },
   );
 
@@ -113,6 +125,16 @@ void main() {
       );
       expect(rubigoNavigatorObserver.currentScreenId, _Screens.s100);
       expect(rubigoRouter.busyService.enabled, true);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.'
+        ],
+      );
     },
   );
 
@@ -150,6 +172,16 @@ void main() {
           );
         },
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.'
+        ],
+      );
     },
   );
 
@@ -173,6 +205,18 @@ void main() {
       await tester.runAsync(() async => rubigoRouter.ui.push(_Screens.s200));
       await tester.pumpAndSettle();
       expect(find.byType(_S200Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+        ],
+      );
     },
   );
 
@@ -199,6 +243,23 @@ void main() {
       await tester.pageBack();
       await tester.pumpAndSettle();
       expect(find.byType(_S100Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+          'Call mayPop().',
+          'The controller returned "true"',
+          'pop() called.',
+          'Screens: s100.',
+          'onDidRemovePage(s200) called. Last page is s100, ignoring.'
+        ],
+      );
     },
   );
 
@@ -225,12 +286,33 @@ void main() {
       await tester.runAsync(() async {
         await rubigoRouter.busyService.busyWrapper(() async {
           await tester.pump();
-          //This should give a warning in the log that it could not be tapped.
+          // This should give a warning in the console log that it could not be
+          // tapped.
+          // Warning: A call to tap() with finder "Found 1 widget with widget
+          // matching predicate: [Tooltip("Back", dependencies:
+          // [InheritedCupertinoTheme, _InheritedTheme,
+          // _LocalizationsScope-[GlobalKey#6e211]], state: TooltipState#c9afe),
+          // ]" derived an Offset (Offset(28.0, 28.0)) that would not hit test
+          // on the specified widget. Maybe the widget is actually off-screen,
+          // or another widget is obscuring it, or the widget cannot receive
+          // pointer events.
           await tester.pageBack();
         });
       });
       await tester.pumpAndSettle();
       expect(find.byType(_S200Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.'
+        ],
+      );
     },
   );
 
@@ -258,6 +340,25 @@ void main() {
       await tester.runAsync(() async => backButtonDispatcher.didPopRoute());
       await tester.pumpAndSettle();
       expect(find.byType(_S100Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+          'RubigoRootBackButtonDispatcher.didPopRoute() called.',
+          'Current route is Page().',
+          'Call mayPop().',
+          'The controller returned "true"',
+          'pop() called.',
+          'Screens: s100.',
+          'onDidRemovePage(s200) called. Last page is s100, ignoring.',
+        ],
+      );
     },
   );
 
@@ -291,6 +392,21 @@ void main() {
       });
       await tester.pumpAndSettle();
       expect(find.byType(_S200Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+          'RubigoRootBackButtonDispatcher.didPopRoute() called.',
+          'Current route is Page().',
+          'Pop was called by the user, but the app is busy.',
+        ],
+      );
     },
   );
 
@@ -325,6 +441,20 @@ void main() {
       expect(currentRouteIsPage(rubigoRouter), true);
       await tester.pumpAndSettle();
       expect(find.byType(_S200Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+          'RubigoRootBackButtonDispatcher.didPopRoute() called.',
+          'Current route is a pageless route. super.didPopRoute() called.',
+        ],
+      );
     },
   );
 
@@ -359,6 +489,18 @@ void main() {
       expect(currentRouteIsPage(rubigoRouter), true);
       await tester.pumpAndSettle();
       expect(find.byType(_S200Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+        ],
+      );
     },
   );
 }

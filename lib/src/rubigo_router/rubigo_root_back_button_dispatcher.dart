@@ -14,9 +14,12 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
 
   @override
   Future<bool> didPopRoute() async {
-    unawaited(rubigoRouter.logNavigation('didPopRoute() called.'));
+    unawaited(
+      rubigoRouter.logNavigation(
+          'RubigoRootBackButtonDispatcher.didPopRoute() called.'),
+    );
     if (currentRouteIsPage(rubigoRouter)) {
-      unawaited(rubigoRouter.logNavigation('Detected a page.'));
+      unawaited(rubigoRouter.logNavigation('Current route is Page().'));
       await rubigoRouter.ui.pop();
       return true;
     }
@@ -24,7 +27,7 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
     // the user presses the Android hardware back button.
     unawaited(
       rubigoRouter.logNavigation(
-        'Detected a pageless route.\nsuper.didPopRoute() called.',
+        'Current route is a pageless route. super.didPopRoute() called.',
       ),
     );
 
