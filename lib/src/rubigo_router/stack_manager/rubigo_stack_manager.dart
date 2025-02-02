@@ -84,7 +84,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       case ReplaceStack<SCREEN_ID>():
         _changeInfo = await _replaceStack(navigationEvent);
       case Remove<SCREEN_ID>():
-        _remove(navigationEvent);
+        await _remove(navigationEvent);
     }
 
     if (_eventCounter == 0) {
@@ -197,16 +197,16 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     return changeInfo;
   }
 
-  void _remove(
+  Future<void> _remove(
     Remove<SCREEN_ID> navigationEvent,
-  ) {
+  ) async {
     final index = screenStack.indexWhere(
       (e) => e.screenId == navigationEvent.screenId,
     );
     if (index == -1) {
       final txt = 'Developer: You can only remove screens that exist on the '
           'stack (${navigationEvent.screenId.name} not found).';
-      unawaited(_logNavigation(txt));
+      await _logNavigation(txt);
       throw UnsupportedError(txt);
     }
     screenStack.removeAt(index);
