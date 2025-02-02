@@ -60,14 +60,14 @@ void main() {
           'RubigoRouter.init() called.',
           'RubigoRouter.init() ended. First screen will be s100.',
           'replaceStack(s100) called.',
-          'Screens: S100',
+          'Screens: s100',
           'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
           'push(s200) called.',
-          'Screens: S100→S200',
+          'Screens: s100→s200',
           'Call mayPop().',
           'The controller returned "true"',
           'pop() called.',
-          'Screens: S100',
+          'Screens: s100',
           'onDidRemovePage(s200) called. Last page is s100, ignoring.'
         ],
       );
