@@ -10,8 +10,10 @@ void main() {
   late RubigoHolder holder;
   late List<RubigoScreen<_Screens>> availableScreens;
   late RubigoRouter<_Screens> rubigoRouter;
+  final logNavigation = <String>[];
 
   setUp(() async {
+    logNavigation.clear();
     holder = RubigoHolder();
     availableScreens = [
       RubigoScreen(
@@ -38,6 +40,7 @@ void main() {
     rubigoRouter = RubigoRouter(
       availableScreens: availableScreens,
       splashScreenId: _Screens.splashScreen,
+      logNavigation: (message) async => logNavigation.add(message),
     );
     await rubigoRouter.init(initAndGetFirstScreen: () async => _Screens.s100);
   });
@@ -91,6 +94,17 @@ void main() {
           ),
         ],
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+        ],
+      );
     },
   );
 
@@ -136,6 +150,17 @@ void main() {
               ],
             ),
           ),
+        ],
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
         ],
       );
     },
@@ -202,6 +227,17 @@ void main() {
           ),
         ],
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+        ],
+      );
     },
   );
 
@@ -260,6 +296,17 @@ void main() {
               ],
             ),
           ),
+        ],
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
         ],
       );
     },
@@ -325,6 +372,19 @@ void main() {
         s300Controller.callBackHistory,
         <CallBack>[RemovedFromStackCallBack()],
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+          'pop() called.',
+          'Screens: s100→s200.',
+        ],
+      );
     },
   );
 
@@ -382,6 +442,19 @@ void main() {
       expect(
         s300Controller.callBackHistory,
         <CallBack>[RemovedFromStackCallBack()],
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+          'pop() called.',
+          'Screens: s100→s200.',
+        ],
       );
     },
   );
@@ -442,6 +515,19 @@ void main() {
         s300Controller.callBackHistory,
         <CallBack>[RemovedFromStackCallBack()],
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+          'popTo(s100) called.',
+          'Screens: s100.',
+        ],
+      );
     },
   );
 
@@ -497,6 +583,19 @@ void main() {
         s300Controller.callBackHistory,
         <CallBack>[RemovedFromStackCallBack()],
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+          'popTo(s100) called.',
+          'Screens: s100.',
+        ],
+      );
     },
   );
 
@@ -538,6 +637,19 @@ void main() {
         s300Controller.callBackHistory,
         <CallBack>[],
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+          'remove(s200) called.',
+          'Screens: s100→s300.',
+        ],
+      );
     },
   );
 
@@ -574,6 +686,19 @@ void main() {
       expect(
         s300Controller.callBackHistory,
         <CallBack>[],
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'replaceStack(s100→s200→s300) called.',
+          'Screens: s100→s200→s300.',
+          'remove(s200) called.',
+          'Screens: s100→s300.',
+        ],
       );
     },
   );
