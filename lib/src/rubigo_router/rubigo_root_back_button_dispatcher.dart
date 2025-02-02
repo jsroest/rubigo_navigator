@@ -25,7 +25,8 @@ class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
     // This is for the default behaviour. For example to close a dialog when
     // the user presses the Android hardware back button.
     await rubigoRouter.logNavigation(
-        'Current route is a pageless route. super.didPopRoute() called.');
+      'Current route is a pageless route. super.didPopRoute() called.',
+    );
     await super.didPopRoute();
     return true;
   }

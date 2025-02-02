@@ -68,7 +68,7 @@ void main() {
           'The controller returned "true"',
           'pop() called.',
           'Screens: s100.',
-          'onDidRemovePage(s200) called. Last page is s100, ignoring.'
+          'onDidRemovePage(s200) called. Last page is s100, ignoring.',
         ],
       );
     },

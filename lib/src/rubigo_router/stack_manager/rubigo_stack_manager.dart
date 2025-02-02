@@ -154,8 +154,8 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     // If not found, or the topmost one
     if (index == -1 || index == screenStack.length - 1) {
       final txt = 'Developer: With popTo, you tried to navigate to '
-          '${navigationEvent.screenId.name}, which was not below this screen on '
-          'the stack.';
+          '${navigationEvent.screenId.name}, which was not below this screen '
+          'on the stack.';
       await _logNavigation(txt);
       throw UnsupportedError(txt);
     }
