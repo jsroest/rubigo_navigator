@@ -10,9 +10,11 @@ void main() {
   late RubigoHolder holder;
   late List<RubigoScreen<_Screens>> availableScreens;
   late RubigoRouter<_Screens> rubigoRouter;
+  final logNavigation = <String>[];
 
   setUp(
     () async {
+      logNavigation.clear();
       holder = RubigoHolder();
       availableScreens = [
         RubigoScreen(
@@ -39,6 +41,7 @@ void main() {
       rubigoRouter = RubigoRouter(
         availableScreens: availableScreens,
         splashScreenId: _Screens.splashScreen,
+        logNavigation: (message) async => logNavigation.add(message),
       );
       await rubigoRouter.init(
         initAndGetFirstScreen: () async => _Screens.s100,
@@ -63,6 +66,19 @@ void main() {
           ),
         ),
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'push(s200) called.',
+          'push(s300) called.',
+          //ignore: lines_longer_than_80_chars
+          'Developer: you may not call push, pop, popTo, replaceStack or remove in the willShow method.',
+        ],
+      );
     },
   );
 
@@ -85,6 +101,22 @@ void main() {
           ),
         ),
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'push(s200) called.',
+          'Screens: s100→s200.',
+          'pop() called.',
+          'Screens: s100.',
+          'push(s300) called.',
+          //ignore: lines_longer_than_80_chars
+          'Developer: you may not call push, pop, popTo, replaceStack or remove in the removedFromStack method.',
+        ],
+      );
     },
   );
 
@@ -102,6 +134,18 @@ void main() {
                         'which was not below this screen on the stack.',
           ),
         ),
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'popTo(s200) called.',
+          //ignore: lines_longer_than_80_chars
+          'Developer: With popTo, you tried to navigate to s200, which was not below this screen on the stack.',
+        ],
       );
     },
   );
@@ -121,6 +165,18 @@ void main() {
           ),
         ),
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'popTo(s100) called.',
+          //ignore: lines_longer_than_80_chars
+          'Developer: With popTo, you tried to navigate to s100, which was not below this screen on the stack.',
+        ],
+      );
     },
   );
 
@@ -139,6 +195,18 @@ void main() {
           ),
         ),
       );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'remove(s200) called.',
+          //ignore: lines_longer_than_80_chars
+          'Developer: You can only remove screens that exist on the stack (s200 not found).',
+        ],
+      );
     },
   );
 
@@ -153,9 +221,20 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'PANIC: page.key must be of type ValueKey<_Screens>.',
+                    'PANIC: page.key must be of type ValueKey<_Screens>, but '
+                        'found null.',
           ),
         ),
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'PANIC: page.key must be of type ValueKey<_Screens>, but found null.',
+        ],
       );
     },
   );
@@ -171,9 +250,21 @@ void main() {
             (e) =>
                 e is UnsupportedError &&
                 e.message ==
-                    'PANIC: page.key must be of type ValueKey<_Screens>.',
+                    'PANIC: page.key must be of type ValueKey<_Screens>, but '
+                        'found ValueKey<int>.',
           ),
         ),
+      );
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          //ignore: lines_longer_than_80_chars
+          'PANIC: page.key must be of type ValueKey<_Screens>, but found ValueKey<int>.',
+        ],
       );
     },
   );
@@ -191,6 +282,17 @@ void main() {
       );
       await rubigoRouter.pop();
       expect(message, 'SystemNavigator.pop');
+      expect(
+        logNavigation,
+        [
+          'RubigoRouter.init() called.',
+          'RubigoRouter.init() ended. First screen will be s100.',
+          'replaceStack(s100) called.',
+          'Screens: s100.',
+          'pop() called.',
+          'The last page is popped.',
+        ],
+      );
     },
   );
 }
