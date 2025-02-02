@@ -267,7 +267,9 @@ This can happen when:
         () async {
           if (isBusy) {
             unawaited(
-              _logNavigation('Pop was called by the user, but we are busy'),
+              _logNavigation(
+                'Pop was called by the user, but the app is busy.',
+              ),
             );
             return;
           }
@@ -301,7 +303,7 @@ This can happen when:
       if (busyService.isBusy) {
         unawaited(
           _logNavigation('PopTo(${screenId.name}) was called by the user, '
-              'but we are busy'),
+              'but the app is busy.'),
         );
         return;
       }
@@ -311,7 +313,7 @@ This can happen when:
       if (busyService.isBusy) {
         unawaited(
           _logNavigation('Push(${screenId.name}) was called by the user, '
-              'but we are busy'),
+              'but the app is busy.'),
         );
         return;
       }
@@ -322,7 +324,7 @@ This can happen when:
         unawaited(
           _logNavigation(
               'replaceStack(${screens.breadCrumbs()}) was called by the user, '
-              'but we are busy'),
+              'but the app is busy.'),
         );
         return;
       }
@@ -332,7 +334,7 @@ This can happen when:
       if (busyService.isBusy) {
         unawaited(
           _logNavigation('remove(${screenId.name}) was called by the user, '
-              'but we are busy'),
+              'but the app is busy.'),
         );
         return;
       }
