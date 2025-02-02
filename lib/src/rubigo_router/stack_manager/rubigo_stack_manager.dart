@@ -222,6 +222,11 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     // of the stack. Also if the contents are logically the same. In this case
     // this is what we want, specifically in case of handling onDidRemovePage.
     screens.value = [...screenStack];
+    unawaited(
+      _logNavigation(
+        'Screens: ${screens.value.toListOfScreenId().breadCrumbs()}',
+      ),
+    );
     // Inform al controllers that were removed from the stack.
     for (final screen in oldScreenSet.difference(newScreenSet)) {
       final controller = screen.getController();
@@ -231,7 +236,6 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
         _inRemovedFromStack = false;
       }
     }
-    unawaited(_logNavigation(screens.value.toListOfScreenId().breadCrumbs()));
     for (final callBack in updateScreensCallBack) {
       callBack.call();
     }
