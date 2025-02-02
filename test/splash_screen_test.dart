@@ -10,8 +10,10 @@ void main() {
   late RubigoHolder holder;
   late List<RubigoScreen<_Screens>> availableScreens;
   late RubigoRouter<_Screens> rubigoRouter;
+  final logNavigation = <String>[];
 
   setUp(() {
+    logNavigation.clear();
     holder = RubigoHolder();
     availableScreens = [
       RubigoScreen(
@@ -38,6 +40,7 @@ void main() {
     rubigoRouter = RubigoRouter(
       availableScreens: availableScreens,
       splashScreenId: _Screens.splashScreen,
+      logNavigation: (message) async => logNavigation.add(message),
     );
   });
 
@@ -76,6 +79,10 @@ void main() {
           ),
         ],
       );
+      expectSync(logNavigation, [
+        'replaceStack(s100) called.',
+        'Screens: S100',
+      ]);
     },
   );
 }
