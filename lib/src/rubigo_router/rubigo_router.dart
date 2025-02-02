@@ -187,14 +187,14 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     }
 
     final warningText = '''
-      RubigoRouter warning.
-      'onDidRemovePage called' for ${removedScreenId.name}, but the source was not a userGesture. 
-      The cause is most likely that Navigator.maybePop(context) was (indirectly) called.
-      This can happen when:
-      - A regular BackButton was used to pop this page. Solution: Use a rubigoBackButton in the AppBar.
-      - The MaterialApp.backButtonDispatcher was not a RubigoRootBackButtonDispatcher.
-      - The pop was not caught by a RubigoBackGesture widget.
-      ''';
+RubigoRouter warning.
+"onDidRemovePage called" for ${removedScreenId.name}, but the source was not a userGesture. 
+The cause is most likely that Navigator.maybePop(context) was (indirectly) called.
+This can happen when:
+- A regular BackButton was used to pop this page. Solution: Use a rubigoBackButton in the AppBar.
+- The MaterialApp.backButtonDispatcher was not a RubigoRootBackButtonDispatcher.
+- The pop was not caught by a RubigoBackGesture widget.
+''';
     unawaited(_logNavigation(warningText));
 
     // This is a workaround for the following exception:
