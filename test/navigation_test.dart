@@ -43,7 +43,7 @@ void main() {
   });
 
   test(
-    'S100 prog.push(S200), when busy',
+    'S100 push(S200), when busy',
     () async {
       final s100Controller = holder.get<_S100Controller>();
       s100Controller.callBackHistory.clear();
@@ -51,7 +51,7 @@ void main() {
       s200Controller.callBackHistory.clear();
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.prog.push(_Screens.s200);
+          await rubigoRouter.push(_Screens.s200);
         },
       );
 
@@ -95,13 +95,13 @@ void main() {
   );
 
   test(
-    'S100 prog.push(S200), when not busy',
+    'S100 push(S200), when not busy',
     () async {
       final s100Controller = holder.get<_S100Controller>();
       s100Controller.callBackHistory.clear();
       final s200Controller = holder.get<_S200Controller>();
       s200Controller.callBackHistory.clear();
-      await rubigoRouter.prog.push(_Screens.s200);
+      await rubigoRouter.push(_Screens.s200);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
@@ -142,7 +142,7 @@ void main() {
   );
 
   test(
-    'S100 prog.replaceStack(S100-S200-S300), busy',
+    'S100 replaceStack(S100-S200-S300), busy',
     () async {
       final s100Controller = holder.get<_S100Controller>();
       s100Controller.callBackHistory.clear();
@@ -152,7 +152,7 @@ void main() {
       s300Controller.callBackHistory.clear();
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.prog.replaceStack([
+          await rubigoRouter.replaceStack([
             _Screens.s100,
             _Screens.s200,
             _Screens.s300,
@@ -206,7 +206,7 @@ void main() {
   );
 
   test(
-    'S100 prog.replaceStack(S100-S200-S300), when not busy',
+    'S100 replaceStack(S100-S200-S300), when not busy',
     () async {
       final s100Controller = holder.get<_S100Controller>();
       s100Controller.callBackHistory.clear();
@@ -214,7 +214,7 @@ void main() {
       s200Controller.callBackHistory.clear();
       final s300Controller = holder.get<_S300Controller>();
       s300Controller.callBackHistory.clear();
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -266,9 +266,9 @@ void main() {
   );
 
   test(
-    'S100-s200-s300 prog.pop(), when busy',
+    'S100-s200-s300 pop(), when busy',
     () async {
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -281,7 +281,7 @@ void main() {
         ..callBackHistory.clear();
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.prog.pop();
+          await rubigoRouter.pop();
         },
       );
 
@@ -329,9 +329,9 @@ void main() {
   );
 
   test(
-    'S100-s200-s300 prog.pop(), when not busy',
+    'S100-s200-s300 pop(), when not busy',
     () async {
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -342,7 +342,7 @@ void main() {
         ..callBackHistory.clear();
       final s300Controller = holder.get<_S300Controller>()
         ..callBackHistory.clear();
-      await rubigoRouter.prog.pop();
+      await rubigoRouter.pop();
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
@@ -387,9 +387,9 @@ void main() {
   );
 
   test(
-    'S100-s200-s300 prog.popTo(S100) when busy',
+    'S100-s200-s300 popTo(S100) when busy',
     () async {
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -402,7 +402,7 @@ void main() {
         ..callBackHistory.clear();
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.prog.popTo(_Screens.s100);
+          await rubigoRouter.popTo(_Screens.s100);
         },
       );
       expect(
@@ -446,9 +446,9 @@ void main() {
   );
 
   test(
-    'S100-s200-s300 prog.popTo(S100) when not busy',
+    'S100-s200-s300 popTo(S100) when not busy',
     () async {
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -459,7 +459,7 @@ void main() {
         ..callBackHistory.clear();
       final s300Controller = holder.get<_S300Controller>()
         ..callBackHistory.clear();
-      await rubigoRouter.prog.popTo(_Screens.s100);
+      await rubigoRouter.popTo(_Screens.s100);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [
@@ -501,9 +501,9 @@ void main() {
   );
 
   test(
-    'S100-s200-s300 prog.remove(S200) when busy',
+    'S100-s200-s300 remove(S200) when busy',
     () async {
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -516,7 +516,7 @@ void main() {
         ..callBackHistory.clear();
       await rubigoRouter.busyService.busyWrapper(
         () async {
-          await rubigoRouter.prog.remove(_Screens.s200);
+          await rubigoRouter.remove(_Screens.s200);
         },
       );
       expect(
@@ -542,9 +542,9 @@ void main() {
   );
 
   test(
-    'S100-s200-s300 prog.remove(S200) when not busy',
+    'S100-s200-s300 remove(S200) when not busy',
     () async {
-      await rubigoRouter.prog.replaceStack([
+      await rubigoRouter.replaceStack([
         _Screens.s100,
         _Screens.s200,
         _Screens.s300,
@@ -555,7 +555,7 @@ void main() {
         ..callBackHistory.clear();
       final s300Controller = holder.get<_S300Controller>()
         ..callBackHistory.clear();
-      await rubigoRouter.prog.remove(_Screens.s200);
+      await rubigoRouter.remove(_Screens.s200);
       expect(
         rubigoRouter.screens.value.toListOfScreenId(),
         [

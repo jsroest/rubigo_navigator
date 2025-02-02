@@ -17,7 +17,7 @@ class MockController<SCREEN_ID extends Enum>
     await super.onTop(changeInfo);
     callBackHistory.add(OnTopCallBack(changeInfo));
     if (onTopPush != null) {
-      await rubigoRouter.prog.push(onTopPush!);
+      await rubigoRouter.push(onTopPush!);
     }
   }
 
@@ -27,7 +27,7 @@ class MockController<SCREEN_ID extends Enum>
     await super.willShow(changeInfo);
     callBackHistory.add(WillShowCallBack(changeInfo));
     if (willShowPush != null) {
-      await rubigoRouter.prog.push(willShowPush!);
+      await rubigoRouter.push(willShowPush!);
     }
   }
 
@@ -37,7 +37,7 @@ class MockController<SCREEN_ID extends Enum>
     await super.removedFromStack();
     callBackHistory.add(RemovedFromStackCallBack());
     if (removedFromStackPush != null) {
-      await rubigoRouter.prog.push(removedFromStackPush!);
+      await rubigoRouter.push(removedFromStackPush!);
     }
   }
 

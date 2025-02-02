@@ -52,7 +52,7 @@ void main() {
       final s200Controller = holder.get<_S200Controller>();
       s200Controller.willShowPush = _Screens.s300;
       await expectLater(
-        () async => rubigoRouter.prog.push(_Screens.s200),
+        () async => rubigoRouter.push(_Screens.s200),
         throwsA(
           predicate(
             (e) =>
@@ -71,9 +71,9 @@ void main() {
     () async {
       final s200Controller = holder.get<_S200Controller>();
       s200Controller.removedFromStackPush = _Screens.s300;
-      await rubigoRouter.prog.push(_Screens.s200);
+      await rubigoRouter.push(_Screens.s200);
       await expectLater(
-        () async => rubigoRouter.prog.pop(),
+        () async => rubigoRouter.pop(),
         throwsA(
           predicate(
             (e) =>
@@ -92,7 +92,7 @@ void main() {
     'PopTo a screen that is not on the stack',
     () async {
       await expectLater(
-        () async => rubigoRouter.prog.popTo(_Screens.s200),
+        () async => rubigoRouter.popTo(_Screens.s200),
         throwsA(
           predicate(
             (e) =>
@@ -110,7 +110,7 @@ void main() {
     'PopTo the current screen',
     () async {
       await expectLater(
-        () async => rubigoRouter.prog.popTo(_Screens.s100),
+        () async => rubigoRouter.popTo(_Screens.s100),
         throwsA(
           predicate(
             (e) =>
@@ -128,7 +128,7 @@ void main() {
     'Remove a screen that is not on the stack',
     () async {
       await expectLater(
-        () async => rubigoRouter.prog.remove(_Screens.s200),
+        () async => rubigoRouter.remove(_Screens.s200),
         throwsA(
           predicate(
             (e) =>
@@ -189,7 +189,7 @@ void main() {
           return null;
         },
       );
-      await rubigoRouter.prog.pop();
+      await rubigoRouter.pop();
       expect(message, 'SystemNavigator.pop');
     },
   );

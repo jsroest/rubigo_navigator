@@ -24,7 +24,7 @@ class RubigoMaterialApp<SCREEN_ID extends Enum> extends StatefulWidget {
   /// In this function the application can be initialized. During this phase
   /// a SplashScreen is shown. After initialisation this functions returns the
   /// first screen to navigate to, which is done with a
-  /// [RubigoRouter.prog].replaceStack.
+  /// [RubigoRouter.replaceStack].
   final Future<SCREEN_ID> Function() initAndGetFirstScreen;
 
   /// The backButtonDispatcher to use. Most of the times you will want to pass

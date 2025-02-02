@@ -20,12 +20,12 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
 /// A collection of extension methods on list of ScreenId.
 extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
   /// Check if there is at least one screen available below the current screen.
-  /// This could be an appropriate check before calling [RubigoRouter.prog].pop.
+  /// This could be an appropriate check before calling [RubigoRouter.pop].
   bool hasScreenBelow() => length > 1;
 
   /// Check if this specific screenId is available below the current screen.
   /// This could be an appropriate check before calling
-  /// [RubigoRouter.prog].popTo.
+  /// [RubigoRouter.popTo].
   bool containsScreenBelow(SCREEN_ID screenId) {
     final lastPageIndex = length - 1;
     final belowLastPageIndex = lastPageIndex - 1;
