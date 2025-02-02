@@ -6,9 +6,11 @@ import 'mock_controller/mock_controller.dart';
 
 void main() {
   late RubigoRouter<_Screens> rubigoRouter;
+  final logNavigation = <String>[];
 
   setUp(
     () {
+      logNavigation.clear();
       final holder = RubigoHolder();
       final availableScreens = [
         RubigoScreen(
@@ -30,6 +32,7 @@ void main() {
       rubigoRouter = RubigoRouter(
         availableScreens: availableScreens,
         splashScreenId: _Screens.splashScreen,
+        logNavigation: (message) async => logNavigation.add(message),
       );
     },
   );
@@ -51,6 +54,21 @@ void main() {
       await tester.pageBack();
       await tester.pumpAndSettle();
       expect(find.byType(_S100Screen), findsOne);
+      expect(
+        logNavigation,
+        [
+          'replaceStack(s100) called.',
+          'Screens: S100',
+          'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+          'push(s200) called.',
+          'Screens: S100→S200',
+          'Call mayPop().',
+          'The controller returned "true"',
+          'pop() called.',
+          'Screens: S100',
+          'onDidRemovePage(s200) called. Last page is s100, ignoring.'
+        ],
+      );
     },
   );
 }

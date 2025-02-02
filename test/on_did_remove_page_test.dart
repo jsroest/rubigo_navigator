@@ -7,9 +7,11 @@ import 'mock_controller/mock_controller.dart';
 void main() {
   late RubigoHolder holder;
   late RubigoRouter<_Screens> rubigoRouter;
+  final logNavigation = <String>[];
 
   setUp(
     () {
+      logNavigation.clear();
       holder = RubigoHolder();
       final availableScreens = <RubigoScreen<_Screens>>[
         RubigoScreen(
@@ -31,6 +33,7 @@ void main() {
       rubigoRouter = RubigoRouter(
         availableScreens: availableScreens,
         splashScreenId: _Screens.splashScreen,
+        logNavigation: (message) async => logNavigation.add(message),
       );
     },
   );
@@ -64,6 +67,21 @@ void main() {
     // End perform a back gesture
     await tester.pumpAndSettle();
     expect(find.byType(_S100Screen), findsOne);
+    expect(
+      logNavigation,
+      [
+        'replaceStack(s100) called.',
+        'Screens: S100',
+        'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+        'push(s200) called.',
+        'Screens: S100→S200',
+        'onDidRemovePage(s200) called.',
+        'Call mayPop().',
+        'The controller returned "true"',
+        'pop() called.',
+        'Screens: S100',
+      ],
+    );
   });
 
   testWidgets('onDidRemovePage - updateScreensIsCalled is false',
@@ -97,6 +115,20 @@ void main() {
     // End perform a back gesture
     await tester.pumpAndSettle();
     expect(find.byType(_S200Screen), findsOne);
+    expect(
+      logNavigation,
+      [
+        'replaceStack(s100) called.',
+        'Screens: S100',
+        'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+        'push(s200) called.',
+        'Screens: S100→S200',
+        'onDidRemovePage(s200) called.',
+        'Call mayPop().',
+        'The controller returned "false"',
+        'Screens: S100→S200',
+      ],
+    );
   });
 
   testWidgets('onDidRemovePage - execute workaround', (tester) async {
@@ -115,6 +147,30 @@ void main() {
     await tester.pageBack();
     await tester.pumpAndSettle();
     expect(find.byType(_S100Screen), findsOne);
+    expect(
+      logNavigation,
+      [
+        'replaceStack(s100) called.',
+        'Screens: S100',
+        'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
+        'push(s200) called.',
+        'Screens: S100→S200',
+        'onDidRemovePage(s200) called.',
+        '''
+RubigoRouter warning.
+"onDidRemovePage called" for s200, but the source was not a userGesture. 
+The cause is most likely that Navigator.maybePop(context) was (indirectly) called.
+This can happen when:
+- A regular BackButton was used to pop this page. Solution: Use a rubigoBackButton in the AppBar.
+- The MaterialApp.backButtonDispatcher was not a RubigoRootBackButtonDispatcher.
+- The pop was not caught by a RubigoBackGesture widget.
+''',
+        'Call mayPop().',
+        'The controller returned "true"',
+        'pop() called.',
+        'Screens: S100',
+      ],
+    );
   });
 }
 
