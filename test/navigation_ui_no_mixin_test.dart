@@ -217,9 +217,10 @@ void main() {
           'Screens: s100.',
           'replaceStack(s100→s200→s300) called.',
           'Screens: s100→s200→s300.',
+          //ignore: lines_longer_than_80_chars
           'The controller is not a RubigoControllerMixin, mayPop is always "true"',
           'pop() called.',
-          'Screens: s100→s200.'
+          'Screens: s100→s200.',
         ],
       );
     },
