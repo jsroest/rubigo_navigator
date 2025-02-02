@@ -59,12 +59,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     required Future<SCREEN_ID> Function() initAndGetFirstScreen,
     LogNavigation? logNavigation,
   }) async {
-    unawaited(_logNavigation('RubigoRouter.init() called.'));
+    await _logNavigation('RubigoRouter.init() called.');
     final firstScreen = await initAndGetFirstScreen();
-    unawaited(
-      _logNavigation(
-        'RubigoRouter.init() ended. First screen will be ${firstScreen.name}.',
-      ),
+    await _logNavigation(
+      'RubigoRouter.init() ended. First screen will be ${firstScreen.name}.',
     );
     for (final screenSet in availableScreens) {
 // Wire up the rubigoRouter in each controller, if it is a
@@ -125,15 +123,17 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       final txt =
           'PANIC: page.key must be of type ValueKey<$SCREEN_ID>, but found '
           'null.';
-      unawaited(_logNavigation(txt));
-      throw UnsupportedError(txt);
+      unawaited(
+        _logNavigation(txt).then(throw UnsupportedError(txt)),
+      );
     }
     if (pageKey is! ValueKey<SCREEN_ID>) {
       final txt =
           'PANIC: page.key must be of type ValueKey<$SCREEN_ID>, but found '
           '${pageKey.runtimeType}.';
-      unawaited(_logNavigation(txt));
-      throw UnsupportedError(txt);
+      unawaited(
+        _logNavigation(txt).then(throw UnsupportedError(txt)),
+      );
     }
     final removedScreenId = pageKey.value;
     final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
@@ -225,7 +225,7 @@ This can happen when:
   // region navigation functions
   /// Pops the current screen from the stack
   Future<void> pop() async {
-    unawaited(_logNavigation('pop() called.'));
+    await _logNavigation('pop() called.');
     try {
       await busyService.busyWrapper(_rubigoStackManager.pop);
     } on LastPagePoppedException catch (e) {
@@ -236,32 +236,29 @@ This can happen when:
 
   /// Pop directly to the screen with [screenId].
   Future<void> popTo(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('popTo(${screenId.name}) called.'));
+    await _logNavigation('popTo(${screenId.name}) called.');
     await busyService.busyWrapper(() => _rubigoStackManager.popTo(screenId));
   }
 
   /// Push screen with [screenId] on the stack.
   Future<void> push(SCREEN_ID screenId) async {
-    unawaited(_logNavigation('push(${screenId.name}) called.'));
+    await _logNavigation('push(${screenId.name}) called.');
     await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
   }
 
   /// Replace the current screen stack with \[screens\].
   Future<void> replaceStack(List<SCREEN_ID> screens) async {
-    unawaited(
-      _logNavigation(
-        'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
-      ),
+    await _logNavigation(
+      'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
     );
-    await busyService
-        .busyWrapper(() => _rubigoStackManager.replaceStack(screens));
+    await busyService.busyWrapper(
+      () => _rubigoStackManager.replaceStack(screens),
+    );
   }
 
   /// Remove the screen with \[screenId\] silently from the stack.
   Future<void> remove(SCREEN_ID screenId) async {
-    unawaited(
-      _logNavigation('remove(${screenId.name}) called.'),
-    );
+    await _logNavigation('remove(${screenId.name}) called.');
     await _rubigoStackManager.remove(screenId);
   }
 
@@ -280,10 +277,8 @@ This can happen when:
       await busyService.busyWrapper(
         () async {
           if (isBusy) {
-            unawaited(
-              _logNavigation(
-                'Pop was called by the user, but the app is busy.',
-              ),
+            await _logNavigation(
+              'Pop was called by the user, but the app is busy.',
             );
             return;
           }
@@ -296,16 +291,15 @@ This can happen when:
           if (controller is RubigoControllerMixin<SCREEN_ID>) {
 // If the controller implements RubigoControllerMixin, call
 // mayPop.
-            unawaited(_logNavigation('Call mayPop().'));
+            await _logNavigation('Call mayPop().');
             mayPop = await controller.mayPop();
-            unawaited(_logNavigation('The controller returned "$mayPop"'));
+            await _logNavigation('The controller returned "$mayPop"');
           } else {
 // Otherwise the screen may always be popped
             mayPop = true;
-            unawaited(
-              _logNavigation('The controller is not a RubigoControllerMixin, '
-                  'mayPop is always "true"'),
-            );
+            await _logNavigation(
+                'The controller is not a RubigoControllerMixin, '
+                'mayPop is always "true"');
           }
           if (mayPop) {
             await pop();
@@ -315,41 +309,33 @@ This can happen when:
     },
     popTo: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
-        unawaited(
-          _logNavigation('PopTo(${screenId.name}) was called by the user, '
-              'but the app is busy.'),
-        );
+        await _logNavigation('PopTo(${screenId.name}) was called by the user, '
+            'but the app is busy.');
         return;
       }
       await popTo(screenId);
     },
     push: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
-        unawaited(
-          _logNavigation('Push(${screenId.name}) was called by the user, '
-              'but the app is busy.'),
-        );
+        await _logNavigation('Push(${screenId.name}) was called by the user, '
+            'but the app is busy.');
         return;
       }
       await push(screenId);
     },
     replaceStack: (List<SCREEN_ID> screens) async {
       if (busyService.isBusy) {
-        unawaited(
-          _logNavigation(
-              'replaceStack(${screens.breadCrumbs()}) was called by the user, '
-              'but the app is busy.'),
-        );
+        await _logNavigation(
+            'replaceStack(${screens.breadCrumbs()}) was called by the user, '
+            'but the app is busy.');
         return;
       }
       await replaceStack(screens);
     },
     remove: (SCREEN_ID screenId) async {
       if (busyService.isBusy) {
-        unawaited(
-          _logNavigation('remove(${screenId.name}) was called by the user, '
-              'but the app is busy.'),
-        );
+        await _logNavigation('remove(${screenId.name}) was called by the user, '
+            'but the app is busy.');
         return;
       }
       await remove(screenId);
