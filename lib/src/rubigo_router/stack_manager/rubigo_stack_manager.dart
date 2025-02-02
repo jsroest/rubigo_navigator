@@ -63,16 +63,16 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       _changeInfo = null;
     }
     if (_inWillShow) {
-      throw UnsupportedError(
-        'Developer: you may not call push, pop, popTo, replaceStack or remove '
-        'in the willShow method.',
-      );
+      const txt = 'Developer: you may not call push, pop, popTo, replaceStack '
+          'or remove in the willShow method.';
+      await _logNavigation(txt);
+      throw UnsupportedError(txt);
     }
     if (_inRemovedFromStack) {
-      throw UnsupportedError(
-        'Developer: you may not call push, pop, popTo, replaceStack or remove '
-        'in the removedFromStack method.',
-      );
+      const txt = 'Developer: you may not call push, pop, popTo, replaceStack '
+          'or remove in the removedFromStack method.';
+      await _logNavigation(txt);
+      throw UnsupportedError(txt);
     }
     switch (navigationEvent) {
       case Push<SCREEN_ID>():
@@ -153,11 +153,11 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     );
     // If not found, or the topmost one
     if (index == -1 || index == screenStack.length - 1) {
-      throw UnsupportedError(
-        'Developer: With popTo, you tried to navigate to '
-        '${navigationEvent.screenId.name}, which was not below this screen on '
-        'the stack.',
-      );
+      final txt = 'Developer: With popTo, you tried to navigate to '
+          '${navigationEvent.screenId.name}, which was not below this screen on '
+          'the stack.';
+      await _logNavigation(txt);
+      throw UnsupportedError(txt);
     }
     screenStack.removeRange(index + 1, screenStack.length);
 
@@ -204,10 +204,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
       (e) => e.screenId == navigationEvent.screenId,
     );
     if (index == -1) {
-      throw UnsupportedError(
-        'Developer: You can only remove screens that exist on the stack '
-        '(${navigationEvent.screenId.name} not found).',
-      );
+      final txt = 'Developer: You can only remove screens that exist on the '
+          'stack (${navigationEvent.screenId.name} not found).';
+      unawaited(_logNavigation(txt));
+      throw UnsupportedError(txt);
     }
     screenStack.removeAt(index);
   }

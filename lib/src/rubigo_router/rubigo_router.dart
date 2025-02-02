@@ -121,10 +121,19 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
   void onDidRemovePage(Page<Object?> page) {
     final pageKey = page.key;
-    if (pageKey == null || pageKey is! ValueKey<SCREEN_ID>) {
-      throw UnsupportedError(
-        'PANIC: page.key must be of type ValueKey<$SCREEN_ID>.',
-      );
+    if (pageKey == null) {
+      final txt =
+          'PANIC: page.key must be of type ValueKey<$SCREEN_ID>, but found '
+          'null.';
+      unawaited(_logNavigation(txt));
+      throw UnsupportedError(txt);
+    }
+    if (pageKey is! ValueKey<SCREEN_ID>) {
+      final txt =
+          'PANIC: page.key must be of type ValueKey<$SCREEN_ID>, but found '
+          '${pageKey.runtimeType}.';
+      unawaited(_logNavigation(txt));
+      throw UnsupportedError(txt);
     }
     final removedScreenId = pageKey.value;
     final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
@@ -221,7 +230,6 @@ This can happen when:
       await busyService.busyWrapper(_rubigoStackManager.pop);
     } on LastPagePoppedException catch (e) {
       await _logNavigation(e.message);
-      await _logNavigation('The app is closed.');
       await _onLastPagePopped();
     }
   }
