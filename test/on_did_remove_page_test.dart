@@ -73,15 +73,15 @@ void main() {
         'RubigoRouter.init() called.',
         'RubigoRouter.init() ended. First screen will be s100.',
         'replaceStack(s100) called.',
-        'Screens: s100',
+        'Screens: s100.',
         'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
         'push(s200) called.',
-        'Screens: s100→s200',
+        'Screens: s100→s200.',
         'onDidRemovePage(s200) called.',
         'Call mayPop().',
         'The controller returned "true"',
         'pop() called.',
-        'Screens: s100',
+        'Screens: s100.',
       ],
     );
   });
@@ -123,14 +123,14 @@ void main() {
         'RubigoRouter.init() called.',
         'RubigoRouter.init() ended. First screen will be s100.',
         'replaceStack(s100) called.',
-        'Screens: s100',
+        'Screens: s100.',
         'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
         'push(s200) called.',
-        'Screens: s100→s200',
+        'Screens: s100→s200.',
         'onDidRemovePage(s200) called.',
         'Call mayPop().',
         'The controller returned "false"',
-        'Screens: s100→s200',
+        'Screens: s100→s200.',
       ],
     );
   });
@@ -157,10 +157,10 @@ void main() {
         'RubigoRouter.init() called.',
         'RubigoRouter.init() ended. First screen will be s100.',
         'replaceStack(s100) called.',
-        'Screens: s100',
+        'Screens: s100.',
         'onDidRemovePage(splashScreen) called. Last page is s100, ignoring.',
         'push(s200) called.',
-        'Screens: s100→s200',
+        'Screens: s100→s200.',
         'onDidRemovePage(s200) called.',
         '''
 RubigoRouter warning.
@@ -174,7 +174,7 @@ This can happen when:
         'Call mayPop().',
         'The controller returned "true"',
         'pop() called.',
-        'Screens: s100',
+        'Screens: s100.',
       ],
     );
   });

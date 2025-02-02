@@ -225,7 +225,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
     unawaited(
       _logNavigation(
         'Screens: '
-        '${screens.value.toListOfScreenId().map((e) => e.name).join('→')}',
+        '${screens.value.toListOfScreenId().map((e) => e.name).join('→')}.',
       ),
     );
     // Inform al controllers that were removed from the stack.
