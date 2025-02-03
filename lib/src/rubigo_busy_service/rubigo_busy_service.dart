@@ -5,6 +5,15 @@ import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/rubigo_busy_service/rubigo_busy_event.dart';
 
 /// This service is used to keep track if the application is busy.
+/// It is used by the [RubigoRouter] internally to track if the router is busy
+/// with navigating. You can also use this in your app to protect some lengthy
+/// processes against any user interaction. Calls to
+/// [RubigoBusyService.busyWrapper] may be nested.
+/// ```dart
+/// await rubigoRouter.busyService.busyWrapper(() async {
+///   // Do some lengthy processing here.
+/// });
+/// ```
 class RubigoBusyService {
   int _busyCounter = 0;
   Timer? _timer;

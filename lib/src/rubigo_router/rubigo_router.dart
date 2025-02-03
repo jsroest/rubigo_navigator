@@ -8,19 +8,60 @@ import 'package:rubigo_router/src/rubigo_router/stack_manager/last_page_popped_e
 import 'package:rubigo_router/src/rubigo_router/stack_manager/rubigo_stack_manager.dart';
 
 /// A router based on [RubigoScreen]'s.
-/// * Use the init function to initialize your app. When the initialization is
-/// done, you must return the first screen of the app.
+/// * Use the init function to initialize your app. For example to initialize
+/// all services that your app uses. When the initialization is done, you must
+/// return the first screen of the app.
 /// * During the initialisation a splashscreen is shown.
 /// * Use the navigation functions in [RubigoRouter] when you want to
 /// change the stack.
 /// * Use the navigation functions in [RubigoRouter.ui] when you want to change
-/// the stack, but the action is initiated by the user. The call is ignored
-/// when the app is busy. See [RubigoBusyService].
-/// * During navigation, the app is automatically marked as busy, but you can
-/// set the app as busy by wrapping your code in
+/// the stack, but the action is initiated by the user, for example by pressing
+/// a button. The call is ignored when the app is busy. See [RubigoBusyService].
+/// * During navigation, the app is automatically marked as busy. You can set
+/// the app busy by wrapping parts of your code in a
 /// [RubigoBusyService.busyWrapper].
+/// ```dart
+/// void main() {
+///   // Create a RubigoRouter for the set of screens defined by the Screens enum.
+///   // Pass it all available screens and the one to use as a splash screen.
+///   final rubigoRouter = RubigoRouter<Screens>(
+///     availableScreens: availableScreens,
+///     splashScreenId: Screens.splashScreen,
+///   );
+///
+///   // Add the router to the holder, so we have access to the router from all
+///   // parts of our app. This is not needed if you use RubigoScreenMixin or
+///   // RubigoControllerMixin
+///   holder.add(rubigoRouter);
+///
+///   // Create a RubigoRouterDelegate.
+///   final routerDelegate = RubigoRouterDelegate(
+///     rubigoRouter: rubigoRouter,
+///   );
+///
+///   // Calling init is mandatory. While init executes, the splashScreen is shown.
+///   // Init returns the first screen to show to the user.
+///   // This callback can be used to initialize the application.For this to work,
+///   // the splashScreen should not accept any user interaction.
+///   Future<Screens> initAndGetFirstScreen() async {
+///     await Future<void>.delayed(const Duration(seconds: 2));
+///     return Screens.s110;
+///   }
+///
+///   runApp(
+///     // Here we use a RubigoMaterialApp to reduce the complexity of this example.
+///     // You might want to replicate the contents of the RubigoMaterialApp and
+///     // adjust it to your needs for more complex scenarios.
+///     RubigoMaterialApp(
+///       initAndGetFirstScreen: initAndGetFirstScreen,
+///       routerDelegate: routerDelegate,
+///       backButtonDispatcher: RubigoRootBackButtonDispatcher(rubigoRouter),
+///     ),
+///   );
+/// }
+/// ```
 class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
-  /// Creates a RubigoRouter
+  /// Creates a [RubigoRouter]
   RubigoRouter({
     required List<RubigoScreen<SCREEN_ID>> availableScreens,
     required SCREEN_ID splashScreenId,
@@ -53,10 +94,9 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   }
 
   //region Public
-  /// Call init to initialise the [RubigoRouter].
-  /// Pass a function that handles your app initialisation first (like setting
-  /// up your app with dependency-injection). When finished initialising, return
-  /// the screen to start the app with.
+  /// Pass a function that handles your app initialisation (like setting
+  /// up dependency-injection etc). When ready, return the first screen of the
+  /// app.
   Future<void> init({
     required Future<SCREEN_ID> Function() initAndGetFirstScreen,
     LogNavigation? logNavigation,
@@ -83,8 +123,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     await replaceStack([firstScreen]);
   }
 
-  /// This parameter contains the busy service you want to use. If none is
-  /// specified it will default to an instance of [RubigoBusyService].
+  /// This parameter contains the busy service. If none is
+  /// specified, it will default to an instance of [RubigoBusyService].
   RubigoBusyService get busyService => _busyService;
 
   /// This function can be used to log all that is related to navigation
@@ -109,15 +149,18 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   //endregion
 
   //region Properties to pass to Flutter's Navigator
-  /// This is the navigator key that must be passed to Flutter's [Navigator].
+  /// Pass this key to [Navigator.key].
   GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
-  /// This is the getter used by the [Navigator.pages] property.
+  /// Pass this property to [Navigator.pages]. Use an extension like
+  /// [ExtensionOnRubigoScreen.toMaterialPage] or
+  /// [ExtensionOnRubigoScreen.toCupertinoPage] to convert each item to a
+  /// [Page] object.
   /// When this object calls [notifyListeners], the [Navigator] rebuilds and
   /// gets a fresh list of pages from this router.
   ListOfRubigoScreens<SCREEN_ID> get screens => _rubigoStackManager.screens;
 
-  /// This method must be passed to the [Navigator.onDidRemovePage] property.
+  /// Pass this property to [Navigator.onDidRemovePage].
   void onDidRemovePage(Page<Object?> page) {
     final pageKey = page.key;
     if (pageKey == null) {
@@ -247,7 +290,7 @@ This can happen when:
     await busyService.busyWrapper(() => _rubigoStackManager.push(screenId));
   }
 
-  /// Replace the current screen stack with \[screens\].
+  /// Replace the current screen stack with another screen stack.
   Future<void> replaceStack(List<SCREEN_ID> screens) async {
     await _logNavigation(
       'replaceStack(${screens.map((e) => e.name).join('→')}) called.',
@@ -257,7 +300,7 @@ This can happen when:
     );
   }
 
-  /// Remove the screen with \[screenId\] silently from the stack.
+  /// Remove the screen with [screenId] silently from the stack.
   Future<void> remove(SCREEN_ID screenId) async {
     await _logNavigation('remove(${screenId.name}) called.');
     await _rubigoStackManager.remove(screenId);
@@ -266,15 +309,16 @@ This can happen when:
   // endregion
 
   //region User initiated (ui) navigation functions
-  /// {@template rubigoRouter.ui.pop}
-  /// Use these navigation functions everywhere when origin is user initiated.
-  /// these calls will be ignored automatically if the app is busy.
+  /// {@template Ui}
+  /// Use these navigation functions everywhere when the origin is user
+  /// initiated, like on button presses. These calls will automatically be
+  /// ignored if the app is busy.
   /// {@endtemplate}
   late final Ui<SCREEN_ID> ui = Ui<SCREEN_ID>(
     pop: () async {
-// First, take notice if the app is busy while this function was called.
+      // First, take notice if the app is busy while this function was called.
       final isBusy = busyService.isBusy;
-// Second, set isBusy to  true.
+      // Second, set isBusy to  true.
       await busyService.busyWrapper(
         () async {
           if (isBusy) {
@@ -283,20 +327,19 @@ This can happen when:
             );
             return;
           }
-// We have to ask the page if we may pop.
+          // We have to ask the page if we may pop.
           final bool mayPop;
-// Get the page to pop from the stack.
+          // Get the page to pop from the stack.
           final screenId = _rubigoStackManager.screenStack.last.screenId;
-// Find the controller
+          // Find the controller
           final controller = _availableScreens.find(screenId).getController();
           if (controller is RubigoControllerMixin<SCREEN_ID>) {
-// If the controller implements RubigoControllerMixin, call
-// mayPop.
+            // If the controller implements RubigoControllerMixin, call mayPop.
             await _logNavigation('Call mayPop().');
             mayPop = await controller.mayPop();
             await _logNavigation('The controller returned "$mayPop"');
           } else {
-// Otherwise the screen may always be popped
+            // Otherwise the screen may always be popped
             mayPop = true;
             await _logNavigation(
                 'The controller is not a RubigoControllerMixin, '
@@ -345,9 +388,10 @@ This can happen when:
 //endregion
 }
 
-/// This class groups navigation functions together.
+/// This class groups ui navigation functions together.
+/// {@macro Ui}
 class Ui<SCREEN_ID extends Enum> {
-  /// Creates a Ui class
+  /// Creates a [Ui] class
   Ui({
     required this.pop,
     required this.popTo,

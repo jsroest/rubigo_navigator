@@ -1,8 +1,8 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// Use this class to wrap a [RubigoRouter] or use it as a blue-print for your
-/// own [RouterDelegate].
+/// Use this class to create a [RubigoRouterDelegate] or use it as a blue-print
+/// for your own [RouterDelegate].
 class RubigoRouterDelegate<SCREEN_ID extends Enum>
     extends RouterDelegate<SCREEN_ID>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -15,6 +15,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
     rubigoRouter.addListener(notifyListeners);
   }
 
+  /// Pass this key to [Navigator.key]
   @override
   GlobalKey<NavigatorState> get navigatorKey => rubigoRouter.navigatorKey;
 
@@ -24,7 +25,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
 
   // coverage:ignore-end
 
-  /// The [RubigoRouter] that is in this instance.
+  /// The [RubigoRouter] instance used.
   final RubigoRouter<SCREEN_ID> rubigoRouter;
 
   /// This function converts a [RubigoScreen] to a [Page]. The default

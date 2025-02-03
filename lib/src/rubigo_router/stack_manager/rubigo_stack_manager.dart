@@ -5,11 +5,11 @@ import 'package:rubigo_router/rubigo_router.dart';
 import 'package:rubigo_router/src/rubigo_router/stack_manager/last_page_popped_exception.dart';
 import 'package:rubigo_router/src/rubigo_router/stack_manager/navigation_events.dart';
 
-/// This manages the screen stack. It provides functions to manipulate the stack
-/// and it fires events like [RubigoControllerMixin.onTop] and
-/// [RubigoControllerMixin.willShow]
+/// This class manages the screen stack. It provides functions to manipulate the
+/// stack and it fires events like [RubigoControllerMixin.onTop] and
+/// [RubigoControllerMixin.willShow].
 class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
-  /// Creates a RubigoStackManager
+  /// Creates a [RubigoStackManager]
   RubigoStackManager(
     this.screenStack,
     this._availableScreens,
@@ -17,7 +17,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   ) : _screens = [...screenStack];
 
   /// This is the actual screen stack, which can have other contents than
-  /// 'screens' when the app is busy navigating and the stack is not stable yet.
+  /// [screens] when the app is busy navigating and the stack is not stable yet.
   ListOfRubigoScreens<SCREEN_ID> screenStack;
 
   // This is a list of all available screens.
@@ -26,6 +26,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   // This function is called for logging purposes.
   final LogNavigation _logNavigation;
 
+  // The backing variable for screens
   ListOfRubigoScreens<SCREEN_ID> _screens;
 
   /// The current stable version of the screen stack. It is only updated
@@ -216,7 +217,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
 
   //endregion navigate
 
-  /// Force Flutters [Navigator] to match our screen stack.
+  /// Force Flutters [Navigator] to match our list of [screens].
   Future<void> updateScreens() async {
     final oldScreenSet = screens.toSet();
     final newScreenSet = screenStack.toSet();

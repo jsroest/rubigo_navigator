@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// A collection of extension methods on ListOfRubigoScreens
+/// A collection of extension methods on [ListOfRubigoScreens]
 extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
     on ListOfRubigoScreens<SCREEN_ID> {
-  /// Finds the first RubigoScreen in the list with this screenId.
+  /// Finds the first [RubigoScreen] in the list with this screenId.
   /// This function throws an error if the screen is not found.
   RubigoScreen<SCREEN_ID> find(SCREEN_ID screenId) =>
       firstWhere((e) => e.screenId == screenId);
@@ -17,7 +17,7 @@ extension ExtensionOnListOfRubigoScreens<SCREEN_ID extends Enum>
   List<Widget> toListOfWidget() => map((e) => e.screenWidget).toList();
 }
 
-/// A collection of extension methods on list of ScreenId.
+/// A collection of extension methods on list of [List<SCREEN_ID>].
 extension ExtensionOnListOfScreenId<SCREEN_ID extends Enum> on List<SCREEN_ID> {
   /// Check if there is at least one screen available below the current screen.
   /// This could be an appropriate check before calling [RubigoRouter.pop].

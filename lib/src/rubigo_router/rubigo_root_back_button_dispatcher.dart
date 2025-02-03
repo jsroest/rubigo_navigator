@@ -4,9 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 /// This class extends [RootBackButtonDispatcher] and delegates hardware back
-/// button presses to the [RubigoRouter]'s ui pop functions..
+/// button presses to the [RubigoRouter.ui].pop function or to
+/// [RootBackButtonDispatcher.didPopRoute] when appropriate.
 class RubigoRootBackButtonDispatcher extends RootBackButtonDispatcher {
-  /// Creates a RubigoRootBackButtonDispatcher
+  /// Creates a [RubigoRootBackButtonDispatcher]
   RubigoRootBackButtonDispatcher(this.rubigoRouter);
 
   /// The [RubigoRouter] to delegate the calls to.

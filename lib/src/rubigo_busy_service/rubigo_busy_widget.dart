@@ -19,7 +19,7 @@ import 'package:rubigo_router/src/rubigo_busy_service/rubigo_busy_event.dart';
 /// );
 /// ```
 class RubigoBusyWidget extends StatelessWidget {
-  /// Create RubigoBusyWidget.
+  /// Create [RubigoBusyWidget].
   const RubigoBusyWidget({
     required this.child,
     required this.listener,
@@ -30,7 +30,7 @@ class RubigoBusyWidget extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
 
-  ///The rest of the app is represented by this child
+  /// The widget below this widget in the tree.
   final Widget child;
 
   final Widget _progressIndicator;

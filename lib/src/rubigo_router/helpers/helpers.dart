@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
 /// Check if the current topmost route is a pageless route or a
-/// page(full?)route.
+/// page(full)route.
 bool currentRouteIsPage(RubigoRouter rubigoRouter) {
   var isPage = false;
   final context = rubigoRouter.navigatorKey.currentContext;

@@ -2,28 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// Wires a screen widget and a controller together with a unique id.
+/// A screen widget with a corresponding controller, which may implement a
+/// [RubigoControllerMixin] (but doesn't have to). This set is uniquely
+/// identified by a [SCREEN_ID].
 @immutable
 class RubigoScreen<SCREEN_ID extends Enum> {
-  /// Creates a RubigoScreen
+  /// Creates a [RubigoScreen]
   RubigoScreen(
     this.screenId,
     this.screenWidget,
     this.getController,
   ) : pageKey = ValueKey(screenId);
 
-  /// A unique pageKey, based on the screenId. This key is normally passed to
-  /// the constructor of the [MaterialPage] or [CupertinoPage] as the key
-  /// parameter.
+  /// A unique key, based on the screenId. This key is used for [Page.key].
   final ValueKey<SCREEN_ID> pageKey;
 
-  /// The unique identifier for this [RubigoScreen]
+  /// The enum for this [RubigoScreen]
   final SCREEN_ID screenId;
 
-  /// The widget that represents this screen. By default this widget is wrapped
-  /// in a [MaterialPage], but you can pass your own rubigoScreenToPage function
-  /// in the rubigoScreenToPage parameter in the [RubigoRouterDelegate]
-  /// constructor.
+  /// The widget that represents this screen.
   final Widget screenWidget;
 
   /// Return the instance of the controller. You can use any dependency

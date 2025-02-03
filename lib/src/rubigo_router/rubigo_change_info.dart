@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:rubigo_router/rubigo_router.dart';
 
-/// All available navigation events, like push/replaceStack
+/// All available navigation events. [EventType.push], [EventType.pop],
+/// [EventType.popTo] and [EventType.replaceStack].
 enum EventType {
   /// This screen is on-top because of a push
   push,
@@ -16,9 +18,11 @@ enum EventType {
 }
 
 /// This class contains information about the navigation event.
+/// Used in [RubigoControllerMixin.onTop] and [RubigoControllerMixin.willShow].
+/// With this information the controller can decide what to do next.
 @immutable
 class RubigoChangeInfo<SCREEN_ID extends Enum> {
-  /// Creates a RubigoChangeInfo
+  /// Creates a [RubigoChangeInfo]
   const RubigoChangeInfo(
     this.eventType,
     this.previousScreen,

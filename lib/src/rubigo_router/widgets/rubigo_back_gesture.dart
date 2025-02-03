@@ -6,7 +6,7 @@ import 'package:rubigo_router/rubigo_router.dart';
 /// Use a RubigoBackGesture to control if a screen may be popped with a
 /// back-gesture.
 class RubigoBackGesture extends StatelessWidget {
-  /// Creates a new RubigoBackGesture
+  /// Creates a new [RubigoBackGesture]
   const RubigoBackGesture({
     required this.rubigoRouter,
     required this.allowBackGesture,

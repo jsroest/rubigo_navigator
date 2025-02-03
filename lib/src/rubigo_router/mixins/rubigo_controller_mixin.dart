@@ -1,7 +1,7 @@
-import 'package:flutter/widgets.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
-/// Adds functionality to any class that is used as a 'controller' for a screen.
+/// Adds navigation events and easy access to the [RubigoRouter] to a
+/// controller.
 mixin RubigoControllerMixin<SCREEN_ID extends Enum> {
   /// Provides easy access to the [RubigoRouter] that is in charge of this
   /// controller.
@@ -19,9 +19,8 @@ mixin RubigoControllerMixin<SCREEN_ID extends Enum> {
   /// This function can be used to prevent (programmatically) back navigation in
   /// an asynchronous way, for example when you want to check with a backend, if
   /// to allow back navigation.
-  /// Be aware that you might want to wire-in a [PopScope] widget to prevent
-  /// back gestures, but that requires a synchronous callback. It is what it is,
-  /// [See predictive-back-gesture](https://developer.android.com/guide/navigation/custom-back/predictive-back-gesture) is not compatible with asynchronous functions.
+  /// Be aware that you might want to wire-in a [RubigoBackGesture] widget to
+  /// prevent back gestures.
   Future<bool> mayPop() => Future.value(true);
 
   /// With this function the controller is informed that it is removed from the
