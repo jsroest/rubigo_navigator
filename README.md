@@ -58,8 +58,11 @@ Managing the stack was never easier.™ 🥳 🚀
   This event is called when the screen is about to be popped from the stack.  
   If you return ```false```, the pop is cancelled.  
   Further navigation **is not** allowed.
+* **removedFromStack()**  
+  This event is called when the screen is removed from the stack.
+  Further navigation **is not** allowed.
 
-#### changeInfo contains the following data:
+#### **changeInfo** contains the following data:
 
 * **eventType:**  
   The event type can be push, pop, popTo or replaceStack.
@@ -68,7 +71,7 @@ Managing the stack was never easier.™ 🥳 🚀
 * **screenStack:**  
   This is a copy of the current screen stack.
 
-With this data, the controller can decide what to do next, like navigate further or load data from
+With this information, the controller can decide what to do next, like navigate further or load data from
 an asynchronous source.
 
 #### Typical use cases
@@ -111,33 +114,27 @@ Create a list that combines the enum, with a widget and a controller.
 
 ```dart
 // holder = your favorite service locator and/or dependency injection package.
-// It's important that the controllers are registered as singletons, unless you
-// know what you are doing :-)
+// It's important that the controllers are registered as singletons.
 final ListOfRubigoScreens<Screens> availableScreens = [
   RubigoScreen(
     Screens.splashScreen,
     SplashScreen(),
-        () => holder.get(SplashController.new),
+    () => holder.get(SplashController.new),
   ),
   RubigoScreen(
     Screens.s100,
     S100Screen(),
-        () => holder.get(S100Controller.new),
+    () => holder.get(S100Controller.new),
   ),
   RubigoScreen(
     Screens.s200,
     S200Screen(),
-        () => holder.get(S200Controller.new),
-  ),
-  RubigoScreen(
-    Screens.s300,
-    S300Screen(),
-        () => holder.get(S300Controller.new),
+    () => holder.get(S200Controller.new),
   ),
 ];
 ```
 
-Create a `RubigoRouter` and pass the `availableScreens` and splash screen.
+Create a `RubigoRouter` and pass the `availableScreens` and the splash screen id.
 
 ```dart
 
@@ -166,17 +163,17 @@ Future<Screens> initAndGetFirstScreen() async {
 }
 ```
 
-Create a `RubigoMaterialApp`, pass the `initAndGetFirstScreen` and `routerDelegate`.
+Create a `RubigoMaterialApp` and pass
+- a `initAndGetFirstScreen` function
+- a `routerDelegate`
+- a `RubigoRootBackButtonDispatcher`
 
 ```dart
-main() {
-  runApp(
-    RubigoMaterialApp(
-      initAndGetFirstScreen: initAndGetFirstScreen,
-      routerDelegate: routerDelegate,
-    ),
-  );
-}
+RubigoMaterialApp(
+  initAndGetFirstScreen: initAndGetFirstScreen,
+  routerDelegate: routerDelegate,
+  backButtonDispatcher: RubigoRootBackButtonDispatcher(rubigoRouter),
+),
 ```
 
 ### Setting up screens
@@ -186,7 +183,7 @@ You can use any widget as a screen widget.
 If you add the `RubigoScreenMixin`, you can access the controller of your page directly in your
 code. This controller is wired up during the initialization phase.
 
-### example usage
+### Example usage
 
 ```dart
 ElevatedButton(
@@ -215,9 +212,12 @@ Future<void> willShow(RubigoChangeInfo<Screens> changeInfo) async {}
 
 @override
 Future<bool> mayPop() => Future.value(true);
+
+@override
+Future<void> removedFromStack() async {}
 ```
 
-The `onTop` event allows further navigation. After navigating and finishing all events, the Flutter
+The `onTop` event allows further navigation. When the screen stack is stable Flutter
 framework is informed about the new state of the screen stack. This will result in a single page
 transition, from the old screen to the new screen.
 
@@ -232,27 +232,25 @@ enum EventType {
 }
 
 class RubigoChangeInfo<SCREEN_ID extends Enum> {
-  const RubigoChangeInfo(this.eventType,
-      this.previousScreen,
-      this.screenStack,);
-
-  final EventType eventType;
-  final Screens? previousScreen;
-  final List<Screens> screenStack;
+  const RubigoChangeInfo(
+    this.eventType,
+    this.previousScreen,
+    this.screenStack,
+  );
 }
-
 ```
 
 ### Navigating from controller code
 
-If the controller has the `RubigoControllerMixin, you can manipulate the stack with these functions.
+If the controller has the `RubigoControllerMixin`, you can access the `rubigoRouter` directly. Otherwise you can use your favorite service locator to get access to your instance of `rubigoRouter`. The following navigation functions are available:
+
 
 ```dart
 await rubigoRouter.pop();
 await rubigoRouter.popTo(screenId);
 await rubigoRouter.push(screenId);
 await rubigoRouter.replaceStack(screens);
-rubigoRouter.remove(screenId);
+await rubigoRouter.remove(screenId);
 ```
 
 ### Check if the app is busy
@@ -274,7 +272,7 @@ Mark the app busy while some code executes:
 
 ```dart
 await rubigoRouter.busyService.busyWrapper(() async {
-  //Do something lengthy here that the use may not interrupt.
+  //Do something lengthy here that the user may/can not interrupt.
 });
 ```
 
@@ -284,13 +282,22 @@ If you want to get notified when the app is marked as busy you can use the notif
 final notifier = rubigoRouter.busyService.notifier;
 ```
 
-All stack manipulation functions have the optional parameter `ignoreWhenBusy`. You can use this if
-you only want to perform the navigation when the app is not busy. This is useful if you wire up a
+
+Each stack manipulation function has an equivalent available in the `RubigoRouter.ui` namespace.
+You can use these functions if you only want to perform the navigation when the app is not busy. This is useful if you wire up a
 button pressed event directly to a navigating function.
 
 ```dart
+await rubigoRouter.ui.pop();
+await rubigoRouter.ui.popTo(screenId);
+await rubigoRouter.ui.push(screenId);
+await rubigoRouter.ui.replaceStack(screens);
+await rubigoRouter.ui.remove(screenId);
+```
+
+```dart
 Future<void> onS200ButtonPressed() async {
-  await rubigoRouter.push(Screens.s200, ignoreWhenBusy: true);
+  await rubigoRouter.ui.push(Screens.s200);
 }
 ```
 
@@ -298,10 +305,10 @@ Future<void> onS200ButtonPressed() async {
 
 I am using this way of working with screens, controllers and navigation with Flutter apps since
 2020.
-But the first implementation goes back to WindowsCE. It always served me well and has never let me
+The first implementation goes back to WindowsCE. It always served me well and has never let me
 down.
 
 For issues or pull request, go to the repository on GitHub.
 
-Happy navigating!
+Happy navigating!  
 Sander Roest
