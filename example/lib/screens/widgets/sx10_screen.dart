@@ -25,6 +25,7 @@ class Sx10Screen extends StatelessWidget {
         title: AppBarTitleBreadCrumbs(
           title: sX10Screen.name.toUpperCase(),
           screens: controller.rubigoRouter.screens,
+          notifier: controller.rubigoRouter,
         ),
       ),
       body: Center(

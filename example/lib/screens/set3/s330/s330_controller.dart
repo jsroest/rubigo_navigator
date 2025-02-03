@@ -55,12 +55,12 @@ class S330Controller with RubigoControllerMixin<Screens> {
   }
 
   Future<void> onToSetAButtonPressed() async {
-    screenStackBackupSet3 = rubigoRouter.screens.value.toListOfScreenId();
+    screenStackBackupSet3 = rubigoRouter.screens.toListOfScreenId();
     await rubigoRouter.ui.replaceStack(screenStackBackupSet1);
   }
 
   Future<void> onToSetBButtonPressed() async {
-    screenStackBackupSet3 = rubigoRouter.screens.value.toListOfScreenId();
+    screenStackBackupSet3 = rubigoRouter.screens.toListOfScreenId();
     await rubigoRouter.ui.replaceStack(screenStackBackupSet2);
   }
 }

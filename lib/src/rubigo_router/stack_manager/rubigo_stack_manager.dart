@@ -8,13 +8,13 @@ import 'package:rubigo_router/src/rubigo_router/stack_manager/navigation_events.
 /// This manages the screen stack. It provides functions to manipulate the stack
 /// and it fires events like [RubigoControllerMixin.onTop] and
 /// [RubigoControllerMixin.willShow]
-class RubigoStackManager<SCREEN_ID extends Enum> {
+class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   /// Creates a RubigoStackManager
   RubigoStackManager(
     this.screenStack,
     this._availableScreens,
     this._logNavigation,
-  ) : screens = ValueNotifier<List<RubigoScreen<SCREEN_ID>>>([...screenStack]);
+  ) : _screens = [...screenStack];
 
   /// This is the actual screen stack, which can have other contents than
   /// 'screens' when the app is busy navigating and the stack is not stable yet.
@@ -26,9 +26,11 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
   // This function is called for logging purposes.
   final LogNavigation _logNavigation;
 
+  ListOfRubigoScreens<SCREEN_ID> _screens;
+
   /// The current stable version of the screen stack. It is only updated
   /// when navigation is complete.
-  final ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> screens;
+  ListOfRubigoScreens<SCREEN_ID> get screens => _screens;
 
   /// Pops a screen from the stack. This call can generate more navigation
   /// calls.
@@ -216,16 +218,17 @@ class RubigoStackManager<SCREEN_ID extends Enum> {
 
   /// Force Flutters [Navigator] to match our screen stack.
   Future<void> updateScreens() async {
-    final oldScreenSet = screens.value.toSet();
+    final oldScreenSet = screens.toSet();
     final newScreenSet = screenStack.toSet();
     // The ValueNotifier always calls it's listeners when we assign an new copy
     // of the stack. Also if the contents are logically the same. In this case
     // this is what we want, specifically in case of handling onDidRemovePage.
-    screens.value = [...screenStack];
+    _screens = [...screenStack];
     await _logNavigation(
       'Screens: '
-      '${screens.value.toListOfScreenId().map((e) => e.name).join('→')}.',
+      '${screens.toListOfScreenId().map((e) => e.name).join('→')}.',
     );
+    notifyListeners();
     // Inform al controllers that were removed from the stack.
     for (final screen in oldScreenSet.difference(newScreenSet)) {
       final controller = screen.getController();

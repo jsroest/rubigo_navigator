@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:rubigo_router/rubigo_router.dart';
 
@@ -7,11 +6,13 @@ class AppBarTitleBreadCrumbs<SCREEN_ID extends Enum> extends StatelessWidget {
   const AppBarTitleBreadCrumbs({
     required this.title,
     required this.screens,
+    required this.notifier,
     super.key,
   });
 
   final String title;
-  final ValueListenable<ListOfRubigoScreens<SCREEN_ID>> screens;
+  final ListOfRubigoScreens<SCREEN_ID> screens;
+  final ChangeNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +20,14 @@ class AppBarTitleBreadCrumbs<SCREEN_ID extends Enum> extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Screen: $title'),
-        ValueListenableBuilder(
-          valueListenable: screens,
-          builder: (context, value, child) => Text(
-            'Screenstack: ${screens.value.toListOfScreenId().breadCrumbs()}',
-            style: TextTheme.of(context).bodyMedium,
-          ),
+        ListenableBuilder(
+          listenable: notifier,
+          builder: (context, _) {
+            return Text(
+              'Screens tack: ${screens.toListOfScreenId().breadCrumbs()}',
+              style: TextTheme.of(context).bodyMedium,
+            );
+          },
         ),
       ],
     );

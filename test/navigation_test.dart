@@ -59,7 +59,7 @@ void main() {
       );
 
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s200,
@@ -117,7 +117,7 @@ void main() {
       s200Controller.callBackHistory.clear();
       await rubigoRouter.push(_Screens.s200);
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s200,
@@ -185,7 +185,7 @@ void main() {
         },
       );
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s200,
@@ -256,7 +256,7 @@ void main() {
         _Screens.s300,
       ]);
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s200,
@@ -333,7 +333,7 @@ void main() {
       );
 
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s200,
@@ -404,7 +404,7 @@ void main() {
         ..callBackHistory.clear();
       await rubigoRouter.pop();
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s200,
@@ -479,7 +479,7 @@ void main() {
         },
       );
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
         ],
@@ -547,7 +547,7 @@ void main() {
         ..callBackHistory.clear();
       await rubigoRouter.popTo(_Screens.s100);
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
         ],
@@ -619,7 +619,7 @@ void main() {
         },
       );
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s300,
@@ -669,7 +669,7 @@ void main() {
         ..callBackHistory.clear();
       await rubigoRouter.remove(_Screens.s200);
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [
           _Screens.s100,
           _Screens.s300,

@@ -51,7 +51,7 @@ void main() {
         initAndGetFirstScreen: () async => _Screens.s100,
       );
       expect(
-        rubigoRouter.screens.value.toListOfScreenId(),
+        rubigoRouter.screens.toListOfScreenId(),
         [_Screens.s100],
       );
       final splashController = holder.get<_SplashController>();

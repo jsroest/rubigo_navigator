@@ -60,6 +60,7 @@ class Sx30Screen extends StatelessWidget {
               title: AppBarTitleBreadCrumbs(
                 title: sX30Screen.name.toUpperCase(),
                 screens: controller.rubigoRouter.screens,
+                notifier: controller.rubigoRouter,
               ),
             ),
             body: Center(
@@ -93,33 +94,33 @@ class Sx30Screen extends StatelessWidget {
                     ),
                   ),
                   NavigateButton(
-                    screens: controller.rubigoRouter.screens,
+                    rubigoRouter: controller.rubigoRouter,
                     isEnabled: (_) => true,
                     onPressed: onPushSx040ButtonPressed,
                     child: Text('Push ${sX40Screen.name.toUpperCase()}'),
                   ),
                   NavigateButton(
-                    screens: controller.rubigoRouter.screens,
+                    rubigoRouter: controller.rubigoRouter,
                     isEnabled: (screenStack) => screenStack.hasScreenBelow(),
                     onPressed: onPopButtonPressed,
                     child: const Text('Pop'),
                   ),
                   NavigateButton(
-                    screens: controller.rubigoRouter.screens,
+                    rubigoRouter: controller.rubigoRouter,
                     isEnabled: (screenStack) =>
                         screenStack.containsScreenBelow(sX10Screen),
                     onPressed: onPopToSx10ButtonPressed,
                     child: Text('PopTo ${sX10Screen.name.toUpperCase()}'),
                   ),
                   NavigateButton(
-                    screens: controller.rubigoRouter.screens,
+                    rubigoRouter: controller.rubigoRouter,
                     isEnabled: (screenStack) =>
                         screenStack.containsScreenBelow(sX10Screen),
                     onPressed: onRemoveSx10ButtonPressed,
                     child: Text('Remove ${sX10Screen.name.toUpperCase()}'),
                   ),
                   NavigateButton(
-                    screens: controller.rubigoRouter.screens,
+                    rubigoRouter: controller.rubigoRouter,
                     isEnabled: (screenStack) =>
                         screenStack.containsScreenBelow(sX20Screen),
                     onPressed: onRemoveSx20ButtonPressed,

@@ -49,7 +49,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         /// implementation
         _onLastPagePopped = onLastPagePopped ?? _defaultOnLastPagePopped {
     ///Listen to updates and notify our listener, the RouterDelegate
-    _rubigoStackManager.screens.addListener(notifyListeners);
+    _rubigoStackManager.addListener(notifyListeners);
   }
 
   //region Public
@@ -89,11 +89,11 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   /// This function can be used to log all that is related to navigation
   LogNavigation get logNavigation => _logNavigation;
+
   //endregion
 
   //region Private
 
-  /// This parameter contains all screens that are available for this router.
   final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
 
   final RubigoBusyService _busyService;
@@ -115,8 +115,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// This is the getter used by the [Navigator.pages] property.
   /// When this object calls [notifyListeners], the [Navigator] rebuilds and
   /// gets a fresh list of pages from this router.
-  ValueNotifier<ListOfRubigoScreens<SCREEN_ID>> get screens =>
-      _rubigoStackManager.screens;
+  ListOfRubigoScreens<SCREEN_ID> get screens => _rubigoStackManager.screens;
 
   /// This method must be passed to the [Navigator.onDidRemovePage] property.
   void onDidRemovePage(Page<Object?> page) {
@@ -138,7 +137,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       );
     }
     final removedScreenId = pageKey.value;
-    final lastScreenId = _rubigoStackManager.screens.value.last.screenId;
+    final lastScreenId = _rubigoStackManager.screens.last.screenId;
     if (removedScreenId != lastScreenId) {
       // With this new event, we also receive this event when pages are removed
       // programmatically from the stack. Here onDidRemovePage was (probably)
@@ -183,7 +182,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     // Remove the last page, so the screens is the same as Flutter expects.
     // Just in case the widget tree rebuilds for some reason.
     // Note: this will not inform the listeners, this is intended behavior.
-    screens.value.removeLast();
+    screens.removeLast();
 
     Future<void> gestureCallback() async {
       final inProgress = navState.userGestureInProgress;

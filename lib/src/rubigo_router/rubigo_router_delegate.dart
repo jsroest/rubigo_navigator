@@ -40,7 +40,7 @@ class RubigoRouterDelegate<SCREEN_ID extends Enum>
     return Navigator(
       observers: observers ?? const <NavigatorObserver>[],
       key: navigatorKey,
-      pages: rubigoRouter.screens.value.map(rubigoScreenToPage).toList(),
+      pages: rubigoRouter.screens.map(rubigoScreenToPage).toList(),
       onDidRemovePage: rubigoRouter.onDidRemovePage,
     );
   }

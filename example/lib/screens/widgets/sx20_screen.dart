@@ -28,6 +28,7 @@ class Sx20Screen extends StatelessWidget {
         title: AppBarTitleBreadCrumbs(
           title: sX20Screen.name.toUpperCase(),
           screens: controller.rubigoRouter.screens,
+          notifier: controller.rubigoRouter,
         ),
       ),
       body: Center(
@@ -40,7 +41,7 @@ class Sx20Screen extends StatelessWidget {
               child: Text('Push ${sX30Screen.name.toUpperCase()}'),
             ),
             NavigateButton(
-              screens: controller.rubigoRouter.screens,
+              rubigoRouter: controller.rubigoRouter,
               isEnabled: (screenStack) => screenStack.hasScreenBelow(),
               onPressed: onPopButtonPressed,
               child: const Text('Pop'),
