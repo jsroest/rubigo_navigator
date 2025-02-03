@@ -167,17 +167,15 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
       final txt =
           'PANIC: page.key must be of type ValueKey<$SCREEN_ID>, but found '
           'null.';
-      unawaited(
-        _logNavigation(txt).then(throw UnsupportedError(txt)),
-      );
+      unawaited(_logNavigation(txt));
+      throw UnsupportedError(txt);
     }
     if (pageKey is! ValueKey<SCREEN_ID>) {
       final txt =
           'PANIC: page.key must be of type ValueKey<$SCREEN_ID>, but found '
           '${pageKey.runtimeType}.';
-      unawaited(
-        _logNavigation(txt).then(throw UnsupportedError(txt)),
-      );
+      unawaited(_logNavigation(txt));
+      throw UnsupportedError(txt);
     }
     final removedScreenId = pageKey.value;
     final lastScreenId = _rubigoStackManager.screens.last.screenId;
