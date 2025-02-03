@@ -1,4 +1,4 @@
-/// This file exports all public api
+/// The public api of this package
 library rubigo_router;
 
 export 'src/rubigo_busy_service/rubigo_busy_service.dart';
