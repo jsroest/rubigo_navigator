@@ -22,17 +22,18 @@ import 'package:rubigo_router/src/rubigo_router/stack_manager/rubigo_stack_manag
 class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// Creates a RubigoRouter
   RubigoRouter({
-    required this.availableScreens,
-    required this.splashScreenId,
+    required List<RubigoScreen<SCREEN_ID>> availableScreens,
+    required SCREEN_ID splashScreenId,
     RubigoBusyService? rubigoBusyService,
     LogNavigation? logNavigation,
     RubigoStackManager<SCREEN_ID>? rubigoStackManager,
     Future<void> Function()? onLastPagePopped,
+  })  : _availableScreens = availableScreens,
 
-    /// If busyService was not given, create one ourselves.
-  })  : busyService = rubigoBusyService ?? RubigoBusyService(),
+        /// If a busyService was not given, use a default implementation
+        _busyService = rubigoBusyService ?? RubigoBusyService(),
 
-        /// If a logNavigation function was not given use a default
+        /// If a logNavigation function was not given, use a default
         /// implementation
         _logNavigation = logNavigation ?? _defaultLogNavigation,
 
@@ -51,6 +52,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     _rubigoStackManager.screens.addListener(notifyListeners);
   }
 
+  //region Public
   /// Call init to initialise the [RubigoRouter].
   /// Pass a function that handles your app initialisation first (like setting
   /// up your app with dependency-injection). When finished initialising, return
@@ -64,7 +66,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     await _logNavigation(
       'RubigoRouter.init() ended. First screen will be ${firstScreen.name}.',
     );
-    for (final screenSet in availableScreens) {
+    for (final screenSet in _availableScreens) {
 // Wire up the rubigoRouter in each controller, if it is a
 // RubigoControllerMixin
       final controller = screenSet.getController();
@@ -81,21 +83,21 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     await replaceStack([firstScreen]);
   }
 
-  /// This parameter contains all screens that are available for this router.
-  final ListOfRubigoScreens<SCREEN_ID> availableScreens;
-
-  /// This parameter contains the [SCREEN_ID] for the screen to use as splash
-  /// screen.
-  final SCREEN_ID splashScreenId;
-
   /// This parameter contains the busy service you want to use. If none is
   /// specified it will default to an instance of [RubigoBusyService].
-  final RubigoBusyService busyService;
+  RubigoBusyService get busyService => _busyService;
 
   /// This function can be used to log all that is related to navigation
   LogNavigation get logNavigation => _logNavigation;
+  //endregion
 
   //region Private
+
+  /// This parameter contains all screens that are available for this router.
+  final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
+
+  final RubigoBusyService _busyService;
+
   final LogNavigation _logNavigation;
 
   final RubigoStackManager<SCREEN_ID> _rubigoStackManager;
@@ -222,7 +224,7 @@ This can happen when:
 
   //endregion
 
-  // region navigation functions
+  // region Navigation functions
   /// Pops the current screen from the stack
   Future<void> pop() async {
     await _logNavigation('pop() called.');
@@ -264,7 +266,7 @@ This can happen when:
 
   // endregion
 
-//region User initiated (ui) navigation functions
+  //region User initiated (ui) navigation functions
   /// {@template rubigoRouter.ui.pop}
   /// Use these navigation functions everywhere when origin is user initiated.
   /// these calls will be ignored automatically if the app is busy.
@@ -287,7 +289,7 @@ This can happen when:
 // Get the page to pop from the stack.
           final screenId = _rubigoStackManager.screenStack.last.screenId;
 // Find the controller
-          final controller = availableScreens.find(screenId).getController();
+          final controller = _availableScreens.find(screenId).getController();
           if (controller is RubigoControllerMixin<SCREEN_ID>) {
 // If the controller implements RubigoControllerMixin, call
 // mayPop.
@@ -345,7 +347,6 @@ This can happen when:
 }
 
 /// This class groups navigation functions together.
-/// A class is used for this, because dart lacks namespaces.
 class Ui<SCREEN_ID extends Enum> {
   /// Creates a Ui class
   Ui({
