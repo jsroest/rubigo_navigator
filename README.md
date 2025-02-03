@@ -301,6 +301,24 @@ Future<void> onS200ButtonPressed() async {
 }
 ```
 
+### Back navigation
+There are a number of ways the user can perform a back navigation event.  
+1. `BackButton` in the `AppBar`.
+2. Hardware back button on an Android device.
+3. A back-gesture on an iOS device.
+4. A predictive-back-gesture on an Android device.
+
+A new challenge is that the app is informed afterwards by the `Navigator.onDidRemovePage` callback and that the animation has already started. This might not always be the preferred way. On iOS, the back gesture feels natural and disabling it altogether or only allow it on certain screens  would be bad for the user experience. 
+ 
+Therefore this package adds the following:
+
+1. `rubigoBackButton` to handle BackButton presses in the `AppBar`.
+2. `RubigoRootBackButtonDispatcher` to handle Android hardware back button presses.
+3. `RubigoBackGesture` widget to control wether or not to allow back-gestures on a screen.
+4. `onDidRemovePage`, a way to catch back-gestures and to handle them gracefully.
+
+With these tools together, the app is still able to decide asynchronously if back navigation is allowed.
+
 ## Additional information
 
 I am using this way of working with screens, controllers and navigation with Flutter apps since
