@@ -302,14 +302,14 @@ Future<void> onS200ButtonPressed() async {
 ```
 
 ### Back navigation
-There are a number of ways the user can perform a back navigation event.  
+There are a number of ways the user can perform back navigation.  
 1. `BackButton` in the `AppBar`.
 2. Hardware back button on an Android device.
 3. A back-gesture on an iOS device.
 4. A predictive-back-gesture on an Android device.
 
 A new challenge is that the app is informed afterwards by the `Navigator.onDidRemovePage` callback and that the animation has already started. This might not always be the preferred way. On iOS, the back gesture feels natural and disabling it altogether or only allow it on certain screens  would be bad for the user experience. 
- 
+
 Therefore this package adds the following:
 
 1. `rubigoBackButton` to handle BackButton presses in the `AppBar`.
@@ -317,7 +317,12 @@ Therefore this package adds the following:
 3. `RubigoBackGesture` widget to control wether or not to allow back-gestures on a screen.
 4. `onDidRemovePage`, a way to catch back-gestures and to handle them gracefully.
 
-With these tools together, the app is still able to decide asynchronously if back navigation is allowed.
+With these tools together, the app is still able to decide asynchronously, with a call to the screen's `mayPop()`, if back navigation is allowed.  
+
+1. Back button events:  
+The animation is not started until it is clear that the user may navigate.
+1. Back gesture events:  
+If a back navigation is cancelled, the screen animates back to the original screen.
 
 ## Additional information
 
