@@ -59,8 +59,7 @@ class Sx30Screen extends StatelessWidget {
               leading: rubigoBackButton(context, controller.rubigoRouter),
               title: AppBarTitleBreadCrumbs(
                 title: sX30Screen.name.toUpperCase(),
-                screens: controller.rubigoRouter.screens,
-                notifier: controller.rubigoRouter,
+                rubigoRouter: controller.rubigoRouter,
               ),
             ),
             body: Center(
