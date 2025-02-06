@@ -99,7 +99,6 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// app.
   Future<void> init({
     required Future<SCREEN_ID> Function() initAndGetFirstScreen,
-    LogNavigation? logNavigation,
   }) async {
     await _logNavigation('RubigoRouter.init() called.');
     final firstScreen = await initAndGetFirstScreen();
