@@ -1,7 +1,13 @@
+## 1.0.2
+
+- Remove documentation entry in pubspec.yaml.
+- Add extension method RubigoRouter.currentScreenId.
+- Any object can be a controller for RubigoScreenMixin, not only ones that extend RubigoControllerMixin.
+
 ## 1.0.1  
 
-- Remove unused parameter logNavigation in initAndGetFirstScreen
-- Bugfix in AppBarTitleBreadCrumbs
+- Remove unused parameter logNavigation in initAndGetFirstScreen.
+- Bugfix in AppBarTitleBreadCrumbs.
 
 ## 1.0.0
 
