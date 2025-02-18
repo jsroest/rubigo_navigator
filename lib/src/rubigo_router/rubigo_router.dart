@@ -113,8 +113,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         controller.rubigoRouter = this;
       }
 // Wire up the controller in each screenWidget that is a RubigoScreenMixin
-      if (screenSet.screenWidget is RubigoScreenMixin &&
-          controller is RubigoControllerMixin<SCREEN_ID>) {
+      if (screenSet.screenWidget is RubigoScreenMixin) {
         final screenWidget = screenSet.screenWidget as RubigoScreenMixin;
         screenWidget.controller = controller;
       }
