@@ -58,3 +58,10 @@ extension ExtensionOnRubigoScreen on RubigoScreen {
         child: screenWidget,
       );
 }
+
+/// Extensions on [RubigoRouter]
+extension ExtensionOnRubigoRouter<SCREEN_ID extends Enum>
+    on RubigoRouter<SCREEN_ID> {
+  /// Get the screenId of the current screen
+  SCREEN_ID get currentScreenId => screens.last.screenId;
+}

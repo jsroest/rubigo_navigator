@@ -188,6 +188,38 @@ void main() {
       expect(cupertinoPage.child, s100.screenWidget);
     },
   );
+
+  test(
+    'currentScreenId',
+    () async {
+      final availableScreens = [
+        RubigoScreen(
+          _Screens.s100,
+          _S100Screen(),
+          () => holder.getOrCreate(_S100Controller.new),
+        ),
+        RubigoScreen(
+          _Screens.s200,
+          _S200Screen(),
+          () => holder.getOrCreate(_S100Controller.new),
+        ),
+        RubigoScreen(
+          _Screens.s300,
+          _S300Screen(),
+          () => holder.getOrCreate(_S300Controller.new),
+        ),
+      ];
+      final rubigoRouter = RubigoRouter(
+        availableScreens: availableScreens,
+        splashScreenId: _Screens.s100,
+      );
+      expect(rubigoRouter.currentScreenId, _Screens.s100);
+      await rubigoRouter.init(initAndGetFirstScreen: () async => _Screens.s200);
+      expect(rubigoRouter.currentScreenId, _Screens.s200);
+      await rubigoRouter.push(_Screens.s300);
+      expect(rubigoRouter.currentScreenId, _Screens.s300);
+    },
+  );
 }
 
 enum _Screens {
