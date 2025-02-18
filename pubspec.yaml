@@ -5,7 +5,6 @@ version: 1.0.1
 homepage: https://yapb.dev
 repository: https://github.com/jsroest/rubigo_router
 issue_tracker: https://github.com/jsroest/rubigo_router/issues
-documentation: https://pub.dev/documentation/rubigo_router/latest/
 
 environment:
   sdk: ^3.0.0
