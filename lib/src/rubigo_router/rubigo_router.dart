@@ -69,6 +69,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     LogNavigation? logNavigation,
     RubigoStackManager<SCREEN_ID>? rubigoStackManager,
     Future<void> Function()? onLastPagePopped,
+    GlobalKey<NavigatorState>? navigatorKey,
   })  : _availableScreens = availableScreens,
 
         /// If a busyService was not given, use a default implementation
@@ -88,7 +89,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
         /// If a onLastPagePopped function was not given use a default
         /// implementation
-        _onLastPagePopped = onLastPagePopped ?? _defaultOnLastPagePopped {
+        _onLastPagePopped = onLastPagePopped ?? _defaultOnLastPagePopped,
+
+        /// If a navigatorKey was not given, create a default one.
+        _navigatorKey = navigatorKey ?? GlobalKey<NavigatorState>() {
     ///Listen to updates and notify our listener, the RouterDelegate
     _rubigoStackManager.addListener(notifyListeners);
   }
@@ -142,7 +146,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
 
   final Future<void> Function() _onLastPagePopped;
 
-  final _navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _navigatorKey;
 
   //endregion
 
