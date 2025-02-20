@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Add navigatorKey as an optional parameter to RubigoRouter.
+
 ## 1.0.2
 
 - Remove documentation entry in pubspec.yaml.
