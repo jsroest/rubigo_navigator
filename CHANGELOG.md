@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Add postNavigationCallback functionality to support async auth change events.
+
 ## 1.0.3
 
 - Add navigatorKey as an optional parameter to RubigoRouter.
