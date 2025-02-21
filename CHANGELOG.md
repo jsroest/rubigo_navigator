@@ -1,3 +1,7 @@
+## 1.0.5
+
+- Add RubigoRouter.isInitialized. Use this to know if the initialization of the app is done and the app is upp and running.
+
 ## 1.0.4
 
 - Add postNavigationCallback functionality to support async auth change events.
