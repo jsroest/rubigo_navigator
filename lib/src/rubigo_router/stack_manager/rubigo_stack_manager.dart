@@ -20,6 +20,9 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   /// [screens] when the app is busy navigating and the stack is not stable yet.
   ListOfRubigoScreens<SCREEN_ID> screenStack;
 
+  // This is a function that can be called after navigation has taken place.
+  PostNavigationCallback? _postNavigationCallback;
+
   // This is a list of all available screens.
   final ListOfRubigoScreens<SCREEN_ID> _availableScreens;
 
@@ -54,7 +57,11 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   /// navigation calls, because it does not fire any events.
   Future<void> remove(SCREEN_ID screenId) => _navigate(Remove(screenId));
 
+  /// Returns true if the app is currently navigating.
+  bool get isNavigating => _isNavigating;
+
   //region _navigate
+  bool _isNavigating = false;
   bool _inWillShow = false;
   bool _inRemovedFromStack = false;
   int _eventCounter = 0;
@@ -62,6 +69,7 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   RubigoChangeInfo<SCREEN_ID>? _changeInfo;
 
   Future<void> _navigate(NavigationEvent<SCREEN_ID> navigationEvent) async {
+    _isNavigating = true;
     if (_eventCounter == 0) {
       _changeInfo = null;
     }
@@ -103,6 +111,12 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
         }
       }
       await updateScreens();
+      _isNavigating = false;
+      final callBack = _postNavigationCallback;
+      if (callBack != null) {
+        _postNavigationCallback = null;
+        await callBack();
+      }
     }
   }
 
@@ -247,4 +261,10 @@ class RubigoStackManager<SCREEN_ID extends Enum> with ChangeNotifier {
   /// Register a callback in this list, if you want to be notified if the
   /// updateScreens function is called.
   final updateScreensCallBack = <VoidCallback>[];
+
+  /// Execute this function, when the current navigation has finished.
+  //ignore: use_setters_to_change_properties
+  void registerPostNavigationCallback(PostNavigationCallback? callback) {
+    _postNavigationCallback = callback;
+  }
 }

@@ -132,6 +132,30 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   /// This function can be used to log all that is related to navigation
   LogNavigation get logNavigation => _logNavigation;
 
+  /// Returns true if the app is currently navigating.
+  bool get isNavigating => _rubigoStackManager.isNavigating;
+
+  /// Unregisters and registers a callback function to be executed immediately
+  /// *after* the current navigation completes.
+  ///
+  /// This is useful for scenarios where you receive an asynchronous event
+  /// (for example a user authentication status change)
+  /// that requires immediate action, but you need to wait for any ongoing
+  /// navigation to finish before starting new navigation actions.
+  ///
+  /// **Important considerations:**
+  ///
+  /// *   **Single Callback:** Only one callback can be registered at a time.
+  /// Registering a new callback will overwrite any previously registered
+  /// callback.
+  /// *   **Unregistering:** To remove a registered callback, pass `null` as the
+  /// argument.
+  /// *   **Automatic Unregistration:** The callback is automatically
+  /// unregistered immediately after it has been executed.
+  void registerPostNavigationCallback(PostNavigationCallback? callback) {
+    _rubigoStackManager.registerPostNavigationCallback(callback);
+  }
+
   //endregion
 
   //region Private

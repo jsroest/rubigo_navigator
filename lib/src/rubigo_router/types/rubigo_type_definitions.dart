@@ -6,3 +6,6 @@ typedef ListOfRubigoScreens<SCREEN_ID extends Enum>
 
 /// A function to log navigation events, using your favorite logger
 typedef LogNavigation = Future<void> Function(String message);
+
+/// A function to execute, when the current navigation finishes.
+typedef PostNavigationCallback = Future<void> Function();
