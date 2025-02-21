@@ -122,6 +122,7 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
         screenWidget.controller = controller;
       }
     }
+    _isInitialized = true;
     await replaceStack([firstScreen]);
   }
 
@@ -156,6 +157,10 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
     _rubigoStackManager.registerPostNavigationCallback(callback);
   }
 
+  /// Returns true if the router is initialized.
+  /// This means the app is up and running.
+  bool get isInitialized => _isInitialized;
+
   //endregion
 
   //region Private
@@ -171,6 +176,8 @@ class RubigoRouter<SCREEN_ID extends Enum> with ChangeNotifier {
   final Future<void> Function() _onLastPagePopped;
 
   final GlobalKey<NavigatorState> _navigatorKey;
+
+  var _isInitialized = false;
 
   //endregion
 
